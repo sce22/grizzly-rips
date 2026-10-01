@@ -3,7 +3,12 @@ name: Sync matches
 on:
   schedule:
     - cron: "*/20 * * * *"   # every 20 minutes (GitHub may delay scheduled runs a few minutes)
-  workflow_dispatch: {}       # "Run workflow" button for a manual sync
+  workflow_dispatch:          # "Run workflow" button for a manual sync
+    inputs:
+      test_text:
+        description: "Send a test text of the latest match"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -33,7 +38,7 @@ jobs:
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           SMS_GATEWAY_ADDRESS: ${{ secrets.SMS_GATEWAY_ADDRESS }}
           PLAYER_PHONES: ${{ secrets.PLAYER_PHONES }}
-        run: python -m fcapp.run
+        run: python -m fcapp.run ${{ inputs.test_text && '--test-text' || '' }}
       - name: Commit new matches and site
         run: |
           git config user.name "fc-sync-bot"

@@ -3,6 +3,7 @@
     python -m fcapp.run              # normal run (used by GitHub Actions)
     python -m fcapp.run --no-fetch   # rebuild from stored matches only
     python -m fcapp.run --no-notify  # don't send texts
+    python -m fcapp.run --test-text  # text the latest match to check SMS setup
 """
 import argparse
 import sys
@@ -36,6 +37,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--no-fetch", action="store_true")
     ap.add_argument("--no-notify", action="store_true")
+    ap.add_argument("--test-text", action="store_true", help="text the latest match now, to check SMS setup")
     args = ap.parse_args(argv)
 
     config = load_config()
@@ -49,6 +51,14 @@ def main(argv=None):
     build_site.build(config, matches, players, model_info)
     print(f"Built site: {len(matches)} matches, {len(players)} players")
 
+    if args.test_text:
+        if not matches:
+            sys.exit("No matches stored yet - nothing to send.")
+        sent = notify.send("[TEST] " + notify.match_text(config["club"]["name"], matches[-1], config["site"]["base_url"]))
+        if not sent:
+            sys.exit("Test text not sent: no SMS provider is configured. Check the repository secrets.")
+        print(f"Test text sent via {sent}")
+        return
     if args.no_notify or not config.get("notify", {}).get("enabled", True):
         return
     by_id = {m["id"]: m for m in matches}
