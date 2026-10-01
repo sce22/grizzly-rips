@@ -1,0 +1,85 @@
+{
+ "season": "Season 1 · Sep 17 – Oct 22",
+ "matches_played": 10,
+ "record": {
+  "W": 6,
+  "D": 2,
+  "L": 2
+ },
+ "goals_for": 24,
+ "goals_against": 17,
+ "first_match": "2026-09-29T22:09:39+00:00",
+ "last_match": "2026-10-01T02:33:40+00:00",
+ "matches": [
+  {
+   "id": "46894398530377",
+   "date": "2026-09-29T22:09:39+00:00",
+   "result": "L",
+   "score": "1-4",
+   "opponent": "Abdina fc"
+  },
+  {
+   "id": "46886544350116",
+   "date": "2026-09-29T22:30:18+00:00",
+   "result": "D",
+   "score": "1-1",
+   "opponent": "Toot DatÄss"
+  },
+  {
+   "id": "46860741820189",
+   "date": "2026-09-29T22:49:38+00:00",
+   "result": "D",
+   "score": "2-2",
+   "opponent": "FC Creamsters"
+  },
+  {
+   "id": "47108226720236",
+   "date": "2026-09-29T23:10:50+00:00",
+   "result": "W",
+   "score": "4-3",
+   "opponent": "FC Creamsters"
+  },
+  {
+   "id": "47214170660349",
+   "date": "2026-09-29T23:31:34+00:00",
+   "result": "W",
+   "score": "1-0",
+   "opponent": "UK Chargers"
+  },
+  {
+   "id": "47350201830407",
+   "date": "2026-09-29T23:54:23+00:00",
+   "result": "L",
+   "score": "1-3",
+   "opponent": "Bubba Bros Fc"
+  },
+  {
+   "id": "51272920510183",
+   "date": "2026-10-01T01:32:09+00:00",
+   "result": "W",
+   "score": "4-0",
+   "opponent": "Gerth United"
+  },
+  {
+   "id": "51410616260094",
+   "date": "2026-10-01T01:52:25+00:00",
+   "result": "W",
+   "score": "4-2",
+   "opponent": "Trotted On"
+  },
+  {
+   "id": "51538552980468",
+   "date": "2026-10-01T02:15:36+00:00",
+   "result": "W",
+   "score": "4-2",
+   "opponent": "pijany"
+  },
+  {
+   "id": "51452766700043",
+   "date": "2026-10-01T02:33:40+00:00",
+   "result": "W",
+   "score": "2-0",
+   "opponent": "MidwayMonsters"
+  }
+ ]
+}

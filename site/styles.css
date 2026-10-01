@@ -177,3 +177,60 @@ details[open] .chev { transform: rotate(180deg); }
 .band { display: inline-block; margin-top: 4px; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 6px; background: var(--draw-bg); color: var(--draw); }
 .band-top { background: var(--good-bg); color: var(--good); }
 .band-bottom { background: var(--bad-bg); color: var(--bad); }
+
+/* calendar */
+.cal { padding: 12px; }
+.cal-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; text-align: center; }
+.cal-head b { display: block; font: 700 18px var(--display); text-transform: uppercase; letter-spacing: .03em; }
+.cal-head small { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.cal-nav { width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--line); background: var(--card); color: var(--ink); font-size: 22px; line-height: 1; cursor: pointer; }
+.cal-nav:disabled { opacity: .3; cursor: default; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.cal-dow { text-align: center; font-size: 11px; font-weight: 700; color: var(--muted); padding-bottom: 2px; }
+.cal-day { position: relative; aspect-ratio: 1 / 1.08; border-radius: 9px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  padding: 4px 2px 3px; font: 600 12px var(--body); color: var(--ink); background: var(--bg); border: 1.5px solid transparent; min-width: 0; }
+.cal-day.blank { background: transparent; }
+.cal-day.empty { color: var(--muted); opacity: .75; }
+.cal-day.empty b { font-weight: 500; }
+.cal-day.has { cursor: pointer; background: color-mix(in srgb, var(--primary) var(--heat), var(--card)); }
+.cal-day.has.dark { color: var(--on-primary); }
+.cal-day.on { border-color: var(--secondary); box-shadow: 0 0 0 2px var(--secondary); }
+.cal-day.today b { text-decoration: underline; text-underline-offset: 2px; }
+.cal-day:focus-visible { outline: 2px solid var(--secondary); outline-offset: 1px; }
+.cal-rec { font-size: 10px; font-weight: 700; margin-top: auto; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+.cal-bar { display: flex; width: 78%; height: 4px; border-radius: 2px; overflow: hidden; margin-top: 2px; background: var(--line); }
+.cal-bar .seg.W, .dot.W { background: #2fb36a; }
+.cal-bar .seg.D, .dot.D { background: #9aa3ad; }
+.cal-bar .seg.L, .dot.L { background: #e05545; }
+.cal-season { order: 2; margin-top: 2px; font: 800 8.5px var(--body); font-style: normal; color: var(--secondary); background: var(--primary); border-radius: 3px; padding: 0 3px; line-height: 12px; }
+.cal-day b { order: 1; }
+.cal-rec { order: 3; }
+.cal-bar { order: 4; }
+.cal-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; margin-top: 10px; font-size: 11.5px; color: var(--muted); }
+.cal-legend .sw { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 2px; vertical-align: -1px; background: color-mix(in srgb, var(--primary) var(--heat), var(--card)); border: 1px solid var(--line); }
+.cal-legend .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin: 0 2px 0 4px; }
+.cal-hint { margin-left: auto; }
+.selection { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--card); border: 1.5px solid var(--secondary); border-radius: var(--radius); padding: 10px 14px; margin: 10px 0; }
+.selection b { display: block; }
+.selection span { font-size: 13px; color: var(--muted); }
+
+/* coach voice */
+.coach-say { font-size: 14.5px; line-height: 1.5; margin: 12px 0 0; }
+.coach-say.closer { font-style: italic; margin-top: 16px; }
+.coach-say.closer span { font-style: normal; font-weight: 700; color: var(--muted); }
+.say { margin: 3px 0 2px; font-size: 14px; }
+.drill-label { font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-top: 8px; }
+.talk { border-top: 4px solid var(--secondary); }
+.talk-head { display: flex; gap: 10px; align-items: flex-start; }
+.talk-head .whistle { font-size: 24px; line-height: 1; }
+.talk-head .coach-say { margin-top: 4px; }
+.talk-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 4px 20px; }
+.talk-list { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+.talk-list li { padding-left: 2px; }
+.talk-list b { display: block; font-size: 13px; }
+.talk-list span { display: block; font-size: 14px; }
+.talk-list em { display: block; font-style: normal; font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.talk-list.good li::marker { color: var(--good); font-weight: 800; }
+.talk-list.bad li::marker { color: var(--bad); font-weight: 800; }
+.good-label { color: var(--good); }
+.bad-label { color: var(--bad); }

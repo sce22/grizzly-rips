@@ -3,8 +3,8 @@
 A mobile website with your club's name, crest, and colours. It keeps every Pro Clubs match you play, breaks down each human player's performance, and texts you a link after each game.
 
 ```
-EA Pro Clubs feed ──► collector (every 20 min) ──► analysis ──► branded mobile site (GitHub Pages)
-                                                             └─► text message with link
+EA Pro Clubs feed ──► watcher (checks every minute) ──► analysis ──► Coach ──► branded mobile site (GitHub Pages)
+                                                                                  └─► team-talk text with link
 ```
 
 ## What it can and can't see
@@ -26,7 +26,9 @@ EA publishes a per-match report for every Pro Clubs game (the same data behind p
 
 The site's "What moved the rating" section uses rating weights measured by regression on the same data (e.g. a forward's goal ≈ +0.61, a midfielder's tackle won ≈ +0.20, a keeper's goal conceded ≈ −0.41). Whatever the listed actions can't explain shows up as **Everything else**. Once your club has 40+ player-matches per position, the weights are re-learned from your own games.
 
-**Important:** EA's feed only returns your last ~10 matches per match type. The archive grows because the sync runs every 20 minutes and saves every match permanently. If the sync stops for a long stretch, matches played in that gap are lost.
+**Important:** EA's feed only returns your last 10 matches per match type (a hard cap). The watcher checks every minute and files every match permanently by season in `data/seasons/season-NN/` (with a `summary.json` per season), so nothing is missed as long as GitHub Actions is running.
+
+**Coach.** All insights are written by "Coach", a Ted Lasso-style voice grounded in the numbers and in standard soccer coaching principles (`fcapp/coach.py`, tips in `fcapp/playbook.py`). After every match, the text you get is Coach's team talk: score, the top 3 things we did well, the top 3 to work on, and a link.
 
 ## One-time setup (~20 minutes)
 
@@ -51,7 +53,7 @@ Use platform `common-gen5` for PS5 / Xbox Series / PC (the default).
 1. Create a new GitHub repository (e.g. `fc-match-centre`) and push this folder to it.
 2. Repo **Settings → Pages → Build and deployment → Deploy from a branch → `main` / `/docs`**.
 3. Your site is `https://<username>.github.io/<repo>/`. Put that in `config.json → site.base_url`.
-4. **Actions** tab → *Sync matches* → **Run workflow** to do the first sync. After that it runs by itself every 20 minutes.
+4. **Actions** tab → *Match watcher* → **Run workflow** to start it. After that GitHub restarts it on a schedule (a run lasts up to ~5.5 hours), and only one runs at a time. Skipped "pending" runs in the Actions list are normal.
 
 > Free GitHub Pages sites are public. Only in-game stats are published; phone numbers stay in encrypted secrets.
 
@@ -67,7 +69,7 @@ US numbers need Twilio's A2P 10DLC or toll-free verification before texts are de
 
 **Per-player texts (optional):** set `notify.per_player_texts: true` and add a secret `PLAYER_PHONES` = `{"GamerTag1": "+1555...", "GamerTag2": "+1555..."}`. Each of those players gets a link straight to their own breakdown.
 
-The first sync saves existing matches without texting. After that you get one text per new match.
+The first sync saves existing matches without texting. After that you get one text per new match, usually 1-3 minutes after the final whistle. To check texting any time: **Actions → Send test text → Run workflow**.
 
 ### If EA blocks GitHub's servers
 EA sometimes blocks cloud servers. If the *Sync matches* run fails with `HTTP 403`, run the sync from your Mac instead (it only needs to be awake):

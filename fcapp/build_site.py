@@ -1,7 +1,8 @@
 """Builds the static mobile site into docs/ (served by GitHub Pages)."""
 import json
 import shutil
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 
 from .store import ROOT, read_json
 
@@ -57,6 +58,7 @@ def build(config, matches, players, model_info, out=OUT, meta=None):
         "generated": datetime.now(timezone.utc).isoformat(),
         "model": model_info,
         "themes_min_matches": config.get("analysis", {}).get("themes_min_matches", 8),
+        "season_starts": season_starts(config.get("seasons"), matches),
         "matches": [
             {
                 "id": m["id"], "ts": m["ts"], "season": m["season"], "type": m["type"],
@@ -94,6 +96,22 @@ def build(config, matches, players, model_info, out=OUT, meta=None):
     html = (out / "index.html").read_text()
     html = html.replace("{{CLUB_NAME}}", brand["name"]).replace("{{THEME_COLOR}}", brand["colors"]["primary"])
     (out / "index.html").write_text(html)
+
+
+def season_starts(seasons, matches):
+    """Calendar markers: the Thursday each season starts, as shown in its label."""
+    if isinstance(seasons, dict):
+        tz = ZoneInfo(seasons.get("timezone", "UTC"))
+        start = datetime.fromisoformat(seasons["rollover"]).replace(tzinfo=tz)
+        length = timedelta(weeks=seasons.get("length_weeks", 5))
+        last = max([datetime.now(tz)] + [datetime.fromtimestamp(m["ts"], tz) for m in matches])
+        out, n = [], 0
+        while start + n * length <= last + length:
+            day = start + n * length - timedelta(days=1)
+            out.append({"date": day.strftime("%Y-%m-%d"), "short": f"S{seasons.get('first_number', 1) + n}"})
+            n += 1
+        return out
+    return [{"date": s["start"], "short": s["name"][:3]} for s in seasons or []]
 
 
 def slug(name):

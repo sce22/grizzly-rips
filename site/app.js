@@ -3,6 +3,8 @@
   const cache = {};
   let INDEX = null;
   let seasonFilter = "All";
+  let selectedDays = new Set();
+  let calMonth = null; // "YYYY-MM"
 
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const slug = (n) => n.replace(/[^A-Za-z0-9]/g, "_").toLowerCase();
@@ -54,28 +56,119 @@
 
   // ------------------------------------------------------------- views
 
+  // ------------------------------------------------------------ calendar
+
+  const pad2 = (n) => String(n).padStart(2, "0");
+  const dayKey = (ts) => { const d = new Date(ts * 1000); return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`; };
+  const monthKey = (ts) => dayKey(ts).slice(0, 7);
+  const recordOf = (ms) => ms.reduce((a, m) => (a[m.result]++, a.n++, a.gf += m.gf, a.ga += m.ga, a), { W: 0, D: 0, L: 0, n: 0, gf: 0, ga: 0 });
+  const recText = (r) => `${r.W}W ${r.D}D ${r.L}L`;
+
+  function shiftMonth(key, delta) {
+    const [y, m] = key.split("-").map(Number);
+    const d = new Date(y, m - 1 + delta, 1);
+    return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}`;
+  }
+
+  function calendarHTML(pool) {
+    const byDay = {};
+    pool.forEach((m) => (byDay[dayKey(m.ts)] ||= []).push(m));
+    const max = Math.max(1, ...Object.values(byDay).map((ms) => ms.length));
+    const [y, mo] = calMonth.split("-").map(Number);
+    const lead = new Date(y, mo - 1, 1).getDay();
+    const days = new Date(y, mo, 0).getDate();
+    const today = dayKey(Date.now() / 1000);
+    const starts = Object.fromEntries((INDEX.season_starts || []).map((s) => [s.date, s.short]));
+    const monthGames = pool.filter((m) => monthKey(m.ts) === calMonth);
+    const allMonths = INDEX.matches.map((m) => monthKey(m.ts));
+    const minMonth = allMonths.length ? allMonths.reduce((a, b) => (a < b ? a : b)) : calMonth;
+    const maxMonth = [today.slice(0, 7), ...allMonths].reduce((a, b) => (a > b ? a : b));
+
+    const cells = [];
+    for (let i = 0; i < lead; i++) cells.push(`<span class="cal-day blank" aria-hidden="true"></span>`);
+    for (let d = 1; d <= days; d++) {
+      const key = `${calMonth}-${pad2(d)}`;
+      const ms = byDay[key] || [];
+      const r = recordOf(ms);
+      const heat = ms.length ? 0.18 + 0.62 * (ms.length / max) : 0;
+      const label = new Date(y, mo - 1, d).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+      const season = starts[key] ? `<i class="cal-season" title="Season starts">${esc(starts[key])}</i>` : "";
+      if (!ms.length) {
+        cells.push(`<span class="cal-day empty${key === today ? " today" : ""}" aria-label="${label}: no games">${season}<b>${d}</b></span>`);
+        continue;
+      }
+      const bar = ["W", "D", "L"].filter((k) => r[k]).map((k) => `<i class="seg ${k}" style="flex:${r[k]}"></i>`).join("");
+      cells.push(`<button type="button" class="cal-day has${heat > 0.5 ? " dark" : ""}${selectedDays.has(key) ? " on" : ""}${key === today ? " today" : ""}"
+        style="--heat:${(heat * 100).toFixed(0)}%" data-day="${key}" aria-pressed="${selectedDays.has(key)}"
+        aria-label="${label}: ${ms.length} game${ms.length > 1 ? "s" : ""}, ${r.W} won, ${r.D} drawn, ${r.L} lost">
+        ${season}<b>${d}</b><span class="cal-rec">${r.W}-${r.D}-${r.L}</span><span class="cal-bar">${bar}</span></button>`);
+    }
+    const mr = recordOf(monthGames);
+    const monthName = new Date(y, mo - 1, 1).toLocaleDateString(undefined, { month: "long", year: "numeric" });
+    return `
+      <section class="card cal" aria-label="Match calendar">
+        <div class="cal-head">
+          <button type="button" class="cal-nav" data-cal="-1" aria-label="Previous month" ${calMonth <= minMonth ? "disabled" : ""}>‹</button>
+          <div><b>${monthName}</b><small>${mr.n ? `${mr.n} game${mr.n > 1 ? "s" : ""} · ${recText(mr)}` : "No games"}</small></div>
+          <button type="button" class="cal-nav" data-cal="1" aria-label="Next month" ${calMonth >= maxMonth ? "disabled" : ""}>›</button>
+        </div>
+        <div class="cal-grid">
+          ${["S", "M", "T", "W", "T", "F", "S"].map((w) => `<span class="cal-dow">${w}</span>`).join("")}
+          ${cells.join("")}
+        </div>
+        <div class="cal-legend">
+          <span><i class="sw" style="--heat:25%"></i><i class="sw" style="--heat:50%"></i><i class="sw" style="--heat:80%"></i> more games</span>
+          <span><i class="dot W"></i>W <i class="dot D"></i>D <i class="dot L"></i>L</span>
+          <span class="cal-hint">Tap days to filter</span>
+        </div>
+      </section>`;
+  }
+
   function matchesView() {
+    if (!calMonth) calMonth = INDEX.matches.length ? monthKey(INDEX.matches[0].ts) : dayKey(Date.now() / 1000).slice(0, 7);
     const seasons = ["All", ...new Set(INDEX.matches.map((m) => m.season))];
-    const list = INDEX.matches.filter((m) => seasonFilter === "All" || m.season === seasonFilter);
+    const pool = INDEX.matches.filter((m) => seasonFilter === "All" || m.season === seasonFilter);
+    const list = selectedDays.size ? pool.filter((m) => selectedDays.has(dayKey(m.ts))) : pool;
     const groups = {};
     list.forEach((m) => (groups[m.season] ||= []).push(m));
-    const chips = seasons.map((s) => `<button class="chip ${s === seasonFilter ? "on" : ""}" data-season="${esc(s)}">${esc(s)}</button>`).join("");
+    const chips = seasons.map((s) => `<button type="button" class="chip ${s === seasonFilter ? "on" : ""}" data-season="${esc(s)}">${esc(s.split(" · ")[0])}</button>`).join("");
+    const sel = [...selectedDays].sort();
+    const selRec = recordOf(list);
+    const selection = sel.length ? `
+      <div class="selection">
+        <div><b>${sel.length === 1 ? new Date(sel[0] + "T12:00").toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" }) : `${sel.length} days`}</b>
+          <span>${selRec.n} game${selRec.n === 1 ? "" : "s"} · ${recText(selRec)} · ${selRec.gf} scored, ${selRec.ga} conceded</span></div>
+        <button type="button" class="chip" id="clear-days">Clear</button>
+      </div>` : "";
     const body = Object.entries(groups).map(([season, ms]) => {
-      const r = ms.reduce((a, m) => (a[m.result]++, a), { W: 0, D: 0, L: 0 });
-      return `<div class="season-head"><h2>${esc(season)}</h2><small>${r.W}W ${r.D}D ${r.L}L</small></div>` +
+      const r = recordOf(ms);
+      return `<div class="season-head"><h2>${esc(season)}</h2><small>${recText(r)}</small></div>` +
         ms.map((m) => `
           <a class="card match-row" href="#/match/${m.id}">
             <span class="pill ${m.result}">${m.result}</span>
             <div>
-              <div class="when">${fmtDate(m.ts)} · ${TYPE[m.type] || m.type}</div>
+              <div class="when">${fmtDate(m.ts)} · ${fmtTime(m.ts)} · ${TYPE[m.type] || m.type}</div>
               <div class="opp">vs ${esc(m.opponent)}</div>
               ${m.top ? `<div class="top">★ ${esc(m.top.name)} ${m.top.rating.toFixed(1)}</div>` : ""}
             </div>
             <div class="score">${m.gf} – ${m.ga}</div>
           </a>`).join("");
     }).join("");
-    app.innerHTML = `<div class="chips">${chips}</div>${body || `<div class="empty">No matches yet. Play a game and check back soon.</div>`}`;
-    app.querySelectorAll("[data-season]").forEach((b) => b.onclick = () => { seasonFilter = b.dataset.season; matchesView(); });
+    app.innerHTML = `<div class="chips">${chips}</div>${calendarHTML(pool)}${selection}${body || `<div class="empty">No matches yet. Play a game and check back soon.</div>`}`;
+    app.querySelectorAll("[data-season]").forEach((b) => b.onclick = () => {
+      seasonFilter = b.dataset.season;
+      selectedDays.clear();
+      const first = INDEX.matches.find((m) => seasonFilter === "All" || m.season === seasonFilter);
+      if (first) calMonth = monthKey(first.ts);
+      matchesView();
+    });
+    app.querySelectorAll("[data-cal]").forEach((b) => b.onclick = () => { calMonth = shiftMonth(calMonth, Number(b.dataset.cal)); matchesView(); });
+    app.querySelectorAll("[data-day]").forEach((b) => b.onclick = () => {
+      const k = b.dataset.day;
+      selectedDays.has(k) ? selectedDays.delete(k) : selectedDays.add(k);
+      matchesView();
+    });
+    document.getElementById("clear-days")?.addEventListener("click", () => { selectedDays.clear(); matchesView(); });
   }
 
   function statCell(value, label, extra = "") {
@@ -112,9 +205,10 @@
   }
 
   function playerCard(p, open) {
-    const strengths = p.strengths.map((s) => `<div class="note good"><b>${esc(s.title)}</b><small>${esc(s.detail)}</small></div>`).join("");
+    const strengths = p.strengths.map((s) => `<div class="note good"><b>${esc(s.title)}</b>${s.coach ? `<p class="say">${esc(s.coach)}</p>` : ""}<small>${esc(s.detail)}</small></div>`).join("");
     const weaknesses = p.weaknesses.map((w) => `
-      <div class="note bad"><b>${esc(w.title)}</b><small>${esc(w.detail)}</small>
+      <div class="note bad"><b>${esc(w.title)}</b>${w.coach ? `<p class="say">${esc(w.coach)}</p>` : ""}<small>${esc(w.detail)}</small>
+        <div class="drill-label">Coach's drill</div>
         <ul class="tips">${w.tips.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>`).join("");
     const vs = p.vs_average != null ? ` · ${p.vs_average >= 0 ? "▲" : "▼"} ${Math.abs(p.vs_average).toFixed(1)} vs avg` : "";
     return `
@@ -129,15 +223,29 @@
           <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </summary>
         <div class="pbody">
-          <p class="headline">${esc(p.headline)}</p>
+          <p class="coach-say">${esc(p.coach ? p.coach.opener : p.headline)}</p>
           ${statGrid(p)}
           <div class="section-label">What moved the rating</div>
           ${driversBlock(p.impact)}
           ${strengths ? `<div class="section-label">Did well</div>${strengths}` : ""}
-          ${weaknesses ? `<div class="section-label">To improve</div>${weaknesses}` : ""}
+          ${weaknesses ? `<div class="section-label">To work on</div>${weaknesses}` : ""}
+          ${p.coach ? `<p class="coach-say closer">${esc(p.coach.closer)} <span>- Coach</span></p>` : ""}
           <a class="back" href="#/player/${encodeURIComponent(p.name)}">Full profile & trends →</a>
         </div>
       </details>`;
+  }
+
+  function talkCard(talk) {
+    const item = (x, i) => `<li><b>${esc(x.title)}</b><span>${esc(x.line)}</span>${x.tip ? `<em>${esc(x.tip)}</em>` : ""}</li>`;
+    return `
+      <section class="card talk" aria-label="Coach's team talk">
+        <div class="talk-head"><span class="whistle" aria-hidden="true">📣</span><div><h3>Coach's team talk</h3><p class="coach-say">${esc(talk.opener)}</p></div></div>
+        <div class="talk-cols">
+          <div><div class="section-label good-label">What we did well</div><ol class="talk-list good">${talk.well.map(item).join("")}</ol></div>
+          <div><div class="section-label bad-label">Work on next match</div><ol class="talk-list bad">${talk.work_on.map(item).join("")}</ol></div>
+        </div>
+        <p class="coach-say closer">${esc(talk.signoff.replace(/ - Coach$/, ""))} <span>- Coach</span></p>
+      </section>`;
   }
 
   async function matchView(id, focus) {
@@ -160,6 +268,7 @@
           <div><b>${t.key_passes ?? "–"}</b><span>Key passes</span></div>
         </div>
       </div>
+      ${m.talk ? talkCard(m.talk) : ""}
       <h2>Player breakdowns</h2>
       ${m.players.map((p) => playerCard(p, focus ? p.name === focus : false)).join("") || `<div class="empty">No human players recorded.</div>`}`;
     if (focus) document.getElementById(`p-${slug(focus)}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -201,16 +310,20 @@
     const a = p.averages;
     const themes = p.themes ? `
       <div class="card">
-        <h3>Overarching themes</h3>
-        ${p.themes.improve.length ? p.themes.improve.map((t) => `
+        <h3>Coach's corner</h3>
+        ${p.coach ? `<p class="coach-say">${esc(p.coach.intro)}</p>` : ""}
+        ${p.themes.improve.length ? `<div class="section-label">What we're working on</div>` + p.themes.improve.map((t) => `
           <div class="theme"><b>${esc(t.title)}</b><span class="tag ${t.direction}">${t.direction}</span>
+            ${t.coach ? `<p class="say">${esc(t.coach)}</p>` : ""}
             <div class="model-note">Flagged in ${t.rate}% of matches (${t.recent_rate}% of the last 5)</div>
+            <div class="drill-label">Coach's drill</div>
             <ul class="tips">${t.tips.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("")
-          : `<p class="model-note">No recurring weaknesses - nothing is flagged in more than 30% of matches.</p>`}
-        ${p.themes.strengths.length ? `<div class="section-label">Consistent strengths</div>` + p.themes.strengths.map((s) => `<div class="note good"><b>${esc(s.title)}</b><small>${esc(s.note)} (${s.rate}% of matches)</small></div>`).join("") : ""}
+          : `<p class="say">Nothing keeps coming up, and that's rare. Nothing is flagged in more than 30% of your matches. Keep doing you.</p>`}
+        ${p.themes.strengths.length ? `<div class="section-label">What you bring every week</div>` + p.themes.strengths.map((s) => `<div class="note good"><b>${esc(s.title)}</b><p class="say">${esc(s.coach || s.note)}</p><small>${s.rate}% of matches</small></div>`).join("") : ""}
       </div>` : `
       <div class="card">
-        <h3>Overarching themes</h3>
+        <h3>Coach's corner</h3>
+        <p class="say">I want to see you play a few more before I start drawing conclusions. One match is a snapshot. Eight is a pattern.</p>
         <p class="model-note">Themes unlock after ${p.themes_progress.need} matches so they reflect patterns, not one-off games.</p>
         <div class="progress"><div style="width:${Math.min(100, (p.themes_progress.have / p.themes_progress.need) * 100)}%"></div></div>
         <div class="model-note">${p.themes_progress.have} of ${p.themes_progress.need} matches</div>
@@ -265,7 +378,8 @@
           <li><b>Did well / To improve</b> compares each player's passing, tackling, shooting, key passes and saves with real FC 27 benchmarks for their position (top quarter = strength, bottom quarter = flag), then reads stats in pairs: forcing passes, diving into tackles, shooting at the keeper, and rating below what the stats predict (positioning).</li>
           <li><b>Rating badge</b> places each rating against players in the same position. A 6.6 is a strong game for a keeper but a quiet one for a midfielder.</li>
           <li><b>What moved the rating</b> estimates how many rating points each action was worth, using weights measured from thousands of real FC 27 matches. "Everything else" is the part of EA's rating the match report doesn't break down (positioning, dribbles, interceptions).</li>
-          <li><b>Overarching themes</b> appear once a player has ${INDEX.themes_min_matches}+ matches: weaknesses flagged in 30%+ of games, with whether they're improving.</li>
+          <li><b>Coach's team talk</b> picks the three things the team did best and the three that most need work after every match. The same talk is texted to you within a couple of minutes of the final whistle.</li>
+          <li><b>Coach's corner</b> themes appear once a player has ${INDEX.themes_min_matches}+ matches: weaknesses flagged in 30%+ of games, with whether they're improving.</li>
         </ul>
       </div>
       <div class="card">

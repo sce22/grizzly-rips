@@ -56,22 +56,33 @@ def player_phones():
         return {}
 
 
-def match_text(club_name, match, base_url):
-    top = match["players"][0] if match["players"] else None
-    score = f"{match['gf']}-{match['ga']}"
+ASCII = str.maketrans({"\u2013": "-", "\u2014": "-", "\u2018": "'", "\u2019": "'", "\u201c": '"', "\u201d": '"',
+                       "\u00b7": "-", "\u2026": "...", "\u2265": ">=", "\u2264": "<="})
+
+
+def _ascii(text):
+    """Email-to-text gateways mangle anything beyond plain ASCII."""
+    return text.translate(ASCII).encode("ascii", "ignore").decode()
+
+
+def match_text(club_name, match, base_url, test=False):
+    """Coach's post-match team talk: score, top 3 done well, top 3 to work on, link."""
+    talk = match["talk"]
     word = {"W": "WIN", "D": "DRAW", "L": "LOSS"}[match["result"]]
-    lines = [f"{club_name}: {word} {score} vs {match['opponent']['name']}"]
-    if top:
-        lines.append(f"Top rated: {top['name']} {top['stats']['rating']:.1f}")
-    lines.append(f"Player breakdowns: {base_url}#/match/{match['id']}")
-    return "\n".join(lines)
+    lines = [f"{'[TEST] ' if test else ''}{club_name} {match['gf']}-{match['ga']} {match['opponent']['name']} ({word})",
+             talk["opener"], "", "WHAT WE DID WELL"]
+    lines += [f"{i}. {x['line']}" for i, x in enumerate(talk["well"], 1)] or ["1. We showed up. That counts."]
+    lines += ["", "WORK ON NEXT MATCH"]
+    lines += [f"{i}. {x['line']}" for i, x in enumerate(talk["work_on"], 1)]
+    lines += ["", talk["signoff"], f"{base_url}#/match/{match['id']}"]
+    return _ascii("\n".join(lines))
 
 
 def player_text(club_name, match, player, base_url):
-    s = player["stats"]
-    work = player["weaknesses"][0]["title"] if player["weaknesses"] else "keep it up"
-    return (
-        f"{club_name} vs {match['opponent']['name']} ({match['gf']}-{match['ga']})\n"
-        f"Your rating: {s['rating']:.1f}. Focus: {work}\n"
-        f"Your breakdown: {base_url}#/match/{match['id']}/{urllib.parse.quote(player['name'])}"
-    )
+    c = player["coach"]
+    work = player["weaknesses"][0] if player["weaknesses"] else None
+    lines = [f"{club_name} {match['gf']}-{match['ga']} {match['opponent']['name']}", c["opener"]]
+    if work:
+        lines.append(f"Next match: {work['coach']} {work['tips'][0] if work['tips'] else ''}".strip())
+    lines.append(f"{base_url}#/match/{match['id']}/{urllib.parse.quote(player['name'])}")
+    return _ascii("\n".join(lines))

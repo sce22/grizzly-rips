@@ -3,7 +3,7 @@
 Benchmarks are per-match percentiles from 4,764 live FC 27 player-matches
 (60+ minutes) across the 40 top-ranked Pro Clubs, pulled 30 Sep 2026.
 "good" is roughly the 75th percentile, "poor" roughly the 25th. Tips distill
-common best-practice guidance from competitive Pro Clubs coaching.
+standard soccer coaching principles, in the coach's voice.
 Edit freely - the analysis reads everything from here.
 """
 
@@ -119,126 +119,129 @@ TAG_TITLES = {
     "busy_keeper": "Kept us in it",
 }
 
+# Coaching points grounded in standard soccer coaching principles (scanning,
+# body shape, support angles, delay-deny-dictate defending, finishing technique),
+# written in the coach's voice and translated to how they show up on the pitch in FC.
 TIPS = {
     "passing_accuracy": {
         "_": [
-            "Default to the simple ground pass to the open, facing teammate; save driven and lobbed passes for clear lanes.",
-            "Scan before receiving: know your next pass before the ball arrives so you are not passing under pressure.",
-            "Avoid passing across your own box or into a teammate who has a marker tight on their back.",
+            "Scan before the ball gets to you - a quick shoulder check means you already know the pass before you need it.",
+            "Open your hips to the field when you receive. Side-on body shape turns a back pass into a forward one.",
+            "Simple and on the ground to the open, facing teammate. Driven and lofted balls are for clear lanes only.",
         ],
         "defender": [
-            "Play out through the pivot or full-back rather than long balls to a marked striker; a CB's job is to recycle, not to force.",
-            "When pressed, a safe pass back to the keeper or a clearance beats a risky line-breaker.",
+            "From the back, your job is to recycle, not to force. The pivot or full-back is almost always on.",
+            "Under pressure, the keeper or a clearance is a perfectly good pass. Nobody ever lost a match to a smart clearance.",
         ],
         "midfielder": [
-            "Use one- and two-touch passing in triangles; hold the ball only when you have space to turn.",
+            "Play in triangles - one or two touches, then move. The ball should do the running, not you.",
         ],
         "forward": [
-            "Hold-up play: shield with your back to goal and lay it off to the supporting midfielder instead of turning into traffic.",
+            "With your back to goal, shield it and set it back to the runner facing play. Turning into traffic is a coin flip.",
         ],
         "goalkeeper": [
-            "Distribute short to the free centre-back; avoid long kicks to contested headers.",
+            "Distribute short to the free centre-back. Long kicks into a crowd are a 50/50 we don't need to take.",
         ],
     },
     "forcing_passes": {
         "_": [
-            "Below ~72% accuracy every extra pass costs rating. Take the simple option until the accuracy comes back.",
-            "Through balls only when the runner is already moving and on the shoulder - otherwise recycle or switch play.",
-            "If nothing is on, keep the ball: shield, turn back, and let the shape reset.",
+            "Below about 72% the extra passes start costing us. Pick the simple option until the touch comes back.",
+            "Through balls only when the runner is already moving and on the last defender's shoulder.",
+            "If nothing's on, keep it: shield, turn back, let the shape reset. Patience is a pass too.",
         ],
     },
     "involvement": {
         "_": [
-            "Show for the ball: move into passing lanes and call for it (pass request) instead of standing behind a marker.",
-            "Stay within your role's zone so teammates always know where their outlet is.",
+            "Show for it. Move into the passing lane and ask for the ball instead of hiding behind your marker.",
+            "Give the passer an angle - diagonal to the ball, not flat in a line where it can't reach you.",
         ],
         "forward": [
-            "Drop between the lines occasionally to link play, then spin in behind once the ball is played wide.",
+            "Drop between the lines to link play, then spin in behind once it goes wide.",
         ],
         "defender": [
-            "Offer width and angles for the keeper and pivot on build-up, especially when the opponent presses high.",
+            "Split wide when the keeper has it. Offer an angle so we can build from the back.",
         ],
     },
     "progression": {
         "_": [
-            "Look forward first: check the striker's run and the space between the lines before the safe sideways pass.",
-            "Switch play to the far side when the opponent shifts across - it is the quickest way to create a chance.",
-            "Arrive late at the edge of the box for cutbacks; that is where midfield key passes and goals come from.",
+            "Look forward first. Check the striker's run and the gap between the lines before the sideways pass.",
+            "Switch play when they shift across. Quickest way to find space is usually on the far side.",
+            "Arrive late at the edge of the box for cutbacks. That's where midfield chances come from.",
         ],
     },
     "tackle_timing": {
         "_": [
-            "Jockey first and stay goal-side; only commit when the attacker's touch pushes the ball away from their body.",
-            "Every missed tackle opens a gap behind you. If unsure, contain and let a covering teammate step in.",
-            "Use standing tackles more than sliding ones; slide only when you are certain of the ball and there's cover.",
+            "Delay, deny, then dictate. Jockey goal-side and only commit when their touch gets heavy.",
+            "Every missed tackle leaves a runner free behind you. If you're not sure, contain and let cover arrive.",
+            "Stay on your feet. Slide only when you're certain of the ball and there's somebody behind you.",
         ],
         "defender": [
-            "Don't step out of the back line to chase; hold shape and let the ball come to you.",
+            "Don't get pulled out of the line to chase. Hold your spot and let the ball come to you.",
         ],
         "midfielder": [
-            "Press to cut the passing lane rather than lunging at the ball carrier from behind.",
+            "Press to cut the passing lane, not to lunge at the ball carrier from behind.",
         ],
     },
     "defensive_work_rate": {
         "_": [
-            "Engage the ball carrier: a won tackle is worth ~0.2 rating and even a 12% success rate pays for the attempts.",
-            "Track your runner all the way into the box; most goals against come from unmarked late runs.",
-            "After losing the ball, counter-press for 3-5 seconds before recovering shape.",
+            "Get stuck in. A won tackle is worth about 0.2 rating, and even 1 in 8 pays for the attempts.",
+            "Track your runner all the way into the box. Most goals against come from late, unmarked runs.",
+            "When we lose it, press for 3-5 seconds right away. That's when they're most disorganized.",
         ],
         "midfielder": [
-            "As a CDM/CM, screen the centre-backs: stay between the ball and your goal, and intercept rather than chase.",
+            "As a CDM/CM, screen the back line: stay between the ball and our goal and pick off passes.",
         ],
     },
     "shot_volume": {
         "_": [
-            "Attack the box: make near- and far-post runs on every cross and cutback.",
-            "Take the shot when you have a clear sight of goal inside the box; hesitation lets defenders recover.",
+            "Attack the box. Near post and far post on every cross and every cutback.",
+            "When you've got a clear look inside the box, pull the trigger. Hesitation lets defenders recover.",
         ],
         "forward": [
-            "Play on the last defender's shoulder and time runs as the passer lifts their head.",
-            "Ask for the ball early in the half-space where a first-time finish is possible.",
+            "Live on the last defender's shoulder and time the run as the passer lifts their head.",
+            "Ask for it early in the half-space, where a first-time finish is on.",
         ],
     },
     "shot_selection": {
         "_": [
-            "Shoot from central areas inside the box; low-angle and long-range efforts are what miss the target.",
-            "Take an extra touch to set your body if you have space - off-balance shots fly wide.",
-            "If the angle is tight, cut it back to a teammate instead of shooting.",
+            "Shoot from central, inside the box. Tight angles and long range are where shots go wide.",
+            "Set your feet first if you've got a half second. Off-balance shots fly into the stands.",
+            "Tight angle? Cut it back to a teammate. A better shot beats a first shot.",
         ],
     },
     "finishing": {
         "_": [
-            "Your shots are on target but the keeper is getting to them: aim for the corners, not the middle.",
-            "Use finesse shots to the far post from angles; use low driven shots one-on-one.",
-            "Only use timed finishing when you're confident in the timing; a normal shot to the corner beats a mistimed one.",
+            "We're hitting the target, so now aim for the corners. Keepers love a shot down the middle.",
+            "Finesse it to the far post from an angle. One-on-one, go low and hard.",
+            "Timed finishing only when you trust it. A clean shot to the corner beats a mistimed rocket.",
         ],
     },
     "shot_stopping": {
         "_": [
-            "Hold your position and let the keeper AI handle angles; rushing out early leaves the near post open.",
-            "Come off your line only for through balls you are clearly first to.",
-            "On crosses, stay central and only claim balls in the six-yard box.",
+            "Set your feet and hold your position as the shot comes. Rushing out early opens up the near post.",
+            "Only come off your line for through balls you're clearly winning.",
+            "On crosses, stay central and claim only what's in the six-yard box.",
         ],
     },
     "positioning": {
         "_": [
-            "Your rating is lower than your stats predict - the gap is off-ball: positioning, interceptions and blocks.",
-            "Hold the defensive line with your partner and step up together; don't get pulled out by a dropping striker.",
-            "Stay goal-side and central first, ball-side second. Cover the space behind the full-back when they press.",
+            "Your rating came in lower than your stats say, and that gap is off-ball: positioning, interceptions, blocks.",
+            "Hold the line with your partner and step up together. Don't let a dropping striker drag you out.",
+            "Goal-side and central first, ball-side second. Cover the space behind the full-back when they press.",
         ],
         "midfielder": [
-            "Keep your position in the shape when the ball is on the far side; drifting leaves the pivot exposed.",
+            "Hold your spot in the shape when the ball's on the far side. Drifting leaves the back line naked.",
         ],
     },
     "discipline": {
         "_": [
-            "Avoid sliding tackles from behind and when you are the last defender - a red card usually costs the match.",
-            "If beaten, recover the goal-side run rather than fouling.",
+            "No slide tackles from behind or as the last defender. A red card costs us the whole match.",
+            "If you're beaten, sprint the recovery run goal-side instead of reaching in.",
         ],
     },
     "idle": {
         "_": [
-            "EA recorded a lot of idle time. Check your connection, and avoid stepping away mid-match - the team plays a man down.",
+            "The data shows a lot of idle time. Check the connection. We need all hands on deck.",
         ],
     },
 }

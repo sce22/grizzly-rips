@@ -4,7 +4,7 @@ connecting a real club:  python -m fcapp.demo   ->  open demo/index.html
 import random
 from datetime import datetime, timedelta, timezone
 
-from . import analysis, build_site
+from . import analysis, build_site, coach
 from .store import ROOT, load_config
 
 CLUB_ID = "1000"
@@ -84,6 +84,7 @@ def main():
     start = datetime(2026, 8, 20, 20, tzinfo=timezone.utc)
     raws = [fake_match(i, int((start + timedelta(days=i * 2.8, hours=rng.random())).timestamp()), rng) for i in range(15)]
     matches, players, model = analysis.analyse_all(raws, config)
+    coach.annotate(matches, players, config)
     meta = {"kit_colors": ["#0b2545", "#e0a526", "#ffffff"], "crest_url": None, "stadium": "Demo Park"}
     build_site.build(config, matches, players, model, out=ROOT / "demo", meta=meta)
     print(f"Demo built: {ROOT / 'demo' / 'index.html'}")
