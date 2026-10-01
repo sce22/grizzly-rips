@@ -241,8 +241,15 @@ def _solve(a, b):
     return [m[i][n] / m[i][i] if abs(m[i][i]) > 1e-12 else 0.0 for i in range(n)]
 
 
-def fit_models(samples, min_samples, lam=8.0):
-    """Ridge regression per position, shrunk towards the baseline weights."""
+def fit_models(samples, prior_matches=30):
+    """Per-position rating model that learns from our own matches from day one.
+
+    The league-wide baseline acts like `prior_matches` matches of evidence
+    (ridge regression shrunk towards the baseline, with each feature's penalty
+    scaled to its typical size). With n of our matches, roughly n/(n+prior)
+    of the model comes from us: ~25% after 10 matches, ~75% after 90.
+    Retrained from the full archive on every rebuild, so it grows with the club.
+    """
     models = {}
     by_pos = defaultdict(list)
     for pos, stats in samples:
@@ -250,22 +257,26 @@ def fit_models(samples, min_samples, lam=8.0):
     for pos in pb.POSITIONS:
         w0 = baseline_weights(pos)
         rows = by_pos.get(pos, [])
-        if len(rows) < min_samples:
-            models[pos] = {"weights": w0, "learned": False, "n": len(rows)}
+        n = len(rows)
+        share = round(n / (n + prior_matches), 2) if n else 0.0
+        if not n:
+            models[pos] = {"weights": w0, "baseline": w0, "n": 0, "share": 0.0}
             continue
         k = len(w0)
+        xs = [_feature_vec(st) for st in rows]
         xtx = [[0.0] * k for _ in range(k)]
         xty = [0.0] * k
-        for st in rows:
-            x = _feature_vec(st)
+        for x, st in zip(xs, rows):
             for i in range(k):
                 xty[i] += x[i] * st["rating"]
                 for j in range(k):
                     xtx[i][j] += x[i] * x[j]
         for i in range(k):
+            typical = sum(x[i] * x[i] for x in xs) / n  # a feature we never see keeps its baseline weight
+            lam = prior_matches * max(typical, 1.0)
             xtx[i][i] += lam
             xty[i] += lam * w0[i]
-        models[pos] = {"weights": _solve(xtx, xty), "learned": True, "n": len(rows)}
+        models[pos] = {"weights": _solve(xtx, xty), "baseline": w0, "n": n, "share": share}
     return models
 
 
@@ -286,7 +297,7 @@ def rating_drivers(stats, model):
             "count": None, "impact": round(other, 2),
         })
     drivers.sort(key=lambda d: d["impact"], reverse=True)
-    return {"baseline": round(base, 2), "drivers": drivers, "learned": model["learned"]}
+    return {"baseline": round(base, 2), "drivers": drivers, "learned": model["share"] >= 0.5, "share": model["share"]}
 
 
 # ---------------------------------------------------- strengths/weaknesses
@@ -423,7 +434,7 @@ def analyse_all(raw_matches, config):
     matches.sort(key=lambda m: m["ts"])
 
     samples = [(p["pos"], p["stats"]) for m in matches for p in m["players"] if p["stats"]["minutes"] >= 20]
-    models = fit_models(samples, acfg.get("learned_model_min_samples", 40))
+    models = fit_models(samples, acfg.get("prior_matches", 30))
 
     history = defaultdict(list)  # player -> prior analyses
     for m in matches:
@@ -444,7 +455,14 @@ def analyse_all(raw_matches, config):
         m["team"] = team_totals(m["players"])
 
     players = {name: player_profile(name, rows, acfg) for name, rows in history.items()}
-    model_info = {pos: {"learned": md["learned"], "samples": md["n"]} for pos, md in models.items()}
+    model_info = {
+        pos: {
+            "samples": md["n"], "share": md["share"], "learned": md["share"] >= 0.5,
+            "weights": {name: round(w, 3) for (name, _), w in zip([("_intercept", "")] + FEATURES, md["weights"])},
+            "baseline": {name: round(w, 3) for (name, _), w in zip([("_intercept", "")] + FEATURES, md["baseline"])},
+        }
+        for pos, md in models.items()
+    }
     return matches, players, model_info
 
 

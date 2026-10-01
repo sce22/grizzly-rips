@@ -49,7 +49,9 @@ class Context:
 
     def __init__(self, m, p, history):
         self.s = p["stats"]
-        self.prev = [h["stats"] for h in history][-10:]
+        self.all = [h["stats"] for h in history]          # every match they've played for us
+        self.prev = self.all[-10:]                        # "your usual" = recent form
+        self.history = history
         self.opp = m["opponent"]["name"]
         self.score = f"{m['gf']}-{m['ga']}"
         self.result = m["result"]
@@ -67,8 +69,16 @@ class Context:
         return sum(vals) / len(vals) if len(vals) >= 3 else None
 
     def best(self, key):
-        vals = [h[key] for h in self.prev if h.get(key) is not None]
+        """All-time best for us (needs a few matches to mean anything)."""
+        vals = [h[key] for h in self.all if h.get(key) is not None]
         return max(vals) if len(vals) >= 3 else None
+
+    def last_scored(self):
+        """Date of their previous goal if it was 3+ matches ago, e.g. 'Sep 29'."""
+        for i, h in enumerate(reversed(self.history)):
+            if h["stats"]["goals"]:
+                return h["date_label"] if i >= 3 else None
+        return None
 
     def usual(self, key, pct=False):
         """'up from your usual 61%' when the gap is worth mentioning, else ''."""
@@ -229,6 +239,9 @@ TEAM_D = ["Drew {score} with {opp}. A point earned is a point we didn't have.",
 TEAM_L = ["Lost {score} to {opp}. Be a goldfish about the score, hang onto the lessons.",
           "{score} to {opp}. Chins up. Losses are tuition, and we're getting smarter.",
           "Fell {score} to {opp}. The scoreboard keeps score; I keep track of growth."]
+CAREER_HIGH = ["Your highest rating yet for us, across all {n} matches. Mark the calendar.",
+               "{r} is a new personal best for us. Somebody call the local paper.",
+               "Best rating of your {n} matches with us. That's not luck, that's reps."]
 BAND_LINE = ["{r} puts you in the {band} of {role}s league-wide.", "League-wide, a {r} is {band} territory for a {role}.",
              "Stack that {r} against every {role} out there: {band}."]
 MINUTES = ["Played all {mins} minutes. Showing up is half of it, and you did.",
@@ -259,8 +272,11 @@ def _good_fact(tag, s, c):
     g, kp = s["goals"], s.get("key_passes") or 0
     if tag == "goal_threat":
         base = {1: "A goal", 2: "A brace", 3: "A hat trick"}.get(g, f"{g} goals") + f" against {c.opp}"
+        drought = c.last_scored()
         if c.goal_streak >= 2:
             base += f", your {_ordinal(c.goal_streak)} straight match scoring"
+        elif drought:
+            base += f", your first since {drought}"
         elif c.season_high("goals") and g > 1:
             base += ", a new personal best"
         return base
@@ -398,6 +414,8 @@ def build(m, p, history, avoid):
         work.append((4, pick("bench", BENCHMARK).format(label=pb.METRIC_LABELS[metric], role=role,
                                                          val=f"{val:.0f}%" if pct else f"{val:.0f}", target=f"{top}%" if pct else top)))
 
+    if c.season_high("rating"):
+        good.append((8, pick("career_high", CAREER_HIGH).format(r=f"{s['rating']:.1f}", n=len(c.all) + 1)))
     if p["band"].startswith("Top"):
         good.append((3, pick("band", BAND_LINE).format(r=f"{s['rating']:.1f}", band=p["band"].lower(), role=role)))
     team = {"W": ("team_w", TEAM_W, good), "D": ("team_d", TEAM_D, good), "L": ("team_l", TEAM_L, work)}[m["result"]]
@@ -437,6 +455,12 @@ def build(m, p, history, avoid):
     return title, body, pick.used
 
 
+def _date_label(ts):
+    from datetime import datetime
+    d = datetime.fromtimestamp(ts)
+    return f"{d:%b} {d.day}"
+
+
 def annotate(matches):
     """Attach p['push'] = {'title', 'body'} to every player in every match,
     walking matches in order so phrasing doesn't repeat for a player."""
@@ -451,4 +475,4 @@ def annotate(matches):
             match_used |= used
             recent.setdefault(p["name"], []).append(used)
             recent[p["name"]] = recent[p["name"]][-RECENT_NOTES:]
-            hist.append(p)
+            hist.append({**p, "date_label": _date_label(m["ts"])})

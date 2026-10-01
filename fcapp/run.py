@@ -49,6 +49,7 @@ def rebuild(config):
     refile(season_of(config))
     matches, players, model_info = analysis.analyse_all(load_matches(), config)
     coach.annotate(matches, players, config)
+    write_json("model.json", {"matches_in_archive": len(matches), "positions": model_info})
     write_season_summaries(matches)
     build_site.build(config, matches, players, model_info)
     print(f"Built site: {len(matches)} matches, {len(players)} players")

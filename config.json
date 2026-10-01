@@ -27,8 +27,8 @@
   },
   "analysis": {
     "themes_min_matches": 8,
-    "learned_model_min_samples": 40,
-    "form_window": 5
+    "form_window": 5,
+    "prior_matches": 30
   },
   "site": {
     "base_url": "https://sce22.github.io/grizzly-rips/"

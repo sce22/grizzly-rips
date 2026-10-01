@@ -201,7 +201,7 @@
       return `<div class="driver"><span>${label}</span><div class="bar"><div class="fill ${cls}" style="width:${w}%"></div></div><span class="val ${cls}">${d.impact > 0 ? "+" : ""}${d.impact.toFixed(2)}</span></div>`;
     }).join("");
     return `<div class="drivers">${rows}</div>
-      <div class="model-note">Starts from a ${impact.baseline.toFixed(1)} base. "Everything else" is rating EA doesn't itemise (positioning, dribbles, interceptions). ${impact.learned ? "Weights learned from your club's own matches." : "Using baseline weights until enough of your matches are logged to learn them."}</div>`;
+      <div class="model-note">Starts from a ${impact.baseline.toFixed(1)} base. "Everything else" is rating EA doesn't itemise (positioning, dribbles, interceptions). ${impact.share != null ? `Weights are ${Math.round(impact.share * 100)}% learned from Grizzly Rips matches and ${100 - Math.round(impact.share * 100)}% league baseline, shifting toward your own data every match.` : (impact.learned ? "Weights learned from your club's own matches." : "Using league baseline weights.")}</div>`;
   }
 
   function playerCard(p, open) {
@@ -360,7 +360,7 @@
       <div class="card">
         <h3>What drives their rating</h3>
         <p class="model-note" style="margin-top:4px">Average effect per match.</p>
-        ${driversBlock({ drivers: impact, baseline: 6.0, learned: INDEX.model[p.main_pos]?.learned })}
+        ${driversBlock({ drivers: impact, baseline: 6.0, learned: INDEX.model[p.main_pos]?.learned, share: INDEX.model[p.main_pos]?.share })}
       </div>
       <div class="card">
         <h3>Match log</h3>
@@ -384,7 +384,8 @@
       </div>
       <div class="card">
         <h3>Rating model status</h3>
-        ${Object.entries(m).map(([pos, v]) => `<div class="log-row"><span style="text-transform:capitalize">${pos}</span><span class="r">${v.learned ? "Learned" : "Baseline"} · ${v.samples} samples</span></div>`).join("")}
+        <p class="model-note">The rating model retrains on every match we play. Each position starts on league-wide weights and shifts toward our own data as games pile up (about 25% ours after 10 matches, 50% after 30, 75% after 90).</p>
+        ${Object.entries(m).map(([pos, v]) => `<div class="log-row"><span style="text-transform:capitalize">${pos}</span><span class="r">${Math.round((v.share ?? 0) * 100)}% ours · ${v.samples} matches</span></div>`).join("")}
       </div>
       <p class="model-note">Updated ${new Date(INDEX.generated).toLocaleString()}</p>
     </div>`;
