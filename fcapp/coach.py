@@ -404,53 +404,202 @@ def text_paragraph(m, p, budget):
 
 
 # ------------------------------------------------------- push notifications
-# Push has room for a proper (still short) bullet list, personal to each player.
+# Personal notes for each player: 6-10 bullets, every one tied to a number.
 
-GOOD_QUIP = {
-    "goal_threat": "Never gets old!", "creativity": "Unselfish - love it", "passing_accuracy": "Kept it like it owed you money",
-    "involvement": "Team ran through you", "tackle_timing": "Clean as a whistle", "defensive_work_rate": "Did the dirty work",
-    "shot_volume": "Can't score 'em if you don't take 'em", "shot_selection": "Smart picks", "finishing": "Clinical",
-    "shot_stopping": "Brick wall", "busy_keeper": "Kept us in it", "clean_sheet": "Nobody got by", "leadership": "Frame it!",
+def _g(v):
+    return "The goal" if v["goals"] == 1 else f"{v['goals']} goals"
+
+
+def _kp(v):
+    return _plural(v["kp"], "key pass", "key passes") if v["kp"] else _plural(v["assists"], "assist")
+
+
+GOOD_LINES = {
+    "goal_threat": ["{G}. Never gets old, and I hope it never does.",
+                    "{G}. You put it where the keeper ain't. That's the whole trick."],
+    "creativity": ["{KP}. Making your teammates look good is the most generous thing in football.",
+                   "{KP}. You were handing out chances like Halloween candy."],
+    "passing_accuracy": ["{pp}% passing. You kept that ball like it owed you money.",
+                         "{pp}% passing. Tidier than my mama's guest bathroom."],
+    "involvement": ["{pa} passes. The team ran through you like a highway through a small town.",
+                    "{pa} passes. You were more involved than a church bake-sale committee."],
+    "tackle_timing": ["Won {tm} of {ta} tackles. Clean as a whistle and twice as loud.",
+                      "Won {tm} of {ta} tackles. You picked your moment like a ripe peach."],
+    "defensive_work_rate": ["{ta} tackles attempted. You did the dirty work nobody claps for. Well, I'm clapping.",
+                            "{ta} tackles attempted. You chased like a golden retriever after a tennis ball. I mean that as a compliment."],
+    "shot_volume": ["{shots} shots. Can't score 'em if you don't take 'em.",
+                    "{shots} shots. You kept knocking on that door like a Girl Scout with a quota."],
+    "shot_selection": ["{on} of {shots} shots on target. Smart picks beat big swings.",
+                       "{on} of {shots} shots on target. You made that keeper earn his paycheck."],
+    "finishing": ["{goals} from {on} shots on target. Clinical, like a dentist, but fun.",
+                  "{goals} from {on} shots on target. When you hit it true, it went in."],
+    "shot_stopping": ["{saves} saves. A brick wall with gloves on.",
+                      "{saves} saves. You stopped the ones you should and a couple you shouldn't."],
+    "busy_keeper": ["{saves} saves while they peppered you. You kept us in it, plain and simple.",
+                    "{saves} saves. Busiest person on the pitch, and you didn't blink."],
+    "clean_sheet": ["Clean sheet. Nobody got by, and you were a big part of that.",
+                    "Clean sheet. Zero goals against. My favorite number after biscuits."],
+    "leadership": ["Man of the Match. Frame it, then hang it where your mama can see it.",
+                   "Man of the Match. The game noticed, and so did I."],
+}
+WORK_LINES = {
+    "forcing_passes": ["{pp}% passing. Under ~72%, every extra pass costs rating. Simple and on the ground, partner.",
+                       "{pp}% passing. Not every ball needs to be a love letter. Short and simple wins."],
+    "passing_accuracy": ["{pp}% passing. Check your shoulder before it arrives so you already know the answer.",
+                         "{pp}% passing. Open your hips, scan, then play the easy one."],
+    "involvement": ["Only {pa} passes. Get in the passing lane and ask for it. Can't help us from the shadows.",
+                    "Only {pa} passes. Show for the ball at an angle, not flat behind your marker."],
+    "progression": ["No key passes from {pa} passes. Look forward first. Sideways is for crabs.",
+                    "No key passes from {pa} passes. We had the ball; now let's hurt 'em with it."],
+    "tackle_timing": ["Won {tm} of {ta} tackles. Jockey, stay goal-side, pounce on the heavy touch.",
+                      "Won {tm} of {ta} tackles. Patience. Let 'em make the mistake, then pounce."],
+    "defensive_work_rate": ["{TA}. A won tackle is worth about 0.2 rating. Get stuck in.",
+                            "{TA}. Defending is everybody's job, like doing the dishes."],
+    "shot_volume": ["{SH}. Get in the box: near post, far post, every cross.",
+                    "{SH}. Time your run off the last defender and the chances will come."],
+    "shot_selection": ["{on} of {shots} shots on target. Set your feet and shoot from central spots.",
+                       "{on} of {shots} shots on target. If the angle's tight, cut it back to a friend."],
+    "finishing": ["{goals} from {on} shots on target. Keepers love the middle. Go corners.",
+                  "{goals} from {on} shots on target. Finesse to the far post, low and hard one-on-one."],
+    "shot_stopping": ["{svp}% of shots stopped. Set your feet and hold your spot as they shoot.",
+                      "{svp}% of shots stopped. Rushing out early opens the near post."],
+    "positioning": ["Your rating came in {gap} below what your stats earned. That gap is off-ball shape. Hold the line.",
+                    "Your rating came in {gap} below what your stats earned. Goal-side and central first, ball second."],
+    "discipline": ["Red card. Stay on your feet; we need all eleven of us.",
+                   "Red card. No slides from behind. Sprint the recovery run instead."],
+    "idle": ["Idle {idle}% of the match. Check the connection, partner. We need you out there.",
+             "Idle {idle}% of the match. A team's only as good as who's on the pitch."],
 }
 TOGETHER = {
     "forcing_passes": "give each other short options", "passing_accuracy": "give each other short options",
-    "tackle_timing": "one presses, one covers", "defensive_work_rate": "track runners together",
+    "tackle_timing": "one presses, one covers", "defensive_work_rate": "pass runners off and track them into the box",
     "involvement": "make triangles, 1-2 touch", "shot_selection": "cut it back to each other",
     "finishing": "square it when the keeper commits", "progression": "make the run for each other",
 }
+SINGULAR = {"Goals": "goal", "Assists": "assist", "Key passes": "key pass", "Shots on target": "shot on target",
+            "Shots off target": "shot off target", "Completed passes": "completed pass", "Misplaced passes": "misplaced pass",
+            "Tackles won": "tackle won", "Missed tackles": "missed tackle", "Saves": "save", "Goals conceded": "goal conceded"}
+# stats each tag already talks about, so filler bullets don't repeat them
+TAG_KEYS = {
+    "goal_threat": {"goals"}, "creativity": {"key_passes", "assists"}, "finishing": {"goals", "shots_on"},
+    "passing_accuracy": {"passes_made", "passes_missed", "pass_pct"}, "forcing_passes": {"passes_made", "passes_missed", "pass_pct"},
+    "involvement": {"passes_made", "passes_missed", "passes_att"}, "progression": {"key_passes"},
+    "tackle_timing": {"tackles_made", "missed_tackles", "tackle_pct"}, "defensive_work_rate": {"tackles_made", "missed_tackles", "tackles_att"},
+    "shot_volume": {"shots_on", "shots_off", "shots"}, "shot_selection": {"shots_on", "shots_off", "shot_accuracy"},
+    "shot_stopping": {"saves", "conceded", "save_pct"}, "busy_keeper": {"saves", "conceded"},
+}
+
+
+def _driver_phrase(d):
+    n = d["count"]
+    noun = SINGULAR.get(d["label"], d["label"].lower()) if n == 1 else d["label"].lower()
+    return f"{n} {noun}"
+
+
+def _benchmark_lines(p, used):
+    """Informative 'where you stand for your position' bullets for stats not already covered."""
+    s, pos = p["stats"], p["pos"]
+    role = pb.LABELS[pos].lower()
+    good, work = [], []
+    for metric, (top, poor, gate) in pb.BENCHMARKS[pos].items():
+        val = s.get(metric)
+        if val is None or metric in used or (gate and (s.get(gate[0]) or 0) < gate[1]):
+            continue
+        label = pb.METRIC_LABELS[metric].lower()
+        shown = f"{val:.0f}%" if metric in pb.PERCENT_METRICS else f"{val:.0f}"
+        target = f"{top}%" if metric in pb.PERCENT_METRICS else f"{top}"
+        if val >= top:
+            continue  # already a strength
+        if poor is None or val > poor:
+            work.append(f"{label.capitalize()}: {shown}. That's middle of the pack for a {role}; the top quarter hits {target}+. Room to climb.")
+    return good, work
 
 
 def push_message(m, p):
-    """(title, body) for one player's push notification."""
+    """(title, body) for one player's push notification: 6-10 bullets."""
     s = p["stats"]
     v = _fmt_vals(s)
+    v.update(G=_g(v), KP=_kp({**v, "assists": s["assists"]}), TA=v["ta_txt"].capitalize(), SH=v["shots_txt"].capitalize())
     mates = [q for q in m["players"] if q["name"] != p["name"]]
     rng = _rng(m["id"], p["name"], "push")
+    gap = next((f"{abs(d['impact']):.1f}" for d in p["impact"]["drivers"] if d["key"] == "other"), "0")
+    good, work, used = [], [], set()  # (priority, text)
 
-    good = [f"{GOOD_SHORT[x['tag']](v)[0].upper()}{GOOD_SHORT[x['tag']](v)[1:]}. {GOOD_QUIP[x['tag']]}"
-            for x in p["strengths"] if x["tag"] in GOOD_SHORT][:3]
-    weak = [w for w in p["weaknesses"] if w["tag"] in WORK_SHORT][:3]
-    work = [f"{WORK_SHORT[w['tag']](v)[0].upper()}{WORK_SHORT[w['tag']](v)[1:]}. {TIP_SHORT[w['tag']]}" for w in weak]
+    for x in p["strengths"]:
+        if x["tag"] in GOOD_LINES:
+            good.append((10, rng.choice(GOOD_LINES[x["tag"]]).format(**v)))
+            used |= TAG_KEYS.get(x["tag"], set())
+    weak = [w for w in p["weaknesses"] if w["tag"] in WORK_LINES]
+    for w in weak:
+        work.append((10, rng.choice(WORK_LINES[w["tag"]]).format(**v, gap=gap)))
+        used |= TAG_KEYS.get(w["tag"], set())
 
-    # one teammate line: you set them up, or a fix to work on together
+    # Teammate lines
     scorer = max(mates, key=lambda q: q["stats"]["goals"], default=None)
     if scorer and scorer["stats"]["goals"] and ((s.get("key_passes") or 0) + s["assists"]):
-        good = good[:2] + [f"You & {scorer['name']} clicked. Keep feeding those runs"]
-    else:
-        for w in weak:
-            mate = next((q for q in mates if any(x["tag"] == w["tag"] for x in q["weaknesses"])), None)
-            if mate and w["tag"] in TOGETHER:
-                work = work[:2] + [f"With {mate['name']}: {TOGETHER[w['tag']]}"]
-                break
+        good.append((9, f"You & {scorer['name']} clicked. Keep feeding those runs, that partnership's got legs."))
+    for w in weak:
+        mate = next((q for q in mates if any(x["tag"] == w["tag"] for x in q["weaknesses"])), None)
+        if mate and w["tag"] in TOGETHER:
+            work.append((8, f"You and {mate['name']} both flagged for {pb.TAG_TITLES[w['tag']].lower()}. Work on it as a pair: {TOGETHER[w['tag']]}."))
+            break
 
-    lines = [p["coach"]["opener"], ""]
-    lines += ["DID WELL"] + [f"+ {x}" for x in good or ["You showed up and competed. That counts"]]
-    lines += ["", "WORK ON"] + [f"- {x}" for x in work or ["Not much! Bottle it up for next match"]]
+    # Form vs your own average
+    va = p.get("vs_average")
+    if va is not None and va >= 0.3:
+        good.append((7, f"{va:.1f} above your usual rating. That's growth, and growth is the whole point."))
+    elif va is not None and va <= -0.3:
+        work.append((7, f"{abs(va):.1f} below your usual rating. One match doesn't define you. We go again."))
+
+    # What actually moved the rating, for actions not mentioned yet
+    drivers = [d for d in p["impact"]["drivers"] if d["key"] not in ("other", "result_val") and d.get("count") and d["key"] not in used]
+    for d in drivers:
+        if d["impact"] > 0:
+            good.append((5, f"{_driver_phrase(d).capitalize()} added +{d['impact']:.1f} to your rating. Little things add up."))
+    for d in reversed(drivers):
+        if d["impact"] < 0:
+            work.append((5, f"{_driver_phrase(d).capitalize()} cost you {abs(d['impact']):.1f} rating. Tidy those and the number climbs."))
+
+    # Where you stand for your position
+    _, bench = _benchmark_lines(p, used)
+    work += [(4, b) for b in bench]
+
+    # Team context (fillers)
+    if m["result"] == "W":
+        good.append((2, f"Team won {m['gf']}-{m['ga']}. Being part of a winning group is a habit worth keeping."))
+    elif m["result"] == "L":
+        work.append((2, f"Team lost {m['gf']}-{m['ga']}. Be a goldfish about the score, hang onto the lessons."))
+    else:
+        good.append((2, f"Team drew {m['gf']}-{m['ga']}. A point earned is a point we didn't have."))
+    if p["band"].startswith("Top"):
+        good.append((3, f"{s['rating']:.1f} puts you in the {p['band'].lower()} of {pb.LABELS[p['pos']].lower()}s league-wide."))
+    good.append((1, f"Played {s['minutes']} minutes. Showing up is half of it, and you did."))
+    work.append((1, f"Pick ONE of these to own next match. Just one. That's how habits stick."))
+
+    # 6-10 bullets: up to 5 per side, then top up the shorter side
+    good.sort(key=lambda x: -x[0])
+    work.sort(key=lambda x: -x[0])
+    g, w = good[:5], work[:5]
+    if len(g) + len(w) < 6:  # one side is thin: let the other run longer
+        g, w = good[:max(5, 6 - len(w))], work[:max(5, 6 - len(g))]
+
+    def weakest():
+        last = lambda side: side[-1][0] if side else 99
+        return g if last(g) <= last(w) else w
+
+    while len(g) + len(w) > 10:
+        weakest().pop()
+    # drop pure fillers once there's enough substance
+    while len(g) + len(w) > 6 and min((x[-1][0] for x in (g, w) if x), default=99) <= 1:
+        weakest().pop()
+
+    lines = [p["coach"]["opener"], "", "DID WELL"] + [f"+ {t}" for _, t in g]
+    lines += ["", "WORK ON"] + [f"- {t}" for _, t in w]
     if weak:
         drill = pb.tips_for(weak[0]["tag"], p["pos"], 1)
         if drill:
-            lines += ["", f"Drill: {drill[0]}"]
-    lines += ["", f"{rng.choice(TEXT_SIGNOFFS)} - {COACH_NAME}"]
+            lines += ["", f"Coach's drill: {drill[0]}"]
+    lines += ["", f"{p['coach']['closer']} - {COACH_NAME}"]
     band = f"{p['band'].lower()} {pb.LABELS[p['pos']][:3].upper()}"
     title = f"{m['result']} {m['gf']}-{m['ga']} vs {m['opponent']['name']} | You: {s['rating']:.1f} ({band})"
     return title, "\n".join(lines)

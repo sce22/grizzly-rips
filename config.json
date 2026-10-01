@@ -38,6 +38,6 @@
     "my_player": "tuxedo_slide",
     "sms_max_chars": 125,
     "push": true,
-    "sms": true
+    "sms": false
   }
 }
