@@ -52,8 +52,7 @@ RESULT_TAG = {"W": "trophy", "D": "handshake", "L": "muscle"}
 
 
 def push_player(club_name, match, player, base_url):
-    from .coach import push_message
-    title, message = push_message(match, player)
+    title, message = player["push"]["title"], player["push"]["body"]
     card = f"{base_url}#/match/{match['id']}/{urllib.parse.quote(player['name'])}"
     return send(
         topic_for(player["name"], club_name), title, message,  # no click URL: tapping opens it in ntfy

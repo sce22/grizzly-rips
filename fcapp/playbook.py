@@ -128,6 +128,10 @@ TIPS = {
             "Scan before the ball gets to you - a quick shoulder check means you already know the pass before you need it.",
             "Open your hips to the field when you receive. Side-on body shape turns a back pass into a forward one.",
             "Simple and on the ground to the open, facing teammate. Driven and lofted balls are for clear lanes only.",
+            "Pass to the far foot of a teammate who's facing play; it lets them take it forward in one touch.",
+            "Weight matters as much as direction. Firm along the ground beats soft and loopy.",
+            "If you're pressed from behind, play it back the way you're facing. Don't turn into trouble.",
+            "Count your touches. Two-touch is a habit that keeps your head up and the ball moving.",
         ],
         "defender": [
             "From the back, your job is to recycle, not to force. The pivot or full-back is almost always on.",
@@ -148,12 +152,19 @@ TIPS = {
             "Below about 72% the extra passes start costing us. Pick the simple option until the touch comes back.",
             "Through balls only when the runner is already moving and on the last defender's shoulder.",
             "If nothing's on, keep it: shield, turn back, let the shape reset. Patience is a pass too.",
+            "A sideways pass that keeps the ball is worth more than a forward one that loses it.",
+            "Before the killer ball, check: is my runner onside, moving, and unmarked? Two out of three isn't enough.",
+            "When the lane closes, switch the point of attack instead of threading the needle.",
+            "Use the keeper and center-backs to reset. Recycling is how good teams find the gap.",
         ],
     },
     "involvement": {
         "_": [
             "Show for it. Move into the passing lane and ask for the ball instead of hiding behind your marker.",
             "Give the passer an angle - diagonal to the ball, not flat in a line where it can't reach you.",
+            "Move after you pass. A pass-and-move player is always an option.",
+            "Check away, then check back. A two-yard feint buys you the space to receive.",
+            "Talk. Call for it early so the passer knows where you'll be.",
         ],
         "forward": [
             "Drop between the lines to link play, then spin in behind once it goes wide.",
@@ -167,6 +178,9 @@ TIPS = {
             "Look forward first. Check the striker's run and the gap between the lines before the sideways pass.",
             "Switch play when they shift across. Quickest way to find space is usually on the far side.",
             "Arrive late at the edge of the box for cutbacks. That's where midfield chances come from.",
+            "Receive on the half-turn so your first touch can go forward.",
+            "Look for the third man: pass to the feet of the player who can find the runner.",
+            "Carry it into space when nobody steps to you. Dribbling into a gap pulls defenders out of shape.",
         ],
     },
     "tackle_timing": {
@@ -174,6 +188,9 @@ TIPS = {
             "Delay, deny, then dictate. Jockey goal-side and only commit when their touch gets heavy.",
             "Every missed tackle leaves a runner free behind you. If you're not sure, contain and let cover arrive.",
             "Stay on your feet. Slide only when you're certain of the ball and there's somebody behind you.",
+            "Show them down the line, toward the touchline and away from goal, then strike.",
+            "Get low and side-on. Square-on defenders get nutmegged.",
+            "Win it with your body before your foot: shoulder to shoulder, then poke it away.",
         ],
         "defender": [
             "Don't get pulled out of the line to chase. Hold your spot and let the ball come to you.",
@@ -187,6 +204,9 @@ TIPS = {
             "Get stuck in. A won tackle is worth about 0.2 rating, and even 1 in 8 pays for the attempts.",
             "Track your runner all the way into the box. Most goals against come from late, unmarked runs.",
             "When we lose it, press for 3-5 seconds right away. That's when they're most disorganized.",
+            "When the ball is lost, the nearest player presses and everyone else closes the passing lanes.",
+            "Know your runner before the cross comes in. A quick look over the shoulder saves a goal.",
+            "Sprint back the first five yards. That's the moment counter-attacks are won or lost.",
         ],
         "midfielder": [
             "As a CDM/CM, screen the back line: stay between the ball and our goal and pick off passes.",
@@ -196,6 +216,8 @@ TIPS = {
         "_": [
             "Attack the box. Near post and far post on every cross and every cutback.",
             "When you've got a clear look inside the box, pull the trigger. Hesitation lets defenders recover.",
+            "Get across your defender at the near post. Most close-range goals come from that first-post run.",
+            "Follow every shot in. Rebounds are free goals for people who keep running.",
         ],
         "forward": [
             "Live on the last defender's shoulder and time the run as the passer lifts their head.",
@@ -207,6 +229,9 @@ TIPS = {
             "Shoot from central, inside the box. Tight angles and long range are where shots go wide.",
             "Set your feet first if you've got a half second. Off-balance shots fly into the stands.",
             "Tight angle? Cut it back to a teammate. A better shot beats a first shot.",
+            "The best shots come from the middle of the box. Work it there before you pull the trigger.",
+            "Hit the target first, beat the keeper second. A shot on target can still be saved into a rebound.",
+            "Look up before you shoot. Half a second tells you where the keeper's weight is.",
         ],
     },
     "finishing": {
@@ -214,6 +239,9 @@ TIPS = {
             "We're hitting the target, so now aim for the corners. Keepers love a shot down the middle.",
             "Finesse it to the far post from an angle. One-on-one, go low and hard.",
             "Timed finishing only when you trust it. A clean shot to the corner beats a mistimed rocket.",
+            "Low shots across the keeper are the hardest to save and the easiest to tap in on the rebound.",
+            "Pick your spot before the ball arrives, then commit. Changing your mind mid-swing is how shots go wide.",
+            "Side-foot for accuracy inside the box; power is for outside it.",
         ],
     },
     "shot_stopping": {
