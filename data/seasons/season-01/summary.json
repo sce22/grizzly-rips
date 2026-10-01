@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 13,
+ "matches_played": 14,
  "record": {
   "W": 7,
   "D": 3,
-  "L": 3
+  "L": 4
  },
- "goals_for": 33,
- "goals_against": 24,
+ "goals_for": 37,
+ "goals_against": 29,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-01T22:15:14+00:00",
+ "last_match": "2026-10-01T22:35:40+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -101,6 +101,13 @@
    "result": "L",
    "score": "4-5",
    "opponent": "UK Chargers"
+  },
+  {
+   "id": "54840653220378",
+   "date": "2026-10-01T22:35:40+00:00",
+   "result": "L",
+   "score": "4-5",
+   "opponent": "Da1e FC"
   }
  ]
 }
