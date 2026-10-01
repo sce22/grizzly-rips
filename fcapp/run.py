@@ -94,12 +94,37 @@ def latest_for(matches, name):
     return next((m for m in reversed(matches) for p in m["players"] if p["name"] == name), None)
 
 
+def send_tests(config, matches, args):
+    """Send each named player the notes from their own latest match."""
+    names = [n.strip() for n in args.players.split(",") if n.strip()] or [config["notify"]["my_player"]]
+    base, club = config["site"]["base_url"], config["club"]["name"]
+    failures = 0
+    for name in names:
+        m = latest_for(matches, name)
+        if not m:
+            print(f"{name}: no stored match - check the gamertag spelling")
+            failures += 1
+            continue
+        player = next(p for p in m["players"] if p["name"] == name)
+        if push.enabled() and args.channel in ("all", "push"):
+            ok = push.push_player(club, m, player, base)
+            print(f"{name}: push {'sent' if ok else 'FAILED'} (their latest match: {m['gf']}-{m['ga']} vs {m['opponent']['name']})")
+            failures += not ok
+        if config["notify"].get("sms", True) and args.channel in ("all", "sms") and name == config["notify"].get("my_player"):
+            text = notify.player_text(m, player, base, config["notify"].get("sms_max_chars", 125), me=True)
+            via = notify.send(text)
+            print(f"{name}: text {'sent via ' + via if via else 'not sent (no SMS provider)'}")
+    if failures:
+        sys.exit(1)
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--no-fetch", action="store_true")
     ap.add_argument("--no-notify", action="store_true")
     ap.add_argument("--test-text", action="store_true", help="send my latest match now, to check notifications")
     ap.add_argument("--channel", choices=["all", "push", "sms"], default="all")
+    ap.add_argument("--players", default="", help="comma-separated gamertags for --test-text (default: notify.my_player)")
     args = ap.parse_args(argv)
 
     config = load_config()
@@ -111,26 +136,7 @@ def main(argv=None):
     matches = rebuild(config)
 
     if args.test_text:
-        if not matches:
-            sys.exit("No matches stored yet - nothing to send.")
-        me = config.get("notify", {}).get("my_player")
-        m = latest_for(matches, me) if me else None
-        if not m:
-            sys.exit(f"No stored match includes notify.my_player ({me!r}) - set it in config.json.")
-        player = next(p for p in m["players"] if p["name"] == me)
-        sent = []
-        if push.enabled() and args.channel in ("all", "push"):
-            ok = push.push_player(config["club"]["name"], m, player, config["site"]["base_url"])
-            print(f"Push notification: {'sent' if ok else 'FAILED'}")
-            sent.append(ok)
-        if config["notify"].get("sms", True) and args.channel in ("all", "sms"):
-            text = notify.player_text(m, player, config["site"]["base_url"], config["notify"].get("sms_max_chars", 125), me=True)
-            print(f"{len(text)} chars: {text}")
-            via = notify.send(text)
-            print(f"Test text: {'sent via ' + via if via else 'no SMS provider configured'}")
-            sent.append(bool(via))
-        if not any(sent):
-            sys.exit("Nothing sent - check the repository secrets.")
+        send_tests(config, matches, args)
         return
     if not args.no_notify:
         send_texts(config, matches, new_ids)

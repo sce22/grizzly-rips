@@ -9,6 +9,10 @@ on:
         type: choice
         options: [all, push, sms]
         default: push
+      players:
+        description: "Gamertags, comma-separated (blank = just you)"
+        required: false
+        default: ""
 
 jobs:
   test:
@@ -31,4 +35,5 @@ jobs:
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           SMS_GATEWAY_ADDRESS: ${{ secrets.SMS_GATEWAY_ADDRESS }}
           NTFY_SECRET: ${{ secrets.NTFY_SECRET }}
-        run: python -m fcapp.run --no-fetch --test-text --channel "${{ inputs.channel }}"
+          PLAYERS: ${{ inputs.players }}
+        run: python -m fcapp.run --no-fetch --test-text --channel "${{ inputs.channel }}" --players "$PLAYERS"
