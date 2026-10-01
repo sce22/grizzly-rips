@@ -10,7 +10,7 @@ The always-on watcher (python -m fcapp.watch) calls the same functions.
 import argparse
 import sys
 
-from . import analysis, build_site, coach, notify
+from . import analysis, build_site, coach, notify, push
 from .store import (load_config, load_matches, read_json, refile, save_match,
                     write_json, write_season_summaries)
 
@@ -73,6 +73,12 @@ def send_texts(config, matches, new_ids):
             continue
         m = by_id[mid]
         played = {p["name"]: p for p in m["players"]}
+        if push.enabled() and ncfg.get("push", True):
+            for p in m["players"]:  # every player gets their own; only subscribers see it
+                push.push_player(config["club"]["name"], m, p, base)
+        if not ncfg.get("sms", True):
+            notified.add(mid)
+            continue
         for name, address in people.items():
             if name in played:
                 me = name == ncfg.get("my_player")
@@ -91,7 +97,8 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--no-fetch", action="store_true")
     ap.add_argument("--no-notify", action="store_true")
-    ap.add_argument("--test-text", action="store_true", help="text the latest match now, to check SMS setup")
+    ap.add_argument("--test-text", action="store_true", help="send my latest match now, to check notifications")
+    ap.add_argument("--channel", choices=["all", "push", "sms"], default="all")
     args = ap.parse_args(argv)
 
     config = load_config()
@@ -110,12 +117,19 @@ def main(argv=None):
         if not m:
             sys.exit(f"No stored match includes notify.my_player ({me!r}) - set it in config.json.")
         player = next(p for p in m["players"] if p["name"] == me)
-        text = notify.player_text(m, player, config["site"]["base_url"], config["notify"].get("sms_max_chars", 125), me=True)
-        print(f"{len(text)} chars: {text}")
-        sent = notify.send(text)
-        if not sent:
-            sys.exit("Test text not sent: no SMS provider is configured. Check the repository secrets.")
-        print(f"Test text sent via {sent}")
+        sent = []
+        if push.enabled() and args.channel in ("all", "push"):
+            ok = push.push_player(config["club"]["name"], m, player, config["site"]["base_url"])
+            print(f"Push notification: {'sent' if ok else 'FAILED'}")
+            sent.append(ok)
+        if config["notify"].get("sms", True) and args.channel in ("all", "sms"):
+            text = notify.player_text(m, player, config["site"]["base_url"], config["notify"].get("sms_max_chars", 125), me=True)
+            print(f"{len(text)} chars: {text}")
+            via = notify.send(text)
+            print(f"Test text: {'sent via ' + via if via else 'no SMS provider configured'}")
+            sent.append(bool(via))
+        if not any(sent):
+            sys.exit("Nothing sent - check the repository secrets.")
         return
     if not args.no_notify:
         send_texts(config, matches, new_ids)

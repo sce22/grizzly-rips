@@ -1,0 +1,26 @@
+name: Invite a player
+
+# Sends a player's private notification channel to the owner's phone (ntfy),
+# ready to forward. Leave the name blank to get invites for everyone.
+on:
+  workflow_dispatch:
+    inputs:
+      player:
+        description: "Gamertag (blank = everyone who has played for us)"
+        required: false
+        default: ""
+
+jobs:
+  invite:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Send invite(s) to the owner
+        env:
+          NTFY_SECRET: ${{ secrets.NTFY_SECRET }}
+          PLAYER: ${{ inputs.player }}
+        run: python -m fcapp.invite "$PLAYER"

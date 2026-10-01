@@ -1,8 +1,14 @@
-name: Send test text
+name: Send test message
 
-# Texts the latest match's team talk to check SMS setup. Changes nothing in the repo.
+# Sends your latest match notes to check notifications. Changes nothing in the repo.
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: "Where to send it"
+        type: choice
+        options: [all, push, sms]
+        default: push
 
 jobs:
   test:
@@ -13,7 +19,7 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - name: Send test text
+      - name: Send test message
         env:
           TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
           TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
@@ -24,4 +30,5 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           SMS_GATEWAY_ADDRESS: ${{ secrets.SMS_GATEWAY_ADDRESS }}
-        run: python -m fcapp.run --no-fetch --test-text
+          NTFY_SECRET: ${{ secrets.NTFY_SECRET }}
+        run: python -m fcapp.run --no-fetch --test-text --channel "${{ inputs.channel }}"

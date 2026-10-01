@@ -71,6 +71,15 @@ US numbers need Twilio's A2P 10DLC or toll-free verification before texts are de
 
 The first sync saves existing matches without texting. After that you get one text per new match, usually 1-3 minutes after the final whistle. To check texting any time: **Actions → Send test text → Run workflow**.
 
+### Push notifications (ntfy) - recommended
+Free, instant, no carrier limits, and personal to each player.
+
+- Every player who appears in our matches automatically gets a private ntfy channel, derived from the `NTFY_SECRET` repository secret. Channel names are never printed or committed.
+- After each match, each player's channel gets **their own** notes from Coach Lasso: rating, what they did well, what to work on, one drill, and a teammate line when it fits. Tapping it opens their player card.
+- **Adding someone:** they install the free **ntfy** app. You go to **Actions → Invite a player → Run workflow** (type their gamertag, or leave it blank for everyone). Their subscribe details arrive on *your* phone, ready to forward.
+- **Testing:** **Actions → Send test message** (choose push, sms or all).
+- To turn texts or push off: `notify.sms` / `notify.push` in `config.json`.
+
 ### If EA blocks GitHub's servers
 EA sometimes blocks cloud servers. If the *Sync matches* run fails with `HTTP 403`, run the sync from your Mac instead (it only needs to be awake):
 ```bash

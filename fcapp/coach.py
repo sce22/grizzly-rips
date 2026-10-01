@@ -401,3 +401,56 @@ def text_paragraph(m, p, budget):
             return text
     return build(0, 0, False, False)[:budget]
 
+
+
+# ------------------------------------------------------- push notifications
+# Push has room for a proper (still short) bullet list, personal to each player.
+
+GOOD_QUIP = {
+    "goal_threat": "Never gets old!", "creativity": "Unselfish - love it", "passing_accuracy": "Kept it like it owed you money",
+    "involvement": "Team ran through you", "tackle_timing": "Clean as a whistle", "defensive_work_rate": "Did the dirty work",
+    "shot_volume": "Can't score 'em if you don't take 'em", "shot_selection": "Smart picks", "finishing": "Clinical",
+    "shot_stopping": "Brick wall", "busy_keeper": "Kept us in it", "clean_sheet": "Nobody got by", "leadership": "Frame it!",
+}
+TOGETHER = {
+    "forcing_passes": "give each other short options", "passing_accuracy": "give each other short options",
+    "tackle_timing": "one presses, one covers", "defensive_work_rate": "track runners together",
+    "involvement": "make triangles, 1-2 touch", "shot_selection": "cut it back to each other",
+    "finishing": "square it when the keeper commits", "progression": "make the run for each other",
+}
+
+
+def push_message(m, p):
+    """(title, body) for one player's push notification."""
+    s = p["stats"]
+    v = _fmt_vals(s)
+    mates = [q for q in m["players"] if q["name"] != p["name"]]
+    rng = _rng(m["id"], p["name"], "push")
+
+    good = [f"{GOOD_SHORT[x['tag']](v)[0].upper()}{GOOD_SHORT[x['tag']](v)[1:]}. {GOOD_QUIP[x['tag']]}"
+            for x in p["strengths"] if x["tag"] in GOOD_SHORT][:3]
+    weak = [w for w in p["weaknesses"] if w["tag"] in WORK_SHORT][:3]
+    work = [f"{WORK_SHORT[w['tag']](v)[0].upper()}{WORK_SHORT[w['tag']](v)[1:]}. {TIP_SHORT[w['tag']]}" for w in weak]
+
+    # one teammate line: you set them up, or a fix to work on together
+    scorer = max(mates, key=lambda q: q["stats"]["goals"], default=None)
+    if scorer and scorer["stats"]["goals"] and ((s.get("key_passes") or 0) + s["assists"]):
+        good = good[:2] + [f"You & {scorer['name']} clicked. Keep feeding those runs"]
+    else:
+        for w in weak:
+            mate = next((q for q in mates if any(x["tag"] == w["tag"] for x in q["weaknesses"])), None)
+            if mate and w["tag"] in TOGETHER:
+                work = work[:2] + [f"With {mate['name']}: {TOGETHER[w['tag']]}"]
+                break
+
+    lines = [p["coach"]["opener"], ""]
+    lines += ["DID WELL"] + [f"+ {x}" for x in good or ["You showed up and competed. That counts"]]
+    lines += ["", "WORK ON"] + [f"- {x}" for x in work or ["Not much! Bottle it up for next match"]]
+    if weak:
+        drill = pb.tips_for(weak[0]["tag"], p["pos"], 1)
+        if drill:
+            lines += ["", f"Drill: {drill[0]}"]
+    lines += ["", f"{rng.choice(TEXT_SIGNOFFS)} - {COACH_NAME}"]
+    band = f"{p['band'].lower()} {pb.LABELS[p['pos']][:3].upper()}"
+    title = f"{m['result']} {m['gf']}-{m['ga']} vs {m['opponent']['name']} | You: {s['rating']:.1f} ({band})"
+    return title, "\n".join(lines)
