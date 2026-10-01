@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 11,
+ "matches_played": 12,
  "record": {
   "W": 7,
-  "D": 2,
+  "D": 3,
   "L": 2
  },
- "goals_for": 27,
- "goals_against": 17,
+ "goals_for": 29,
+ "goals_against": 19,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-01T21:37:52+00:00",
+ "last_match": "2026-10-01T21:55:03+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -87,6 +87,13 @@
    "result": "W",
    "score": "3-0",
    "opponent": "GPFC Academy"
+  },
+  {
+   "id": "54920220400088",
+   "date": "2026-10-01T21:55:03+00:00",
+   "result": "D",
+   "score": "2-2",
+   "opponent": "Scentless"
   }
  ]
 }
