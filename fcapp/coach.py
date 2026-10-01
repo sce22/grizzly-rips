@@ -15,7 +15,7 @@ import zlib
 
 from . import playbook as pb
 
-COACH_NAME = "Coach"
+COACH_NAME = "Coach Lasso"
 
 
 def _rng(*keys):
@@ -103,6 +103,7 @@ def _player(m, p):
     rng = _rng(m["id"], p["name"])
     s = p["stats"]
     p["coach"] = {
+        "name": COACH_NAME,
         "opener": _pick(rng, OPENERS[p["band"]], name=p["name"], r=f"{s['rating']:.1f}", pos=pb.LABELS[p["pos"]].lower()),
         "closer": rng.choice(CLOSERS_GOOD if not p["weaknesses"] or p["band"].startswith("Top") else CLOSERS_MIXED),
     }
@@ -128,7 +129,7 @@ RESULT_OPENERS = {
         "Lost {gf}-{ga} to {opp}. Chins up. One match doesn't define a team.",
     ],
 }
-TEXT_SIGNOFFS = ["Believe. - Coach", "Proud of y'all. - Coach", "Onward. - Coach", "Biscuits on me. - Coach"]
+TEXT_SIGNOFFS = ["Believe.", "Proud of y'all.", "Onward.", "Biscuits on me."]
 
 
 def _team_candidates(m):
@@ -265,6 +266,7 @@ def _talk(m, club):
         "well": well,
         "work_on": improve,
         "signoff": rng.choice(TEXT_SIGNOFFS),
+        "coach": COACH_NAME,
     }
 
 
@@ -388,7 +390,8 @@ def text_paragraph(m, p, budget):
             parts.append(f"Loved {' & '.join(g)}.")
         elif w:
             parts.append(f"{' & '.join(w).capitalize()} hurt.")
-        parts.append(f"{tip}! -Coach" if (with_tip and tip) else ("Bottle it! -Coach" if with_tip and not w else "-Coach"))
+        sign = f"- {COACH_NAME}"
+        parts.append(f"{tip}! {sign}" if (with_tip and tip) else (f"Bottle it! {sign}" if with_tip and not w else sign))
         return " ".join(parts)
 
     for args in [(2, 2, True, True), (1, 2, True, True), (2, 1, True, True), (1, 1, True, True),

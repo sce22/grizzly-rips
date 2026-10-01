@@ -229,7 +229,7 @@
           ${driversBlock(p.impact)}
           ${strengths ? `<div class="section-label">Did well</div>${strengths}` : ""}
           ${weaknesses ? `<div class="section-label">To work on</div>${weaknesses}` : ""}
-          ${p.coach ? `<p class="coach-say closer">${esc(p.coach.closer)} <span>- Coach</span></p>` : ""}
+          ${p.coach ? `<p class="coach-say closer">${esc(p.coach.closer)} <span>- ${esc(p.coach.name || "Coach Lasso")}</span></p>` : ""}
           <a class="back" href="#/player/${encodeURIComponent(p.name)}">Full profile & trends →</a>
         </div>
       </details>`;
@@ -244,7 +244,7 @@
           <div><div class="section-label good-label">What we did well</div><ol class="talk-list good">${talk.well.map(item).join("")}</ol></div>
           <div><div class="section-label bad-label">Work on next match</div><ol class="talk-list bad">${talk.work_on.map(item).join("")}</ol></div>
         </div>
-        <p class="coach-say closer">${esc(talk.signoff.replace(/ - Coach$/, ""))} <span>- Coach</span></p>
+        <p class="coach-say closer">${esc(talk.signoff.replace(/ - Coach$/, ""))} <span>- ${esc(talk.coach || "Coach Lasso")}</span></p>
       </section>`;
   }
 
