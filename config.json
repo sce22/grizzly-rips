@@ -1,0 +1,39 @@
+{
+  "club": {
+    "name": "Grizzly Rips",
+    "short_name": "Grizzly Rips",
+    "club_id": 882969,
+    "platform": "common-gen5",
+    "logo": "auto",
+    "colors": {
+      "primary": "#1d4230",
+      "secondary": "#ffd200",
+      "accent": "#1c2914"
+    }
+  },
+  "match_types": [
+    "leagueMatch",
+    "playoffMatch",
+    "friendlyMatch"
+  ],
+  "roster": [],
+  "seasons": [
+    {
+      "name": "FC 27 \u00b7 Launch",
+      "start": "2026-09-01",
+      "end": "2026-12-31"
+    }
+  ],
+  "analysis": {
+    "themes_min_matches": 8,
+    "learned_model_min_samples": 40,
+    "form_window": 5
+  },
+  "site": {
+    "base_url": "https://sce22.github.io/grizzly-rips/"
+  },
+  "notify": {
+    "enabled": true,
+    "per_player_texts": false
+  }
+}

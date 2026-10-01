@@ -1,0 +1,442 @@
+<title>Pro Clubs Stat Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: single reading column (~72ch) with full-width data tables that scroll inside their own frames */
+:root {
+  --bg: #f4f6f5;
+  --surface: #ffffff;
+  --ink: #15201b;
+  --muted: #5d6b64;
+  --line: #d9e0dc;
+  --accent: #1f6b4a;
+  --accent-soft: #e2efe8;
+  --pos: #1f7a4d;
+  --neg: #b4412f;
+  --chip: #eef2f0;
+  --display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --body: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1412; --surface: #161d1a; --ink: #e6ece9; --muted: #95a39c; --line: #2a3530;
+    --accent: #5fc394; --accent-soft: #1b2e25; --pos: #5fc394; --neg: #ec8a78; --chip: #1e2723;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1412; --surface: #161d1a; --ink: #e6ece9; --muted: #95a39c; --line: #2a3530;
+  --accent: #5fc394; --accent-soft: #1b2e25; --pos: #5fc394; --neg: #ec8a78; --chip: #1e2723;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15.5px/1.6 var(--body); padding-inline: 16px; padding-block: 0 64px; }
+.wrap { max-width: 880px; margin: 0 auto; }
+.prose { max-width: 70ch; }
+h1, h2, h3 { font-family: var(--display); text-transform: uppercase; letter-spacing: .02em; line-height: 1.05; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(38px, 7vw, 58px); }
+h2 { font-size: 30px; margin-top: 64px; padding-top: 18px; border-top: 3px solid var(--ink); }
+h3 { font-size: 21px; margin-top: 32px; }
+p { margin: 12px 0; }
+.eyebrow { font: 500 12px var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--accent); }
+header { padding-block: 44px 8px; }
+.lede { font-size: 18px; color: var(--muted); max-width: 62ch; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 28px; }
+.facts div { background: var(--surface); padding: 14px 16px; }
+.facts b { display: block; font: 700 30px var(--display); font-variant-numeric: tabular-nums; }
+.facts span { font-size: 13px; color: var(--muted); }
+nav.toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+nav.toc a { font: 500 13px var(--mono); color: var(--ink); background: var(--chip); padding: 5px 10px; border-radius: 4px; text-decoration: none; }
+nav.toc a:hover, nav.toc a:focus-visible { background: var(--accent-soft); outline: 2px solid var(--accent); }
+.table-frame { overflow-x: auto; margin: 14px 0; border: 1px solid var(--line); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 11.5px var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); background: var(--chip); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td code, p code, li code { font: 13px var(--mono); background: var(--chip); padding: 1px 5px; border-radius: 3px; white-space: nowrap; }
+td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.conf { font: 500 11px var(--mono); padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+.conf.high { background: var(--accent-soft); color: var(--accent); }
+.conf.med { background: var(--chip); color: var(--ink); }
+.conf.low { background: transparent; color: var(--muted); border: 1px dashed var(--line); }
+.src { font: 12px var(--mono); color: var(--muted); }
+.callout { background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 12px 16px; margin: 18px 0; max-width: 70ch; }
+.missing { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.missing span { font-size: 13px; padding: 4px 10px; border: 1px dashed var(--muted); border-radius: 4px; color: var(--muted); }
+
+/* rating driver charts */
+.pos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); gap: 16px; margin-top: 16px; }
+.pos-card { background: var(--surface); border: 1px solid var(--line); padding: 16px; min-width: 0; }
+.pos-card header { padding: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.pos-card h3 { margin: 0; }
+.r2 { font: 12px var(--mono); color: var(--muted); }
+.r2bar { height: 8px; background: var(--chip); margin: 8px 0 14px; position: relative; }
+.r2bar i { position: absolute; inset: 0 auto 0 0; background: var(--accent); }
+.bars { display: grid; gap: 5px; }
+.bar { display: grid; grid-template-columns: 118px 1fr 52px; align-items: center; gap: 8px; font-size: 13px; }
+.bar .track { position: relative; height: 12px; }
+.bar .track::before { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--muted); }
+.bar .fill { position: absolute; top: 0; bottom: 0; }
+.bar .fill.p { left: 50%; background: var(--pos); }
+.bar .fill.n { right: 50%; background: var(--neg); }
+.bar .v { font: 12px var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
+.bar .v.p { color: var(--pos); } .bar .v.n { color: var(--neg); }
+.axis { display: grid; grid-template-columns: 118px 1fr 52px; gap: 8px; font: 11px var(--mono); color: var(--muted); margin-top: 4px; }
+.axis div { display: flex; justify-content: space-between; }
+.note { font-size: 13px; color: var(--muted); margin-top: 10px; }
+
+/* win-rate chart */
+.win { display: grid; gap: 14px; margin-top: 14px; max-width: 640px; }
+.win-row { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center; font-size: 14px; }
+.win-row .pair { display: grid; gap: 3px; }
+.win-row .line { display: grid; grid-template-columns: 1fr 44px; gap: 8px; align-items: center; }
+.win-row .b { height: 12px; background: var(--accent); }
+.win-row .b.lo { background: var(--muted); opacity: .55; }
+.win-row .line span { font: 12px var(--mono); font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 12.5px; color: var(--muted); margin-top: 10px; }
+.legend i { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -1px; background: var(--accent); }
+.legend i.lo { background: var(--muted); opacity: .55; }
+
+.formula { font: 14px var(--mono); background: var(--surface); border: 1px solid var(--line); padding: 12px 14px; margin: 10px 0; overflow-x: auto; white-space: pre; }
+ol.steps { padding-left: 22px; max-width: 70ch; }
+ol.steps li { margin: 8px 0; }
+a { color: var(--accent); }
+@media (max-width: 480px) {
+  .bar, .axis { grid-template-columns: 96px 1fr 46px; }
+  .win-row { grid-template-columns: 1fr; gap: 4px; }
+}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">EA Sports FC 27 · Pro Clubs data</div>
+  <h1>Pro Clubs Stat Atlas</h1>
+  <p class="lede">Every stat EA's Pro Clubs data feed exposes, how those stats combine into a player's match rating, and how the app turns them into coaching suggestions.</p>
+  <div class="facts">
+    <div><b>7</b><span>live data endpoints</span></div>
+    <div><b>44</b><span>fields per player, per match</span></div>
+    <div><b>229</b><span>hidden event counters</span></div>
+    <div><b>4,764</b><span>player-matches analysed</span></div>
+  </div>
+  <nav class="toc" aria-label="Sections">
+    <a href="#inventory">1 · Inventory</a>
+    <a href="#hidden">2 · Hidden counters</a>
+    <a href="#missing">3 · Not available</a>
+    <a href="#derived">4 · Derived metrics</a>
+    <a href="#rating">5 · What drives rating</a>
+    <a href="#interactions">6 · Interactions</a>
+    <a href="#benchmarks">7 · Benchmarks</a>
+    <a href="#winning">8 · Team wins</a>
+    <a href="#suggestions">9 · Suggestions</a>
+  </nav>
+</header>
+
+<div class="callout prose">
+  <b>Where these numbers come from.</b> I pulled live data from EA's Pro Clubs feed on 30 Sep 2026: 375 recent league matches from the 40 highest-ranked FC 27 clubs, which gave 4,764 player-match lines (5,038 before filtering). Your club's numbers will differ, and the app re-learns from your own matches once enough are logged.
+</div>
+
+<!-- ========================================================= -->
+<h2 id="inventory">1 · Everything EA exposes</h2>
+<p class="prose">The data comes from seven endpoints. Per-player detail only exists in match reports. Season and career views are running totals.</p>
+
+<h3>Per player, per match</h3>
+<p class="prose src">clubs/matches → players[clubId][playerId]. The richest source, available for league, playoff and friendly matches. It holds only the last ~10 matches, so the app archives it every 20 minutes.</p>
+<div class="table-frame"><table>
+<thead><tr><th>Field</th><th>What it is</th><th>Use</th></tr></thead>
+<tbody>
+<tr><td><code>playername</code></td><td>Gamertag</td><td>Player identity</td></tr>
+<tr><td><code>pos</code></td><td>Position group played: goalkeeper, defender, midfielder, forward</td><td>Picks benchmarks and rating model</td></tr>
+<tr><td><code>archetypeid</code></td><td>Pro archetype ID (build/class)</td><td>Group players by build</td></tr>
+<tr><td><code>rating</code></td><td>EA match rating, 0–10</td><td>The outcome everything is measured against</td></tr>
+<tr><td><code>goals</code> · <code>assists</code></td><td>Goals scored, goals assisted</td><td>Direct contribution</td></tr>
+<tr><td><code>shots</code></td><td>Total shots</td><td>Attacking volume</td></tr>
+<tr><td><code>passattempts</code> · <code>passesmade</code></td><td>Passes attempted and completed</td><td>Involvement and accuracy</td></tr>
+<tr><td><code>tackleattempts</code> · <code>tacklesmade</code></td><td>Tackles attempted and won</td><td>Defensive engagement and timing</td></tr>
+<tr><td><code>saves</code></td><td>Total saves</td><td>Goalkeeper output</td></tr>
+<tr><td><code>goodDirectionSaves</code> · <code>reflexSaves</code> · <code>crossSaves</code> · <code>ballDiveSaves</code> · <code>punchSaves</code> · <code>parrySaves</code></td><td>Saves split by type</td><td>Goalkeeper style profile</td></tr>
+<tr><td><code>goalsconceded</code></td><td>Goals conceded while on the pitch</td><td>Defensive outcome</td></tr>
+<tr><td><code>cleansheetsany</code> · <code>cleansheetsdef</code> · <code>cleansheetsgk</code></td><td>Clean-sheet flags (any role, as defender, as keeper)</td><td>Defensive outcome</td></tr>
+<tr><td><code>redcards</code></td><td>Red cards</td><td>Discipline</td></tr>
+<tr><td><code>mom</code></td><td>Man of the Match (0/1)</td><td>Top performer</td></tr>
+<tr><td><code>wins</code> · <code>losses</code> · <code>userResult</code></td><td>Result from this player's point of view</td><td>Context</td></tr>
+<tr><td><code>secondsPlayed</code> · <code>gameTime</code></td><td>In-game seconds on the pitch</td><td>Scale counting stats per 90</td></tr>
+<tr><td><code>realtimegame</code> · <code>realtimeidle</code></td><td>Real-world seconds in the match, and seconds idle</td><td>Flags AFK players and disconnects</td></tr>
+<tr><td><code>SCORE</code></td><td>Team score</td><td>Context</td></tr>
+<tr><td><code>match_event_aggregate_0…3</code></td><td>Hidden event counters as <code>code:count</code> lists. See section 2.</td><td>Shots on target, key passes, missed tackles and more</td></tr>
+<tr><td><code>vproattr</code> · <code>vprohackreason</code> · <code>namespace</code></td><td>Pro attribute string (usually blank or <code>NH</code>), anti-cheat flag, account namespace</td><td>Data-quality checks only</td></tr>
+</tbody></table></div>
+<p class="note">The <code>aggregate</code> block in each match holds the same fields summed across a club's players.</p>
+
+<h3>Per club, per match</h3>
+<p class="prose src">clubs/matches → clubs[clubId]</p>
+<div class="table-frame"><table>
+<thead><tr><th>Field</th><th>What it is</th></tr></thead>
+<tbody>
+<tr><td><code>date</code> · <code>matchId</code> · <code>gameNumber</code></td><td>Kickoff time (unix), match identifier, sequence number</td></tr>
+<tr><td><code>goals</code> · <code>goalsAgainst</code> · <code>score</code></td><td>Final score</td></tr>
+<tr><td><code>wins</code> · <code>losses</code> · <code>ties</code> · <code>result</code></td><td>Outcome flags and result code</td></tr>
+<tr><td><code>winnerByDnf</code></td><td>Opponent quit or disconnected</td></tr>
+<tr><td><code>matchType</code> · <code>season_id</code></td><td>League / playoff / friendly; EA season (often 0)</td></tr>
+<tr><td><code>details</code></td><td>Opponent name, ID, region, kit, stadium, crest</td></tr>
+</tbody></table></div>
+
+<h3>Club profile and season record</h3>
+<p class="prose src">clubs/info · clubs/overallStats · allTimeLeaderboard</p>
+<div class="table-frame"><table>
+<thead><tr><th>Field</th><th>What it is</th></tr></thead>
+<tbody>
+<tr><td><code>name</code> · <code>clubId</code> · <code>regionId</code> · <code>teamId</code></td><td>Identity</td></tr>
+<tr><td><code>stadName</code> · <code>crestAssetId</code> · <code>crestColor</code></td><td>Stadium name and crest (the app uses the crest as your logo)</td></tr>
+<tr><td><code>kitColor1–4</code> · <code>kitAColor1–4</code> · <code>kitThrdColor1–4</code></td><td>Home, away and third kit colours (the app uses these as your theme)</td></tr>
+<tr><td><code>gamesPlayed</code> · <code>wins</code> · <code>ties</code> · <code>losses</code></td><td>All-time record</td></tr>
+<tr><td><code>goals</code> · <code>goalsAgainst</code> · <code>cleanSheets</code> · <code>goalsPerGame</code> · <code>goalsAgainstPerGame</code></td><td>Scoring record</td></tr>
+<tr><td><code>skillRating</code> · <code>rank</code></td><td>Club strength rating and leaderboard position</td></tr>
+<tr><td><code>currentDivision</code> · <code>bestDivision</code> · <code>bestFinishGroup</code> · <code>finishesInDivisionNGroup1</code></td><td>Division history</td></tr>
+<tr><td><code>promotions</code> · <code>relegations</code> · <code>leagueAppearances</code> · <code>gamesPlayedPlayoff</code></td><td>League progress</td></tr>
+<tr><td><code>lastMatch0–9</code> · <code>lastOpponent0–9</code></td><td>Results and opponents of the last 10 games</td></tr>
+<tr><td><code>wstreak</code> · <code>unbeatenstreak</code></td><td>Current win and unbeaten streaks</td></tr>
+<tr><td><code>reputationtier</code> · <code>reputationlevel</code></td><td>Club reputation</td></tr>
+</tbody></table></div>
+
+<h3>Per player, season and career totals</h3>
+<p class="prose src">members/stats · members/career/stats</p>
+<div class="table-frame"><table>
+<thead><tr><th>Field</th><th>What it is</th></tr></thead>
+<tbody>
+<tr><td><code>gamesPlayed</code> · <code>winRate</code></td><td>Appearances, win percentage</td></tr>
+<tr><td><code>goals</code> · <code>assists</code> · <code>manOfTheMatch</code> · <code>redCards</code></td><td>Totals</td></tr>
+<tr><td><code>shotSuccessRate</code> · <code>passSuccessRate</code> · <code>tackleSuccessRate</code></td><td>Season percentages</td></tr>
+<tr><td><code>passesMade</code> · <code>tacklesMade</code> · <code>cleanSheetsDef</code> · <code>cleanSheetsGK</code></td><td>Season totals</td></tr>
+<tr><td><code>ratingAve</code></td><td>Average match rating</td></tr>
+<tr><td><code>proName</code> · <code>proPos</code> · <code>proStyle</code> · <code>proHeight</code> · <code>proNationality</code> · <code>proOverall</code></td><td>The pro's build: name, preferred position code, style, height, nation, overall rating</td></tr>
+<tr><td><code>favoritePosition</code> · <code>positionCount</code></td><td>Most-played position; squad count per position</td></tr>
+<tr><td><code>prevGoals1–10</code></td><td>Goals in each of the last 10 games</td></tr>
+</tbody></table></div>
+
+<!-- ========================================================= -->
+<h2 id="hidden">2 · The hidden event counters</h2>
+<div class="prose">
+<p>Each player line carries up to four <code>match_event_aggregate</code> strings such as <code>214:1,217:3,216:4</code>. EA doesn't document them. Across the corpus there are 229 distinct codes. To decode them, I tested each code, and sums of codes, against the stats we already know.</p>
+<p>The strongest matches check out: code 214 equals goals in 99% of player-matches, and codes 217 + 218 add up to total shots 97% of the time. Anything below "high" is an inference from correlations, so treat it as a lead rather than a fact.</p>
+</div>
+<div class="table-frame"><table>
+<thead><tr><th>Code</th><th>Likely meaning</th><th>Evidence</th><th>Confidence</th></tr></thead>
+<tbody>
+<tr><td class="num">0:214</td><td>Goals</td><td>Equals <code>goals</code> in 99% of rows</td><td><span class="conf high">high</span></td></tr>
+<tr><td class="num">0:11</td><td>Assists</td><td>Equals <code>assists</code> in 99%</td><td><span class="conf high">high</span></td></tr>
+<tr><td class="num">0:217</td><td><b>Shots on target</b></td><td>217 + 218 = shots in 97%; ≥ goals in 99%</td><td><span class="conf high">high</span></td></tr>
+<tr><td class="num">0:218</td><td><b>Shots off target</b></td><td>The other half of the shots sum; r = 0.62 with missed shots</td><td><span class="conf high">high</span></td></tr>
+<tr><td class="num">0:164</td><td>Tackles won (0:0, 0:121, 0:229 almost identical)</td><td>Equals <code>tacklesmade</code> in 89%</td><td><span class="conf high">high</span></td></tr>
+<tr><td class="num">0:215</td><td>Completed passes</td><td>With 0:153, equals <code>passesmade</code> in 82%</td><td><span class="conf med">medium</span></td></tr>
+<tr><td class="num">0:216</td><td>Misplaced passes</td><td>Equals attempts − completed in 77%</td><td><span class="conf med">medium</span></td></tr>
+<tr><td class="num">0:114</td><td><b>Key passes / chances created</b></td><td>≥ assists in 98%; r = 0.57 with assists</td><td><span class="conf med">medium</span></td></tr>
+<tr><td class="num">0:1</td><td><b>Tackles missed / dribbled past</b></td><td>r = 0.74 with missed tackles</td><td><span class="conf med">medium</span></td></tr>
+<tr><td class="num">0:13</td><td>High-quality shots on target (likely inside the box)</td><td>Always between goals and shots on target (99%)</td><td><span class="conf med">medium</span></td></tr>
+<tr><td class="num">0:267 · 0:49 · 0:50 · 0:55 · 0:10</td><td>Goalkeeper actions (claims, saves by zone)</td><td>Almost only recorded for goalkeepers; r = 0.55–0.86 with saves</td><td><span class="conf med">medium</span></td></tr>
+<tr><td class="num">0:202 · 0:14 · 0:195 · 0:188</td><td>Missed-shot variants (blocked, wide, over)</td><td>r = 0.36–0.68 with missed shots, mostly forwards</td><td><span class="conf low">low</span></td></tr>
+<tr><td class="num">0:171 · 0:2 · 0:95 · 0:213</td><td>Fouls and bookings</td><td>Track red cards and missed tackles</td><td><span class="conf low">low</span></td></tr>
+<tr><td class="num">0:266 · 0:8 · 0:9 · 0:162 · 0:108</td><td>Defensive actions (clearances, blocks, interceptions, headers)</td><td>Defenders record 2–10× more than other positions; rise with clean sheets</td><td><span class="conf low">low</span></td></tr>
+<tr><td class="num">0:174 · 0:175 · 0:24 · 0:143 · 0:182</td><td>Pass sub-types (short, lobbed, through, driven)</td><td>r = 0.4–0.6 with passes, differing mix by position</td><td><span class="conf low">low</span></td></tr>
+<tr><td class="num">0:111</td><td>Touches / possessions (~24 per game)</td><td>Scales with minutes played; highest for defenders</td><td><span class="conf low">low</span></td></tr>
+<tr><td class="num">0:113</td><td>Clean-sheet or shut-out contribution</td><td>r = 0.42 with clean sheets, −0.45 with goals conceded</td><td><span class="conf low">low</span></td></tr>
+<tr><td class="num">1:97 · 1:30–1:39</td><td>Attacking actions (shot types, dribbles)</td><td>Forwards and attacking midfielders only; track shots</td><td><span class="conf low">low</span></td></tr>
+</tbody></table></div>
+<p class="note">The high-confidence codes add two stats the documented fields lack: <b>shots on target</b> and, with medium confidence, <b>key passes</b> and <b>missed tackles</b>. The rating analysis below uses them.</p>
+
+<!-- ========================================================= -->
+<h2 id="missing">3 · What EA doesn't publish</h2>
+<p class="prose">These only exist inside the game, so no outside app can read them.</p>
+<div class="missing">
+  <span>Shot maps / locations</span><span>Heat maps</span><span>Crosses (explicit)</span><span>Dribbles (explicit)</span><span>Interceptions (explicit)</span><span>Possession %</span><span>xG</span><span>Distance covered</span><span>Yellow cards (explicit)</span><span>Offsides</span><span>Event timeline</span><span>AI player stats</span>
+</div>
+<p class="prose note">Some of these may be buried in the low-confidence counters above. Decoding them with confidence would take a controlled test: play a friendly, note exactly what each player did, and compare against the codes.</p>
+
+<!-- ========================================================= -->
+<h2 id="derived">4 · Derived metrics</h2>
+<p class="prose">Raw counts depend on minutes played and on how involved a player is. These ratios let you compare performances fairly.</p>
+<div class="table-frame"><table>
+<thead><tr><th>Metric</th><th>Formula</th><th>What it tells you</th></tr></thead>
+<tbody>
+<tr><td>Pass accuracy</td><td class="num">passesmade ÷ passattempts</td><td>Ball security</td></tr>
+<tr><td>Involvement</td><td class="num">passattempts × 90 ÷ minutes</td><td>How much the team plays through them</td></tr>
+<tr><td>Shot accuracy</td><td class="num">on target (0:217) ÷ shots</td><td>Shot selection and technique</td></tr>
+<tr><td>Finishing</td><td class="num">goals ÷ shots on target</td><td>Beating the keeper once on target</td></tr>
+<tr><td>Conversion</td><td class="num">goals ÷ shots</td><td>Overall shooting efficiency</td></tr>
+<tr><td>Creativity</td><td class="num">key passes (0:114) + assists</td><td>Chances made for others</td></tr>
+<tr><td>Tackle success</td><td class="num">tacklesmade ÷ tackleattempts</td><td>Timing</td></tr>
+<tr><td>Defensive engagement</td><td class="num">tackleattempts × 90 ÷ minutes</td><td>Willingness to press and duel</td></tr>
+<tr><td>Missed tackles</td><td class="num">tackleattempts − tacklesmade</td><td>Times beaten in a duel</td></tr>
+<tr><td>Save percentage</td><td class="num">saves ÷ (saves + goalsconceded)</td><td>Goalkeeper shot-stopping</td></tr>
+<tr><td>Idle share</td><td class="num">realtimeidle ÷ realtimegame</td><td>AFK or disconnect flag</td></tr>
+<tr><td>Rating vs position</td><td class="num">percentile of rating within position</td><td>Fair cross-position comparison (keepers average ~1.3 points lower)</td></tr>
+</tbody></table></div>
+
+<!-- ========================================================= -->
+<h2 id="rating">5 · What actually drives the match rating</h2>
+<div class="prose">
+<p>I fitted a regression of EA's match rating on the available stats, separately for each position, using players with 60+ minutes. The bars show how much a <b>typical swing</b> in each stat (one standard deviation) moves the rating. That puts goals and passes on the same scale.</p>
+<p>The top bar in each card, <b>explained</b>, is the share of the rating these stats account for. The rest comes from things EA doesn't itemise, such as positioning, interceptions and dribbles.</p>
+</div>
+<div class="pos-grid" id="drivers"></div>
+<p class="note prose">Small bars that point the "wrong" way (for example, completed passes slightly negative for forwards) come from overlap between stats, since players who pass a lot also score less. Don't read anything into bars under ±0.1.</p>
+
+<h3>Rating points per action</h3>
+<p class="prose">The same models expressed per single event, which is how the app builds each player's "What moved the rating" breakdown.</p>
+<div class="table-frame"><table>
+<thead><tr><th>Action</th><th>Forward</th><th>Midfielder</th><th>Defender</th><th>Goalkeeper</th></tr></thead>
+<tbody>
+<tr><td>Goal</td><td class="num">+0.61</td><td class="num">+0.41</td><td class="num">+0.33</td><td class="num">–</td></tr>
+<tr><td>Assist</td><td class="num">+0.32</td><td class="num">+0.20</td><td class="num">+0.23</td><td class="num">–</td></tr>
+<tr><td>Key pass</td><td class="num">+0.14</td><td class="num">+0.10</td><td class="num">+0.14</td><td class="num">–</td></tr>
+<tr><td>Shot on target</td><td class="num">+0.09</td><td class="num">+0.03</td><td class="num">+0.27</td><td class="num">–</td></tr>
+<tr><td>Completed pass</td><td class="num">≈0</td><td class="num">+0.013</td><td class="num">+0.009</td><td class="num">+0.037</td></tr>
+<tr><td>Misplaced pass</td><td class="num">≈0</td><td class="num">−0.034</td><td class="num">≈0</td><td class="num">≈0</td></tr>
+<tr><td>Tackle won</td><td class="num">≈0</td><td class="num">+0.20</td><td class="num">+0.25</td><td class="num">–</td></tr>
+<tr><td>Tackle missed</td><td class="num">−0.013</td><td class="num">−0.028</td><td class="num">−0.030</td><td class="num">–</td></tr>
+<tr><td>Save</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">+0.16</td></tr>
+<tr><td>Goal conceded</td><td class="num">≈0</td><td class="num">−0.020</td><td class="num">−0.058</td><td class="num">−0.41</td></tr>
+<tr><td>Red card</td><td class="num">−0.15</td><td class="num">−0.22</td><td class="num">−2.69</td><td class="num">–</td></tr>
+<tr><td>Win (vs draw)</td><td class="num">+0.22</td><td class="num">+0.20</td><td class="num">+0.05</td><td class="num">+0.26</td></tr>
+<tr><td><i>Starting point</i></td><td class="num">6.45</td><td class="num">6.98</td><td class="num">6.94</td><td class="num">5.73</td></tr>
+</tbody></table></div>
+
+<!-- ========================================================= -->
+<h2 id="interactions">6 · How the stats interact</h2>
+<div class="prose">
+<p>A stat on its own rarely tells the story. These pairings are what the app uses to separate a good performance from one that only looks good on paper.</p>
+
+<h3>Volume × accuracy (passing)</h3>
+<p>For midfielders, a misplaced pass costs about 2.6 times what a completed pass earns (−0.034 vs +0.013). That puts the <b>break-even at about 72% accuracy</b>. Above it, more passing raises the rating. Below it, every extra pass lowers it.</p>
+<div class="formula">break-even accuracy = miss cost ÷ (miss cost + completion gain)
+                    = 0.034 ÷ (0.034 + 0.013) ≈ 72%</div>
+<p>This gives four passing profiles:</p>
+<ul>
+  <li><b>High volume, high accuracy:</b> the team's hub. Protect it.</li>
+  <li><b>Low volume, high accuracy:</b> the player is hiding. They're safe but not involved, so tell them to show for the ball.</li>
+  <li><b>High volume, low accuracy:</b> forcing passes. Simplify.</li>
+  <li><b>Low volume, low accuracy:</b> out of the game. Look at their positioning first.</li>
+</ul>
+
+<h3>The shooting funnel</h3>
+<p>Shots → on target → goals. Across the corpus, 72% of shots hit the target and 52% of on-target shots were scored. Where the funnel leaks tells you what to coach:</p>
+<ul>
+  <li>Few shots: movement and getting into the box.</li>
+  <li>Many shots, low on-target rate: shot selection and technique (shooting under pressure, from bad angles).</li>
+  <li>On target but rarely scoring: placement. The keeper is getting to them, so aim for corners and use finesse or low driven shots.</li>
+</ul>
+
+<h3>Tackle attempts × success</h3>
+<p>For midfielders a won tackle is worth +0.20 and a missed one −0.03, so engaging pays for itself in rating terms at <b>just 12% success</b>. Defenders break even at 11%. Rating therefore rewards aggression. The team cost of a missed tackle, a runner in behind, doesn't show up in the missing player's rating. It shows up as <code>goalsconceded</code> for everyone. The app flags high volume with low success (below ~30%) as a timing problem even when the player's rating looks fine.</p>
+
+<h3>Saves × goals conceded (goalkeepers)</h3>
+<p>A goal conceded costs 0.41 and a save earns 0.16, so a keeper needs about <b>2.5 saves to cancel out one goal</b>. That is why keeper ratings run ~1.3 points below outfield players. Many saves plus many goals against points at the defence rather than the keeper. Few saves with many goals against points at the keeper.</p>
+
+<h3>Individual stats × result</h3>
+<p>Winning adds about +0.2 to every outfield player's rating. Compare ratings within a result (wins against wins) before drawing conclusions about a player.</p>
+
+<h3>What the feed can't see</h3>
+<p>The stats explain 77% of a forward's rating, 74% of a keeper's, 50% of a midfielder's and only <b>34% of a defender's</b>. When a defender's rating is well above or below what their stats predict, the difference comes from positioning, interceptions and blocks. The app shows that gap as "Everything else" and treats a consistently negative gap as an off-the-ball positioning theme.</p>
+</div>
+
+<!-- ========================================================= -->
+<h2 id="benchmarks">7 · Benchmarks by position</h2>
+<p class="prose">Percentiles from the top-40 clubs' 60+ minute performances. P50 is a typical showing at a high level, and P75 or above is a strong one.</p>
+<div class="table-frame"><table>
+<thead><tr><th>Position</th><th>Stat</th><th>P25</th><th>P50</th><th>P75</th><th>P90</th></tr></thead>
+<tbody>
+<tr><td rowspan="8"><b>Forward</b></td><td>Match rating</td><td class="num">6.3</td><td class="num">7.0</td><td class="num">7.9</td><td class="num">9.3</td></tr>
+<tr><td>Pass accuracy</td><td class="num">73%</td><td class="num">82%</td><td class="num">88%</td><td class="num">93%</td></tr>
+<tr><td>Passes attempted</td><td class="num">13</td><td class="num">17</td><td class="num">23</td><td class="num">36</td></tr>
+<tr><td>Shots</td><td class="num">1</td><td class="num">2</td><td class="num">3</td><td class="num">4</td></tr>
+<tr><td>Shot accuracy</td><td class="num">60%</td><td class="num">86%</td><td class="num">100%</td><td class="num">100%</td></tr>
+<tr><td>Conversion</td><td class="num">0%</td><td class="num">33%</td><td class="num">50%</td><td class="num">80%</td></tr>
+<tr><td>Key passes</td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">3</td></tr>
+<tr><td>Tackle success</td><td class="num">13%</td><td class="num">25%</td><td class="num">40%</td><td class="num">57%</td></tr>
+<tr><td rowspan="6"><b>Midfielder</b></td><td>Match rating</td><td class="num">6.9</td><td class="num">7.3</td><td class="num">7.9</td><td class="num">8.6</td></tr>
+<tr><td>Pass accuracy</td><td class="num">71%</td><td class="num">80%</td><td class="num">87%</td><td class="num">92%</td></tr>
+<tr><td>Passes attempted</td><td class="num">15</td><td class="num">20</td><td class="num">25</td><td class="num">31</td></tr>
+<tr><td>Tackles attempted</td><td class="num">2</td><td class="num">4</td><td class="num">6</td><td class="num">10</td></tr>
+<tr><td>Tackle success</td><td class="num">18%</td><td class="num">33%</td><td class="num">50%</td><td class="num">67%</td></tr>
+<tr><td>Key passes</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">2</td></tr>
+<tr><td rowspan="5"><b>Defender</b></td><td>Match rating</td><td class="num">6.9</td><td class="num">7.2</td><td class="num">7.7</td><td class="num">8.2</td></tr>
+<tr><td>Pass accuracy</td><td class="num">71%</td><td class="num">80%</td><td class="num">89%</td><td class="num">100%</td></tr>
+<tr><td>Passes attempted</td><td class="num">9</td><td class="num">12</td><td class="num">15</td><td class="num">19</td></tr>
+<tr><td>Tackles attempted</td><td class="num">1</td><td class="num">2</td><td class="num">4</td><td class="num">6</td></tr>
+<tr><td>Tackle success</td><td class="num">25%</td><td class="num">33%</td><td class="num">60%</td><td class="num">75%</td></tr>
+<tr><td rowspan="4"><b>Goalkeeper</b></td><td>Match rating</td><td class="num">5.3</td><td class="num">6.0</td><td class="num">6.6</td><td class="num">7.1</td></tr>
+<tr><td>Save percentage</td><td class="num">60%</td><td class="num">69%</td><td class="num">83%</td><td class="num">100%</td></tr>
+<tr><td>Saves</td><td class="num">1</td><td class="num">3</td><td class="num">5</td><td class="num">7</td></tr>
+<tr><td>Goals conceded</td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">4</td></tr>
+</tbody></table></div>
+<p class="note prose">Goalkeeper save types per game: good-direction 1.54, reflex 0.24, cross 0.19, diving 0.09, punch 0.06, parry 0. Keepers at this level mostly win by positioning, not highlight saves.</p>
+
+<!-- ========================================================= -->
+<h2 id="winning">8 · Which team stats predict winning</h2>
+<p class="prose">Across 309 matches with 3+ human players per side, this shows how often a team won when it beat its opponent on each measure, compared with when it trailed.</p>
+<div class="win" id="winchart"></div>
+<div class="legend"><span><i></i>Team was ahead on this stat</span><span><i class="lo"></i>Team was behind</span></div>
+<p class="prose">Out-shooting the opponent is by far the strongest team signal. Winning the tackle battle comes next. Pass accuracy matters least of the three. For club-level suggestions, the app asks two questions: are we creating more shots than we allow, and are we winning our duels?</p>
+
+<!-- ========================================================= -->
+<h2 id="suggestions">9 · From stats to suggestions</h2>
+<ol class="steps">
+  <li><b>Normalise.</b> Scale counting stats to 90 minutes, drop players under 20 minutes, and flag anyone with a high idle share.</li>
+  <li><b>Compare by position.</b> Place each metric against that position's percentiles (P25 = flag, P75 = strength) and against the player's own rolling average.</li>
+  <li><b>Read the pairs, not single stats.</b> Apply the interaction rules below, which turn "62% passing" into a specific diagnosis.</li>
+  <li><b>Attribute the rating.</b> Break the rating down with the per-action weights, then show the unexplained remainder as "Everything else".</li>
+  <li><b>Attach coaching.</b> Each diagnosis maps to position-specific best-practice tips.</li>
+  <li><b>Promote to themes.</b> A diagnosis that appears in 30%+ of a player's 8+ matches becomes an overarching theme, tagged improving, steady or worsening by comparing the last 5 matches with earlier ones.</li>
+</ol>
+
+<div class="table-frame"><table>
+<thead><tr><th>Pattern in the data</th><th>Diagnosis</th><th>Suggestion</th></tr></thead>
+<tbody>
+<tr><td>Pass accuracy &lt; 72% and passes ≥ P50</td><td>Forcing passes</td><td>Take the simple option. Save through balls for runners already moving.</td></tr>
+<tr><td>Passes ≤ P25, accuracy fine</td><td>Hiding</td><td>Show for the ball in passing lanes; offer angles in build-up.</td></tr>
+<tr><td>Midfielder: passes high, key passes 0 over several games</td><td>Safe but not progressive</td><td>Look forward first. Play between the lines and switch play.</td></tr>
+<tr><td>Forward: shots ≤ P25</td><td>Not getting into shooting positions</td><td>Attack the box on crosses and cutbacks; run off the last defender's shoulder.</td></tr>
+<tr><td>Shot accuracy &lt; 60%</td><td>Poor shot selection</td><td>Shoot from central areas inside the box and set your body first.</td></tr>
+<tr><td>On target, but finishing &lt; 35%</td><td>Shooting at the keeper</td><td>Aim finesse shots at the far post and hit low driven shots one-on-one.</td></tr>
+<tr><td>Tackle attempts ≥ P75 and success &lt; 30%</td><td>Diving in</td><td>Jockey and stay goal-side. Tackle only on a heavy touch.</td></tr>
+<tr><td>Defender/midfielder: tackle attempts ≤ P25</td><td>Passive defending</td><td>Engage the ball carrier and track runners into the box.</td></tr>
+<tr><td>Defender: rating consistently below what their stats predict</td><td>Off-ball positioning</td><td>Hold the line, cover the centre-back and don't chase.</td></tr>
+<tr><td>Keeper: save % ≤ P25</td><td>Shot-stopping</td><td>Hold position and stop rushing out. Claim only in the six-yard box.</td></tr>
+<tr><td>Keeper: many saves and many goals conceded</td><td>Defence leaking chances</td><td>Theme goes to the back line, not the keeper.</td></tr>
+<tr><td>Red card</td><td>Discipline</td><td>No slide tackles from behind or as the last defender.</td></tr>
+<tr><td>Team: fewer shots than the opponent</td><td>Losing the territory battle</td><td>Club theme: shape, pressing triggers, and getting runners forward.</td></tr>
+</tbody></table></div>
+
+<div class="callout prose">
+  <b>Built into the app.</b> These benchmarks, rating weights and interaction rules now drive every player breakdown. The decoded shots-on-target and key-pass counters appear on each match card. Tested against the full corpus, each flag fires on roughly 10–30% of real performances, so a flag means a below-standard game for the position, not an ordinary one.
+</div>
+</div>
+
+<script>
+const DRIVERS = {
+  Forward: { r2: .771, n: 1026, d: [["Goals", .661], ["Assists", .266], ["Win", .209], ["Key passes", .196], ["Shots on target", .135], ["Completed passes", -.132], ["Tackles won", -.107], ["Misplaced passes", .072], ["Missed tackles", -.059]] },
+  Midfielder: { r2: .497, n: 1932, d: [["Tackles won", .315], ["Goals", .202], ["Win", .189], ["Key passes", .122], ["Completed passes", .116], ["Assists", .113], ["Misplaced passes", -.100], ["Missed tackles", -.086], ["Goals conceded", -.038]] },
+  Defender: { r2: .34, n: 928, d: [["Tackles won", .332], ["Red cards", -.125], ["Goals conceded", -.096], ["Shots on target", .086], ["Misplaced passes", .072], ["Goals", .065], ["Completed passes", .059], ["Missed tackles", -.054], ["Win", .044]] },
+  Goalkeeper: { r2: .739, n: 188, d: [["Goals conceded", -.703], ["Saves", .414], ["Win", .242], ["Completed passes", .093], ["Clean sheet", .066]] },
+};
+const MAX = 0.75;
+document.getElementById("drivers").innerHTML = Object.entries(DRIVERS).map(([pos, v]) => `
+  <section class="pos-card">
+    <header><h3>${pos}</h3><span class="r2">${v.n.toLocaleString()} player-matches</span></header>
+    <div class="r2">explained by stats: ${Math.round(v.r2 * 100)}%</div>
+    <div class="r2bar" role="img" aria-label="${Math.round(v.r2 * 100)} percent explained"><i style="width:${v.r2 * 100}%"></i></div>
+    <div class="bars">${v.d.map(([k, x]) => {
+      const c = x >= 0 ? "p" : "n";
+      return `<div class="bar"><span>${k}</span><div class="track"><div class="fill ${c}" style="width:${Math.abs(x) / MAX * 50}%"></div></div><span class="v ${c}">${x > 0 ? "+" : "−"}${Math.abs(x).toFixed(2)}</span></div>`;
+    }).join("")}</div>
+    <div class="axis"><span></span><div><span>−0.75</span><span>0</span><span>+0.75</span></div><span></span></div>
+  </section>`).join("");
+
+const WIN = [["Shots", .86, .13], ["Tackle success", .69, .35], ["Pass accuracy", .61, .45]];
+document.getElementById("winchart").innerHTML = WIN.map(([k, hi, lo]) => `
+  <div class="win-row"><b>${k}</b>
+    <div class="pair">
+      <div class="line"><div class="b" style="width:${hi * 100}%"></div><span>${Math.round(hi * 100)}%</span></div>
+      <div class="line"><div class="b lo" style="width:${lo * 100}%"></div><span>${Math.round(lo * 100)}%</span></div>
+    </div></div>`).join("");
+</script>
