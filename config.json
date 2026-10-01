@@ -17,13 +17,14 @@
     "friendlyMatch"
   ],
   "roster": [],
-  "seasons": [
-    {
-      "name": "FC 27 \u00b7 Launch",
-      "start": "2026-09-01",
-      "end": "2026-12-31"
-    }
-  ],
+  "seasons": {
+    "_comment": "5-week seasons rolling over Thursday night at midnight (Central time). Season 1 = Thu Sep 17 - Thu Oct 22, 2026.",
+    "rollover": "2026-09-18T00:00",
+    "timezone": "America/Chicago",
+    "length_weeks": 5,
+    "first_number": 1,
+    "before_name": "Pre-season"
+  },
   "analysis": {
     "themes_min_matches": 8,
     "learned_model_min_samples": 40,

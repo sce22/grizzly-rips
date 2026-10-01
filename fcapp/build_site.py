@@ -57,7 +57,6 @@ def build(config, matches, players, model_info, out=OUT, meta=None):
         "generated": datetime.now(timezone.utc).isoformat(),
         "model": model_info,
         "themes_min_matches": config.get("analysis", {}).get("themes_min_matches", 8),
-        "seasons": [s["name"] for s in config.get("seasons", [])],
         "matches": [
             {
                 "id": m["id"], "ts": m["ts"], "season": m["season"], "type": m["type"],

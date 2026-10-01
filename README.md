@@ -43,7 +43,7 @@ Use platform `common-gen5` for PS5 / Xbox Series / PC (the default).
 - `club.name`, `club.club_id`
 - `club.logo`: `"auto"` uses your in-game crest. To use your own logo, put it in `branding/` (e.g. `branding/logo.png`) and set `"logo": "branding/logo.png"`
 - `club.colors`: `"auto"` uses your kit colours. You can also set hex values, e.g. `"primary": "#0b2545"`
-- `seasons`: named date ranges used to group matches
+- `seasons`: a rolling schedule (first rollover, timezone, length in weeks) or a list of named date ranges
 - `roster` (optional): list of gamertags to include; leave empty to include everyone on your side
 - `site.base_url`: filled in after step 3
 

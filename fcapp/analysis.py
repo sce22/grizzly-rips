@@ -4,7 +4,8 @@ Only players in our club's `players` block are analysed. EA's Pro Clubs feed
 lists human-controlled pros only - AI teammates never appear there.
 """
 from collections import Counter, defaultdict
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 
 from . import playbook as pb
 
@@ -30,6 +31,9 @@ def _pct(num, den):
 
 
 def season_for(ts, ea_season, seasons):
+    """Seasons are either a rolling schedule (dict) or explicit date ranges (list)."""
+    if isinstance(seasons, dict):
+        return rolling_season(ts, seasons)
     day = datetime.fromtimestamp(ts, tz=timezone.utc).strftime("%Y-%m-%d")
     for s in seasons:
         if s["start"] <= day <= s["end"]:
@@ -37,6 +41,25 @@ def season_for(ts, ea_season, seasons):
     if ea_season and str(ea_season) != "0":
         return f"EA Season {ea_season}"
     return datetime.fromtimestamp(ts, tz=timezone.utc).strftime("%B %Y")
+
+
+def rolling_season(ts, cfg):
+    """Fixed-length seasons that roll over at the same local time each cycle.
+
+    `rollover` is the first season's start in local time (e.g. Thursday night
+    midnight = the following Friday 00:00). Labels show the Thursday dates.
+    """
+    tz = ZoneInfo(cfg.get("timezone", "UTC"))
+    start = datetime.fromisoformat(cfg["rollover"]).replace(tzinfo=tz)
+    length = timedelta(weeks=cfg.get("length_weeks", 5))
+    when = datetime.fromtimestamp(ts, tz=tz)
+    if when < start:
+        return cfg.get("before_name", "Pre-season")
+    n = int((when - start) / length)
+    s_start = start + n * length
+    first_day, last_day = s_start - timedelta(days=1), s_start + length - timedelta(days=1)
+    label = f"{first_day:%b} {first_day.day} – {last_day:%b} {last_day.day}"
+    return f"Season {cfg.get('first_number', 1) + n} · {label}"
 
 
 # Hidden counters in match_event_aggregate_0, decoded against 4,764 live
