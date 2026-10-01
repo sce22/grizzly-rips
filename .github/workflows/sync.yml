@@ -1,8 +1,10 @@
 name: Match watcher
 
-# Checks EA every minute and texts as soon as a match lands. A job can run for
-# at most 6 hours, so the schedule below restarts the watcher; only one runs
-# at a time and a restart waits in the queue until the current one finishes.
+# Checks EA every minute and notifies players as soon as a match lands.
+# A job can run for at most 6 hours, so each run starts its own successor when
+# it finishes (GitHub's scheduler can lag by hours on new repos; the schedule
+# below is only a backup). Only one runs at a time; a successor waits in the
+# queue until the current one finishes.
 on:
   schedule:
     - cron: "*/15 * * * *"
@@ -10,6 +12,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: watcher
@@ -29,6 +32,7 @@ jobs:
           git config user.name "fc-sync-bot"
           git config user.email "fc-sync-bot@users.noreply.github.com"
       - name: Watch for matches
+        id: watch
         env:
           TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
           TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
@@ -42,3 +46,11 @@ jobs:
           NTFY_SECRET: ${{ secrets.NTFY_SECRET }}
           PLAYER_SMS: ${{ secrets.PLAYER_SMS }}
         run: python -m fcapp.watch --minutes 330 --interval 60
+      - name: Start the next watcher
+        if: always() && !cancelled()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # If the watcher crashed, pause before restarting so a bug can't spin in a tight loop
+          if [ "${{ steps.watch.outcome }}" != "success" ]; then sleep 300; fi
+          gh workflow run sync.yml --repo "${{ github.repository }}" --ref main
