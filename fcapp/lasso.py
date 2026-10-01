@@ -17,7 +17,6 @@ import zlib
 from . import playbook as pb
 
 COACH = "Coach Lasso"
-RECENT_NOTES = 4  # don't reuse a phrase within a player's last N notes
 
 
 # ------------------------------------------------------------------ helpers
@@ -26,20 +25,31 @@ def _plural(n, word, plural=None):
     return f"{n} {word if n == 1 else (plural or word + 's')}"
 
 
-class Picker:
-    """Chooses phrase variants, avoiding ones this player heard recently and
-    ones already used in this match (by them or a teammate)."""
+class Rotation:
+    """Club-wide memory of when each phrase was last used, across every
+    player note, team talk and profile, in match order."""
 
-    def __init__(self, seed, avoid):
+    def __init__(self):
+        self.seq = 0
+        self.last = {}
+
+
+class Picker:
+    """Chooses phrase variants: never twice in one note, and otherwise the
+    variant used longest ago anywhere in the club (ties broken at random,
+    seeded so rebuilding the site never reshuffles past notes)."""
+
+    def __init__(self, seed, rotation):
         self.rng = random.Random(zlib.crc32(seed.encode()))
-        self.avoid = avoid
+        self.rot = rotation
         self.used = set()
 
     def __call__(self, key, options):
-        ids = range(len(options))
-        fresh = [i for i in ids if f"{key}:{i}" not in self.avoid and f"{key}:{i}" not in self.used]
-        pool = fresh or [i for i in ids if f"{key}:{i}" not in self.used] or list(ids)
-        i = self.rng.choice(pool)
+        ids = [i for i in range(len(options)) if f"{key}:{i}" not in self.used] or list(range(len(options)))
+        oldest = min(self.rot.last.get(f"{key}:{i}", -1) for i in ids)
+        i = self.rng.choice([i for i in ids if self.rot.last.get(f"{key}:{i}", -1) == oldest])
+        self.rot.seq += 1
+        self.rot.last[f"{key}:{i}"] = self.rot.seq
         self.used.add(f"{key}:{i}")
         return options[i]
 
@@ -143,19 +153,31 @@ OPENERS = {
 GOOD = {  # framing that follows the fact
     "goal_threat": ["Never gets old, and I hope it never does.", "You put it where the keeper ain't. That's the whole trick.",
                     "The net said thank you, and so do I.", "That's the stuff they write songs about. Bad songs, but songs.",
-                    "Scoring's a lot like karaoke: confidence is half of it."],
+                    "Scoring's a lot like karaoke: confidence is half of it.",
+                    "Goals are like biscuits: always better shared, but I'll take this one.",
+                    "That ball had your name on it from the moment you set your feet.",
+                    "Cool as the other side of the pillow."],
     "creativity": ["Making your teammates look good is the most generous thing in football.", "You were handing out chances like Halloween candy.",
                    "That's what I call neighborly football.", "Selfless as a church potluck, and twice as filling.",
-                   "Chances like that are gifts. You were Santa out there."],
+                   "Chances like that are gifts. You were Santa out there.",
+                    "You saw passes other folks didn't even know existed.",
+                    "That's the kind of vision you can't teach. Well, I can try, but you already have it.",
+                    "A good pass is a love note. You wrote a few."],
     "passing_accuracy": ["You kept that ball like it owed you money.", "Tidier than my mama's guest bathroom.",
                          "Every pass had a return address on it.", "Smooth as a fresh jar of peanut butter.",
-                         "Possession is nine-tenths of the law, and you were the sheriff."],
+                         "Possession is nine-tenths of the law, and you were the sheriff.",
+                    "Every ball arrived like it had a GPS.",
+                    "Neat, tidy, and not a wasted touch."],
     "involvement": ["The team ran through you like a highway through a small town.", "You were more involved than a church bake-sale committee.",
                     "Everybody wanted the ball at your feet, and for good reason.", "You were the busiest person on the pitch. I'm tired just watching.",
-                    "You were the hub, and hubs keep wheels turning."],
+                    "You were the hub, and hubs keep wheels turning.",
+                    "You touched the ball more than a nervous waiter touches a menu.",
+                    "Always available, always an option."],
     "tackle_timing": ["Clean as a whistle and twice as loud.", "You picked your moment like a ripe peach.",
                       "Patient, then pounced. That's textbook.", "You read it like a bedtime story.",
-                      "Their attackers are gonna have nightmares about you, and I mean that kindly."],
+                      "Their attackers are gonna have nightmares about you, and I mean that kindly.",
+                    "Timing like a grandfather clock.",
+                    "You won it clean and gave it back to us with a bow on top."],
     "defensive_work_rate": ["You did the dirty work nobody claps for. Well, I'm clapping.", "You chased like a golden retriever after a tennis ball, and I mean that as a compliment.",
                             "Defending's a mood, and your mood was 'not today'.", "You got stuck in like a boot in Missouri mud.",
                             "That's the kind of effort that wins tight matches."],
@@ -176,7 +198,12 @@ GOOD = {  # framing that follows the fact
 }
 
 WORK_LEADIN = ["Here's the fix:", "Tell you what:", "Coach's secret:", "Try this:", "Between you and me:",
-               "Little homework:", "Next match:", "Here's a thought:"]
+               "Little homework:", "Next match:", "Here's a thought:",
+    "Simple fix:",
+    "Quick one:",
+    "Real talk:",
+    "Homework:",
+]
 
 TEAMMATE_GOOD = [
     "You and {mate} linked up like peanut butter and jelly. Keep making sandwiches.",
@@ -192,6 +219,8 @@ TEAMMATE_WORK = [
     "You and {mate}, same {issue} homework. Partners: {fix}.",
     "Funny thing: {mate} wrestled with {issue} too. Two heads, one fix: {fix}.",
     "{issue} snagged you and {mate} both. Buddy system: {fix}.",
+    "You and {mate} share this one: {issue}. Tandem fix: {fix}.",
+
 ]
 TOGETHER = {
     "forcing_passes": "give each other short options", "passing_accuracy": "give each other short options",
@@ -203,29 +232,47 @@ FORM_UP = ["{x} above your usual rating. That's growth, and growth is the whole 
            "{x} better than your average. You're trending like a cat video.",
            "{x} over your norm. Keep stacking days like this.",
            "{x} above your average. Somebody's been doing their homework.",
-           "{x} better than usual. That's a staircase, and you're climbing it."]
+           "{x} better than usual. That's a staircase, and you're climbing it.",
+    "{x} above your usual. Somebody's been eating their Wheaties.",
+]
 FORM_DOWN = ["{x} below your usual rating. One match doesn't define you. We go again.",
              "{x} under your average. Every player has those. The great ones answer back.",
              "{x} off your norm. Let it go like a bad haircut. It'll grow back.",
              "{x} below your average. Even the sun takes a cloudy day off.",
-             "{x} under your usual. That's a dip, not a trend. Promise."]
+             "{x} under your usual. That's a dip, not a trend. Promise.",
+    "{x} below your usual. Shake it off like a wet dog.",
+]
 DRIVER_GOOD = ["{what} added +{x} to your rating. Little things add up.",
                "{what} chipped in +{x}. Pennies make dollars.",
                "{what} was worth +{x} on its own. That's the quiet stuff that wins.",
                "{what} nudged you up +{x}. Every bit counts.",
                "{what}: +{x}. Like finding a twenty in last winter's coat.",
                "{what} bought you +{x}. Sprinkles on the sundae.",
-               "{what} kicked in +{x}. Small hinges swing big doors."]
+               "{what} kicked in +{x}. Small hinges swing big doors.",
+    "{what} earned +{x}. That's interest on hard work.",
+    "{what} gave you a +{x} lift. Nice little tailwind.",
+    "{what}: +{x}. The kind of thing nobody notices except me and the rating.",
+]
 DRIVER_WORK = ["{what} cost you {x}. Tidy those and the number climbs.",
                "{what} took {x} off your rating. Easy points to win back.",
                "{what} shaved {x} off. Clean that up and you're flying.",
                "{what} pulled you down {x}. That's the low-hanging fruit.",
                "{what}: -{x}. Leaky faucet stuff. Small drips, big bill.",
                "{what} docked you {x}. Nothing a little focus can't fix.",
-               "{what} cost {x}. Think of it as a pebble in your boot. Shake it out."]
+               "{what} cost {x}. Think of it as a pebble in your boot. Shake it out.",
+    "{what} cost {x}. Squeaky wheel; let's oil it.",
+    "{what} dinged you {x}. Fixable by Thursday.",
+    "{what}: -{x}. Like leaving the porch light on all day. Small, but it adds up.",
+]
 BENCHMARK = ["{label}: {val}. Middle of the pack for a {role}; the top quarter hits {target}+. Room to climb.",
              "{label}: {val}. Decent, but top-quarter {role}s get to {target}+. That's the next rung.",
-             "{label}: {val}. Solid ground. The best {role}s push it to {target}+."]
+             "{label}: {val}. Solid ground. The best {role}s push it to {target}+.",
+    "{label}: {val}. Good, not great yet; top-quarter {role}s sit at {target}+.",
+    "{label}: {val}. You're in the neighborhood. The fancy houses start at {target}+.",
+    "{label}: {val}. That's a B. The A-students among {role}s are at {target}+.",
+    "{label}: {val}. Halfway up the mountain. The view from {target}+ is something else.",
+    "{label}: {val}. Respectable. Top-quarter {role}s get to {target}+, and you've got it in you.",
+]
 TEAM_W = ["Team won {score}. Being part of a winning group is a habit worth keeping.",
           "We beat {opp} {score}. Wins taste better when everybody chipped in.",
           "{score} win over {opp}. Enjoy it tonight, hunt the next one tomorrow.",
@@ -238,23 +285,44 @@ TEAM_D = ["Drew {score} with {opp}. A point earned is a point we didn't have.",
           "{score} with {opp}. Not the ending we wanted, but the story's still going."]
 TEAM_L = ["Lost {score} to {opp}. Be a goldfish about the score, hang onto the lessons.",
           "{score} to {opp}. Chins up. Losses are tuition, and we're getting smarter.",
-          "Fell {score} to {opp}. The scoreboard keeps score; I keep track of growth."]
+          "Fell {score} to {opp}. The scoreboard keeps score; I keep track of growth.",
+    "Fell to {opp}, {score}. Tomorrow's a clean slate and we've got chalk.",
+    "{score} to {opp}. Even oak trees lose a few leaves.",
+]
 CAREER_HIGH = ["Your highest rating yet for us, across all {n} matches. Mark the calendar.",
                "{r} is a new personal best for us. Somebody call the local paper.",
                "Best rating of your {n} matches with us. That's not luck, that's reps."]
 BAND_LINE = ["{r} puts you in the {band} of {role}s league-wide.", "League-wide, a {r} is {band} territory for a {role}.",
-             "Stack that {r} against every {role} out there: {band}."]
+             "Stack that {r} against every {role} out there: {band}.",
+    "A {r} is {band} stuff for a {role} anywhere you look.",
+    "{band} of {role}s, league-wide. Not bad for a weeknight.",
+]
 MINUTES = ["Played all {mins} minutes. Showing up is half of it, and you did.",
            "{mins} minutes on the pitch. Availability is an ability.",
-           "You gave us {mins} minutes. That's a full tank, and I noticed."]
+           "You gave us {mins} minutes. That's a full tank, and I noticed.",
+    "{mins} minutes, full shift. Your lungs earned a nap.",
+    "Went the distance: {mins} minutes.",
+]
 ONE_THING = ["Pick ONE of these to own next match. Just one. That's how habits stick.",
              "Don't fix it all at once. Choose one, nail it, then come back for the next.",
-             "One thing at a time. Rome wasn't built in a day, and neither was a midfield."]
-DRILL_LEAD = ["Coach's drill:", "This week's homework:", "Practice this:", "Training-ground special:"]
+             "One thing at a time. Rome wasn't built in a day, and neither was a midfield.",
+    "Choose your favorite problem from that list and make it your project.",
+    "Circle one. Just one. Then come tell me how it went.",
+]
+DRILL_LEAD = ["Coach's drill:", "This week's homework:", "Practice this:", "Training-ground special:",
+    "Back-garden drill:",
+    "Before next match:",
+    "Five minutes of this:",
+]
 CLOSERS_GOOD = [
     "Keep that up and I'll have to start buying bigger biscuit tins.", "Proud of you. Now go drink some water.",
     "That's the stuff. Same time next match?", "You make this job too easy. Don't tell the gaffer.",
     "Believe. And maybe stretch.", "Go tell somebody you love about that one.",
+    "If I had a gold star sticker, you'd get the whole sheet.",
+    "That's the kind of night that makes me glad I took this job.",
+    "Keep doing you. You're doing great at it.",
+    "I'm gonna go tell my plant about you.",
+
 ]
 CLOSERS_MIXED = [
     "Pick one thing from that list and own it next match. Just one.",
@@ -263,6 +331,11 @@ CLOSERS_MIXED = [
     "Go easy on yourself tonight. Go hard at it tomorrow.",
     "Tomorrow's a fresh pitch. Let's go make some divots.",
     "Every great player has nights like this. Most of 'em just don't get a note from me.",
+    "Rome wasn't built in a day, but they were laying bricks every hour.",
+    "You're closer than you think. Trust the process, and trust your teammates.",
+    "Ups and downs make a roller coaster, and roller coasters are fun.",
+    "Write one of these on your hand next match. I'm serious.",
+
 ]
 
 
@@ -359,11 +432,11 @@ def _driver_what(d):
 
 # --------------------------------------------------------------- the note
 
-def build(m, p, history, avoid):
+def build(m, p, history, rotation):
     """Returns (title, body, used_phrase_ids) for one player's note."""
     s = p["stats"]
     c = Context(m, p, history)
-    pick = Picker(f"{m['id']}|{p['name']}|lasso", avoid)
+    pick = Picker(f"{m['id']}|{p['name']}|lasso", rotation)
     mates = [q for q in m["players"] if q["name"] != p["name"]]
     role = pb.LABELS[p["pos"]].lower()
     gap = next((f"{abs(d['impact']):.1f}" for d in p["impact"]["drivers"] if d["key"] == "other"), "0")
@@ -441,18 +514,27 @@ def build(m, p, history, avoid):
 
     opener = pick(f"open_{p['band']}", OPENERS[p["band"]]).format(
         name=p["name"], r=f"{s['rating']:.1f}", pos=role, opp=c.opp)
-    lines = [opener, "", "DID WELL"] + [f"+ {t}" for _, t in g] + ["", "WORK ON"] + [f"- {t}" for _, t in w]
+    drill = None
     if drill_tag:
         bullet_text = "\n".join(t for _, t in w)
         drills = [t for t in pb.tips_for(drill_tag, p["pos"], limit=12) if t not in bullet_text]
         if drills:
-            lines += ["", f"{pick('drill', DRILL_LEAD)} {pick('t_' + drill_tag, drills)}"]
+            drill = f"{pick('drill', DRILL_LEAD)} {pick('t_' + drill_tag, drills)}"
     closer = pick("close_good", CLOSERS_GOOD) if (not p["weaknesses"] or p["band"].startswith("Top")) else pick("close_mixed", CLOSERS_MIXED)
+    note = {"opener": _an(opener), "good": [_an(t) for _, t in g], "work": [_an(t) for _, t in w],
+            "drill": drill, "closer": closer, "coach": COACH}
+    lines = [note["opener"], "", "DID WELL"] + [f"+ {t}" for t in note["good"]] + ["", "WORK ON"] + [f"- {t}" for t in note["work"]]
+    if drill:
+        lines += ["", drill]
     lines += ["", f"{closer} - {COACH}"]
     band = f"{p['band'].lower()} {pb.LABELS[p['pos']][:3].upper()}"
     title = f"{m['result']} {c.score} vs {c.opp} | You: {s['rating']:.1f} ({band})"
-    body = re.sub(r"\b([Aa]) (?=(8|11|18)(\.\d)?\b)", lambda mm: mm.group(1) + "n ", "\n".join(lines))
-    return title, body, pick.used
+    return title, "\n".join(lines), pick.used, note
+
+
+def _an(text):
+    """'a 8.4' -> 'an 8.4'."""
+    return re.sub(r"\b([Aa]) (?=(8|11|18)(\.\d)?\b)", lambda mm: mm.group(1) + "n ", text)
 
 
 def _date_label(ts):
@@ -461,18 +543,250 @@ def _date_label(ts):
     return f"{d:%b} {d.day}"
 
 
-def annotate(matches):
-    """Attach p['push'] = {'title', 'body'} to every player in every match,
-    walking matches in order so phrasing doesn't repeat for a player."""
-    history, recent = {}, {}
+def annotate(matches, players):
+    """Write every player note, team talk and profile note in match order,
+    sharing one club-wide phrase rotation so nothing reads like a rerun."""
+    rotation, history = Rotation(), {}
     for m in sorted(matches, key=lambda x: x["ts"]):
-        match_used = set()
         for p in m["players"]:
             hist = history.setdefault(p["name"], [])
-            avoid = set().union(*recent.get(p["name"], [])) | match_used
-            title, body, used = build(m, p, hist, avoid)
+            title, body, _, note = build(m, p, hist, rotation)
             p["push"] = {"title": title, "body": body}
-            match_used |= used
-            recent.setdefault(p["name"], []).append(used)
-            recent[p["name"]] = recent[p["name"]][-RECENT_NOTES:]
-            hist.append({**p, "date_label": _date_label(m["ts"])})
+            p["note"] = note  # same words on the website player card
+        m["talk"], _ = build_talk(m, history, rotation)
+        for p in m["players"]:
+            history[p["name"]].append({**p, "date_label": _date_label(m["ts"])})
+    for p in players.values():
+        build_profile(p, rotation)
+
+
+# ================================================================ team talk
+# Match-page team talk: 3 things we did well, 3 to work on. Phrasing rotates
+# so consecutive match pages don't read alike.
+
+TALK_OPEN = {
+    "W": ["Three points, y'all. {gf}-{ga} over {opp}.",
+          "That's a W. {gf}-{ga} against {opp}, and I'm smiling so big my cheeks hurt.",
+          "{gf}-{ga} over {opp}. Somebody put the kettle on, we're celebrating.",
+          "We beat {opp} {gf}-{ga}. That's what happens when a team trusts each other.",
+          "Win number one-more-than-before: {gf}-{ga} against {opp}.",
+          "{opp} came, {opp} saw, {opp} lost {ga}-{gf}. Let's talk about why."],
+    "D": ["{gf}-{ga} with {opp}. A draw is a win that hasn't figured itself out yet.",
+          "We shared the points with {opp}, {gf}-{ga}. Plenty to learn from.",
+          "{gf}-{ga}. Not a loss, not a win, but a whole lotta lessons.",
+          "Even-steven with {opp} at {gf}-{ga}. Let's find the extra gear."],
+    "L": ["{ga}-{gf} to {opp}. Be a goldfish about the result, keep the lessons.",
+          "Lost {gf}-{ga} to {opp}. Chins up. One match doesn't define a team.",
+          "{opp} got us {ga}-{gf}. Losses are tuition, and we're getting smarter.",
+          "Tough night against {opp}, {gf}-{ga}. Let's turn it into fuel.",
+          "{gf}-{ga} loss. The scoreboard keeps score; I keep track of growth."],
+}
+TALK_SIGNOFF = ["Believe.", "Proud of y'all.", "Onward.", "Biscuits on me.", "Hydrate, then celebrate.",
+                "Same time next match.", "Go hug your mama.", "Stay curious."]
+
+TALK_GOOD = {
+    "clean_sheet": ["Clean sheet against {opp}. Nobody got past us, and that's all of us defending, not just the back line.",
+                    "Zero conceded to {opp}. We defended like the last slice of pie was on the line.",
+                    "{opp} didn't score. Shutouts are built by everybody."],
+    "scoring": ["{gf} goals from {shots} shots. When we flood the box, good things happen.",
+                "Put {gf} past {opp}. Our runners made their back line dizzy.",
+                "{gf} goals. That attack was humming like a pickup on a cold morning."],
+    "shot_acc": ["{on} of {shots} shots on target ({acc}%). We picked our moments instead of swinging at everything.",
+                 "{acc}% of our shots hit the target. Patience in front of goal pays off.",
+                 "{on}/{shots} on target. Their keeper's gloves are still smoking."],
+    "passing": ["Passing at {pp}%. We kept that ball like it owed us money.",
+                "{pp}% team passing. Smooth as Sunday morning.",
+                "{pp}% of our passes found a teammate. That's how you tire a team out."],
+    "duels": ["Won {tm} of {ta} tackles ({tp}%). First to the ball, and we meant it.",
+              "{tp}% of our tackles won. We were hungrier than them.",
+              "{tm}/{ta} tackles won. Every loose ball looked like ours."],
+    "chances": ["{kp} key passes. We made chances for each other.",
+                "{kp} chances created. Unselfish football is beautiful football.",
+                "{kp} key passes. Assist-minded team, and I love it."],
+    "star": ["{name} led the way with {art} {r}: {bits}.", "Tip of the cap to {name}, {art} {r}: {bits}.",
+             "{name} was the engine ({r}): {bits}."],
+}
+TALK_WORK = {
+    "conceded": ["Conceded {ga}. When we lose it, get compact and goal-side: shape before chase.",
+                 "{ga} goals against. We left the back door open; let's lock it.",
+                 "Let in {ga}. Recovery runs and tracking runners into the box fix most of that."],
+    "passing": ["Passing at {pp}%, under the ~72% line where extra passes start costing us.",
+                "{pp}% passing. We gave it away too cheap.",
+                "Only {pp}% of passes found a teammate. Shorter, safer, then go."],
+    "shot_sel": ["Only {on} of {shots} shots on target.", "{on}/{shots} on target. Too many hopeful ones.",
+                 "{acc}% shot accuracy. Better looks, not more looks."],
+    "tackling": ["Won just {tm} of {ta} tackles.", "{tm}/{ta} tackles won. We dove in.", "{tp}% tackle success. Patience in the duel."],
+    "few_shots": ["Only {shots} shots all match.", "{shots} shots. We need to arrive in the box, not admire it.",
+                  "Just {shots} attempts at goal."],
+    "progression": ["{kp} key passes from {pa} passes.", "Lots of ball ({pa} passes), {kp} key passes.",
+                    "{pa} passes, {kp} key passes. We weren't hurting them."],
+    "red": ["{name} saw red.", "Red card for {name}.", "We played a man down after {name}'s red."],
+}
+TALK_TIP_TAG = {"conceded": "defensive_work_rate", "passing": "passing_accuracy", "shot_sel": "shot_selection",
+                "tackling": "tackle_timing", "few_shots": "shot_volume", "progression": "progression", "red": "discipline"}
+TALK_TITLES = {"clean_sheet": "Clean sheet", "scoring": "Scoring", "shot_acc": "Shot accuracy", "passing": "Passing",
+               "duels": "Winning duels", "chances": "Creating chances", "conceded": "Defending as a unit",
+               "shot_sel": "Shot selection", "tackling": "Tackling", "few_shots": "Getting shots off",
+               "progression": "Playing forward", "red": "Discipline"}
+
+
+def _star_bits(p):
+    s = p["stats"]
+    bits = []
+    if s["goals"]:
+        bits.append(_plural(s["goals"], "goal"))
+    if s["assists"]:
+        bits.append(_plural(s["assists"], "assist"))
+    if s.get("key_passes"):
+        bits.append(_plural(s["key_passes"], "key pass", "key passes"))
+    if s["tackles_made"] >= 3:
+        bits.append(f"{s['tackles_made']} tackles won")
+    if s.get("pass_pct") and s["pass_pct"] >= 80 and len(bits) < 3:
+        bits.append(f"{s['pass_pct']:.0f}% passing")
+    if p["pos"] == "goalkeeper" and s["saves"]:
+        bits.append(_plural(s["saves"], "save"))
+    return ", ".join(bits[:3]) or "all-round work"
+
+
+def build_talk(m, histories, rotation):
+    t, ps = m["team"], m["players"]
+    pick = Picker(f"{m['id']}|talk", rotation)
+    f = dict(opp=m["opponent"]["name"], gf=m["gf"], ga=m["ga"], shots=t.get("shots", 0), on=t.get("shots_on") or 0,
+             acc=f"{t['shot_accuracy']:.0f}" if t.get("shot_accuracy") is not None else "-",
+             pp=f"{t['pass_pct']:.0f}" if t.get("pass_pct") is not None else "-",
+             tm=t.get("tackles_made", 0), ta=t.get("tackles_att", 0),
+             tp=f"{t['tackle_pct']:.0f}" if t.get("tackle_pct") is not None else "-",
+             kp=t.get("key_passes") or 0, pa=t.get("passes_att", 0))
+    good, work = [], []  # (score, title, line, tip)
+
+    def g(score, key):
+        good.append((score, TALK_TITLES[key], pick("tg_" + key, TALK_GOOD[key]).format(**f), None))
+
+    def w(score, key, **extra):
+        tip_tag = TALK_TIP_TAG[key]
+        tips = pb.tips_for(tip_tag, "_", limit=12)
+        work.append((score, TALK_TITLES[key], pick("tw_" + key, TALK_WORK[key]).format(**f, **extra),
+                     pick("t_" + tip_tag, tips) if tips else None))
+
+    acc, pp, tp = t.get("shot_accuracy"), t.get("pass_pct"), t.get("tackle_pct")
+    if m["ga"] == 0:
+        g(3.0, "clean_sheet")
+    if m["gf"] >= 3:
+        g(2 + (m["gf"] - 3) * 0.5, "scoring")
+    if acc is not None and f["shots"] >= 4 and acc >= 65:
+        g(1.5 + (acc - 65) / 20, "shot_acc")
+    if pp is not None and pp >= 82:
+        g(1.5 + (pp - 82) / 5, "passing")
+    if tp is not None and f["ta"] >= 6 and tp >= 45:
+        g(1.5 + (tp - 45) / 15, "duels")
+    if f["kp"] >= 4:
+        g(1.4 + (f["kp"] - 4) * 0.2, "chances")
+    star = ps[0] if ps else None
+    if star and star["band"] in ("Top 10%", "Top 25%"):
+        r = f"{star['stats']['rating']:.1f}"
+        good.append((2.6 if star["band"] == "Top 10%" else 2.0, star["name"],
+                     pick("tg_star", TALK_GOOD["star"]).format(name=star["name"], r=r, bits=_star_bits(star),
+                                                               art="an" if r.startswith(("8", "11", "18")) else "a"), None))
+
+    if m["ga"] >= 3:
+        w(2 + (m["ga"] - 3) * 0.5, "conceded")
+    if pp is not None and pp < pb.PASS_BREAK_EVEN:
+        w(2 + (pb.PASS_BREAK_EVEN - pp) / 5, "passing")
+    if acc is not None and f["shots"] >= 4 and acc < 45:
+        w(1.8 + (45 - acc) / 20, "shot_sel")
+    if tp is not None and f["ta"] >= 6 and tp < 30:
+        w(1.8 + (30 - tp) / 15, "tackling")
+    if f["shots"] <= 3:
+        w(1.6, "few_shots")
+    if f["kp"] <= 1 and f["pa"] >= 40:
+        w(1.4, "progression")
+    for p in ps:
+        if p["stats"]["red_cards"]:
+            w(3.0, "red", name=p["name"])
+
+    # Individual moments, in the same varied voice as the player notes
+    covered = {"passing_accuracy", "forcing_passes", "shot_selection", "tackle_timing", "shot_volume", "discipline", "progression"}
+    for p in ps[1:] if star and star["band"] in ("Top 10%", "Top 25%") else ps:
+        c = Context(m, p, histories.get(p["name"], []))
+        x = next((x for x in p["strengths"] if x["tag"] in GOOD and _good_fact(x["tag"], p["stats"], c)), None)
+        if x:
+            good.append((0.6, f"{p['name']} · {pb.TAG_TITLES[x['tag']]}",
+                         f"{p['name']}: {_good_fact(x['tag'], p['stats'], c)}. {pick('g_' + x['tag'], GOOD[x['tag']])}", None))
+    for p in ps:
+        c = Context(m, p, histories.get(p["name"], []))
+        gap = next((f"{abs(d['impact']):.1f}" for d in p["impact"]["drivers"] if d["key"] == "other"), "0")
+        x = next((x for x in p["weaknesses"] if x["tag"] not in covered and _work_fact(x["tag"], p["stats"], c, gap)), None)
+        if x:
+            tips = pb.tips_for(x["tag"], p["pos"], limit=12)
+            work.append((0.9, f"{p['name']} · {pb.TAG_TITLES[x['tag']]}",
+                         f"{p['name']}: {_work_fact(x['tag'], p['stats'], c, gap)}.", pick("t_" + x["tag"], tips) if tips else None))
+    # Fallbacks so there are always three of each
+    for p in ps:
+        drivers = [d for d in p["impact"]["drivers"] if d["key"] not in ("other", "result_val") and d.get("count")]
+        if drivers and drivers[0]["impact"] > 0:
+            d = drivers[0]
+            good.append((0.3, f"{p['name']} · {d['label']}", f"{p['name']}: " + pick("drv_g", DRIVER_GOOD).format(what=_driver_what(d), x=f"{d['impact']:.1f}"), None))
+        if drivers and drivers[-1]["impact"] < 0:
+            d = drivers[-1]
+            work.append((0.3, f"{p['name']} · {d['label']}", f"{p['name']}: " + pick("drv_w", DRIVER_WORK).format(what=_driver_what(d), x=f"{abs(d['impact']):.1f}"), None))
+
+    def top3(items):
+        seen, out = set(), []
+        for score, title, line, tip in sorted(items, key=lambda i: -i[0]):
+            if title in seen:
+                continue
+            seen.add(title)
+            item = {"title": title, "line": _an(line)}
+            if tip:
+                item["tip"] = tip
+            out.append(item)
+            if len(out) == 3:
+                break
+        return out
+
+    well, improve = top3(good), top3(work)
+    if not improve:
+        improve = [{"title": "Keep it rolling", "line": "Honestly? Not much. Bottle whatever that was and bring it next match."}]
+    talk = {"opener": pick("talk_open_" + m["result"], TALK_OPEN[m["result"]]).format(**f),
+            "well": well, "work_on": improve, "signoff": pick("talk_sign", TALK_SIGNOFF), "coach": COACH}
+    return talk, pick.used
+
+
+# ================================================================= profiles
+
+PROFILE_INTRO = [
+    "{name}, I've watched all {n} of your matches. Here's what the tape and the numbers are telling me.",
+    "Alright {name}, {n} matches in. Let's talk patterns, the good and the growing.",
+    "{name}, {n} matches is enough to see who you are as a player. I like what I see, and I see where we can go.",
+    "{n} matches, {name}. Patterns don't lie, but they do change. Here's where yours are headed.",
+    "Pull up a chair, {name}. {n} matches of evidence, and I've got thoughts.",
+]
+THEME_LINES = {
+    "improving": ["It's come up in {rate}% of your matches, but only {recent}% lately. You're winning this one.",
+                  "Flagged {rate}% of the time overall, {recent}% in your last five. That's a trend I like.",
+                  "{rate}% of matches overall, down to {recent}% recently. Keep chipping away."],
+    "worsening": ["It's crept up to {recent}% of your recent matches ({rate}% overall). Let's make it the focus.",
+                  "{recent}% of your last five, up from {rate}% overall. Time to put this one front and center.",
+                  "This one's been sneaking up: {recent}% lately vs {rate}% overall."],
+    "steady": ["It's shown up in {rate}% of your matches and it's holding steady. Let's crack it.",
+               "Steady at about {rate}% of matches. Steady means fixable; it's a habit, not a fluke.",
+               "{rate}% of matches, right in line with your recent form. A good one to drill."],
+}
+THEME_STRENGTH = ["Shows up in {rate}% of your matches. That's a calling card.",
+                  "{rate}% of the time. Teammates can count on it.",
+                  "There in {rate}% of your matches. Build your game around it.",
+                  "{rate}% of matches. That's not luck; that's who you are."]
+
+
+def build_profile(p, rotation):
+    pick = Picker(f"profile|{p['name']}|{p['matches']}", rotation)
+    p["coach"] = {"intro": pick("p_intro", PROFILE_INTRO).format(name=p["name"], n=p["matches"]), "name": COACH}
+    if not p.get("themes"):
+        return
+    for t in p["themes"]["improve"]:
+        t["coach"] = pick("p_theme_" + t["direction"], THEME_LINES[t["direction"]]).format(rate=t["rate"], recent=t["recent_rate"])
+        tips = pb.tips_for(t["tag"], p["main_pos"], limit=12)
+        t["tips"] = [pick("t_" + t["tag"], tips) for _ in range(min(3, len(tips)))]
+    for x in p["themes"]["strengths"]:
+        frame = pick("g_" + x["tag"], GOOD[x["tag"]]) if x["tag"] in GOOD else ""
+        x["coach"] = f"{frame} {pick('p_str', THEME_STRENGTH).format(rate=x['rate'])}".strip()

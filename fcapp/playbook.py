@@ -165,6 +165,8 @@ TIPS = {
             "Move after you pass. A pass-and-move player is always an option.",
             "Check away, then check back. A two-yard feint buys you the space to receive.",
             "Talk. Call for it early so the passer knows where you'll be.",
+            "Play with your head up between touches. You can't find a pass you never looked for.",
+            "Drift into the half-space between their midfield and defense. It's the hardest spot to mark.",
         ],
         "forward": [
             "Drop between the lines to link play, then spin in behind once it goes wide.",
@@ -207,6 +209,9 @@ TIPS = {
             "When the ball is lost, the nearest player presses and everyone else closes the passing lanes.",
             "Know your runner before the cross comes in. A quick look over the shoulder saves a goal.",
             "Sprint back the first five yards. That's the moment counter-attacks are won or lost.",
+            "Defend the space, not just the player. Stand in the lane they want to pass into.",
+            "Make yourself big in the box when they shoot. Blocks count, even if the stats don't.",
+            "Second-ball awareness: after a header or clearance, be the first one to the loose ball.",
         ],
         "midfielder": [
             "As a CDM/CM, screen the back line: stay between the ball and our goal and pick off passes.",

@@ -234,3 +234,10 @@ details[open] .chev { transform: rotate(180deg); }
 .talk-list.bad li::marker { color: var(--bad); font-weight: 800; }
 .good-label { color: var(--good); }
 .bad-label { color: var(--bad); }
+
+.notes { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.notes li { position: relative; padding-left: 22px; font-size: 14px; line-height: 1.45; }
+.notes li::before { position: absolute; left: 0; top: 0; font-weight: 800; }
+.notes li.good::before { content: "+"; color: var(--good); }
+.notes li.bad::before { content: "–"; color: var(--bad); }
+.drill { margin: 14px 0 0; padding: 10px 12px; background: var(--bg); border-radius: 10px; font-size: 13.5px; }

@@ -302,7 +302,7 @@ def annotate(matches, players, config):
         m["talk"] = _talk(m, club)
     for p in players.values():
         _profile(p)
-    lasso.annotate(matches)  # personal push notes, phrasing varied per player
+    lasso.annotate(matches, players)  # player notes, team talks, profiles: one club-wide phrase rotation
 
 
 # ------------------------------------------------------------ player texts

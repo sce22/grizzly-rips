@@ -205,11 +205,13 @@
   }
 
   function playerCard(p, open) {
-    const strengths = p.strengths.map((s) => `<div class="note good"><b>${esc(s.title)}</b>${s.coach ? `<p class="say">${esc(s.coach)}</p>` : ""}<small>${esc(s.detail)}</small></div>`).join("");
-    const weaknesses = p.weaknesses.map((w) => `
-      <div class="note bad"><b>${esc(w.title)}</b>${w.coach ? `<p class="say">${esc(w.coach)}</p>` : ""}<small>${esc(w.detail)}</small>
-        <div class="drill-label">Coach's drill</div>
-        <ul class="tips">${w.tips.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>`).join("");
+    const n = p.note;
+    const bullet = (cls) => (t) => `<li class="${cls}">${esc(t)}</li>`;
+    const strengths = n ? (n.good.length ? `<ul class="notes good">${n.good.map(bullet("good")).join("")}</ul>` : "")
+      : p.strengths.map((s) => `<div class="note good"><b>${esc(s.title)}</b><small>${esc(s.detail)}</small></div>`).join("");
+    const weaknesses = n ? (n.work.length ? `<ul class="notes bad">${n.work.map(bullet("bad")).join("")}</ul>` : "")
+      : p.weaknesses.map((w) => `<div class="note bad"><b>${esc(w.title)}</b><small>${esc(w.detail)}</small></div>`).join("");
+    const drill = n && n.drill ? `<p class="drill">${esc(n.drill)}</p>` : "";
     const vs = p.vs_average != null ? ` · ${p.vs_average >= 0 ? "▲" : "▼"} ${Math.abs(p.vs_average).toFixed(1)} vs avg` : "";
     return `
       <details class="card pcard" id="p-${slug(p.name)}" ${open ? "open" : ""}>
@@ -223,13 +225,14 @@
           <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </summary>
         <div class="pbody">
-          <p class="coach-say">${esc(p.coach ? p.coach.opener : p.headline)}</p>
+          <p class="coach-say">${esc(n ? n.opener : p.headline)}</p>
           ${statGrid(p)}
           <div class="section-label">What moved the rating</div>
           ${driversBlock(p.impact)}
           ${strengths ? `<div class="section-label">Did well</div>${strengths}` : ""}
           ${weaknesses ? `<div class="section-label">To work on</div>${weaknesses}` : ""}
-          ${p.coach ? `<p class="coach-say closer">${esc(p.coach.closer)} <span>- ${esc(p.coach.name || "Coach Lasso")}</span></p>` : ""}
+          ${drill}
+          ${n ? `<p class="coach-say closer">${esc(n.closer)} <span>- ${esc(n.coach || "Coach Lasso")}</span></p>` : ""}
           <a class="back" href="#/player/${encodeURIComponent(p.name)}">Full profile & trends →</a>
         </div>
       </details>`;
