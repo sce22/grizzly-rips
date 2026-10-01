@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 16,
+ "matches_played": 17,
  "record": {
   "W": 7,
   "D": 4,
-  "L": 5
+  "L": 6
  },
  "goals_for": 41,
- "goals_against": 34,
+ "goals_against": 38,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-01T23:24:09+00:00",
+ "last_match": "2026-10-01T23:29:27+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -122,6 +122,13 @@
    "result": "D",
    "score": "3-3",
    "opponent": "Bluecocks BC"
+  },
+  {
+   "id": "55388085970142",
+   "date": "2026-10-01T23:29:27+00:00",
+   "result": "L",
+   "score": "0-4",
+   "opponent": "Project 2030"
   }
  ]
 }
