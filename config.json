@@ -35,6 +35,7 @@
   },
   "notify": {
     "enabled": true,
-    "per_player_texts": false
+    "my_player": "tuxedo_slide",
+    "sms_part_chars": 120
   }
 }

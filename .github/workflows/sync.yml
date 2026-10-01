@@ -39,5 +39,5 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           SMS_GATEWAY_ADDRESS: ${{ secrets.SMS_GATEWAY_ADDRESS }}
-          PLAYER_PHONES: ${{ secrets.PLAYER_PHONES }}
+          PLAYER_SMS: ${{ secrets.PLAYER_SMS }}
         run: python -m fcapp.watch --minutes 330 --interval 60

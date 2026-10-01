@@ -299,3 +299,130 @@ def annotate(matches, players, config):
         m["talk"] = _talk(m, club)
     for p in players.values():
         _profile(p)
+
+
+# ------------------------------------------------------------ player texts
+# Short bullets for the post-match text: what YOU did well, what to work on,
+# with a teammate nod where it fits. Kept tight because SMS is tiny.
+
+GOOD_BULLETS = {
+    "goal_threat": "{goals_txt}. Never gets old!",
+    "creativity": "{kp_txt}. Unselfish - love it",
+    "passing_accuracy": "{pp}% passing. Kept it like it owed you money",
+    "involvement": "{pa} passes. Team ran through you",
+    "tackle_timing": "Won {tm}/{ta} tackles. Clean as a whistle",
+    "defensive_work_rate": "{ta} tackles in. Did the dirty work",
+    "shot_volume": "{shots} shots. Can't score 'em if you don't take 'em",
+    "shot_selection": "{on}/{shots} on target. Smart picks",
+    "finishing": "{goals} from {on} on target. Clinical",
+    "shot_stopping": "{saves} saves. Brick wall",
+    "busy_keeper": "{saves} saves. Kept us in it",
+    "clean_sheet": "Clean sheet. Nobody got by",
+    "leadership": "Man of the Match. Frame it!",
+}
+WORK_BULLETS = {
+    "forcing_passes": "{pp}% passing. Simple, on the ground",
+    "passing_accuracy": "{pp}% passing. Scan first, then pass",
+    "involvement": "Only {pa} passes. Show for it more",
+    "progression": "0 key passes. Look forward first",
+    "tackle_timing": "Won {tm}/{ta} tackles. Jockey, then pounce",
+    "defensive_work_rate": "{ta_txt}. Get stuck in",
+    "shot_volume": "{shots_txt}. Get in the box",
+    "shot_selection": "{on}/{shots} on target. Set your feet",
+    "finishing": "{goals} from {on} on target. Aim for corners",
+    "shot_stopping": "Stopped {svp}%. Set feet, hold your spot",
+    "positioning": "Rating {gap} under your stats. Hold your shape",
+    "discipline": "Red card. Stay on your feet",
+    "idle": "Idle {idle}% of the match. Check the connection",
+}
+# When a teammate shares the same issue, a "together" fix
+TOGETHER = {
+    "forcing_passes": "give each other short options",
+    "passing_accuracy": "give each other short options",
+    "tackle_timing": "one presses, one covers",
+    "defensive_work_rate": "track runners together",
+    "involvement": "make triangles, 1-2 touch",
+    "shot_selection": "cut it back to each other",
+    "finishing": "square it when the keeper commits",
+    "progression": "make the run for each other",
+}
+
+
+def _fmt_vals(s):
+    return {
+        "goals": s["goals"], "goals_txt": _plural(s["goals"], "goal"),
+        "kp": s.get("key_passes") or 0,
+        "kp_txt": _plural(s.get("key_passes") or s["assists"], *(("key pass", "key passes") if s.get("key_passes") else ("assist",))),
+        "pp": f"{s['pass_pct']:.0f}" if s.get("pass_pct") is not None else "-", "pa": s["passes_att"],
+        "tm": s["tackles_made"], "ta": s["tackles_att"], "ta_txt": _plural(s["tackles_att"], "tackle") + (" tried" if s["tackles_att"] else ""),
+        "shots": s["shots"], "shots_txt": _plural(s["shots"], "shot"), "on": s.get("shots_on") or 0,
+        "saves": s["saves"], "svp": f"{s['save_pct']:.0f}" if s.get("save_pct") is not None else "-",
+        "idle": f"{s.get('idle_share', 0) * 100:.0f}",
+    }
+
+
+SINGULAR = {"Goals": "goal", "Assists": "assist", "Key passes": "key pass", "Shots on target": "shot on target",
+            "Shots off target": "shot off target", "Completed passes": "completed pass", "Misplaced passes": "misplaced pass",
+            "Tackles won": "tackle won", "Missed tackles": "missed tackle", "Saves": "save", "Goals conceded": "goal conceded"}
+# stats each tag already talks about, so fallback lines don't repeat them
+TAG_KEYS = {
+    "goal_threat": {"goals"}, "creativity": {"key_passes", "assists"}, "finishing": {"goals", "shots_on"},
+    "passing_accuracy": {"passes_made", "passes_missed"}, "forcing_passes": {"passes_made", "passes_missed"},
+    "involvement": {"passes_made", "passes_missed"}, "progression": {"key_passes"},
+    "tackle_timing": {"tackles_made", "missed_tackles"}, "defensive_work_rate": {"tackles_made", "missed_tackles"},
+    "shot_volume": {"shots_on", "shots_off"}, "shot_selection": {"shots_on", "shots_off"},
+    "shot_stopping": {"saves", "conceded"}, "busy_keeper": {"saves", "conceded"},
+}
+
+
+def _driver_phrase(d):
+    n = d["count"]
+    noun = SINGULAR.get(d["label"], d["label"].lower()) if n == 1 else d["label"].lower()
+    return f"{n} {noun}"
+
+
+def text_lines(m, p):
+    """Short bullet lines for one player's post-match text (SMS is tiny)."""
+    s = p["stats"]
+    v = _fmt_vals(s)
+    mates = [q for q in m["players"] if q["name"] != p["name"]]
+    rng = _rng(m["id"], p["name"], "text")
+    gap = next((f"{abs(d['impact']):.1f}" for d in p["impact"]["drivers"] if d["key"] == "other"), "0")
+
+    good, work, used = [], [], set()
+    for x in p["strengths"]:
+        if x["tag"] in GOOD_BULLETS and len(good) < 3:
+            good.append(GOOD_BULLETS[x["tag"]].format(**v))
+            used |= TAG_KEYS.get(x["tag"], set())
+    for w in p["weaknesses"]:
+        if w["tag"] in WORK_BULLETS and len(work) < 3:
+            work.append(WORK_BULLETS[w["tag"]].format(**v, gap=gap))
+            used |= TAG_KEYS.get(w["tag"], set())
+
+    # One teammate line: you set them up, or a shared fix to work on together
+    scorer = max(mates, key=lambda q: q["stats"]["goals"], default=None)
+    if scorer and scorer["stats"]["goals"] and ((s.get("key_passes") or 0) + s["assists"]):
+        line = f"You & {scorer['name']} clicked. Keep feeding those runs"
+        good = (good[:2] + [line]) if len(good) >= 3 else good + [line]
+    else:
+        for w in p["weaknesses"]:
+            mate = next((q for q in mates if any(x["tag"] == w["tag"] for x in q["weaknesses"])), None)
+            if mate and w["tag"] in TOGETHER:
+                line = f"With {mate['name']}: {TOGETHER[w['tag']]}"
+                work = (work[:2] + [line]) if len(work) >= 3 else work + [line]
+                break
+
+    drivers = [d for d in p["impact"]["drivers"] if d["key"] not in ("other", "result_val") and d.get("count") and d["key"] not in used]
+    for d in drivers:
+        if len(good) < 3 and d["impact"] > 0:
+            good.append(f"{_driver_phrase(d)}. Good stuff")
+    for d in reversed(drivers):
+        if len(work) < 3 and d["impact"] < 0:
+            work.append(f"{_driver_phrase(d)}. Clean those up")
+    good = good or ["You showed up and competed. That counts"]
+    work = work or ["Not much! Bottle it up for next match"]
+
+    sign = rng.choice(["Believe. -Coach", "Proud of ya. -Coach", "Onward! -Coach", "Biscuits on me. -Coach"])
+    head = f"{m['gf']}-{m['ga']} {m['result']} vs {m['opponent']['name']}"
+    rating = f"You: {s['rating']:.1f}, {p['band'].lower()} {pb.LABELS[p['pos']][:3].upper()}"
+    return [head, rating, "GOOD"] + [f"+ {x}" for x in good] + ["WORK ON"] + [f"- {x}" for x in work] + [sign]

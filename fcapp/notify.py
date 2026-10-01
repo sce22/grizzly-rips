@@ -3,12 +3,17 @@ variables (GitHub Actions secrets) so they never end up in the public repo.
 
 Option A - Twilio:        TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_FROM, NOTIFY_PHONE
 Option B - email-to-SMS:  SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMS_GATEWAY_ADDRESS
-Per-player texts (optional): PLAYER_PHONES='{"GamerTag": "+15551234567"}'
+The owner's number gets the text for config notify.my_player.
+Other players (optional): PLAYER_SMS='{"GamerTag": "5551234567@vtext.com" or "+15551234567"}'
+
+Email-to-text gateways cut each message at ~160 characters *including* their
+own sender header, so long texts are split into numbered parts that fit.
 """
 import base64
 import json
 import os
 import smtplib
+import time
 import urllib.parse
 import urllib.request
 from email.message import EmailMessage
@@ -25,35 +30,80 @@ def _twilio(to, body):
         return r.status
 
 
-def _email_gateway(address, body):
-    msg = EmailMessage()
-    msg["From"] = os.environ["SMTP_USER"]
-    msg["To"] = address
-    msg.set_content(body)
+def chunk(text, limit):
+    """Split on line breaks into numbered parts of at most `limit` characters."""
+    lines = text.split("\n")
+    for total_guess in range(1, 20):
+        parts, cur = [], ""
+        budget = limit - len(f"({total_guess}/{total_guess}) ")
+        for line in lines:
+            while len(line) > budget:  # a single over-long line: hard wrap at a space
+                cut = line.rfind(" ", 0, budget)
+                cut = cut if cut > 0 else budget
+                if cur:
+                    parts.append(cur)
+                    cur = ""
+                parts.append(line[:cut])
+                line = line[cut:].lstrip()
+            candidate = f"{cur}\n{line}" if cur else line
+            if len(candidate) > budget:
+                parts.append(cur)
+                cur = line
+            else:
+                cur = candidate
+        if cur:
+            parts.append(cur)
+        if len(parts) <= total_guess:
+            if len(parts) == 1:
+                return parts
+            return [f"({i}/{len(parts)}) {p}" for i, p in enumerate(parts, 1)]
+    return [text[:limit]]
+
+
+def _email_gateway(address, body, limit):
+    parts = chunk(body, limit) if limit else [body]
     with smtplib.SMTP(os.environ["SMTP_HOST"], int(os.environ.get("SMTP_PORT", 587))) as s:
         s.starttls()
         s.login(os.environ["SMTP_USER"], os.environ["SMTP_PASS"])
-        s.send_message(msg)
+        for i, part in enumerate(parts):
+            msg = EmailMessage()
+            msg["From"] = os.environ["SMTP_USER"]
+            msg["To"] = address
+            msg.set_content(part)
+            s.send_message(msg)
+            if i < len(parts) - 1:
+                time.sleep(4)  # keeps the parts arriving in order
+    return len(parts)
 
 
-def send(body, to=None):
-    """Send to `to` (E.164 number) or the owner's configured number."""
-    if os.environ.get("TWILIO_ACCOUNT_SID"):
-        target = to or os.environ["NOTIFY_PHONE"]
-        _twilio(target, body)
-        return f"twilio:{target[-4:]}"
-    if os.environ.get("SMS_GATEWAY_ADDRESS") and not to:
-        _email_gateway(os.environ["SMS_GATEWAY_ADDRESS"], body)
-        return "email-gateway"
-    print("[notify] No SMS provider configured - message would have been:\n" + body)
+def send(body, to=None, limit=120):
+    """Send to `to` (email-gateway address or E.164 number), or to the owner."""
+    to = to or os.environ.get("SMS_GATEWAY_ADDRESS") or os.environ.get("NOTIFY_PHONE")
+    if not to:
+        print("[notify] No recipient configured - message would have been:\n" + body)
+        return None
+    if "@" in to and os.environ.get("SMTP_USER"):
+        n = _email_gateway(to, _ascii(body), limit)
+        return f"email-gateway ({n} part{'s' * (n > 1)})"
+    if "@" not in to and os.environ.get("TWILIO_ACCOUNT_SID"):
+        _twilio(to, body)  # Twilio joins long messages itself
+        return f"twilio:{to[-4:]}"
+    print("[notify] No SMS provider configured for this recipient - message would have been:\n" + body)
     return None
 
 
-def player_phones():
+def recipients(config):
+    """{gamertag: address} - the owner's player plus any per-player numbers."""
+    out = {}
     try:
-        return json.loads(os.environ.get("PLAYER_PHONES", "{}"))
+        out.update(json.loads(os.environ.get("PLAYER_SMS") or os.environ.get("PLAYER_PHONES") or "{}"))
     except json.JSONDecodeError:
-        return {}
+        print("[notify] PLAYER_SMS is not valid JSON - ignoring it")
+    me = config.get("notify", {}).get("my_player")
+    owner = os.environ.get("SMS_GATEWAY_ADDRESS") or os.environ.get("NOTIFY_PHONE")
+    if me and owner:
+        out[me] = owner
+    return out
 
 
 ASCII = str.maketrans({"\u2013": "-", "\u2014": "-", "\u2018": "'", "\u2019": "'", "\u201c": '"', "\u201d": '"',
@@ -65,24 +115,16 @@ def _ascii(text):
     return text.translate(ASCII).encode("ascii", "ignore").decode()
 
 
-def match_text(club_name, match, base_url, test=False):
-    """Coach's post-match team talk: score, top 3 done well, top 3 to work on, link."""
-    talk = match["talk"]
-    word = {"W": "WIN", "D": "DRAW", "L": "LOSS"}[match["result"]]
-    lines = [f"{'[TEST] ' if test else ''}{club_name} {match['gf']}-{match['ga']} {match['opponent']['name']} ({word})",
-             talk["opener"], "", "WHAT WE DID WELL"]
-    lines += [f"{i}. {x['line']}" for i, x in enumerate(talk["well"], 1)] or ["1. We showed up. That counts."]
-    lines += ["", "WORK ON NEXT MATCH"]
-    lines += [f"{i}. {x['line']}" for i, x in enumerate(talk["work_on"], 1)]
-    lines += ["", talk["signoff"], f"{base_url}#/match/{match['id']}"]
+def player_text(match, player, base_url, test=False):
+    from .coach import text_lines
+    lines = text_lines(match, player)
+    if test:
+        lines[0] = "[TEST] " + lines[0]
+    lines[-1] += f" {base_url}#/m/{match['id']}/{urllib.parse.quote(player['name'])}"  # sign-off + link stay together
     return _ascii("\n".join(lines))
 
 
-def player_text(club_name, match, player, base_url):
-    c = player["coach"]
-    work = player["weaknesses"][0] if player["weaknesses"] else None
-    lines = [f"{club_name} {match['gf']}-{match['ga']} {match['opponent']['name']}", c["opener"]]
-    if work:
-        lines.append(f"Next match: {work['coach']} {work['tips'][0] if work['tips'] else ''}".strip())
-    lines.append(f"{base_url}#/match/{match['id']}/{urllib.parse.quote(player['name'])}")
-    return _ascii("\n".join(lines))
+def sat_out_text(match, name, base_url):
+    word = {"W": "W", "D": "D", "L": "L"}[match["result"]]
+    return _ascii(f"{match['gf']}-{match['ga']} {word} vs {match['opponent']['name']}\n"
+                  f"{name}, you sat this one out. Team talk:\n{base_url}#/m/{match['id']}")

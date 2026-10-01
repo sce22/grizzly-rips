@@ -56,7 +56,8 @@ def rebuild(config):
 
 
 def send_texts(config, matches, new_ids):
-    if not config.get("notify", {}).get("enabled", True):
+    ncfg = config.get("notify", {})
+    if not ncfg.get("enabled", True):
         return
     by_id = {m["id"]: m for m in matches}
     if read_json("notified.json") is None:
@@ -65,18 +66,24 @@ def send_texts(config, matches, new_ids):
         return
     notified = set(read_json("notified.json", []) or [])
     base = config["site"]["base_url"]
-    name = config["club"]["name"]
-    phones = notify.player_phones() if config["notify"].get("per_player_texts") else {}
+    limit = ncfg.get("sms_part_chars", 120)
+    people = notify.recipients(config)
     for mid in sorted((i for i in new_ids if i in by_id), key=lambda i: by_id[i]["ts"]):
         if mid in notified:
             continue
         m = by_id[mid]
-        notify.send(notify.match_text(name, m, base))
-        for p in m["players"]:
-            if p["name"] in phones:
-                notify.send(notify.player_text(name, m, p, base), to=phones[p["name"]])
+        played = {p["name"]: p for p in m["players"]}
+        for name, address in people.items():
+            if name in played:
+                notify.send(notify.player_text(m, played[name], base), to=address, limit=limit)
+            elif name == ncfg.get("my_player"):
+                notify.send(notify.sat_out_text(m, name, base), to=address, limit=limit)
         notified.add(mid)
     write_json("notified.json", sorted(notified))
+
+
+def latest_for(matches, name):
+    return next((m for m in reversed(matches) for p in m["players"] if p["name"] == name), None)
 
 
 def main(argv=None):
@@ -97,7 +104,14 @@ def main(argv=None):
     if args.test_text:
         if not matches:
             sys.exit("No matches stored yet - nothing to send.")
-        sent = notify.send(notify.match_text(config["club"]["name"], matches[-1], config["site"]["base_url"], test=True))
+        me = config.get("notify", {}).get("my_player")
+        m = latest_for(matches, me) if me else None
+        if not m:
+            sys.exit(f"No stored match includes notify.my_player ({me!r}) - set it in config.json.")
+        player = next(p for p in m["players"] if p["name"] == me)
+        text = notify.player_text(m, player, config["site"]["base_url"], test=True)
+        print(text)
+        sent = notify.send(text, limit=config["notify"].get("sms_part_chars", 120))
         if not sent:
             sys.exit("Test text not sent: no SMS provider is configured. Check the repository secrets.")
         print(f"Test text sent via {sent}")

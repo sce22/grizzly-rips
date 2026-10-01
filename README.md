@@ -28,7 +28,7 @@ The site's "What moved the rating" section uses rating weights measured by regre
 
 **Important:** EA's feed only returns your last 10 matches per match type (a hard cap). The watcher checks every minute and files every match permanently by season in `data/seasons/season-NN/` (with a `summary.json` per season), so nothing is missed as long as GitHub Actions is running.
 
-**Coach.** All insights are written by "Coach", a Ted Lasso-style voice grounded in the numbers and in standard soccer coaching principles (`fcapp/coach.py`, tips in `fcapp/playbook.py`). After every match, the text you get is Coach's team talk: score, the top 3 things we did well, the top 3 to work on, and a link.
+**Coach.** All insights are written by "Coach", a Ted Lasso-style voice grounded in the numbers and in standard soccer coaching principles (`fcapp/coach.py`, tips in `fcapp/playbook.py`). After every match, each player with a number on file gets their own short text in Coach's voice: score, their rating, up to 3 things they did well and 3 to work on (with one teammate line when it fits), and a link to their breakdown. Email-to-text gateways cut messages at ~160 characters, so texts arrive as 3-4 numbered parts (`notify.sms_part_chars`). The full team talk is on the match page.
 
 ## One-time setup (~20 minutes)
 
@@ -67,7 +67,7 @@ US numbers need Twilio's A2P 10DLC or toll-free verification before texts are de
 **Option B – free email-to-text**
 `SMTP_HOST=smtp.gmail.com`, `SMTP_PORT=587`, `SMTP_USER` (Gmail address), `SMTP_PASS` (a Gmail *app password*), `SMS_GATEWAY_ADDRESS` (e.g. `5551234567@vtext.com` for Verizon, `@tmomail.net` for T-Mobile). Carriers are phasing these gateways out, so delivery can be unreliable.
 
-**Per-player texts (optional):** set `notify.per_player_texts: true` and add a secret `PLAYER_PHONES` = `{"GamerTag1": "+1555...", "GamerTag2": "+1555..."}`. Each of those players gets a link straight to their own breakdown.
+**Who gets texts:** your number (the `SMS_GATEWAY_ADDRESS` or `NOTIFY_PHONE` secret) gets the text for `notify.my_player` in `config.json`. To text teammates too, add a secret `PLAYER_SMS` = `{"GamerTag1": "5551234567@vtext.com", "GamerTag2": "+15551234567"}`.
 
 The first sync saves existing matches without texting. After that you get one text per new match, usually 1-3 minutes after the final whistle. To check texting any time: **Actions → Send test text → Run workflow**.
 
