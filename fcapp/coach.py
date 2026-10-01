@@ -342,7 +342,7 @@ WORK_SHORT = {
     "involvement": lambda v: f"only {v['pa']} passes",
     "progression": lambda v: "no key passes",
     "tackle_timing": lambda v: f"{v['tm']}/{v['ta']} tackles",
-    "defensive_work_rate": lambda v: f"only {v['ta']} tackle{'s' * (v['ta'] != 1)}",
+    "defensive_work_rate": lambda v: f"only {v['ta']} tackle{'s' * (v['ta'] != 1)}" if v["ta"] else "no tackles",
     "shot_volume": lambda v: f"{v['shots']} shot{'s' * (v['shots'] != 1)}",
     "shot_selection": lambda v: f"{v['on']}/{v['shots']} on target",
     "finishing": lambda v: f"{v['goals']} of {v['on']} on target scored",
