@@ -59,6 +59,7 @@ def build(config, matches, players, model_info, out=OUT, meta=None):
         "model": model_info,
         "themes_min_matches": config.get("analysis", {}).get("themes_min_matches", 8),
         "season_starts": season_starts(config.get("seasons"), matches),
+        "my_player": config.get("notify", {}).get("my_player"),
         "matches": [
             {
                 "id": m["id"], "ts": m["ts"], "season": m["season"], "type": m["type"],
@@ -69,7 +70,7 @@ def build(config, matches, players, model_info, out=OUT, meta=None):
         ],
         "players": sorted(
             (
-                {"name": p["name"], "pos": p["main_pos"], "matches": p["matches"],
+                {"name": p["name"], "pos": p["main_pos"], "matches": p["matches"], "latest": p["form"][-1]["match"],
                  "rating": p["averages"]["rating"], "trend": p["trend"],
                  "goals": p["totals"].get("goals", 0), "assists": p["totals"].get("assists", 0)}
                 for p in players.values()

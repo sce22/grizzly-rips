@@ -66,7 +66,7 @@ def send_texts(config, matches, new_ids):
         return
     notified = set(read_json("notified.json", []) or [])
     base = config["site"]["base_url"]
-    limit = ncfg.get("sms_part_chars", 120)
+    limit = ncfg.get("sms_max_chars", 125)
     people = notify.recipients(config)
     for mid in sorted((i for i in new_ids if i in by_id), key=lambda i: by_id[i]["ts"]):
         if mid in notified:
@@ -75,9 +75,10 @@ def send_texts(config, matches, new_ids):
         played = {p["name"]: p for p in m["players"]}
         for name, address in people.items():
             if name in played:
-                notify.send(notify.player_text(m, played[name], base), to=address, limit=limit)
+                me = name == ncfg.get("my_player")
+                notify.send(notify.player_text(m, played[name], base, limit, me=me), to=address)
             elif name == ncfg.get("my_player"):
-                notify.send(notify.sat_out_text(m, name, base), to=address, limit=limit)
+                notify.send(notify.sat_out_text(m, name, base), to=address)
         notified.add(mid)
     write_json("notified.json", sorted(notified))
 
@@ -109,9 +110,9 @@ def main(argv=None):
         if not m:
             sys.exit(f"No stored match includes notify.my_player ({me!r}) - set it in config.json.")
         player = next(p for p in m["players"] if p["name"] == me)
-        text = notify.player_text(m, player, config["site"]["base_url"], test=True)
-        print(text)
-        sent = notify.send(text, limit=config["notify"].get("sms_part_chars", 120))
+        text = notify.player_text(m, player, config["site"]["base_url"], config["notify"].get("sms_max_chars", 125), me=True)
+        print(f"{len(text)} chars: {text}")
+        sent = notify.send(text)
         if not sent:
             sys.exit("Test text not sent: no SMS provider is configured. Check the repository secrets.")
         print(f"Test text sent via {sent}")

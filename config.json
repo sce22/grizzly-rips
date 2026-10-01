@@ -36,6 +36,6 @@
   "notify": {
     "enabled": true,
     "my_player": "tuxedo_slide",
-    "sms_part_chars": 120
+    "sms_max_chars": 125
   }
 }

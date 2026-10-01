@@ -398,6 +398,12 @@
     document.querySelectorAll(".tabbar a").forEach((a) => a.classList.toggle("active", a.dataset.tab === tab));
     try {
       if (parts[0] === "m") parts[0] = "match"; // short links used in texts
+      if (parts[0] === "l") { // "#/l" = my latest match, "#/l/<name>" = that player's latest
+        const who = parts[1] || INDEX.my_player;
+        const pl = INDEX.players.find((x) => x.name === who);
+        if (pl) { location.replace(`#/match/${pl.latest}/${encodeURIComponent(who)}`); return; }
+        parts[0] = "";
+      }
       if (parts[0] === "match" && parts[1]) await matchView(parts[1], parts[2]);
       else if (parts[0] === "player" && parts[1]) await playerView(parts[1]);
       else if (parts[0] === "squad") squadView();

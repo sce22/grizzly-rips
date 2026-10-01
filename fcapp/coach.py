@@ -302,50 +302,6 @@ def annotate(matches, players, config):
 
 
 # ------------------------------------------------------------ player texts
-# Short bullets for the post-match text: what YOU did well, what to work on,
-# with a teammate nod where it fits. Kept tight because SMS is tiny.
-
-GOOD_BULLETS = {
-    "goal_threat": "{goals_txt}. Never gets old!",
-    "creativity": "{kp_txt}. Unselfish - love it",
-    "passing_accuracy": "{pp}% passing. Kept it like it owed you money",
-    "involvement": "{pa} passes. Team ran through you",
-    "tackle_timing": "Won {tm}/{ta} tackles. Clean as a whistle",
-    "defensive_work_rate": "{ta} tackles in. Did the dirty work",
-    "shot_volume": "{shots} shots. Can't score 'em if you don't take 'em",
-    "shot_selection": "{on}/{shots} on target. Smart picks",
-    "finishing": "{goals} from {on} on target. Clinical",
-    "shot_stopping": "{saves} saves. Brick wall",
-    "busy_keeper": "{saves} saves. Kept us in it",
-    "clean_sheet": "Clean sheet. Nobody got by",
-    "leadership": "Man of the Match. Frame it!",
-}
-WORK_BULLETS = {
-    "forcing_passes": "{pp}% passing. Simple, on the ground",
-    "passing_accuracy": "{pp}% passing. Scan first, then pass",
-    "involvement": "Only {pa} passes. Show for it more",
-    "progression": "0 key passes. Look forward first",
-    "tackle_timing": "Won {tm}/{ta} tackles. Jockey, then pounce",
-    "defensive_work_rate": "{ta_txt}. Get stuck in",
-    "shot_volume": "{shots_txt}. Get in the box",
-    "shot_selection": "{on}/{shots} on target. Set your feet",
-    "finishing": "{goals} from {on} on target. Aim for corners",
-    "shot_stopping": "Stopped {svp}%. Set feet, hold your spot",
-    "positioning": "Rating {gap} under your stats. Hold your shape",
-    "discipline": "Red card. Stay on your feet",
-    "idle": "Idle {idle}% of the match. Check the connection",
-}
-# When a teammate shares the same issue, a "together" fix
-TOGETHER = {
-    "forcing_passes": "give each other short options",
-    "passing_accuracy": "give each other short options",
-    "tackle_timing": "one presses, one covers",
-    "defensive_work_rate": "track runners together",
-    "involvement": "make triangles, 1-2 touch",
-    "shot_selection": "cut it back to each other",
-    "finishing": "square it when the keeper commits",
-    "progression": "make the run for each other",
-}
 
 
 def _fmt_vals(s):
@@ -361,68 +317,84 @@ def _fmt_vals(s):
     }
 
 
-SINGULAR = {"Goals": "goal", "Assists": "assist", "Key passes": "key pass", "Shots on target": "shot on target",
-            "Shots off target": "shot off target", "Completed passes": "completed pass", "Misplaced passes": "misplaced pass",
-            "Tackles won": "tackle won", "Missed tackles": "missed tackle", "Saves": "save", "Goals conceded": "goal conceded"}
-# stats each tag already talks about, so fallback lines don't repeat them
-TAG_KEYS = {
-    "goal_threat": {"goals"}, "creativity": {"key_passes", "assists"}, "finishing": {"goals", "shots_on"},
-    "passing_accuracy": {"passes_made", "passes_missed"}, "forcing_passes": {"passes_made", "passes_missed"},
-    "involvement": {"passes_made", "passes_missed"}, "progression": {"key_passes"},
-    "tackle_timing": {"tackles_made", "missed_tackles"}, "defensive_work_rate": {"tackles_made", "missed_tackles"},
-    "shot_volume": {"shots_on", "shots_off"}, "shot_selection": {"shots_on", "shots_off"},
-    "shot_stopping": {"saves", "conceded"}, "busy_keeper": {"saves", "conceded"},
+# ------------------------------------------------------- one-message text
+# Email-to-text gateways deliver one message of ~125 usable characters and drop
+# follow-ups, so the text is a single short paragraph that is trimmed to fit.
+
+GOOD_SHORT = {
+    "goal_threat": lambda v: "the goal" if v["goals"] == 1 else f"{v['goals']} goals",
+    "creativity": lambda v: f"{v['kp']} key pass{'es' * (v['kp'] != 1)}" if v["kp"] else "the assist",
+    "passing_accuracy": lambda v: f"{v['pp']}% passing",
+    "involvement": lambda v: "being on the ball",
+    "tackle_timing": lambda v: f"winning {v['tm']}/{v['ta']} tackles",
+    "defensive_work_rate": lambda v: "the bite",
+    "shot_volume": lambda v: f"{v['shots']} shots",
+    "shot_selection": lambda v: f"{v['on']}/{v['shots']} on target",
+    "finishing": lambda v: "the finishing",
+    "shot_stopping": lambda v: f"{v['saves']} saves",
+    "busy_keeper": lambda v: f"{v['saves']} saves",
+    "clean_sheet": lambda v: "the clean sheet",
+    "leadership": lambda v: "MOTM",
 }
+WORK_SHORT = {
+    "forcing_passes": lambda v: f"{v['pp']}% passing",
+    "passing_accuracy": lambda v: f"{v['pp']}% passing",
+    "involvement": lambda v: f"only {v['pa']} passes",
+    "progression": lambda v: "no key passes",
+    "tackle_timing": lambda v: f"{v['tm']}/{v['ta']} tackles",
+    "defensive_work_rate": lambda v: f"only {v['ta']} tackle{'s' * (v['ta'] != 1)}",
+    "shot_volume": lambda v: f"{v['shots']} shot{'s' * (v['shots'] != 1)}",
+    "shot_selection": lambda v: f"{v['on']}/{v['shots']} on target",
+    "finishing": lambda v: f"{v['goals']} of {v['on']} on target scored",
+    "shot_stopping": lambda v: f"{v['svp']}% saved",
+    "positioning": lambda v: "positioning",
+    "discipline": lambda v: "the red",
+    "idle": lambda v: "idle time",
+}
+TIP_SHORT = {
+    "forcing_passes": "Keep it simple", "passing_accuracy": "Scan, then pass", "involvement": "Show for it",
+    "progression": "Look forward", "tackle_timing": "Jockey, then pounce", "defensive_work_rate": "Get stuck in",
+    "shot_volume": "Get in the box", "shot_selection": "Set your feet", "finishing": "Aim for corners",
+    "shot_stopping": "Hold your spot", "positioning": "Hold your shape", "discipline": "Stay on your feet",
+    "idle": "Check your connection",
+}
+OPENER_SHORT = {"Top 10%": "What a night!", "Top 25%": "Heck yeah!", "Above average": "Solid!",
+                "Below average": "Good effort.", "Bottom 25%": "Be a goldfish."}
 
 
-def _driver_phrase(d):
-    n = d["count"]
-    noun = SINGULAR.get(d["label"], d["label"].lower()) if n == 1 else d["label"].lower()
-    return f"{n} {noun}"
-
-
-def text_lines(m, p):
-    """Short bullet lines for one player's post-match text (SMS is tiny)."""
+def text_paragraph(m, p, budget):
+    """One Ted-style sentence pair about this player that fits in `budget` chars."""
     s = p["stats"]
     v = _fmt_vals(s)
+    good = [GOOD_SHORT[x["tag"]](v) for x in p["strengths"] if x["tag"] in GOOD_SHORT]
     mates = [q for q in m["players"] if q["name"] != p["name"]]
-    rng = _rng(m["id"], p["name"], "text")
-    gap = next((f"{abs(d['impact']):.1f}" for d in p["impact"]["drivers"] if d["key"] == "other"), "0")
-
-    good, work, used = [], [], set()
-    for x in p["strengths"]:
-        if x["tag"] in GOOD_BULLETS and len(good) < 3:
-            good.append(GOOD_BULLETS[x["tag"]].format(**v))
-            used |= TAG_KEYS.get(x["tag"], set())
-    for w in p["weaknesses"]:
-        if w["tag"] in WORK_BULLETS and len(work) < 3:
-            work.append(WORK_BULLETS[w["tag"]].format(**v, gap=gap))
-            used |= TAG_KEYS.get(w["tag"], set())
-
-    # One teammate line: you set them up, or a shared fix to work on together
     scorer = max(mates, key=lambda q: q["stats"]["goals"], default=None)
     if scorer and scorer["stats"]["goals"] and ((s.get("key_passes") or 0) + s["assists"]):
-        line = f"You & {scorer['name']} clicked. Keep feeding those runs"
-        good = (good[:2] + [line]) if len(good) >= 3 else good + [line]
-    else:
-        for w in p["weaknesses"]:
-            mate = next((q for q in mates if any(x["tag"] == w["tag"] for x in q["weaknesses"])), None)
-            if mate and w["tag"] in TOGETHER:
-                line = f"With {mate['name']}: {TOGETHER[w['tag']]}"
-                work = (work[:2] + [line]) if len(work) >= 3 else work + [line]
-                break
+        good.insert(1, f"linking w/ {scorer['name']}")
+    weak = [w for w in p["weaknesses"] if w["tag"] in WORK_SHORT]
+    work = [WORK_SHORT[w["tag"]](v) for w in weak]
+    tip = TIP_SHORT.get(weak[0]["tag"]) if weak else None
+    head = f"{m['result']} {m['gf']}-{m['ga']}, {s['rating']:.1f}."
+    opener = OPENER_SHORT[p["band"]]
 
-    drivers = [d for d in p["impact"]["drivers"] if d["key"] not in ("other", "result_val") and d.get("count") and d["key"] not in used]
-    for d in drivers:
-        if len(good) < 3 and d["impact"] > 0:
-            good.append(f"{_driver_phrase(d)}. Good stuff")
-    for d in reversed(drivers):
-        if len(work) < 3 and d["impact"] < 0:
-            work.append(f"{_driver_phrase(d)}. Clean those up")
-    good = good or ["You showed up and competed. That counts"]
-    work = work or ["Not much! Bottle it up for next match"]
+    def build(n_good, n_work, with_opener, with_tip):
+        g, w = good[:n_good], work[:n_work]
+        parts = [head]
+        if with_opener:
+            parts.append(opener)
+        if g and w:
+            parts.append(f"Loved {' & '.join(g)}, but {' & '.join(w)}.")
+        elif g:
+            parts.append(f"Loved {' & '.join(g)}.")
+        elif w:
+            parts.append(f"{' & '.join(w).capitalize()} hurt.")
+        parts.append(f"{tip}! -Coach" if (with_tip and tip) else ("Bottle it! -Coach" if with_tip and not w else "-Coach"))
+        return " ".join(parts)
 
-    sign = rng.choice(["Believe. -Coach", "Proud of ya. -Coach", "Onward! -Coach", "Biscuits on me. -Coach"])
-    head = f"{m['gf']}-{m['ga']} {m['result']} vs {m['opponent']['name']}"
-    rating = f"You: {s['rating']:.1f}, {p['band'].lower()} {pb.LABELS[p['pos']][:3].upper()}"
-    return [head, rating, "GOOD"] + [f"+ {x}" for x in good] + ["WORK ON"] + [f"- {x}" for x in work] + [sign]
+    for args in [(2, 2, True, True), (1, 2, True, True), (2, 1, True, True), (1, 1, True, True),
+                 (1, 1, False, True), (1, 1, False, False), (1, 0, False, False), (0, 1, False, False), (0, 0, False, False)]:
+        text = build(*args)
+        if len(text) <= budget:
+            return text
+    return build(0, 0, False, False)[:budget]
+

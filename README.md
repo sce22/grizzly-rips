@@ -28,7 +28,7 @@ The site's "What moved the rating" section uses rating weights measured by regre
 
 **Important:** EA's feed only returns your last 10 matches per match type (a hard cap). The watcher checks every minute and files every match permanently by season in `data/seasons/season-NN/` (with a `summary.json` per season), so nothing is missed as long as GitHub Actions is running.
 
-**Coach.** All insights are written by "Coach", a Ted Lasso-style voice grounded in the numbers and in standard soccer coaching principles (`fcapp/coach.py`, tips in `fcapp/playbook.py`). After every match, each player with a number on file gets their own short text in Coach's voice: score, their rating, up to 3 things they did well and 3 to work on (with one teammate line when it fits), and a link to their breakdown. Email-to-text gateways cut messages at ~160 characters, so texts arrive as 3-4 numbered parts (`notify.sms_part_chars`). The full team talk is on the match page.
+**Coach.** All insights are written by "Coach", a Ted Lasso-style voice grounded in the numbers and in standard soccer coaching principles (`fcapp/coach.py`, tips in `fcapp/playbook.py`). After every match, each player with a number on file gets their own short text in Coach's voice: score, their rating, what they did well, what to work on and one quick tip (plus a teammate nod when it fits). Email-to-text gateways cut messages at ~160 characters and drop follow-ups, so each text is one short paragraph capped at `notify.sms_max_chars` (125), plus a short link to your latest match. The full breakdown and team talk are on the site.
 
 ## One-time setup (~20 minutes)
 
