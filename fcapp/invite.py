@@ -21,7 +21,7 @@ def main():
     if len(sys.argv) > 1 and sys.argv[1].strip():
         names = [sys.argv[1].strip()]
     else:
-        names = sorted({p["playername"] for m in load_matches() for p in m.get("players", {}).get(cid, {}).values()})
+        names = sorted({p["playername"] for m in load_matches() for p in m.get("players", {}).get(cid, {}).values()} - {me})
     for name in names:
         topic = push.topic_for(name, club)
         msg = (f"Forward this to {name}:\n\n"
