@@ -75,7 +75,7 @@ The first sync saves existing matches without texting. After that you get one te
 Free, instant, no carrier limits, and personal to each player.
 
 - Every player who appears in our matches automatically gets a private ntfy channel, derived from the `NTFY_SECRET` repository secret. Channel names are never printed or committed.
-- After each match, each player's channel gets **their own** notes from Coach Lasso: rating, 6-10 bullets split between what they did well and what to work on (each tied to a number), one drill, and a teammate line when it fits. Tapping it opens their player card.
+- After each match, each player's channel gets **their own** notes from Coach Lasso: rating, 6-10 bullets split between what they did well and what to work on (each tied to a number), one drill, and a teammate line when it fits. Tapping it opens the full note in the ntfy app; the **My breakdown** and **Team talk** buttons open the website.
 - **Adding someone:** they install the free **ntfy** app. You go to **Actions → Invite a player → Run workflow** (type their gamertag, or leave it blank for everyone). Their subscribe details arrive on *your* phone, ready to forward.
 - **Testing:** **Actions → Send test message** (choose push, sms or all).
 - Texts are off (`notify.sms: false`); push is on (`notify.push`). Flip either in `config.json`.

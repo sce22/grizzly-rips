@@ -56,7 +56,7 @@ def push_player(club_name, match, player, base_url):
     title, message = push_message(match, player)
     card = f"{base_url}#/match/{match['id']}/{urllib.parse.quote(player['name'])}"
     return send(
-        topic_for(player["name"], club_name), title, message, click=card,
+        topic_for(player["name"], club_name), title, message,  # no click URL: tapping opens it in ntfy
         actions=[{"action": "view", "label": "My breakdown", "url": card},
                  {"action": "view", "label": "Team talk", "url": f"{base_url}#/match/{match['id']}"}],
         tags=["soccer", RESULT_TAG[match["result"]]],
