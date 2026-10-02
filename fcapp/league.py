@@ -9,10 +9,10 @@ number that lags), so we follow the FC 27 ladder ourselves:
     running out means a relegation match.
   * promotion matches (every division): 5->4 win 1 of 3, 4->3 win 2 of 3,
     3->2 win 3 of 4, 2->1 win 4 of 4, 1->Elite win 5 of 5. Hit the wins and
-    you go up; once it's out of reach, it's a relegation match.
-  * relegation match: a win or a draw stays up - chances reset to 3 and
-    points go back to what they were before the slip that caused it (after a
-    failed promotion series that's the full target, so a fresh series starts);
+    you go up; once it's out of reach, you're back to 0 points (3 chances) in
+    the same division.
+  * relegation match (after losing all 3 chances): a win or a draw stays up -
+    chances reset to 3 and points go back to where you left off (e.g. 9/12);
     a loss drops a division. Draws never cost a chance.
   * Elite: unlimited - no target and nothing above it; points just keep
     adding up.
@@ -119,8 +119,8 @@ def apply(state, m, r):
             ev.update(kind="promoted", text=ev["text"] + f". Promoted to {div_name(nd)}!")
             state.update(_points_phase(nd, r))
         elif state["promo_wins"] + left < wins_needed:
-            ev.update(kind="relegation_match_due", text=ev["text"] + ". Promotion out of reach; relegation match next")
-            state.update(stage="relegation", saved_points=state["points"])
+            ev.update(kind="promotion_failed", text=ev["text"] + f". Promotion missed; back to 0 pts in {div_name(d)}")
+            state.update(_points_phase(d, r))
         else:
             ev["kind"] = "promo_match"
         return ev
@@ -133,9 +133,6 @@ def apply(state, m, r):
                                          f"chances reset, back to {saved} pts")
         state.update(_points_phase(d, r))
         state["points"] = saved
-        goal = target(d, r)
-        if goal is not None and saved >= goal:  # we'd already earned the promotion matches
-            state.update(stage="promotion", promo_played=0, promo_wins=0, promo_results=[])
     else:
         pd = prev_div(d)
         ev.update(kind="relegated" if pd != d else "survived",
