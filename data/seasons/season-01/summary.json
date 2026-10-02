@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 24,
+ "matches_played": 25,
  "record": {
   "W": 11,
-  "D": 5,
+  "D": 6,
   "L": 8
  },
- "goals_for": 61,
- "goals_against": 48,
+ "goals_for": 63,
+ "goals_against": 50,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-02T02:52:11+00:00",
+ "last_match": "2026-10-02T03:10:52+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -178,6 +178,13 @@
    "result": "W",
    "score": "3-0",
    "opponent": "Jebem Ti Kruha"
+  },
+  {
+   "id": "55752127900301",
+   "date": "2026-10-02T03:10:52+00:00",
+   "result": "D",
+   "score": "2-2",
+   "opponent": "unbeatables FC"
   }
  ]
 }
