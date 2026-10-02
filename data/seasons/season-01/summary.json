@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 18,
+ "matches_played": 19,
  "record": {
-  "W": 7,
+  "W": 8,
   "D": 4,
   "L": 7
  },
- "goals_for": 41,
- "goals_against": 40,
+ "goals_for": 45,
+ "goals_against": 42,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-01T23:46:41+00:00",
+ "last_match": "2026-10-02T00:05:29+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -136,6 +136,13 @@
    "result": "L",
    "score": "0-2",
    "opponent": "Two Man Elite"
+  },
+  {
+   "id": "55458126620133",
+   "date": "2026-10-02T00:05:29+00:00",
+   "result": "W",
+   "score": "4-2",
+   "opponent": "Inter Aliens"
   }
  ]
 }
