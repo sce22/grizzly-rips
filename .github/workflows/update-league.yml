@@ -47,7 +47,6 @@ jobs:
           POINTS: ${{ inputs.points }}
           LIVES: ${{ inputs.lives }}
           PROMO: ${{ inputs.promo_results }}
-          NTFY_SECRET: ${{ secrets.NTFY_SECRET }}
         run: |
           args=(--division "$DIVISION" --stage "$STAGE" --promo-results "$PROMO")
           [ -n "$POINTS" ] && args+=(--points "$POINTS")

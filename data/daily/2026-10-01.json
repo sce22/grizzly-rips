@@ -218,11 +218,9 @@
    "left": 3,
    "wins_needed": 3
   },
-  "stage_label": "Promotion matches → Division 2",
+  "stage_label": "Promotion → Division 2",
   "status": [
-   "Promotion matches: 1 of 4 played (D), 0/3 wins",
-   "Need 3 more wins from 3 matches (no slip-ups)",
-   "Miss out and it's a relegation match to stay in Division 3"
+   "Must win 3 out of 3"
   ],
   "spoken": "We're in Division 3, playing promotion matches for Division 2. 1 down, 3 to go, and we need 3 more wins",
   "history": [
@@ -230,6 +228,11 @@
     "ts": 1790910652,
     "kind": "promo_match",
     "text": "Promotion match 1 of 4: D 2-2 vs unbeatables FC"
+   },
+   {
+    "ts": 1790910652,
+    "kind": "manual",
+    "text": "Status set: Division 3, promotion stage, promotion results D (Set from the Update league status form)"
    }
   ]
  },
@@ -257,11 +260,9 @@
  "key_stats": [
   "Day: 5W 4D 6L from 15 matches · 39 scored, 33 conceded",
   "Player of the day: PhogsToffees (7.9 avg, 13 goals, 13 assists)",
-  "League: Promotion matches → Division 2",
-  "Promotion matches: 1 of 4 played (D), 0/3 wins",
-  "Need 3 more wins from 3 matches (no slip-ups)",
-  "Miss out and it's a relegation match to stay in Division 3"
+  "League: Promotion → Division 2",
+  "Must win 3 out of 3"
  ],
  "coach": "Coach Lasso",
- "generated_at": "2026-10-01T23:09-05:00"
+ "generated_at": "2026-10-01T23:22-05:00"
 }

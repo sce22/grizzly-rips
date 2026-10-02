@@ -439,10 +439,9 @@
       bar = `<div class="lad-bar danger"><div class="lad-fill" style="width:100%"></div></div>`;
     }
     const lives = t.stage === "points" && t.target != null
-      ? `<div class="lives" aria-label="${t.lives} of ${t.max_lives} lives left">${Array.from({ length: t.max_lives }, (_, k) => `<span class="${k < t.lives ? "on" : ""}">♥</span>`).join("")}<small>lives</small></div>` : "";
+      ? `<div class="chances" role="img" aria-label="${t.lives} of ${t.max_lives} chances left">${Array.from({ length: t.max_lives }, (_, k) => `<span class="${k < t.lives ? "on" : "off"}"></span>`).join("")}</div>` : "";
     const pips = t.stage === "promotion"
-      ? `<div class="promo-pips">${t.promo.results.map((r) => `<span class="pill ${r}">${r}</span>`).join("")}${Array.from({ length: t.promo.left }, () => `<span class="pill todo">·</span>`).join("")}
-           <small>${t.promo.wins_needed} win${t.promo.wins_needed === 1 ? "" : "s"} needed from ${t.promo.left}</small></div>` : "";
+      ? `<div class="promo-pips">${t.promo.results.map((r) => `<span class="pill ${r}">${r}</span>`).join("")}${Array.from({ length: t.promo.left }, () => `<span class="pill todo">·</span>`).join("")}</div>` : "";
     const hist = opts.history !== false && t.history && t.history.length
       ? `<ul class="lad-hist">${[...t.history].reverse().slice(0, 5).map((e) => `<li><span>${new Date(e.ts * 1000).toLocaleDateString(undefined, { month: "short", day: "numeric" })}</span>${esc(e.text || "")}</li>`).join("")}</ul>` : "";
     return `

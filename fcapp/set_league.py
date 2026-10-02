@@ -53,18 +53,3 @@ def main():
     league.write_seed(args.division, args.stage, points, lives, results, latest, history, args.note)
     print(f"League status set: {league.div_name(args.division)}, {args.stage}, as of the {latest['gf']}-{latest['ga']} vs {latest['opponent']['name']}")
 
-    # Confirm on the owner's phone, showing exactly what the ladder will track from here
-    from . import push
-    if push.enabled():
-        snap = league.snapshot(matches, config)
-        body = "\n".join([f"Applies from the {latest['gf']}-{latest['ga']} vs {latest['opponent']['name']} onward; every league match after it moves the ladder forward.", ""]
-                          + [f"• {x}" for x in snap["status"]])
-        ok = push.send(push.topic_for(config["notify"]["my_player"], config["club"]["name"]),
-                       f"League status updated · {snap['stage_label']}", body,
-                       actions=[{"action": "view", "label": "Open the ladder", "url": config["site"]["base_url"] + "#/"}],
-                       tags=["clipboard"])
-        print(f"Confirmation push {'sent' if ok else 'FAILED'}")
-
-
-if __name__ == "__main__":
-    main()

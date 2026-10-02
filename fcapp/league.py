@@ -10,7 +10,10 @@ number that lags), so we follow the FC 27 ladder ourselves:
   * promotion matches (every division): 5->4 win 1 of 3, 4->3 win 2 of 3,
     3->2 win 3 of 4, 2->1 win 4 of 4, 1->Elite win 5 of 5. Hit the wins and
     you go up; once it's out of reach, it's a relegation match.
-  * relegation match: a win or a draw stays up; a loss drops a division.
+  * relegation match: a win or a draw stays up - chances reset to 3 and
+    points go back to what they were before the slip that caused it (after a
+    failed promotion series that's the full target, so a fresh series starts);
+    a loss drops a division. Draws never cost a chance.
   * Elite: unlimited - no target and nothing above it; points just keep
     adding up.
 
@@ -98,8 +101,8 @@ def apply(state, m, r):
                                               f"Promotion matches to {div_name(next_div(d))}: win {wins} of {games}")
             state.update(stage="promotion", promo_played=0, promo_wins=0, promo_results=[])
         elif state["lives"] <= 0:
-            ev.update(kind="relegation_match_due", text=f"Out of lives in {div_name(d)} ({res} {score} vs {opp}). Relegation match next")
-            state.update(stage="relegation")
+            ev.update(kind="relegation_match_due", text=f"Out of chances in {div_name(d)} ({res} {score} vs {opp}). Relegation match next")
+            state.update(stage="relegation", saved_points=state["points"])
         else:
             ev["kind"] = "points"
         return ev
@@ -117,7 +120,7 @@ def apply(state, m, r):
             state.update(_points_phase(nd, r))
         elif state["promo_wins"] + left < wins_needed:
             ev.update(kind="relegation_match_due", text=ev["text"] + ". Promotion out of reach; relegation match next")
-            state.update(stage="relegation")
+            state.update(stage="relegation", saved_points=state["points"])
         else:
             ev["kind"] = "promo_match"
         return ev
@@ -125,8 +128,14 @@ def apply(state, m, r):
     # relegation match
     stayed = res == "W" or (res == "D" and not r["relegation_win_needed"])
     if stayed:
-        ev.update(kind="survived", text=f"Relegation match {'won' if res == 'W' else 'drawn'} ({score} vs {opp}). Staying in {div_name(d)}")
+        saved = state.get("saved_points", 0)
+        ev.update(kind="survived", text=f"Relegation match {'won' if res == 'W' else 'drawn'} ({score} vs {opp}). Staying in {div_name(d)}, "
+                                         f"chances reset, back to {saved} pts")
         state.update(_points_phase(d, r))
+        state["points"] = saved
+        goal = target(d, r)
+        if goal is not None and saved >= goal:  # we'd already earned the promotion matches
+            state.update(stage="promotion", promo_played=0, promo_wins=0, promo_results=[])
     else:
         pd = prev_div(d)
         ev.update(kind="relegated" if pd != d else "survived",
@@ -169,10 +178,8 @@ def describe(state, config, events=(), taken_at=None):
         status.append(f"{state['points']} pts in Elite. No ceiling up here; every point counts")
     elif state["stage"] == "points":
         need = max(0, goal - state["points"])
-        games, wins = series(d, r)
-        out["stage_label"] = f"{div_name(d)} · points phase"
-        status.append(f"{state['points']}/{goal} pts: {need} more to reach promotion matches for {div_name(nd)} (win {wins} of {games})")
-        status.append(f"{state['lives']} of {r['lives']} lives left before a relegation match")
+        out["stage_label"] = "Points phase"
+        status.append(f"{state['points']}/{goal} pts: {need} more to reach promotion to {div_name(nd)}")
     elif state["stage"] == "promotion":
         games, wins_needed = series(d, r)
         played, won = state["promo_played"], state["promo_wins"]
@@ -180,14 +187,11 @@ def describe(state, config, events=(), taken_at=None):
         still = max(0, wins_needed - won)
         out["promo"] = {"played": played, "total": games, "wins": won, "target_wins": wins_needed,
                         "results": state["promo_results"], "left": left, "wins_needed": still}
-        out["stage_label"] = f"Promotion matches → {div_name(nd)}"
-        status.append(f"Promotion matches: {played} of {games} played ({' '.join(state['promo_results']) or 'none yet'}), {won}/{wins_needed} wins")
-        status.append(f"Need {still} more win{'s' if still != 1 else ''} from {left} match{'es' if left != 1 else ''}" +
-                      (" (no slip-ups)" if still == left else ""))
-        status.append(f"Miss out and it's a relegation match to stay in {div_name(d)}")
+        out["stage_label"] = f"Promotion → {div_name(nd)}"
+        status.append(f"Must win {still} out of {left}")
     else:
-        out["stage_label"] = f"Relegation match · {div_name(d)}"
-        status.append(f"Relegation match next: a win or a draw keeps us in {div_name(d)}; a loss drops us to {div_name(prev_div(d))}")
+        out["stage_label"] = "Relegation match"
+        status.append(f"A win or draw keeps us in {div_name(d)}")
     out["status"] = status
     if state["stage"] == "promotion":
         pr = out["promo"]
@@ -197,7 +201,7 @@ def describe(state, config, events=(), taken_at=None):
         out["spoken"] = f"We're in Elite with {state['points']} points and no ceiling in sight"
     elif state["stage"] == "points":
         out["spoken"] = (f"We're in {div_name(d)} with {state['points']} of {goal} points and "
-                         f"{state['lives']} li{'ves' if state['lives'] != 1 else 'fe'} left")
+                         f"{state['lives']} of {r['lives']} chances left")
     else:
         out["spoken"] = f"We've got a relegation match coming to stay in {div_name(d)}, and a draw is enough"
     out["history"] = [e for e in events if e.get("kind") not in ("points",)][-8:]
