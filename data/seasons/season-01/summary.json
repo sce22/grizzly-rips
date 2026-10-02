@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 23,
+ "matches_played": 24,
  "record": {
-  "W": 10,
+  "W": 11,
   "D": 5,
   "L": 8
  },
- "goals_for": 58,
+ "goals_for": 61,
  "goals_against": 48,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-02T02:41:00+00:00",
+ "last_match": "2026-10-02T02:52:11+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -171,6 +171,13 @@
    "result": "L",
    "score": "1-2",
    "opponent": "Lets Grub FC 3"
+  },
+  {
+   "id": "55420960270475",
+   "date": "2026-10-02T02:52:11+00:00",
+   "result": "W",
+   "score": "3-0",
+   "opponent": "Jebem Ti Kruha"
   }
  ]
 }
