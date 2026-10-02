@@ -48,8 +48,8 @@ def main():
     _, events, _ = league.track(matches, config) if old else (None, [], None)
     history = [e for e in events if e.get("kind") not in ("points",)][-20:] + [{
         "ts": latest["ts"], "kind": "manual",
-        "text": f"Status set: {league.div_name(args.division)}, {args.stage} stage" +
-                (f", promotion results {' '.join(results)}" if results else "") + f" ({args.note})"}]
+        "text": f"Status: {league.div_name(args.division)}, {args.stage} stage" +
+                (f", promotion results {' '.join(results)}" if results else "")}]
     league.write_seed(args.division, args.stage, points, lives, results, latest, history, args.note)
     print(f"League status set: {league.div_name(args.division)}, {args.stage}, as of the {latest['gf']}-{latest['ga']} vs {latest['opponent']['name']}")
 

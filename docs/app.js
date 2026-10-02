@@ -497,6 +497,13 @@
     app.innerHTML = `<div class="about">
       <h2>How it works</h2>
       <div class="card">
+        <h3>League ladder</h3>
+        <p>The ladder on the Matches tab follows FC 27's league from a confirmed starting point and moves forward after every league match. If it ever disagrees with the game, set it to what the game shows. It takes about a minute to update here.</p>
+        <p><a class="form-link" href="https://github.com/sce22/grizzly-rips/actions/workflows/update-league.yml" target="_blank" rel="noopener">Open the Update league status form ↗</a></p>
+        <p class="model-note">On that page, tap <b>Run workflow</b>, pick the division and stage, add points, chances left or promotion results (like "D W"), then tap the green <b>Run workflow</b> button. You need to be signed in to GitHub as a member of the repo.</p>
+      </div>
+
+      <div class="card">
         <p>After every match, this site pulls the official EA Pro Clubs match report for <b>${esc(INDEX.club.name)}</b>. Only human-controlled players on our side are analysed - AI teammates and opponents are ignored.</p>
         <ul>
           <li><b>Did well / To improve</b> compares each player's passing, tackling, shooting, key passes and saves with real FC 27 benchmarks for their position (top quarter = strength, bottom quarter = flag), then reads stats in pairs: forcing passes, diving into tackles, shooting at the keeper, and rating below what the stats predict (positioning).</li>
