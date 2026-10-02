@@ -275,3 +275,6 @@ details[open] .chev { transform: rotate(180deg); }
 .season-run .pill { width: 24px; height: 24px; font-size: 13px; }
 .pill.todo { background: var(--line); color: var(--muted); }
 .status { margin: 0; padding-left: 18px; font-size: 13.5px; display: grid; gap: 3px; }
+.grade-day .cal-grade { order: 3; }
+.mk.promo span { bottom: auto; top: 100%; margin: 2px 0 0; transform: translateX(-50%); }
+.pts-bar { margin-bottom: 26px; }
