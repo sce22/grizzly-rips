@@ -1,8 +1,8 @@
 {
- "note": "Confirmed by tuxedo_slide on Oct 1: Division 3, promotion matches to Division 2 (win 3 of 4), 1 played (2-2 draw)",
+ "note": "Set from the Update league status form",
  "as_of_ts": 1790910652,
  "as_of_match": "55752127900301",
- "set_at": "2026-10-01T23:09-05:00",
+ "set_at": "2026-10-01T23:12-05:00",
  "state": {
   "division": "3",
   "stage": "promotion",
@@ -20,6 +20,11 @@
    "ts": 1790910652,
    "kind": "promo_match",
    "text": "Promotion match 1 of 4: D 2-2 vs unbeatables FC"
+  },
+  {
+   "ts": 1790910652,
+   "kind": "manual",
+   "text": "Status set: Division 3, promotion stage, promotion results D (Set from the Update league status form)"
   }
  ]
 }
