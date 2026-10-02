@@ -27,7 +27,7 @@ def main():
     matches, _, _ = analysis.analyse_all(load_matches(), config)
     latest = max((m for m in matches if m["type"] == "leagueMatch"), key=lambda m: m["ts"])
     results = [x for x in args.promo_results.upper().replace(",", " ").split() if x in ("W", "D", "L")]
-    points = args.points if args.points is not None else (league.target(args.division, r) if args.stage == "promotion" else 0)
+    points = args.points if args.points is not None else ((league.target(args.division, r) or 0) if args.stage == "promotion" else 0)
     lives = args.lives if args.lives is not None else r["lives"]
     old = read_json(league.SEED_FILE) or {}
     _, events, _ = league.track(matches, config) if old else (None, [], None)
@@ -35,8 +35,7 @@ def main():
         "ts": latest["ts"], "kind": "manual",
         "text": f"Status set: {league.div_name(args.division)}, {args.stage} stage" +
                 (f", promotion results {' '.join(results)}" if results else "") + f" ({args.note})"}]
-    league.write_seed(args.division, args.stage, points, lives, len(results), sum(league.PTS[x] for x in results),
-                      results, latest, history, args.note)
+    league.write_seed(args.division, args.stage, points, lives, results, latest, history, args.note)
     print(f"League status set: {league.div_name(args.division)}, {args.stage}, as of the {latest['gf']}-{latest['ga']} vs {latest['opponent']['name']}")
 
 

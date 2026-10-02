@@ -426,16 +426,19 @@
     let bar, label;
     if (t.stage === "promotion") {
       const p = t.promo;
-      label = `${p.points} / ${p.target} Pts`;
-      bar = `<div class="lad-bar"><div class="lad-fill" style="width:${Math.min(100, (p.points / p.target) * 100)}%"></div></div>`;
+      label = `${p.wins} / ${p.target_wins} Wins`;
+      bar = `<div class="lad-bar"><div class="lad-fill" style="width:${Math.min(100, (p.wins / p.target_wins) * 100)}%"></div></div>`;
+    } else if (t.stage === "points" && t.target == null) {
+      label = `${t.points} Pts · unlimited`;
+      bar = `<div class="lad-bar"><div class="lad-fill" style="width:100%"></div></div>`;
     } else if (t.stage === "points") {
-      label = `${t.points} / ${t.target} Pts${t.target_confirmed ? "" : "*"}`;
+      label = `${t.points} / ${t.target} Pts`;
       bar = `<div class="lad-bar"><div class="lad-fill" style="width:${Math.min(100, (t.points / t.target) * 100)}%"></div></div>`;
     } else {
       label = "Relegation match";
       bar = `<div class="lad-bar danger"><div class="lad-fill" style="width:100%"></div></div>`;
     }
-    const lives = t.stage === "points"
+    const lives = t.stage === "points" && t.target != null
       ? `<div class="lives" aria-label="${t.lives} of ${t.max_lives} lives left">${Array.from({ length: t.max_lives }, (_, k) => `<span class="${k < t.lives ? "on" : ""}">♥</span>`).join("")}<small>lives</small></div>` : "";
     const pips = t.stage === "promotion"
       ? `<div class="promo-pips">${t.promo.results.map((r) => `<span class="pill ${r}">${r}</span>`).join("")}${Array.from({ length: t.promo.left }, () => `<span class="pill todo">·</span>`).join("")}
@@ -454,7 +457,6 @@
         ${pips}${lives}
         <ul class="status">${t.status.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
         ${hist}
-        ${t.target_confirmed === false && t.stage === "points" ? `<p class="model-note">* Points target for this division not confirmed yet.</p>` : ""}
       </div>`;
   }
 
