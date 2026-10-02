@@ -310,3 +310,7 @@ details[open] .chev { transform: rotate(180deg); }
 .chances span { width: 16px; height: 16px; border-radius: 50%; }
 .chances .on { background: #3fa34d; }
 .chances .off { background: #111; box-shadow: inset 0 0 0 1px var(--line); }
+
+.lad-bar.gold { background: #d4af37; }
+.lad-bar.gold .lad-fill { background: #d4af37; }
+.lad-title span.promo-on { font-size: 15px; font-weight: 800; color: var(--ink); }

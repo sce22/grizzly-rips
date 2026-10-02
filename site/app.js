@@ -427,7 +427,7 @@
     if (t.stage === "promotion") {
       const p = t.promo;
       label = `${p.wins} / ${p.target_wins} Wins`;
-      bar = `<div class="lad-bar"><div class="lad-fill" style="width:${Math.min(100, (p.wins / p.target_wins) * 100)}%"></div></div>`;
+      bar = `<div class="lad-bar gold" title="Points threshold reached"><div class="lad-fill" style="width:100%"></div></div>`;
     } else if (t.stage === "points" && t.target == null) {
       label = `${t.points} Pts · unlimited`;
       bar = `<div class="lad-bar"><div class="lad-fill" style="width:100%"></div></div>`;
@@ -446,7 +446,7 @@
       ? `<ul class="lad-hist">${[...t.history].reverse().slice(0, 5).map((e) => `<li><span>${new Date(e.ts * 1000).toLocaleDateString(undefined, { month: "short", day: "numeric" })}</span>${esc(e.text || "")}</li>`).join("")}</ul>` : "";
     return `
       <div class="ladder">
-        <div class="lad-title"><b>${esc(t.division_name)}</b><span>${esc(t.stage_label)}</span></div>
+        <div class="lad-title"><b>${esc(t.division_name)}</b><span class="${t.stage === "promotion" ? "promo-on" : ""}">${esc(t.stage_label)}</span></div>
         <div class="lad-track">
           ${shield(t.division, "cur")}
           <div class="lad-seg">${bar}<span class="lad-label">${label}</span></div>
