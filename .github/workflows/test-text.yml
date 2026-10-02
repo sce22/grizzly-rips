@@ -9,6 +9,15 @@ on:
         type: choice
         options: [all, push, sms]
         default: push
+      what:
+        description: "Which message"
+        type: choice
+        options: [match notes, daily summary]
+        default: match notes
+      date:
+        description: "Daily summary date YYYY-MM-DD (blank = latest)"
+        required: false
+        default: ""
       players:
         description: "Gamertags, comma-separated (blank = just you)"
         required: false
@@ -35,5 +44,13 @@ jobs:
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           SMS_GATEWAY_ADDRESS: ${{ secrets.SMS_GATEWAY_ADDRESS }}
           NTFY_SECRET: ${{ secrets.NTFY_SECRET }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           PLAYERS: ${{ inputs.players }}
-        run: python -m fcapp.run --no-fetch --test-text --channel "${{ inputs.channel }}" --players "$PLAYERS"
+          WHAT: ${{ inputs.what }}
+          DAY: ${{ inputs.date }}
+        run: |
+          if [ "$WHAT" = "daily summary" ]; then
+            python -m fcapp.run --no-fetch --test-daily --date "$DAY" --players "$PLAYERS"
+          else
+            python -m fcapp.run --no-fetch --test-text --channel "${{ inputs.channel }}" --players "$PLAYERS"
+          fi

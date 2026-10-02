@@ -78,6 +78,12 @@ def build(config, matches, players, model_info, out=OUT, meta=None):
             key=lambda p: -p["matches"],
         ),
     }
+    from .daily import load_all as load_daily
+    summaries = load_daily()
+    index["daily"] = [{"date": d["date"], "label": d["label"], "grade": d["grade"], "games": d["games"],
+                       "record": d["record"], "gf": d["gf"], "ga": d["ga"]} for d in summaries]
+    for d in summaries:
+        _dump(out / "data" / "daily" / f"{d['date']}.json", {k: v for k, v in d.items() if k not in ("score", "phrases")})
     _dump(out / "data" / "index.json", index)
     for m in matches:
         for p in m["players"]:

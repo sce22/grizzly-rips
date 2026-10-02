@@ -80,6 +80,12 @@ Free, instant, no carrier limits, and personal to each player.
 - **Testing:** **Actions → Send test message** (choose push, sms or all).
 - Texts are off (`notify.sms: false`); push is on (`notify.push`). Flip either in `config.json`.
 
+### Daily Summary (Coach Lasso's nightly pep talk)
+- At 10:45pm CT, any day with 3+ matches (a day runs 10:45pm to 10:45pm) gets a 2-3 minute pep talk from Coach Lasso, a letter grade (A+ to F), key stats and a league-table snapshot (division, season points, what's needed for safety, promotion and the title, games left). It's pushed to everyone who played that day and saved forever under the **Daily** tab, with its own calendar.
+- The mood follows the day: from a stern talking-to that finds its way back to hope, to full-blown celebration. An internal 0-20 scale (results, margins, ratings, and how the day compares to our normal) sets the tone and the grade; the number itself is never shown.
+- Speeches are written by Claude when an `ANTHROPIC_API_KEY` repository secret is set (about 5 cents a night), otherwise by the built-in writer. Settings: `daily` and `league` in `config.json`.
+- Test it: **Actions -> Send test message**, choose *daily summary*.
+
 ### If EA blocks GitHub's servers
 EA sometimes blocks cloud servers. If the *Sync matches* run fails with `HTTP 403`, run the sync from your Mac instead (it only needs to be awake):
 ```bash

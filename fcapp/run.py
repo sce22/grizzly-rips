@@ -10,7 +10,7 @@ The always-on watcher (python -m fcapp.watch) calls the same functions.
 import argparse
 import sys
 
-from . import analysis, build_site, coach, notify, push
+from . import analysis, build_site, coach, daily, notify, push
 from .store import (load_config, load_matches, read_json, refile, save_match,
                     write_json, write_season_summaries)
 
@@ -90,6 +90,53 @@ def send_texts(config, matches, new_ids):
     write_json("notified.json", sorted(notified))
 
 
+def daily_due(config):
+    """Cheap check (no analysis) for closed days that still need a summary."""
+    return daily.due_days([{"ts": int(m["timestamp"])} for m in load_matches()], config)
+
+
+def write_daily(config, client=None):
+    """Write summaries for every closed day that's due. Tonight's gets a live
+    league-table snapshot; older backfilled days don't (EA only reports now).
+    Returns the new summaries."""
+    from .ea_client import EAClient
+
+    matches = rebuild(config)
+    cfg = daily.settings(config)
+    new = []
+    for day in daily.due_days(matches, config):
+        table = None
+        if daily.should_notify({"date": day.isoformat()}, {**config, "daily": {**config.get("daily", {}), "start_date": "1970-01-01"}}):
+            try:
+                client = client or EAClient(platform=config["club"].get("platform", "common-gen5"))
+                table = daily.standing(client, config["club"]["club_id"], config["club"]["name"], cfg["season_games"])
+            except Exception as e:
+                print(f"[daily] league table unavailable: {type(e).__name__}")
+        summary = daily.generate(day, matches, config, table)
+        daily.save(summary)
+        print(f"[daily] {summary['title']}: {summary['games']} games, grade {summary['grade']}, speech by {summary['speech_by']}")
+        new.append(summary)
+    if new:
+        rebuild(config)  # put them on the site
+    return new
+
+
+def push_daily(config, summary, names=None):
+    """Push a summary to the given players (default: everyone who played that day)."""
+    if not push.enabled():
+        print("[daily] NTFY_SECRET not set - nothing sent")
+        return 0
+    title, body, url = daily.notification(summary, config["site"]["base_url"])
+    tags = ["soccer", "trophy" if summary["score"] >= 13 else "muscle" if summary["score"] <= 6 else "handshake"]
+    sent = 0
+    for name in names or summary["active"]:
+        ok = push.send(push.topic_for(name, config["club"]["name"]), title, body,
+                       actions=[{"action": "view", "label": "Open Daily Summary", "url": url}], tags=tags)
+        print(f"{name}: daily summary push {'sent' if ok else 'FAILED'}")
+        sent += ok
+    return sent
+
+
 def latest_for(matches, name):
     return next((m for m in reversed(matches) for p in m["players"] if p["name"] == name), None)
 
@@ -124,6 +171,8 @@ def main(argv=None):
     ap.add_argument("--no-notify", action="store_true")
     ap.add_argument("--test-text", action="store_true", help="send my latest match now, to check notifications")
     ap.add_argument("--channel", choices=["all", "push", "sms"], default="all")
+    ap.add_argument("--test-daily", action="store_true", help="push the latest Daily Summary (or --date) to --players")
+    ap.add_argument("--date", default="", help="YYYY-MM-DD for --test-daily")
     ap.add_argument("--players", default="", help="comma-separated gamertags for --test-text (default: notify.my_player)")
     args = ap.parse_args(argv)
 
@@ -135,6 +184,15 @@ def main(argv=None):
     print(f"New matches: {len(new_ids)}")
     matches = rebuild(config)
 
+    if args.test_daily:
+        summaries = daily.load_all()
+        summary = next((x for x in summaries if x["date"] == args.date), None) if args.date else (summaries[-1] if summaries else None)
+        if not summary:
+            sys.exit("No Daily Summary saved for that date yet.")
+        names = [n.strip() for n in args.players.split(",") if n.strip()] or [config["notify"]["my_player"]]
+        if not push_daily(config, summary, names):
+            sys.exit(1)
+        return
     if args.test_text:
         send_tests(config, matches, args)
         return

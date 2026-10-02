@@ -5,6 +5,7 @@
   let seasonFilter = "All";
   let selectedDays = new Set();
   let calMonth = null; // "YYYY-MM"
+  let dailyMonth = null; // "YYYY-MM" for the Daily Summary calendar
 
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const slug = (n) => n.replace(/[^A-Za-z0-9]/g, "_").toLowerCase();
@@ -371,6 +372,98 @@
       </div>`;
   }
 
+  // ------------------------------------------------------- daily summary
+
+  const GRADE_CLASS = (g) => (g.startsWith("A") ? "ga" : g.startsWith("B") ? "gb" : g.startsWith("C") ? "gc" : g.startsWith("D") ? "gd" : "gf");
+  const longDate = (iso) => new Date(iso + "T12:00").toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
+
+  function dailyCalendarHTML(selected) {
+    const days = Object.fromEntries((INDEX.daily || []).map((d) => [d.date, d]));
+    const [y, mo] = dailyMonth.split("-").map(Number);
+    const lead = new Date(y, mo - 1, 1).getDay();
+    const count = new Date(y, mo, 0).getDate();
+    const months = (INDEX.daily || []).map((d) => d.date.slice(0, 7));
+    const today = dayKey(Date.now() / 1000);
+    const minMonth = months.length ? months.reduce((a, b) => (a < b ? a : b)) : dailyMonth;
+    const maxMonth = [today.slice(0, 7), ...months].reduce((a, b) => (a > b ? a : b));
+    const inMonth = (INDEX.daily || []).filter((d) => d.date.startsWith(dailyMonth));
+    const cells = [];
+    for (let i = 0; i < lead; i++) cells.push(`<span class="cal-day blank" aria-hidden="true"></span>`);
+    for (let d = 1; d <= count; d++) {
+      const key = `${dailyMonth}-${pad2(d)}`;
+      const s = days[key];
+      if (!s) { cells.push(`<span class="cal-day empty${key === today ? " today" : ""}"><b>${d}</b></span>`); continue; }
+      const r = s.record;
+      const bar = ["W", "D", "L"].filter((k) => r[k]).map((k) => `<i class="seg ${k}" style="flex:${r[k]}"></i>`).join("");
+      cells.push(`<a class="cal-day has grade-day ${GRADE_CLASS(s.grade)}${key === selected ? " on" : ""}" href="#/daily/${key}"
+        aria-label="${longDate(key)}: grade ${s.grade}, ${s.games} games, ${r.W} won, ${r.D} drawn, ${r.L} lost">
+        <b>${d}</b><span class="cal-grade">${esc(s.grade)}</span><span class="cal-bar">${bar}</span></a>`);
+    }
+    const monthName = new Date(y, mo - 1, 1).toLocaleDateString(undefined, { month: "long", year: "numeric" });
+    return `
+      <section class="card cal" aria-label="Daily Summary calendar">
+        <div class="cal-head">
+          <button type="button" class="cal-nav" data-dcal="-1" aria-label="Previous month" ${dailyMonth <= minMonth ? "disabled" : ""}>‹</button>
+          <div><b>${monthName}</b><small>${inMonth.length ? `${inMonth.length} daily summar${inMonth.length > 1 ? "ies" : "y"}` : "No summaries yet"}</small></div>
+          <button type="button" class="cal-nav" data-dcal="1" aria-label="Next month" ${dailyMonth >= maxMonth ? "disabled" : ""}>›</button>
+        </div>
+        <div class="cal-grid">
+          ${["S", "M", "T", "W", "T", "F", "S"].map((w) => `<span class="cal-dow">${w}</span>`).join("")}
+          ${cells.join("")}
+        </div>
+        <div class="cal-legend"><span>Days with 3+ games get a summary and a grade from Coach Lasso</span><span class="cal-hint">Tap a day</span></div>
+      </section>`;
+  }
+
+  function tableCard(t) {
+    if (!t || !t.division) return `<p class="model-note">League table snapshot not recorded for this day (EA only reports the live table, so snapshots start with nightly summaries).</p>`;
+    const max = t.season_games * 3;
+    const mark = (v, label, cls) => (v == null || v < 0 ? "" : `<i class="mk ${cls}" style="left:${(v / max) * 100}%"><span>${label} ${v}</span></i>`);
+    return `
+      <div class="table-card">
+        <div class="table-head"><b>${esc(t.division_name)}</b><span>${t.points} pts · ${t.played}/${t.season_games} played · ${t.remaining} left</span></div>
+        <div class="pts-bar" role="img" aria-label="${t.points} of a possible ${max} points">
+          <div class="pts-fill" style="width:${(t.points / max) * 100}%"></div>
+          <div class="pts-max" style="left:${(t.points / max) * 100}%;width:${((t.max_points - t.points) / max) * 100}%"></div>
+          ${mark(t.hold, "Stay up", "hold")}${mark(t.promotion, "Promotion", "promo")}${mark(t.title, "Title", "title")}
+        </div>
+        <div class="season-run">${t.results.map((r) => `<span class="pill ${r}">${r}</span>`).join("")}${Array.from({ length: t.remaining }, () => `<span class="pill todo">·</span>`).join("")}</div>
+        <ul class="status">${t.status.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+        <p class="model-note">Snapshot taken ${new Date(t.taken_at).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}. ${t.promotions} promotions and ${t.relegations} relegations all-time.</p>
+      </div>`;
+  }
+
+  async function dailyView(date) {
+    const list = INDEX.daily || [];
+    const chosen = date || (list.length ? list[list.length - 1].date : null);
+    if (!dailyMonth || date) dailyMonth = (chosen || dayKey(Date.now() / 1000)).slice(0, 7);
+    let body = `<div class="empty">No daily summaries yet. Play 3+ games in a day and Coach Lasso will have words for you at 10:45pm CT.</div>`;
+    if (chosen && list.some((d) => d.date === chosen)) {
+      const s = await load(`data/daily/${chosen}.json`);
+      const r = s.record;
+      body = `
+        <article class="card daily">
+          <div class="daily-head">
+            <div><div class="eyebrow">${esc(longDate(s.date))}</div><h2>${esc(s.title)}</h2>
+              <div class="ppos">${r.W}W ${r.D}D ${r.L}L · ${s.games} matches · ${s.gf} scored, ${s.ga} conceded</div></div>
+            <div class="grade ${GRADE_CLASS(s.grade)}" aria-label="Coach Lasso's grade: ${esc(s.grade)}"><small>Grade</small>${esc(s.grade)}</div>
+          </div>
+          <div class="speech">${s.speech.split("\n\n").map((p) => `<p>${esc(p)}</p>`).join("")}<p class="sig">- ${esc(s.coach || "Coach Lasso")}</p></div>
+          <div class="section-label">Key stats</div>
+          <ul class="keystats">${s.key_stats.filter((x) => !x.startsWith("Table:") && !(s.table && s.table.status.includes(x)) && !x.startsWith("Games left")).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+          <div class="section-label">League table</div>
+          ${tableCard(s.table)}
+          <div class="section-label">Players</div>
+          ${s.players.map((p) => `<a class="log-row" href="#/player/${encodeURIComponent(p.name)}"><span>${esc(p.name)}</span><span class="ppos">${p.games} gp · ${p.goals}G ${p.assists}A</span><span class="r" style="color:${ratingColor(p.avg_rating)}">${p.avg_rating.toFixed(1)}</span></a>`).join("")}
+          <div class="section-label">Matches</div>
+          ${s.matches.map((m) => `<a class="log-row" href="#/match/${m.id}"><span class="pill ${m.result}">${m.result}</span><span>${fmtTime(m.ts)} vs ${esc(m.opp)}</span><span class="r">${m.gf}-${m.ga}</span></a>`).join("")}
+          ${s.speech_by === "builtin" ? `<p class="model-note">Written by the app's built-in Coach Lasso writer.</p>` : ""}
+        </article>`;
+    }
+    app.innerHTML = `<h2>Daily Summary</h2>${dailyCalendarHTML(chosen)}${body}`;
+    app.querySelectorAll("[data-dcal]").forEach((b) => b.onclick = () => { dailyMonth = shiftMonth(dailyMonth, Number(b.dataset.dcal)); const keep = chosen; dailyView(keep).then(() => {}); });
+  }
+
   function aboutView() {
     const m = INDEX.model;
     app.innerHTML = `<div class="about">
@@ -398,7 +491,7 @@
 
   async function route() {
     const parts = location.hash.replace(/^#\/?/, "").split("/").map(decodeURIComponent);
-    const tab = parts[0] === "squad" || parts[0] === "player" ? "squad" : parts[0] === "about" ? "about" : "matches";
+    const tab = parts[0] === "squad" || parts[0] === "player" ? "squad" : parts[0] === "about" ? "about" : parts[0] === "daily" ? "daily" : "matches";
     document.querySelectorAll(".tabbar a").forEach((a) => a.classList.toggle("active", a.dataset.tab === tab));
     try {
       if (parts[0] === "m") parts[0] = "match"; // short links used in texts
@@ -410,6 +503,7 @@
       }
       if (parts[0] === "match" && parts[1]) await matchView(parts[1], parts[2]);
       else if (parts[0] === "player" && parts[1]) await playerView(parts[1]);
+      else if (parts[0] === "daily") await dailyView(parts[1]);
       else if (parts[0] === "squad") squadView();
       else if (parts[0] === "about") aboutView();
       else matchesView();

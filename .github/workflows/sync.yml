@@ -44,6 +44,7 @@ jobs:
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           SMS_GATEWAY_ADDRESS: ${{ secrets.SMS_GATEWAY_ADDRESS }}
           NTFY_SECRET: ${{ secrets.NTFY_SECRET }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           PLAYER_SMS: ${{ secrets.PLAYER_SMS }}
         run: python -m fcapp.watch --minutes 330 --interval 60
       - name: Start the next watcher

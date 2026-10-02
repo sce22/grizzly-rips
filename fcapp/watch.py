@@ -13,7 +13,8 @@ import time
 import urllib.request
 
 from .ea_client import EAClient
-from .run import fetch, rebuild, send_texts
+from .run import daily_due, fetch, push_daily, rebuild, send_texts, write_daily
+from . import daily
 from .store import load_config
 
 BOT = "fc-sync-bot"
@@ -89,6 +90,16 @@ def main():
             commit_and_push("Record texts sent")
         elif refresh_meta:
             commit_and_push("Refresh club info")
+
+        # Nightly Daily Summary (10:45pm CT) once a day with enough games closes
+        if daily_due(config):
+            summaries = write_daily(config, client)
+            if summaries:
+                commit_and_push(f"Daily summary {', '.join(x['date'] for x in summaries)}")
+                for x in summaries:
+                    if daily.should_notify(x, config):
+                        wait_until_live(config["site"]["base_url"] + f"data/daily/{x['date']}.json")
+                        push_daily(config, x)
 
         if time.time() - last_upstream > 600:
             last_upstream = time.time()
