@@ -314,5 +314,3 @@ details[open] .chev { transform: rotate(180deg); }
 .lad-bar.gold { background: #d4af37; }
 .lad-bar.gold .lad-fill { background: #d4af37; }
 .lad-title span.promo-on { font-size: 15px; font-weight: 800; color: var(--ink); }
-
-.form-link { display: inline-block; padding: 10px 14px; border-radius: 10px; background: var(--primary); color: var(--on-primary); font-weight: 700; text-decoration: none; }
