@@ -32,7 +32,6 @@ def settings(config):
         "send_at": time.fromisoformat(d.get("send_at", "22:45")),
         "min_games": d.get("min_games", 3),
         "start_date": d.get("start_date", "1970-01-01"),
-        "season_games": config.get("league", {}).get("season_games", 10),
     }
 
 
@@ -93,73 +92,8 @@ def tone_for(score):
 
 
 # ------------------------------------------------------------ league table
-
-def standing(client, club_id, club_name, season_games):
-    """Where we stand right now in EA's league: division, this season's results
-    and the points we need. EA only reports the current moment, so each daily
-    summary stores the snapshot taken when it was written."""
-    stats = (client._get("clubs/overallStats", clubIds=club_id) or [{}])[0]
-    search = client._get("allTimeLeaderboard/search", clubName=club_name) or []
-    me = next((c for c in search if str(c.get("clubId")) == str(club_id)), {})
-    division = int(me.get("currentDivision") or 0) or None
-    thresholds = (client._get("settings") or {}).get(str(division), {}) if division else {}
-    codes = [int(stats.get(f"lastMatch{i}", -1)) for i in range(season_games)]
-    played = [c for c in codes if c != -1]
-    w, l, d = played.count(1), played.count(2), played.count(3)
-    pts = 3 * w + d
-    remaining = season_games - len(played)
-    out = {
-        "division": division, "division_name": thresholds.get("divisionName") or (f"Division {division}" if division else None),
-        "season_games": season_games, "played": len(played), "remaining": remaining,
-        "record": {"W": w, "D": d, "L": l}, "points": pts, "max_points": pts + 3 * remaining,
-        "results": ["W" if c == 1 else "L" if c == 2 else "D" for c in reversed(played)],  # oldest first
-        "hold": thresholds.get("pointsToHoldDivision"), "promotion": thresholds.get("pointsForPromotion"),
-        "title": thresholds.get("pointsToTitle"),
-        "promotions": int(stats.get("promotions") or 0), "relegations": int(stats.get("relegations") or 0),
-        "skill_rating": int(stats.get("skillRating") or 0) or None,
-        "playoff_games": int(stats.get("gamesPlayedPlayoff") or 0),
-        "taken_at": datetime.now(ZoneInfo("America/Chicago")).isoformat(timespec="minutes"),
-    }
-    out["status"] = table_status(out)
-    return out
-
-
-def _need(target, pts, remaining):
-    """(points still needed, wins needed, reachable?)"""
-    gap = max(0, target - pts)
-    return gap, -(-gap // 3), gap <= 3 * remaining
-
-
-def table_status(t):
-    """Plain-English lines about promotion, title and relegation."""
-    lines, pts, rem = [], t["points"], t["remaining"]
-    if t.get("promotion") is not None:
-        gap, wins, ok = _need(t["promotion"], pts, rem)
-        if gap == 0:
-            lines.append(f"Promotion secured ({pts}/{t['promotion']} pts)")
-        elif ok:
-            lines.append(f"Promotion: {gap} more pts needed ({t['promotion']} total), about {_plural(wins, 'win')} from {_plural(rem, 'game')} left")
-        else:
-            lines.append(f"Promotion out of reach this season ({t['promotion']} pts needed, max possible {t['max_points']})")
-    if t.get("title") is not None:
-        gap, wins, ok = _need(t["title"], pts, rem)
-        if gap == 0:
-            lines.append(f"Division title clinched ({t['title']} pts)")
-        elif ok:
-            lines.append(f"Title: {gap} more pts for the title ({t['title']} total)")
-    if t.get("hold") is not None and t["hold"] >= 0:
-        gap, wins, ok = _need(t["hold"], pts, rem)
-        if gap == 0:
-            lines.append(f"Safe from relegation ({pts}/{t['hold']} pts)")
-        elif ok:
-            lines.append(f"Safety: {gap} more pts to stay up ({t['hold']} total) with {_plural(rem, 'chance')} left")
-        else:
-            lines.append(f"Relegation can't be avoided this season ({t['hold']} pts needed)")
-    elif t.get("hold") == -1:
-        lines.append("No relegation from this division")
-    if t["playoff_games"]:
-        lines.append(f"Playoff matches played: {t['playoff_games']}")
-    return lines
+# The ladder (division, points phase, promotion/relegation matches) comes from
+# fcapp/league.py; EA's own division fields still use FC's old format.
 
 
 def _plural(n, word, plural=None):
@@ -238,10 +172,9 @@ def key_stats(s):
         p = s["players"][0]
         lines.append(f"Player of the day: {p['name']} ({p['avg_rating']:.1f} avg, {_plural(p['goals'], 'goal')}, {_plural(p['assists'], 'assist')})")
     t = s.get("table")
-    if t and t.get("division"):
-        lines.append(f"Table: {t['division_name']} · {t['points']} pts after {t['played']}/{t['season_games']} games ({t['record']['W']}W {t['record']['D']}D {t['record']['L']}L)")
+    if t:
+        lines.append(f"League: {t['stage_label']}")
         lines += t["status"]
-        lines.append(f"Games left this season: {t['remaining']}")
     return lines
 
 
@@ -268,9 +201,8 @@ def claude_speech(summary, tone):
     facts["club_name"] = summary.get("club")
     facts["main_team_issue"] = pb.TAG_TITLES.get(summary["team_issue"]) if summary.get("team_issue") else None
     facts["coaching_points_for_that_issue"] = pb.tips_for(summary["team_issue"], "_", 4) if summary.get("team_issue") else []
-    facts["league_table"] = {"division": summary["table"]["division_name"], "points": summary["table"]["points"],
-                             "played": summary["table"]["played"], "remaining": summary["table"]["remaining"],
-                             "status": summary["table"]["status"]} if summary.get("table") else None
+    facts["league_ladder"] = {"where_we_are": summary["table"]["spoken"], "status": summary["table"]["status"],
+                              "recent_ladder_events": [e.get("text") for e in summary["table"]["history"][-4:]]} if summary.get("table") else None
     try:
         client = anthropic.Anthropic()
         response = client.beta.messages.create(
@@ -346,9 +278,9 @@ STORY = {
 FOCUS = ["Now, the one thing we fix before next time: {issue}. {tip}",
          "If we work on one thing, let it be {issue}. Here's how: {tip}",
          "Homework, and yes, I'm assigning homework: {issue}. {tip}"]
-TABLE = ["Where does that leave us? We're in {div} with {pts} points from {played} games this season, {rem} left to play. {status}.",
-         "A word on the table, because the table never lies: {div}, {pts} points, {played} played, {rem} to go. {status}.",
-         "League check: {pts} points in {div} with {rem} games remaining. {status}."]
+TABLE = ["Where does that leave us? {spoken}. Nobody said climbing was easy, but the view's worth it.",
+         "A word on the ladder, because the ladder never lies: {spoken}. I like our chances. I always like our chances.",
+         "League check: {spoken}. That's not pressure, that's an invitation."]
 CLOSE = {
     "low": ["So tonight, be a goldfish about the scoreline. Tomorrow, we come back and we fix it together. I still believe in this team. Heck, I believe in it more after a day like this, because I know how bad you want it.",
             "I'm not giving up on this group, so you don't get to either. Go home, rest up, and come back hungry. We're gonna be alright. Better than alright."],
@@ -428,9 +360,8 @@ def builtin_speech(s, rotation):
         tips = pb.tips_for(s["team_issue"], "_", 12)
         paras.append(pick("d_focus", FOCUS).format(issue=pb.TAG_TITLES[s["team_issue"]].lower(), tip=pick("t_" + s["team_issue"], tips)))
     t = s.get("table")
-    if t and t.get("division") and t["status"]:
-        paras.append(pick("d_table", TABLE).format(div=t["division_name"], pts=t["points"], played=t["played"],
-                                                   rem=t["remaining"], status=t["status"][0]))
+    if t and t["status"]:
+        paras.append(pick("d_table", TABLE).format(spoken=t["spoken"]))
     paras.append(pick("d_rally_" + mood, RALLY[mood]))
     paras.append(pick("d_close_" + mood, CLOSE[mood]))
     return _an("\n\n".join(paras)), sorted(pick.used)

@@ -155,7 +155,8 @@
             <div class="score">${m.gf} – ${m.ga}</div>
           </a>`).join("");
     }).join("");
-    app.innerHTML = `<div class="chips">${chips}</div>${calendarHTML(pool)}${selection}${body || `<div class="empty">No matches yet. Play a game and check back soon.</div>`}`;
+    const ladder = INDEX.league ? `<section class="card">${ladderCard(INDEX.league, { history: false })}</section>` : "";
+    app.innerHTML = `<div class="chips">${chips}</div>${ladder}${calendarHTML(pool)}${selection}${body || `<div class="empty">No matches yet. Play a game and check back soon.</div>`}`;
     app.querySelectorAll("[data-season]").forEach((b) => b.onclick = () => {
       seasonFilter = b.dataset.season;
       selectedDays.clear();
@@ -415,23 +416,49 @@
       </section>`;
   }
 
-  function tableCard(t) {
-    if (!t || !t.division) return `<p class="model-note">League table snapshot not recorded for this day (EA only reports the live table, so snapshots start with nightly summaries).</p>`;
-    const max = t.season_games * 3;
-    const mark = (v, label, cls) => (v == null || v < 0 ? "" : `<i class="mk ${cls}" style="left:${(v / max) * 100}%"><span>${label} ${v}</span></i>`);
+  const DIVS = ["5", "4", "3", "2", "1", "Elite"];
+  const shield = (d, cls = "") => `<span class="shield ${cls}" aria-label="${d === "Elite" ? "Elite" : "Division " + d}">${d === "Elite" ? "E" : d}</span>`;
+
+  function ladderCard(t, opts = {}) {
+    if (!t) return `<p class="model-note">League ladder not tracked yet for this day (tracking starts Oct 1, 10:10 PM).</p>`;
+    const i = DIVS.indexOf(t.division);
+    const next = DIVS[i + 1], after = DIVS[i + 2];
+    let bar, label;
+    if (t.stage === "promotion") {
+      const p = t.promo;
+      label = `${p.points} / ${p.target} Pts`;
+      bar = `<div class="lad-bar"><div class="lad-fill" style="width:${Math.min(100, (p.points / p.target) * 100)}%"></div></div>`;
+    } else if (t.stage === "points") {
+      label = `${t.points} / ${t.target} Pts${t.target_confirmed ? "" : "*"}`;
+      bar = `<div class="lad-bar"><div class="lad-fill" style="width:${Math.min(100, (t.points / t.target) * 100)}%"></div></div>`;
+    } else {
+      label = "Relegation match";
+      bar = `<div class="lad-bar danger"><div class="lad-fill" style="width:100%"></div></div>`;
+    }
+    const lives = t.stage === "points"
+      ? `<div class="lives" aria-label="${t.lives} of ${t.max_lives} lives left">${Array.from({ length: t.max_lives }, (_, k) => `<span class="${k < t.lives ? "on" : ""}">♥</span>`).join("")}<small>lives</small></div>` : "";
+    const pips = t.stage === "promotion"
+      ? `<div class="promo-pips">${t.promo.results.map((r) => `<span class="pill ${r}">${r}</span>`).join("")}${Array.from({ length: t.promo.left }, () => `<span class="pill todo">·</span>`).join("")}
+           <small>${t.promo.wins_needed} win${t.promo.wins_needed === 1 ? "" : "s"} needed from ${t.promo.left}</small></div>` : "";
+    const hist = opts.history !== false && t.history && t.history.length
+      ? `<ul class="lad-hist">${[...t.history].reverse().slice(0, 5).map((e) => `<li><span>${new Date(e.ts * 1000).toLocaleDateString(undefined, { month: "short", day: "numeric" })}</span>${esc(e.text || "")}</li>`).join("")}</ul>` : "";
     return `
-      <div class="table-card">
-        <div class="table-head"><b>${esc(t.division_name)}</b><span>${t.points} pts · ${t.played}/${t.season_games} played · ${t.remaining} left</span></div>
-        <div class="pts-bar" role="img" aria-label="${t.points} of a possible ${max} points">
-          <div class="pts-fill" style="width:${(t.points / max) * 100}%"></div>
-          <div class="pts-max" style="left:${(t.points / max) * 100}%;width:${((t.max_points - t.points) / max) * 100}%"></div>
-          ${mark(t.hold, "Stay up", "hold")}${mark(t.promotion, "Promotion", "promo")}${mark(t.title, "Title", "title")}
+      <div class="ladder">
+        <div class="lad-title"><b>${esc(t.division_name)}</b><span>${esc(t.stage_label)}</span></div>
+        <div class="lad-track">
+          ${shield(t.division, "cur")}
+          <div class="lad-seg">${bar}<span class="lad-label">${label}</span></div>
+          ${next ? shield(next, "next") : ""}
+          ${after ? `<div class="lad-seg ghost"><div class="lad-bar"></div></div>${shield(after, "ghost")}` : ""}
         </div>
-        <div class="season-run">${t.results.map((r) => `<span class="pill ${r}">${r}</span>`).join("")}${Array.from({ length: t.remaining }, () => `<span class="pill todo">·</span>`).join("")}</div>
+        ${pips}${lives}
         <ul class="status">${t.status.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
-        <p class="model-note">Snapshot taken ${new Date(t.taken_at).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}. ${t.promotions} promotions and ${t.relegations} relegations all-time.</p>
+        ${hist}
+        ${t.target_confirmed === false && t.stage === "points" ? `<p class="model-note">* Points target for this division not confirmed yet.</p>` : ""}
       </div>`;
   }
+
+  const tableCard = (t) => ladderCard(t);
 
   async function dailyView(date) {
     const list = INDEX.daily || [];
@@ -450,8 +477,8 @@
           </div>
           <div class="speech">${s.speech.split("\n\n").map((p) => `<p>${esc(p)}</p>`).join("")}<p class="sig">- ${esc(s.coach || "Coach Lasso")}</p></div>
           <div class="section-label">Key stats</div>
-          <ul class="keystats">${s.key_stats.filter((x) => !x.startsWith("Table:") && !(s.table && s.table.status.includes(x)) && !x.startsWith("Games left")).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
-          <div class="section-label">League table</div>
+          <ul class="keystats">${s.key_stats.filter((x) => !x.startsWith("League:") && !x.startsWith("Table:") && !(s.table && s.table.status.includes(x)) && !x.startsWith("Games left")).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+          <div class="section-label">League ladder at the end of the day</div>
           ${tableCard(s.table)}
           <div class="section-label">Players</div>
           ${s.players.map((p) => `<a class="log-row" href="#/player/${encodeURIComponent(p.name)}"><span>${esc(p.name)}</span><span class="ppos">${p.games} gp · ${p.goals}G ${p.assists}A</span><span class="r" style="color:${ratingColor(p.avg_rating)}">${p.avg_rating.toFixed(1)}</span></a>`).join("")}

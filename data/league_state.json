@@ -1,0 +1,25 @@
+{
+ "note": "Confirmed by tuxedo_slide on Oct 1: Division 3 (12 pts reached), promotion matches to Division 2, 1 played (2-2 draw), 3 left, need 3 wins",
+ "as_of_ts": 1790910652,
+ "as_of_match": "55752127900301",
+ "set_at": "2026-10-01T22:54-05:00",
+ "state": {
+  "division": "3",
+  "stage": "promotion",
+  "points": 12,
+  "lives": 3,
+  "promo_played": 1,
+  "promo_points": 1,
+  "promo_results": [
+   "D"
+  ],
+  "phase_results": []
+ },
+ "history": [
+  {
+   "ts": 1790910652,
+   "kind": "promo_match",
+   "text": "Promotion match 1: D 2-2 vs unbeatables FC"
+  }
+ ]
+}

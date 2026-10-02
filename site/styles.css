@@ -278,3 +278,30 @@ details[open] .chev { transform: rotate(180deg); }
 .grade-day .cal-grade { order: 3; }
 .mk.promo span { bottom: auto; top: 100%; margin: 2px 0 0; transform: translateX(-50%); }
 .pts-bar { margin-bottom: 26px; }
+
+/* league ladder (in-game style) */
+.ladder { display: grid; gap: 10px; }
+.lad-title { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.lad-title b { font: 800 20px var(--display); text-transform: uppercase; }
+.lad-title span { font-size: 13px; color: var(--muted); font-weight: 600; }
+.lad-track { display: flex; align-items: center; gap: 6px; padding: 6px 0 16px; }
+.shield { flex: none; width: 42px; height: 48px; display: grid; place-items: center; font: 800 22px var(--display);
+  color: #f3dc8e; background: linear-gradient(160deg, #3a3a3a, #141414);
+  clip-path: polygon(50% 0, 100% 14%, 100% 58%, 50% 100%, 0 58%, 0 14%); }
+.shield.cur { width: 54px; height: 62px; font-size: 28px; background: linear-gradient(160deg, #5b4d2c, #17140c); }
+.shield.ghost { opacity: .45; width: 34px; height: 40px; font-size: 18px; }
+.lad-seg { position: relative; flex: 1; min-width: 0; }
+.lad-seg.ghost { flex: .55; opacity: .45; }
+.lad-bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.lad-fill { height: 100%; background: var(--secondary); }
+.lad-bar.danger .lad-fill { background: var(--bad); }
+.lad-label { position: absolute; left: 50%; top: 10px; transform: translateX(-50%); white-space: nowrap; font-weight: 700; font-size: 13px; color: var(--good); }
+.promo-pips { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.promo-pips .pill { width: 26px; height: 26px; }
+.promo-pips small { margin-left: 6px; font-weight: 700; font-size: 13px; }
+.lives { display: flex; align-items: center; gap: 3px; font-size: 18px; color: var(--line); }
+.lives .on { color: var(--bad); }
+.lives small { font-size: 12px; color: var(--muted); margin-left: 4px; }
+.lad-hist { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 13px; }
+.lad-hist li { display: grid; grid-template-columns: 52px 1fr; gap: 6px; }
+.lad-hist span { color: var(--muted); }

@@ -41,7 +41,22 @@
     "sms": false
   },
   "league": {
-    "season_games": 10
+    "_comment": "FC 27 ladder rules. Confirmed: Div 5 target 7, Div 3 target 12, relegation draw = stay up. Others are best guesses - correct as you learn them.",
+    "rules": {
+      "points_targets": {
+        "5": 7,
+        "4": 9,
+        "3": 12,
+        "2": 12,
+        "1": 12,
+        "Elite": 12
+      },
+      "lives": 3,
+      "promotion_matches": 4,
+      "promotion_points": 10,
+      "promotion_matches_from": "3",
+      "relegation_win_needed": false
+    }
   },
   "daily": {
     "_comment": "Coach Lasso's nightly pep talk. A day runs 10:45pm-10:45pm CT; sent to that day's players when 3+ games were played.",

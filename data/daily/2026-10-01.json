@@ -197,42 +197,47 @@
   }
  ],
  "table": {
-  "division": 4,
-  "division_name": "Division 4",
-  "season_games": 10,
-  "played": 5,
-  "remaining": 5,
-  "record": {
-   "W": 2,
-   "D": 2,
-   "L": 1
+  "division": "3",
+  "division_name": "Division 3",
+  "next_name": "Division 2",
+  "stage": "promotion",
+  "points": 12,
+  "target": 12,
+  "target_confirmed": true,
+  "lives": 3,
+  "max_lives": 3,
+  "phase_results": [],
+  "taken_at": "2026-10-01T22:45-05:00",
+  "promo": {
+   "played": 1,
+   "total": 4,
+   "points": 1,
+   "target": 10,
+   "results": [
+    "D"
+   ],
+   "left": 3,
+   "need": 9,
+   "wins_needed": 3
   },
-  "points": 8,
-  "max_points": 23,
-  "results": [
-   "D",
-   "W",
-   "L",
-   "W",
-   "D"
-  ],
-  "hold": 10,
-  "promotion": 16,
-  "title": 19,
-  "promotions": 2,
-  "relegations": 0,
-  "skill_rating": 1526,
-  "playoff_games": 0,
-  "taken_at": "2026-10-01T22:35-05:00",
+  "stage_label": "Promotion matches → Division 2",
   "status": [
-   "Promotion: 8 more pts needed (16 total), about 3 wins from 5 games left",
-   "Title: 11 more pts for the title (19 total)",
-   "Safety: 2 more pts to stay up (10 total) with 5 chances left"
+   "Promotion matches: 1 of 4 played (D), 1/10 pts",
+   "Need 9 pts from 3 matches: 3 wins (every one counts)",
+   "Miss out and it's a relegation match to stay in Division 3"
+  ],
+  "spoken": "We're in Division 3, playing promotion matches for Division 2. 1 down, 3 to go, and we need 9 more points, which means 3 wins",
+  "history": [
+   {
+    "ts": 1790910652,
+    "kind": "promo_match",
+    "text": "Promotion match 1: D 2-2 vs unbeatables FC"
+   }
   ]
  },
  "club": "Grizzly Rips",
  "speech_by": "builtin",
- "speech": "Well, that was a day, wasn't it? A real choose-your-own-adventure kind of day.\n\nLet's do the arithmetic first, because math doesn't have feelings: 15 games, 5 wins, 4 draws, 6 losses, 39 scored and 33 conceded.\n\nThe high point? That 6-2 against WhoDisBic. That one I'm gonna play on loop in my head while I brush my teeth. The 0-4 against Project 2030 is the one we learn the most from, and lessons are only expensive if we waste 'em. It wasn't a bad day, and it wasn't a great one. It was a 'we're figuring it out' day, and I'll take a figuring-it-out day over a giving-up day every single time.\n\nWhen we kept it simple and talked to each other, we were tough to beat. When we tried to win it all with one pass, we gave it right back. That's not a talent problem. That's a patience problem, and patience is learnable.\n\nPhogsToffees, 13 goals, 13 assists, 23 key passes across 15 games and a 7.9 average. That's the kind of day that makes a coach misty. BellyTb1: 12 goals, 9 assists, 10 key passes, 7.8 average. You were the steady heartbeat of this team today. And tuxedo_slide, 8 goals, 2 assists, 11 key passes and a 7.1 average over 10 games. Don't you dare let anybody tell you that didn't matter.\n\nPhogsToffees and BellyTb1 combined for 25 goals today. When those two connect, everybody else gets more room. Let's feed that.\n\nA garden doesn't grow in one afternoon. You water it, you pull a few weeds, and one day you look up and you've got tomatoes. We're in the watering part.\n\nNow, the one thing we fix before next time: defensive work rate. Second-ball awareness: after a header or clearance, be the first one to the loose ball.\n\nA word on the table, because the table never lies: Division 4, 8 points, 5 played, 5 to go. Promotion: 8 more pts needed (16 total), about 3 wins from 5 games left.\n\nI'd rather coach a team that's figuring it out than one that thinks it already has. Stay hungry, stay humble, stay together.\n\nProud of the fight, hungry for more. Get some sleep, drink some water, and let's go turn a figuring-it-out day into a figured-it-out week.",
+ "speech": "Well, that was a day, wasn't it? A real choose-your-own-adventure kind of day.\n\nLet's do the arithmetic first, because math doesn't have feelings: 15 games, 5 wins, 4 draws, 6 losses, 39 scored and 33 conceded.\n\nThe high point? That 6-2 against WhoDisBic. That one I'm gonna play on loop in my head while I brush my teeth. The 0-4 against Project 2030 is the one we learn the most from, and lessons are only expensive if we waste 'em. It wasn't a bad day, and it wasn't a great one. It was a 'we're figuring it out' day, and I'll take a figuring-it-out day over a giving-up day every single time.\n\nWhen we kept it simple and talked to each other, we were tough to beat. When we tried to win it all with one pass, we gave it right back. That's not a talent problem. That's a patience problem, and patience is learnable.\n\nPhogsToffees, 13 goals, 13 assists, 23 key passes across 15 games and a 7.9 average. That's the kind of day that makes a coach misty. BellyTb1: 12 goals, 9 assists, 10 key passes, 7.8 average. You were the steady heartbeat of this team today. And tuxedo_slide, 8 goals, 2 assists, 11 key passes and a 7.1 average over 10 games. Don't you dare let anybody tell you that didn't matter.\n\nPhogsToffees and BellyTb1 combined for 25 goals today. When those two connect, everybody else gets more room. Let's feed that.\n\nA garden doesn't grow in one afternoon. You water it, you pull a few weeds, and one day you look up and you've got tomatoes. We're in the watering part.\n\nNow, the one thing we fix before next time: defensive work rate. Second-ball awareness: after a header or clearance, be the first one to the loose ball.\n\nA word on the ladder, because the ladder never lies: We're in Division 3, playing promotion matches for Division 2. 1 down, 3 to go, and we need 9 more points, which means 3 wins. I like our chances. I always like our chances.\n\nI'd rather coach a team that's figuring it out than one that thinks it already has. Stay hungry, stay humble, stay together.\n\nProud of the fight, hungry for more. Get some sleep, drink some water, and let's go turn a figuring-it-out day into a figured-it-out week.",
  "phrases": [
   "d_best:0",
   "d_close_mid:0",
@@ -254,12 +259,11 @@
  "key_stats": [
   "Day: 5W 4D 6L from 15 matches · 39 scored, 33 conceded",
   "Player of the day: PhogsToffees (7.9 avg, 13 goals, 13 assists)",
-  "Table: Division 4 · 8 pts after 5/10 games (2W 2D 1L)",
-  "Promotion: 8 more pts needed (16 total), about 3 wins from 5 games left",
-  "Title: 11 more pts for the title (19 total)",
-  "Safety: 2 more pts to stay up (10 total) with 5 chances left",
-  "Games left this season: 5"
+  "League: Promotion matches → Division 2",
+  "Promotion matches: 1 of 4 played (D), 1/10 pts",
+  "Need 9 pts from 3 matches: 3 wins (every one counts)",
+  "Miss out and it's a relegation match to stay in Division 3"
  ],
  "coach": "Coach Lasso",
- "generated_at": "2026-10-01T22:35-05:00"
+ "generated_at": "2026-10-01T22:55-05:00"
 }

@@ -156,6 +156,7 @@ def normalise(raw, club_id, seasons, roster):
         "gf": gf,
         "ga": ga,
         "dnf": _i(ours.get("winnerByDnf")) == 1,
+        "ea_result": _i(ours.get("result")),  # bit 16384 = EA flags this match as reaching the league target
         "opponent": {
             "name": opp.get("details", {}).get("name", "Opponent"),
             "id": opp_id,

@@ -10,7 +10,7 @@ The always-on watcher (python -m fcapp.watch) calls the same functions.
 import argparse
 import sys
 
-from . import analysis, build_site, coach, daily, notify, push
+from . import analysis, build_site, coach, daily, league, notify, push
 from .store import (load_config, load_matches, read_json, refile, save_match,
                     write_json, write_season_summaries)
 
@@ -96,22 +96,13 @@ def daily_due(config):
 
 
 def write_daily(config, client=None):
-    """Write summaries for every closed day that's due. Tonight's gets a live
-    league-table snapshot; older backfilled days don't (EA only reports now).
-    Returns the new summaries."""
-    from .ea_client import EAClient
-
+    """Write summaries for every closed day that's due, each with the league
+    ladder as it stood when that day closed. Returns the new summaries."""
     matches = rebuild(config)
     cfg = daily.settings(config)
     new = []
     for day in daily.due_days(matches, config):
-        table = None
-        if daily.should_notify({"date": day.isoformat()}, {**config, "daily": {**config.get("daily", {}), "start_date": "1970-01-01"}}):
-            try:
-                client = client or EAClient(platform=config["club"].get("platform", "common-gen5"))
-                table = daily.standing(client, config["club"]["club_id"], config["club"]["name"], cfg["season_games"])
-            except Exception as e:
-                print(f"[daily] league table unavailable: {type(e).__name__}")
+        table = league.snapshot(matches, config, until_ts=daily.window(day, cfg)[1].timestamp())
         summary = daily.generate(day, matches, config, table)
         daily.save(summary)
         print(f"[daily] {summary['title']}: {summary['games']} games, grade {summary['grade']}, speech by {summary['speech_by']}")

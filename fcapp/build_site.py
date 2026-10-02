@@ -78,6 +78,8 @@ def build(config, matches, players, model_info, out=OUT, meta=None):
             key=lambda p: -p["matches"],
         ),
     }
+    from .league import snapshot as league_snapshot
+    index["league"] = league_snapshot(matches, config)
     from .daily import load_all as load_daily
     summaries = load_daily()
     index["daily"] = [{"date": d["date"], "label": d["label"], "grade": d["grade"], "games": d["games"],
