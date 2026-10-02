@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 19,
+ "matches_played": 20,
  "record": {
-  "W": 8,
+  "W": 9,
   "D": 4,
   "L": 7
  },
- "goals_for": 45,
+ "goals_for": 49,
  "goals_against": 42,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-02T00:05:29+00:00",
+ "last_match": "2026-10-02T01:41:02+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -143,6 +143,13 @@
    "result": "W",
    "score": "4-2",
    "opponent": "Inter Aliens"
+  },
+  {
+   "id": "55436668970376",
+   "date": "2026-10-02T01:41:02+00:00",
+   "result": "W",
+   "score": "4-0",
+   "opponent": "unbeatables FC"
   }
  ]
 }
