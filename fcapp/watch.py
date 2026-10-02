@@ -114,7 +114,7 @@ def main():
         elif refresh_meta:
             commit_and_push("Refresh club info")
 
-        # Nightly Daily Summary (10:45pm CT) once a day with enough games closes
+        # Nightly Daily Summary (11:00pm CT) once a day with enough games closes
         if daily_due(config):
             summaries = write_daily(config, client)
             if summaries:

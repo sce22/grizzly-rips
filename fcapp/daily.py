@@ -1,7 +1,7 @@
 """Nightly Daily Summary: Coach Lasso's pep talk, a grade, key stats and where
 we stand in the league table.
 
-A "day" runs from 10:45pm CT the previous night to 10:45pm CT (the send time),
+A "day" runs from 11pm CT the previous night to 11pm CT (the send time),
 so late-night matches roll into the next day's summary. A summary is written
 only for days with at least `daily.min_games` matches, and goes to everyone
 who played that day. Each summary is saved for good in data/daily/<date>.json.
@@ -29,7 +29,7 @@ def settings(config):
     d = config.get("daily", {})
     return {
         "tz": ZoneInfo(d.get("timezone", "America/Chicago")),
-        "send_at": time.fromisoformat(d.get("send_at", "22:45")),
+        "send_at": time.fromisoformat(d.get("send_at", "23:00")),
         "min_games": d.get("min_games", 3),
         "start_date": d.get("start_date", "1970-01-01"),
     }
