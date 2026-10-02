@@ -790,3 +790,9 @@ def build_profile(p, rotation):
     for x in p["themes"]["strengths"]:
         frame = pick("g_" + x["tag"], GOOD[x["tag"]]) if x["tag"] in GOOD else ""
         x["coach"] = f"{frame} {pick('p_str', THEME_STRENGTH).format(rate=x['rate'])}".strip()
+
+
+# Extra phrasing (about 5x the pools above), merged append-only
+import sys as _sys  # noqa: E402
+from . import lasso_more as _lasso_more  # noqa: E402
+_lasso_more.merge(_sys.modules[__name__])

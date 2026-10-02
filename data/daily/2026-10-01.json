@@ -238,24 +238,24 @@
  },
  "club": "Grizzly Rips",
  "speech_by": "builtin",
- "speech": "Well, that was a day, wasn't it? A real choose-your-own-adventure kind of day.\n\nLet's do the arithmetic first, because math doesn't have feelings: 15 games, 5 wins, 4 draws, 6 losses, 39 scored and 33 conceded.\n\nThe high point? That 6-2 against WhoDisBic. That one I'm gonna play on loop in my head while I brush my teeth. The 0-4 against Project 2030 is the one we learn the most from, and lessons are only expensive if we waste 'em. It wasn't a bad day, and it wasn't a great one. It was a 'we're figuring it out' day, and I'll take a figuring-it-out day over a giving-up day every single time.\n\nWhen we kept it simple and talked to each other, we were tough to beat. When we tried to win it all with one pass, we gave it right back. That's not a talent problem. That's a patience problem, and patience is learnable.\n\nPhogsToffees, 13 goals, 13 assists, 23 key passes across 15 games and a 7.9 average. That's the kind of day that makes a coach misty. BellyTb1: 12 goals, 9 assists, 10 key passes, 7.8 average. You were the steady heartbeat of this team today. And tuxedo_slide, 8 goals, 2 assists, 11 key passes and a 7.1 average over 10 games. Don't you dare let anybody tell you that didn't matter.\n\nPhogsToffees and BellyTb1 combined for 25 goals today. When those two connect, everybody else gets more room. Let's feed that.\n\nA garden doesn't grow in one afternoon. You water it, you pull a few weeds, and one day you look up and you've got tomatoes. We're in the watering part.\n\nNow, the one thing we fix before next time: defensive work rate. Second-ball awareness: after a header or clearance, be the first one to the loose ball.\n\nA word on the ladder, because the ladder never lies: We're in Division 3, playing promotion matches for Division 2. 1 down, 3 to go, and we need 3 more wins. I like our chances. I always like our chances.\n\nI'd rather coach a team that's figuring it out than one that thinks it already has. Stay hungry, stay humble, stay together.\n\nProud of the fight, hungry for more. Get some sleep, drink some water, and let's go turn a figuring-it-out day into a figured-it-out week.",
+ "speech": "Team, today was a little bit of everything.\n\nTale of the tape: 15 games, 39 goals scored, 33 let in. 5 wins, 4 draws, 6 losses.\n\nThat 6-2 over WhoDisBic was a clinic. Let's teach it to ourselves again. The 0-4 loss to Project 2030 showed us exactly what to fix. The difference between our wins and our losses today was focus, plain and simple.\n\nMiddling days are where good teams quietly become great ones. This is that day.\n\nPhogsToffees, 13 goals, 13 assists, 23 key passes across 15 games and a 7.9 average. That's the kind of day that makes a coach misty. BellyTb1: 12 goals, 9 assists, 10 key passes, 7.8 average. You were the steady heartbeat of this team today. And tuxedo_slide, 8 goals, 2 assists, 11 key passes and a 7.1 average over 10 games. Don't you dare let anybody tell you that didn't matter.\n\nLoved the PhogsToffees-BellyTb1 connection: 25 goals.\n\nRain makes the corn grow. Today was a little rain.\n\nPriority number one: defensive work rate. Get stuck in. A won tackle is worth about 0.2 rating, and even 1 in 8 pays for the attempts.\n\nWhere does that leave us? We're in Division 3, playing promotion matches for Division 2. 1 down, 3 to go, and we need 3 more wins. Nobody said climbing was easy, but the view's worth it.\n\nI'd rather coach a team that's figuring it out than one that thinks it already has. Stay hungry, stay humble, stay together.\n\nLove the fight. Let's add the finish.",
  "phrases": [
-  "d_best:0",
-  "d_close_mid:0",
-  "d_core_mid:0",
-  "d_core_mid:2",
-  "d_focus:0",
-  "d_open_mid:1",
+  "d_best:11",
+  "d_close_mid:8",
+  "d_core_mid:12",
+  "d_core_mid:14",
+  "d_focus:10",
+  "d_open_mid:4",
   "d_rally_mid:1",
-  "d_recap:2",
-  "d_story_mid:1",
-  "d_table:1",
-  "d_team_mid:0",
-  "d_worst:2",
+  "d_recap:6",
+  "d_story_mid:5",
+  "d_table:0",
+  "d_team_mid:5",
+  "d_worst:8",
   "dp_good:0",
   "dp_good:1",
   "dp_good:2",
-  "t_defensive_work_rate:8"
+  "t_defensive_work_rate:0"
  ],
  "key_stats": [
   "Day: 5W 4D 6L from 15 matches · 39 scored, 33 conceded",
@@ -264,5 +264,5 @@
   "Must win 3 out of 3"
  ],
  "coach": "Coach Lasso",
- "generated_at": "2026-10-01T23:22-05:00"
+ "generated_at": "2026-10-01T23:36-05:00"
 }

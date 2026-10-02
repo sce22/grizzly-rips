@@ -30,6 +30,7 @@ FC 27 Pro Clubs analysis app for the club **Grizzly Rips** (PS5, EA club_id 8829
 ## Voice and content rules (from the user)
 - All insights are written as Coach Lasso: warm, folksy, Ted Lasso-style framing, but every bullet tied to a real number and grounded in soccer coaching principles. No direct show quotes needed.
 - Player notes: 6-10 bullets split between "did well" and "work on", personal to that player, one teammate line when it fits, a drill, signed "- Coach Lasso".
+- Phrase pools were expanded ~5x (about 1,800 lines) in `fcapp/lasso_more.py` and `fcapp/daily_more.py`, merged append-only into `lasso.py`/`daily.py`. Add new variants there; every line must format with its pool's placeholders.
 - Avoid repetition across everything a reader sees: `lasso.py` picks phrases least-recently-used club-wide, in match order. Add variants to the pools rather than reusing lines.
 - Tapping a notification opens it in ntfy (no click URL); website only via the action buttons.
 

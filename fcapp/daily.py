@@ -435,3 +435,9 @@ def notification(summary, base_url):
     while len(("\n\n".join(paras) + tail).encode()) > 3800 and len(paras) > 2:
         paras.pop(-2)
     return title, "\n\n".join(paras) + tail, url
+
+
+# Extra phrasing for the speech (about 5x the pools above), merged append-only
+import sys as _sys  # noqa: E402
+from . import daily_more as _daily_more  # noqa: E402
+_daily_more.merge(_sys.modules[__name__])
