@@ -16,6 +16,10 @@ FC 27 Pro Clubs analysis app for the club **Grizzly Rips** (PS5, EA club_id 8829
 - SMS code still exists but is off (`notify.sms: false`) and its secrets were deleted. Verizon email-to-text truncated at ~130 chars and dropped follow-up messages.
 - The user wants to be told explicitly, with the time (Central), whenever a test notification is sent to their phone.
 
+## Daily Summary
+- `fcapp/daily.py`: at 10:45pm CT (window 10:45pm-10:45pm) any day with 3+ matches gets a Coach Lasso pep talk (2-3 min, ~330-430 words), letter grade from an internal 0-20 scale (never shown), key stats and a league-table snapshot (EA `settings` thresholds + `overallStats.lastMatch0-9` = current 10-game season). Pushed to that day's players; saved in `data/daily/<date>.json`; shown on the Daily tab with a grade calendar. Nightly sends started 2026-10-02 (`daily.start_date`).
+- Speech by Claude (`claude-opus-5-5`, fallbacks "default") when the `ANTHROPIC_API_KEY` secret exists, else the built-in writer. Summaries are written once and never regenerated.
+
 ## Code map
 - `fcapp/ea_client.py` EA API · `store.py` archive in `data/seasons/season-NN/` (never delete) · `analysis.py` grading + rating model · `playbook.py` benchmarks/tips · `coach.py` + `lasso.py` Coach Lasso voice · `build_site.py` → `docs/` · `run.py` pipeline · `watch.py` watcher · `push.py`/`invite.py` ntfy.
 - Seasons: 5 weeks, roll over Thursday midnight Central; Season 1 = Sep 17 to Oct 22, 2026 (`config.json`).
