@@ -38,6 +38,21 @@ def commit_and_push(message):
     return False
 
 
+def pull_data_updates():
+    """Pick up data commits made elsewhere (e.g. the Update league status form,
+    which commits as the bot) so the next rebuild and notifications use them.
+    Returns "code" if someone pushed new code (the caller restarts instead),
+    "data" if data was pulled, or None if nothing changed."""
+    git("fetch", "-q", "origin", "main", check=False)
+    authors = git("log", "HEAD..origin/main", "--format=%an", check=False).split()
+    if not authors:
+        return None
+    if any(a != BOT for a in authors):
+        return "code"
+    git("pull", "-q", "--rebase", "origin", "main", check=False)
+    return "data"
+
+
 def code_changed_upstream():
     git("fetch", "-q", "origin", "main", check=False)
     authors = git("log", "HEAD..origin/main", "--format=%an", check=False).split()
@@ -67,6 +82,14 @@ def main():
     client = None
     last_meta = last_upstream = 0.0
     while time.time() < end:
+        update = pull_data_updates()
+        if update == "code":
+            print("[watch] new code pushed - exiting so the next run uses it")
+            return
+        if update == "data":
+            print("[watch] pulled a data update (e.g. league status) - rebuilding")
+            rebuild(load_config())
+            commit_and_push("Rebuild after update")
         config = load_config()
         try:
             client = client or EAClient(platform=config["club"].get("platform", "common-gen5"))

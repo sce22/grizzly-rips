@@ -38,6 +38,8 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
+      - name: Get the latest data
+        run: git pull -q --rebase origin main
       - name: Save league status and rebuild the site
         env:
           DIVISION: ${{ inputs.division }}
@@ -45,6 +47,7 @@ jobs:
           POINTS: ${{ inputs.points }}
           LIVES: ${{ inputs.lives }}
           PROMO: ${{ inputs.promo_results }}
+          NTFY_SECRET: ${{ secrets.NTFY_SECRET }}
         run: |
           args=(--division "$DIVISION" --stage "$STAGE" --promo-results "$PROMO")
           [ -n "$POINTS" ] && args+=(--points "$POINTS")

@@ -3,8 +3,12 @@
     python -m fcapp.set_league --division 3 --stage promotion --promo-results D
 
 Everything not given is derived: points-phase points default to 0, lives to
-full, promotion points from the results. The state applies as of our most
-recent league match; later matches move it forward automatically.
+full, promotion wins from the results.
+
+The status you enter is what the game shows *now*, so it applies as of the most
+recent league match EA knows about (asked live, so a match our watcher hasn't
+saved yet can't be counted twice). Every league match after that moves it
+forward automatically, and the ladder history carries over.
 """
 import argparse
 
@@ -26,6 +30,17 @@ def main():
     r = league.rules(config)
     matches, _, _ = analysis.analyse_all(load_matches(), config)
     latest = max((m for m in matches if m["type"] == "leagueMatch"), key=lambda m: m["ts"])
+    try:  # EA may already have a match the watcher hasn't saved yet
+        from .ea_client import EAClient
+        live = EAClient(platform=config["club"].get("platform", "common-gen5")).matches(config["club"]["club_id"], "leagueMatch")
+        newest = max(live, key=lambda m: int(m["timestamp"]), default=None)
+        if newest and int(newest["timestamp"]) > latest["ts"]:
+            ours = newest["clubs"][str(config["club"]["club_id"])]
+            opp = next(v for k, v in newest["clubs"].items() if k != str(config["club"]["club_id"]))
+            latest = {"id": str(newest["matchId"]), "ts": int(newest["timestamp"]), "gf": int(ours["goals"]),
+                      "ga": int(ours["goalsAgainst"]), "opponent": {"name": opp.get("details", {}).get("name", "Opponent")}}
+    except Exception as e:
+        print(f"[league] couldn't check EA for newer matches ({type(e).__name__}); using our archive")
     results = [x for x in args.promo_results.upper().replace(",", " ").split() if x in ("W", "D", "L")]
     points = args.points if args.points is not None else ((league.target(args.division, r) or 0) if args.stage == "promotion" else 0)
     lives = args.lives if args.lives is not None else r["lives"]
@@ -37,6 +52,18 @@ def main():
                 (f", promotion results {' '.join(results)}" if results else "") + f" ({args.note})"}]
     league.write_seed(args.division, args.stage, points, lives, results, latest, history, args.note)
     print(f"League status set: {league.div_name(args.division)}, {args.stage}, as of the {latest['gf']}-{latest['ga']} vs {latest['opponent']['name']}")
+
+    # Confirm on the owner's phone, showing exactly what the ladder will track from here
+    from . import push
+    if push.enabled():
+        snap = league.snapshot(matches, config)
+        body = "\n".join([f"Applies from the {latest['gf']}-{latest['ga']} vs {latest['opponent']['name']} onward; every league match after it moves the ladder forward.", ""]
+                          + [f"• {x}" for x in snap["status"]])
+        ok = push.send(push.topic_for(config["notify"]["my_player"], config["club"]["name"]),
+                       f"League status updated · {snap['stage_label']}", body,
+                       actions=[{"action": "view", "label": "Open the ladder", "url": config["site"]["base_url"] + "#/"}],
+                       tags=["clipboard"])
+        print(f"Confirmation push {'sent' if ok else 'FAILED'}")
 
 
 if __name__ == "__main__":
