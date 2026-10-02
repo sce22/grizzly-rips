@@ -363,6 +363,11 @@ def builtin_speech(s, rotation):
     if t and t["status"]:
         paras.append(pick("d_table", TABLE).format(spoken=t["spoken"]))
     paras.append(pick("d_rally_" + mood, RALLY[mood]))
+    # keep it a 2-3 minute speech (~320+ words): add more beats if it ran short
+    extra = [("d_core_", CORE), ("d_rally_", RALLY), ("d_story_", STORY), ("d_core_", CORE)]
+    while len(" ".join(paras).split()) < 320 and extra:
+        key, pool = extra.pop(0)
+        paras.insert(-1, pick(key + mood, pool[mood]))
     paras.append(pick("d_close_" + mood, CLOSE[mood]))
     return _an("\n\n".join(paras)), sorted(pick.used)
 
