@@ -1,0 +1,265 @@
+{
+ "date": "2026-10-01",
+ "label": "Thu, Oct 1",
+ "title": "Oct 1 Daily Summary",
+ "games": 15,
+ "record": {
+  "W": 5,
+  "D": 4,
+  "L": 6
+ },
+ "gf": 39,
+ "ga": 33,
+ "points": 19,
+ "club_ppg_before": 2.0,
+ "score": 7,
+ "grade": "C-",
+ "players": [
+  {
+   "name": "PhogsToffees",
+   "games": 15,
+   "goals": 13,
+   "assists": 13,
+   "key_passes": 23,
+   "tackles_won": 10,
+   "mom": 4,
+   "pos": "forward",
+   "avg_rating": 7.89,
+   "best_rating": 10.0,
+   "top_issue": "forcing_passes"
+  },
+  {
+   "name": "BellyTb1",
+   "games": 15,
+   "goals": 12,
+   "assists": 9,
+   "key_passes": 10,
+   "tackles_won": 11,
+   "mom": 3,
+   "pos": "midfielder",
+   "avg_rating": 7.79,
+   "best_rating": 10.0,
+   "top_issue": "defensive_work_rate"
+  },
+  {
+   "name": "tuxedo_slide",
+   "games": 10,
+   "goals": 8,
+   "assists": 2,
+   "key_passes": 11,
+   "tackles_won": 13,
+   "mom": 1,
+   "pos": "midfielder",
+   "avg_rating": 7.13,
+   "best_rating": 9.1,
+   "top_issue": "positioning"
+  }
+ ],
+ "active": [
+  "PhogsToffees",
+  "BellyTb1",
+  "tuxedo_slide"
+ ],
+ "mvp": "PhogsToffees",
+ "best_match": {
+  "id": "55400898500433",
+  "score": "6-2",
+  "opp": "WhoDisBic",
+  "result": "W"
+ },
+ "worst_match": {
+  "id": "55388085970142",
+  "score": "0-4",
+  "opp": "Project 2030",
+  "result": "L"
+ },
+ "team_issue": "defensive_work_rate",
+ "matches": [
+  {
+   "id": "54828349150493",
+   "ts": 1790890672,
+   "result": "W",
+   "gf": 3,
+   "ga": 0,
+   "opp": "GPFC Academy"
+  },
+  {
+   "id": "54920220400088",
+   "ts": 1790891703,
+   "result": "D",
+   "gf": 2,
+   "ga": 2,
+   "opp": "Scentless"
+  },
+  {
+   "id": "54858465460433",
+   "ts": 1790892914,
+   "result": "L",
+   "gf": 4,
+   "ga": 5,
+   "opp": "UK Chargers"
+  },
+  {
+   "id": "54840653220378",
+   "ts": 1790894140,
+   "result": "L",
+   "gf": 4,
+   "ga": 5,
+   "opp": "Da1e FC"
+  },
+  {
+   "id": "54902712130090",
+   "ts": 1790895296,
+   "result": "L",
+   "gf": 1,
+   "ga": 2,
+   "opp": "West Cumberland"
+  },
+  {
+   "id": "54922897310314",
+   "ts": 1790897049,
+   "result": "D",
+   "gf": 3,
+   "ga": 3,
+   "opp": "Bluecocks BC"
+  },
+  {
+   "id": "55388085970142",
+   "ts": 1790897367,
+   "result": "L",
+   "gf": 0,
+   "ga": 4,
+   "opp": "Project 2030"
+  },
+  {
+   "id": "55026871450071",
+   "ts": 1790898401,
+   "result": "L",
+   "gf": 0,
+   "ga": 2,
+   "opp": "Two Man Elite"
+  },
+  {
+   "id": "55458126620133",
+   "ts": 1790899529,
+   "result": "W",
+   "gf": 4,
+   "ga": 2,
+   "opp": "Inter Aliens"
+  },
+  {
+   "id": "55436668970376",
+   "ts": 1790905262,
+   "result": "W",
+   "gf": 4,
+   "ga": 0,
+   "opp": "unbeatables FC"
+  },
+  {
+   "id": "55446685780357",
+   "ts": 1790906267,
+   "result": "D",
+   "gf": 2,
+   "ga": 2,
+   "opp": "itwasnt6million"
+  },
+  {
+   "id": "55400898500433",
+   "ts": 1790907485,
+   "result": "W",
+   "gf": 6,
+   "ga": 2,
+   "opp": "WhoDisBic"
+  },
+  {
+   "id": "55390930490486",
+   "ts": 1790908860,
+   "result": "L",
+   "gf": 1,
+   "ga": 2,
+   "opp": "Lets Grub FC 3"
+  },
+  {
+   "id": "55420960270475",
+   "ts": 1790909531,
+   "result": "W",
+   "gf": 3,
+   "ga": 0,
+   "opp": "Jebem Ti Kruha"
+  },
+  {
+   "id": "55752127900301",
+   "ts": 1790910652,
+   "result": "D",
+   "gf": 2,
+   "ga": 2,
+   "opp": "unbeatables FC"
+  }
+ ],
+ "table": {
+  "division": 4,
+  "division_name": "Division 4",
+  "season_games": 10,
+  "played": 5,
+  "remaining": 5,
+  "record": {
+   "W": 2,
+   "D": 2,
+   "L": 1
+  },
+  "points": 8,
+  "max_points": 23,
+  "results": [
+   "D",
+   "W",
+   "L",
+   "W",
+   "D"
+  ],
+  "hold": 10,
+  "promotion": 16,
+  "title": 19,
+  "promotions": 2,
+  "relegations": 0,
+  "skill_rating": 1526,
+  "playoff_games": 0,
+  "taken_at": "2026-10-01T22:35-05:00",
+  "status": [
+   "Promotion: 8 more pts needed (16 total), about 3 wins from 5 games left",
+   "Title: 11 more pts for the title (19 total)",
+   "Safety: 2 more pts to stay up (10 total) with 5 chances left"
+  ]
+ },
+ "club": "Grizzly Rips",
+ "speech_by": "builtin",
+ "speech": "Well, that was a day, wasn't it? A real choose-your-own-adventure kind of day.\n\nLet's do the arithmetic first, because math doesn't have feelings: 15 games, 5 wins, 4 draws, 6 losses, 39 scored and 33 conceded.\n\nThe high point? That 6-2 against WhoDisBic. That one I'm gonna play on loop in my head while I brush my teeth. The 0-4 against Project 2030 is the one we learn the most from, and lessons are only expensive if we waste 'em. It wasn't a bad day, and it wasn't a great one. It was a 'we're figuring it out' day, and I'll take a figuring-it-out day over a giving-up day every single time.\n\nWhen we kept it simple and talked to each other, we were tough to beat. When we tried to win it all with one pass, we gave it right back. That's not a talent problem. That's a patience problem, and patience is learnable.\n\nPhogsToffees, 13 goals, 13 assists, 23 key passes across 15 games and a 7.9 average. That's the kind of day that makes a coach misty. BellyTb1: 12 goals, 9 assists, 10 key passes, 7.8 average. You were the steady heartbeat of this team today. And tuxedo_slide, 8 goals, 2 assists, 11 key passes and a 7.1 average over 10 games. Don't you dare let anybody tell you that didn't matter.\n\nPhogsToffees and BellyTb1 combined for 25 goals today. When those two connect, everybody else gets more room. Let's feed that.\n\nA garden doesn't grow in one afternoon. You water it, you pull a few weeds, and one day you look up and you've got tomatoes. We're in the watering part.\n\nNow, the one thing we fix before next time: defensive work rate. Second-ball awareness: after a header or clearance, be the first one to the loose ball.\n\nA word on the table, because the table never lies: Division 4, 8 points, 5 played, 5 to go. Promotion: 8 more pts needed (16 total), about 3 wins from 5 games left.\n\nI'd rather coach a team that's figuring it out than one that thinks it already has. Stay hungry, stay humble, stay together.\n\nProud of the fight, hungry for more. Get some sleep, drink some water, and let's go turn a figuring-it-out day into a figured-it-out week.",
+ "phrases": [
+  "d_best:0",
+  "d_close_mid:0",
+  "d_core_mid:0",
+  "d_core_mid:2",
+  "d_focus:0",
+  "d_open_mid:1",
+  "d_rally_mid:1",
+  "d_recap:2",
+  "d_story_mid:1",
+  "d_table:1",
+  "d_team_mid:0",
+  "d_worst:2",
+  "dp_good:0",
+  "dp_good:1",
+  "dp_good:2",
+  "t_defensive_work_rate:8"
+ ],
+ "key_stats": [
+  "Day: 5W 4D 6L from 15 matches · 39 scored, 33 conceded",
+  "Player of the day: PhogsToffees (7.9 avg, 13 goals, 13 assists)",
+  "Table: Division 4 · 8 pts after 5/10 games (2W 2D 1L)",
+  "Promotion: 8 more pts needed (16 total), about 3 wins from 5 games left",
+  "Title: 11 more pts for the title (19 total)",
+  "Safety: 2 more pts to stay up (10 total) with 5 chances left",
+  "Games left this season: 5"
+ ],
+ "coach": "Coach Lasso",
+ "generated_at": "2026-10-01T22:35-05:00"
+}

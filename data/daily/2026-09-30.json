@@ -1,0 +1,137 @@
+{
+ "date": "2026-09-30",
+ "label": "Wed, Sep 30",
+ "title": "Sep 30 Daily Summary",
+ "games": 4,
+ "record": {
+  "W": 4,
+  "D": 0,
+  "L": 0
+ },
+ "gf": 14,
+ "ga": 4,
+ "points": 12,
+ "club_ppg_before": 1.33,
+ "score": 20,
+ "grade": "A+",
+ "players": [
+  {
+   "name": "BellyTb1",
+   "games": 4,
+   "goals": 7,
+   "assists": 0,
+   "key_passes": 0,
+   "tackles_won": 3,
+   "mom": 2,
+   "pos": "midfielder",
+   "avg_rating": 8.15,
+   "best_rating": 8.7,
+   "top_issue": "passing_accuracy"
+  },
+  {
+   "name": "tuxedo_slide",
+   "games": 4,
+   "goals": 5,
+   "assists": 2,
+   "key_passes": 5,
+   "tackles_won": 0,
+   "mom": 1,
+   "pos": "midfielder",
+   "avg_rating": 8.0,
+   "best_rating": 9.4,
+   "top_issue": "defensive_work_rate"
+  },
+  {
+   "name": "PhogsToffees",
+   "games": 4,
+   "goals": 2,
+   "assists": 6,
+   "key_passes": 7,
+   "tackles_won": 1,
+   "mom": 1,
+   "pos": "forward",
+   "avg_rating": 7.95,
+   "best_rating": 8.8,
+   "top_issue": "forcing_passes"
+  }
+ ],
+ "active": [
+  "BellyTb1",
+  "tuxedo_slide",
+  "PhogsToffees"
+ ],
+ "mvp": "BellyTb1",
+ "best_match": {
+  "id": "51272920510183",
+  "score": "4-0",
+  "opp": "Gerth United",
+  "result": "W"
+ },
+ "worst_match": {
+  "id": "51452766700043",
+  "score": "2-0",
+  "opp": "MidwayMonsters",
+  "result": "W"
+ },
+ "team_issue": "forcing_passes",
+ "matches": [
+  {
+   "id": "51272920510183",
+   "ts": 1790818329,
+   "result": "W",
+   "gf": 4,
+   "ga": 0,
+   "opp": "Gerth United"
+  },
+  {
+   "id": "51410616260094",
+   "ts": 1790819545,
+   "result": "W",
+   "gf": 4,
+   "ga": 2,
+   "opp": "Trotted On"
+  },
+  {
+   "id": "51538552980468",
+   "ts": 1790820936,
+   "result": "W",
+   "gf": 4,
+   "ga": 2,
+   "opp": "pijany"
+  },
+  {
+   "id": "51452766700043",
+   "ts": 1790822020,
+   "result": "W",
+   "gf": 2,
+   "ga": 0,
+   "opp": "MidwayMonsters"
+  }
+ ],
+ "table": null,
+ "club": "Grizzly Rips",
+ "speech_by": "builtin",
+ "speech": "Oh, I have been waiting all day to give this speech. All. Day.\n\nWe played 4 today. 4 wins, 0 draws, 0 losses. We put 14 in the back of the net and let 4 into ours.\n\nWhen it clicked, it really clicked. Look at the 4-0 over Gerth United. That's who we can be. Every time they thought they had an answer, you asked a new question. That's what good teams do, and tonight you were a good team. Heck, you were a great one.\n\nWhat I saw today was a team that trusts each other. You played for the person next to you, and that's the whole secret. That's it. That's the speech. Well, no, I've got more.\n\nBellyTb1, 7 goals across 4 games and an 8.2 average. That's the kind of day that makes a coach misty. tuxedo_slide: 5 goals, 2 assists, 5 key passes, 8.0 average. You were the steady heartbeat of this team today. And PhogsToffees, 2 goals, 6 assists, 7 key passes and an 8.0 average over 4 games. Don't you dare let anybody tell you that didn't matter.\n\nAnd can we talk about PhogsToffees and BellyTb1? 9 goals between 'em. If that partnership were a band, I'd buy the t-shirt.\n\nI once saw a kid at a county fair win the ring toss five times in a row, and the whole crowd just started chanting his name. That's how I felt watching you tonight. I was the crowd. I was chanting.\n\nHomework, and yes, I'm assigning homework: forcing passes. Before the killer ball, check: is my runner onside, moving, and unmarked? Two out of three isn't enough.\n\nNow, I'm not gonna tell you to come back down to earth. You can float a little tonight. You earned the altitude.\n\nI'm so proud of you I could burst like a water balloon at a church picnic. Enjoy it tonight. Every single one of you earned it.",
+ "phrases": [
+  "d_best:1",
+  "d_close_high:1",
+  "d_core_high:0",
+  "d_core_high:2",
+  "d_focus:2",
+  "d_open_high:1",
+  "d_rally_high:1",
+  "d_recap:0",
+  "d_story_high:0",
+  "d_team_high:1",
+  "dp_good:0",
+  "dp_good:1",
+  "dp_good:2",
+  "t_forcing_passes:11"
+ ],
+ "key_stats": [
+  "Day: 4W 0D 0L from 4 matches · 14 scored, 4 conceded",
+  "Player of the day: BellyTb1 (8.2 avg, 7 goals, 0 assists)"
+ ],
+ "coach": "Coach Lasso",
+ "generated_at": "2026-10-01T22:35-05:00"
+}
