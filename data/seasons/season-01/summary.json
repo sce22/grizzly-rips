@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 27,
+ "matches_played": 28,
  "record": {
-  "W": 11,
+  "W": 12,
   "D": 6,
   "L": 10
  },
- "goals_for": 65,
+ "goals_for": 68,
  "goals_against": 57,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-04T22:16:53+00:00",
+ "last_match": "2026-10-04T22:47:07+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -199,6 +199,13 @@
    "result": "L",
    "score": "1-4",
    "opponent": "LavaCakesFc"
+  },
+  {
+   "id": "67256431840004",
+   "date": "2026-10-04T22:47:07+00:00",
+   "result": "W",
+   "score": "3-0",
+   "opponent": "Paris Saint Bal"
   }
  ]
 }
