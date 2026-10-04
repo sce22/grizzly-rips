@@ -1,5 +1,5 @@
 {
- "matches_in_archive": 29,
+ "matches_in_archive": 30,
  "positions": {
   "goalkeeper": {
    "samples": 0,
@@ -80,25 +80,25 @@
    }
   },
   "midfielder": {
-   "samples": 40,
-   "share": 0.57,
+   "samples": 43,
+   "share": 0.59,
    "learned": true,
    "weights": {
-    "_intercept": 6.994,
+    "_intercept": 7.039,
     "goals": 0.496,
-    "assists": 0.319,
-    "key_passes": 0.128,
-    "shots_on": 0.049,
-    "shots_off": -0.016,
-    "passes_made": 0.016,
-    "passes_missed": -0.029,
-    "tackles_made": 0.188,
-    "missed_tackles": -0.037,
+    "assists": 0.315,
+    "key_passes": 0.181,
+    "shots_on": 0.035,
+    "shots_off": -0.029,
+    "passes_made": 0.015,
+    "passes_missed": -0.031,
+    "tackles_made": 0.18,
+    "missed_tackles": -0.058,
     "saves": 0.0,
-    "conceded": 0.002,
+    "conceded": 0.003,
     "clean_sheet": 0.0,
     "red_cards": -1.0,
-    "result_val": 0.194
+    "result_val": 0.214
    },
    "baseline": {
     "_intercept": 6.98,
@@ -119,25 +119,25 @@
    }
   },
   "forward": {
-   "samples": 25,
-   "share": 0.45,
+   "samples": 26,
+   "share": 0.46,
    "learned": false,
    "weights": {
-    "_intercept": 6.473,
-    "goals": 0.673,
-    "assists": 0.378,
-    "key_passes": 0.176,
+    "_intercept": 6.472,
+    "goals": 0.672,
+    "assists": 0.379,
+    "key_passes": 0.175,
     "shots_on": 0.09,
-    "shots_off": 0.035,
+    "shots_off": 0.036,
     "passes_made": 0.001,
     "passes_missed": 0.002,
-    "tackles_made": 0.015,
+    "tackles_made": 0.013,
     "missed_tackles": 0.002,
     "saves": 0.0,
     "conceded": 0.016,
     "clean_sheet": 0.0,
     "red_cards": -1.0,
-    "result_val": 0.193
+    "result_val": 0.191
    },
    "baseline": {
     "_intercept": 6.45,
