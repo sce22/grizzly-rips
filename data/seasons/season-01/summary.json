@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 25,
+ "matches_played": 26,
  "record": {
   "W": 11,
   "D": 6,
-  "L": 8
+  "L": 9
  },
- "goals_for": 63,
- "goals_against": 50,
+ "goals_for": 64,
+ "goals_against": 53,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-02T03:10:52+00:00",
+ "last_match": "2026-10-04T21:53:15+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -185,6 +185,13 @@
    "result": "D",
    "score": "2-2",
    "opponent": "unbeatables FC"
+  },
+  {
+   "id": "66892943240145",
+   "date": "2026-10-04T21:53:15+00:00",
+   "result": "L",
+   "score": "1-3",
+   "opponent": "man united2112"
   }
  ]
 }
