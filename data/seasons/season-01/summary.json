@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 26,
+ "matches_played": 27,
  "record": {
   "W": 11,
   "D": 6,
-  "L": 9
+  "L": 10
  },
- "goals_for": 64,
- "goals_against": 53,
+ "goals_for": 65,
+ "goals_against": 57,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-04T21:53:15+00:00",
+ "last_match": "2026-10-04T22:16:53+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -192,6 +192,13 @@
    "result": "L",
    "score": "1-3",
    "opponent": "man united2112"
+  },
+  {
+   "id": "67068683100126",
+   "date": "2026-10-04T22:16:53+00:00",
+   "result": "L",
+   "score": "1-4",
+   "opponent": "LavaCakesFc"
   }
  ]
 }
