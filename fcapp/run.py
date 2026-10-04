@@ -60,6 +60,8 @@ def send_texts(config, matches, new_ids):
     ncfg = config.get("notify", {})
     if not ncfg.get("enabled", True):
         return
+    from .invite import invite_new_members
+    invite_new_members(config, matches)  # first-time players: subscribe key to the owner
     by_id = {m["id"]: m for m in matches}
     if read_json("notified.json") is None:
         # Don't text the backlog EA returns on the very first sync

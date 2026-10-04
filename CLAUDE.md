@@ -13,6 +13,7 @@ FC 27 Pro Clubs analysis app for the club **Grizzly Rips** (PS5, EA club_id 8829
 
 ## Notifications
 - ntfy push only. Each player's private topic is derived from the `NTFY_SECRET` repo secret (`fcapp/push.py`). Only players who appeared in a match are notified. Topic names must never be printed or committed (public repo, public logs).
+- New members: the first time a gamertag appears in our matches, `invite.invite_new_members` pushes their subscribe key to the owner's channel to forward (known members in `data/members.json`). Manual: Actions -> "Invite a player".
 - SMS code still exists but is off (`notify.sms: false`) and its secrets were deleted. Verizon email-to-text truncated at ~130 chars and dropped follow-up messages.
 - The user wants to be told explicitly, with the time (Central), whenever a test notification is sent to their phone.
 
