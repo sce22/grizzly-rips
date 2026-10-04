@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 28,
+ "matches_played": 29,
  "record": {
-  "W": 12,
+  "W": 13,
   "D": 6,
   "L": 10
  },
- "goals_for": 68,
- "goals_against": 57,
+ "goals_for": 71,
+ "goals_against": 59,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-04T22:47:07+00:00",
+ "last_match": "2026-10-04T23:32:37+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -206,6 +206,13 @@
    "result": "W",
    "score": "3-0",
    "opponent": "Paris Saint Bal"
+  },
+  {
+   "id": "67504014320344",
+   "date": "2026-10-04T23:32:37+00:00",
+   "result": "W",
+   "score": "3-2",
+   "opponent": "JamRock  United"
   }
  ]
 }
