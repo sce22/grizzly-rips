@@ -452,8 +452,9 @@ def build(m, p, history, rotation):
     for w in weak:
         tips = pb.tips_for(w["tag"], p["pos"], limit=12)
         tip = pick("t_" + w["tag"], tips) if tips else ""
-        lead = pick("lead", WORK_LEADIN) + " " if pick.rng.random() < 0.5 else ""
-        work.append((10, f"{_work_fact(w['tag'], s, c, gap)}. {lead}{tip}".strip()))
+        lead = pick("lead", WORK_LEADIN) + " "
+        tail = " " + pick("tail", WORK_TAIL) if pick.rng.random() < 0.7 else ""
+        work.append((10, f"{_work_fact(w['tag'], s, c, gap)}. {lead}{tip}{tail}".strip()))
         used |= TAG_KEYS.get(w["tag"], set())
 
     scorer = max(mates, key=lambda q: q["stats"]["goals"], default=None)
@@ -489,8 +490,13 @@ def build(m, p, history, rotation):
 
     if c.season_high("rating"):
         good.append((8, pick("career_high", CAREER_HIGH).format(r=f"{s['rating']:.1f}", n=len(c.all) + 1)))
-    if p["band"].startswith("Top"):
-        good.append((3, pick("band", BAND_LINE).format(r=f"{s['rating']:.1f}", band=p["band"].lower(), role=role)))
+    rk = p.get("rank")
+    if rk and rk["of"] >= 3:
+        line_args = dict(r=f"{s['rating']:.1f}", rank=rk["text"])
+        if rk["dir"] == "best" and rk["best"] <= max(3, rk["of"] // 4):
+            good.append((6, pick("rank_g", RANK_GOOD).format(**line_args)))
+        elif rk["dir"] == "worst" and rk["worst"] <= max(3, rk["of"] // 4):
+            work.append((6, pick("rank_w", RANK_WORK).format(**line_args)))
     team = {"W": ("team_w", TEAM_W, good), "D": ("team_d", TEAM_D, good), "L": ("team_l", TEAM_L, work)}[m["result"]]
     team[2].append((2, pick(team[0], team[1]).format(score=c.score, opp=c.opp)))
     good.append((1, pick("mins", MINUTES).format(mins=s["minutes"])))
@@ -512,23 +518,24 @@ def build(m, p, history, rotation):
     while len(g) + len(w) > 6 and min((x[-1][0] for x in (g, w) if x), default=99) <= 1:
         weakest().pop()
 
-    opener = pick(f"open_{p['band']}", OPENERS[p["band"]]).format(
-        name=p["name"], r=f"{s['rating']:.1f}", pos=role, opp=c.opp)
+    tone = p.get("rank", {}).get("tone", p["band"])
+    rank = p.get("rank", {}).get("text", "")
+    opener = pick(f"open_{tone}", OPENERS[tone]).format(name=p["name"], r=f"{s['rating']:.1f}", pos=role, opp=c.opp, rank=rank)
     drill = None
     if drill_tag:
         bullet_text = "\n".join(t for _, t in w)
         drills = [t for t in pb.tips_for(drill_tag, p["pos"], limit=12) if t not in bullet_text]
         if drills:
             drill = f"{pick('drill', DRILL_LEAD)} {pick('t_' + drill_tag, drills)}"
-    closer = pick("close_good", CLOSERS_GOOD) if (not p["weaknesses"] or p["band"].startswith("Top")) else pick("close_mixed", CLOSERS_MIXED)
+    closer = pick("close_good", CLOSERS_GOOD) if (not p["weaknesses"] or tone.startswith("Top")) else pick("close_mixed", CLOSERS_MIXED)
+    lassoism = pick("lassoism", LASSOISMS)
     note = {"opener": _an(opener), "good": [_an(t) for _, t in g], "work": [_an(t) for _, t in w],
-            "drill": drill, "closer": closer, "coach": COACH}
+            "drill": drill, "lassoism": lassoism, "closer": closer, "coach": COACH}
     lines = [note["opener"], "", "DID WELL"] + [f"+ {t}" for t in note["good"]] + ["", "WORK ON"] + [f"- {t}" for t in note["work"]]
     if drill:
         lines += ["", drill]
-    lines += ["", f"{closer} - {COACH}"]
-    band = f"{p['band'].lower()} {pb.LABELS[p['pos']][:3].upper()}"
-    title = f"{m['result']} {c.score} vs {c.opp} | You: {s['rating']:.1f} ({band})"
+    lines += ["", lassoism, "", f"{closer} - {COACH}"]
+    title = f"{m['result']} {c.score} vs {c.opp} | You: {s['rating']:.1f} ({rank or p['band'].lower()})"
     return title, "\n".join(lines), pick.used, note
 
 
@@ -796,3 +803,11 @@ def build_profile(p, rotation):
 import sys as _sys  # noqa: E402
 from . import lasso_more as _lasso_more  # noqa: E402
 _lasso_more.merge(_sys.modules[__name__])
+
+# Ratings are framed against each player's own games, not league percentages:
+# drop opener lines that talk in percentages, add the personal-ranking ones.
+_PCT = re.compile(r"%|percent|quarter|top 10|top 25|average for|par for|league-wide|anywhere in this league|for a \{pos\} out there", re.I)
+for _tone, _lines in OPENERS.items():
+    OPENERS[_tone] = [x for x in _lines if not _PCT.search(x)] + _lasso_more.RANK_OPENERS[_tone]
+RANK_GOOD, RANK_WORK = _lasso_more.RANK_GOOD, _lasso_more.RANK_WORK
+WORK_TAIL, LASSOISMS = _lasso_more.WORK_TAIL, _lasso_more.LASSOISMS

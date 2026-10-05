@@ -223,7 +223,7 @@
           <div>
             <div class="pname">${esc(p.name)}${p.stats.mom ? " ⭐" : ""}</div>
             <div class="ppos"><span class="cap">${esc(p.pos)}</span> · ${p.stats.minutes}'${vs}</div>
-            ${p.band ? `<span class="band band-${p.band.split(" ")[0].toLowerCase()}">${esc(p.band)}</span>` : ""}
+            ${p.rank ? `<span class="band ${p.rank.dir === "best" && p.rank.best <= Math.max(3, p.rank.of / 4) ? "band-top" : p.rank.dir === "worst" && p.rank.worst <= Math.max(3, p.rank.of / 4) ? "band-bottom" : ""}">${esc(p.rank.text.charAt(0).toUpperCase() + p.rank.text.slice(1))}</span>` : ""}
           </div>
           <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </summary>
@@ -235,6 +235,7 @@
           ${strengths ? `<div class="section-label">Did well</div>${strengths}` : ""}
           ${weaknesses ? `<div class="section-label">To work on</div>${weaknesses}` : ""}
           ${drill}
+          ${n && n.lassoism ? `<p class="lassoism">${esc(n.lassoism)}</p>` : ""}
           ${n ? `<p class="coach-say closer">${esc(n.closer)} <span>- ${esc(n.coach || "Coach Lasso")}</span></p>` : ""}
           <a class="back" href="#/player/${encodeURIComponent(p.name)}">Full profile & trends →</a>
         </div>

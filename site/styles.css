@@ -338,3 +338,5 @@ details[open] .chev { transform: rotate(180deg); }
 .ed-actions .primary { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
 .ed-msg { margin: 0; font-size: 13px; color: var(--good); min-height: 1em; }
 .ed-msg.err { color: var(--bad); }
+
+.lassoism { margin: 12px 0 0; padding: 10px 12px; border-left: 3px solid var(--secondary); font-size: 14px; font-style: italic; }

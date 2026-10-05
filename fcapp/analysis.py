@@ -396,6 +396,37 @@ def assess(pos, s, minutes_factor, impact=None):
     return strengths, weaknesses
 
 
+def _ordinal(n):
+    return f"{n}{'th' if 10 <= n % 100 <= 20 else {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')}"
+
+
+def personal_rank(rating, earlier, league_band):
+    """Where this rating ranks among the player's own games so far (this one
+    included), e.g. "3rd best of 14" or "2nd worst of 14". `tone` buckets the
+    same ranking for Coach Lasso's mood (league band until 4 games)."""
+    all_r = earlier + [rating]
+    n = len(all_r)
+    best = 1 + sum(r > rating for r in all_r)
+    worst = 1 + sum(r < rating for r in all_r)
+    if n == 1:
+        text, direction = "first game with us", "best"
+    elif best == 1:
+        text, direction = f"best of {n}", "best"
+    elif worst == 1:
+        text, direction = f"worst of {n}", "worst"
+    elif best <= worst:
+        text, direction = f"{_ordinal(best)} best of {n}", "best"
+    else:
+        text, direction = f"{_ordinal(worst)} worst of {n}", "worst"
+    if n < 4:
+        tone = league_band
+    else:
+        pct = (best - 1) / (n - 1)
+        tone = ("Top 10%" if pct <= 0.1 else "Top 25%" if pct <= 0.3 else "Above average" if pct <= 0.55
+                else "Below average" if pct <= 0.8 else "Bottom 25%")
+    return {"best": best, "worst": worst, "of": n, "text": text, "dir": direction, "tone": tone}
+
+
 def rating_band(pos, r):
     p25, p50, p75, p90 = pb.RATING_PERCENTILES[pos]
     if r >= p90:
@@ -446,6 +477,7 @@ def analyse_all(raw_matches, config):
             strengths, weaknesses = assess(p["pos"], s, factor, p["impact"])
             p["strengths"], p["weaknesses"] = strengths, weaknesses
             p["band"] = rating_band(p["pos"], s["rating"])
+            p["rank"] = personal_rank(s["rating"], [x["stats"]["rating"] for x in history[p["name"]]], p["band"])
             prior = history[p["name"]]
             if len(prior) >= 3:
                 avg = sum(x["stats"]["rating"] for x in prior) / len(prior)
