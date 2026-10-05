@@ -56,20 +56,48 @@ def load_all():
     return sorted((json.loads(p.read_text()) for p in DAILY_DIR.glob("*.json")), key=lambda d: d["date"])
 
 
-def score_day(day_matches, club_ppg):
-    """Internal 0-20 mood scale (never shown) from results, margins and form vs normal."""
-    n = len(day_matches)
-    pts = sum({"W": 3, "D": 1, "L": 0}[m["result"]] for m in day_matches)
-    ppg = pts / n
-    gd = sum(m["gf"] - m["ga"] for m in day_matches) / n
-    ratings = [p["stats"]["rating"] for m in day_matches for p in m["players"]]
-    avg_rating = sum(ratings) / len(ratings) if ratings else 7.0
-    s = ppg / 3 * 13                                   # results drive most of it (0-13)
-    s += (max(-3.0, min(3.0, gd)) + 3) / 6 * 4         # how convincing (0-4)
-    s += max(0.0, min(1.5, (avg_rating - 6.5)))        # how well we played (0-1.5)
-    if club_ppg is not None:                           # better or worse than our normal (+/-2)
-        s += max(-2.0, min(2.0, (ppg - club_ppg) * 2))
-    return max(0, min(20, round(s)))
+BASELINE_MIN = 20     # matches before the team baseline starts to count
+BASELINE_PRIOR = 40   # the league-standard scale counts like this many matches
+
+
+def _day_stats(ms):
+    n = len(ms)
+    ratings = [p["stats"]["rating"] for m in ms for p in m["players"]]
+    return {"ppg": sum({"W": 3, "D": 1, "L": 0}[m["result"]] for m in ms) / n,
+            "gd": sum(m["gf"] - m["ga"] for m in ms) / n,
+            "rating": sum(ratings) / len(ratings) if ratings else 7.0}
+
+
+def team_baseline(before):
+    """Our own normal from every match before the day. It phases in once we
+    have BASELINE_MIN matches and weighs more as the sample grows:
+    weight = n / (n + BASELINE_PRIOR) - about a third at 20 matches, half at
+    40, two thirds at 80."""
+    n = len(before)
+    if n < BASELINE_MIN:
+        return {"matches": n, "weight": 0.0}
+    b = _day_stats(before)
+    return {"matches": n, "weight": round(n / (n + BASELINE_PRIOR), 2),
+            "ppg": round(b["ppg"], 2), "gd": round(b["gd"], 2), "rating": round(b["rating"], 2)}
+
+
+def score_day(day_matches, baseline):
+    """Internal 0-20 mood scale (never shown).
+
+    Two views, blended by how much of our own history we have:
+      * league standard - results, margins and ratings on a fixed scale
+      * our baseline - the same three things compared with our usual, so a
+        day is graded against what this team normally does (10 = a normal day)
+    """
+    d = _day_stats(day_matches)
+    standard = d["ppg"] / 3 * 14 + (max(-3.0, min(3.0, d["gd"])) + 3) / 6 * 4.5 + max(0.0, min(1.5, d["rating"] - 6.5))
+    w = baseline.get("weight", 0.0)
+    if not w:
+        return max(0, min(20, round(standard)))
+    relative = (10 + (d["ppg"] - baseline["ppg"]) * 6 + max(-3.0, min(3.0, d["gd"] - baseline["gd"])) * 1.2
+                + max(-1.5, min(1.5, d["rating"] - baseline["rating"])) * 2)
+    relative = max(0.0, min(20.0, relative))
+    return max(0, min(20, round((1 - w) * standard + w * relative)))
 
 
 def grade_for(score):
@@ -133,11 +161,11 @@ def build(day, matches, cfg, table=None, rotation=None):
     start, end = window(day, cfg)
     dm = [m for m in matches if start.timestamp() <= m["ts"] < end.timestamp()]
     before = [m for m in matches if m["ts"] < start.timestamp()]
-    club_ppg = (sum({"W": 3, "D": 1, "L": 0}[m["result"]] for m in before) / len(before)) if len(before) >= 5 else None
+    baseline = team_baseline(before)
     rec = {"W": 0, "D": 0, "L": 0}
     for m in dm:
         rec[m["result"]] += 1
-    score = score_day(dm, club_ppg)
+    score = score_day(dm, baseline)
     players = summarize_players(dm)
     best = max(dm, key=lambda m: (m["gf"] - m["ga"], m["gf"]))
     worst = min(dm, key=lambda m: (m["gf"] - m["ga"], m["gf"]))
@@ -152,7 +180,7 @@ def build(day, matches, cfg, table=None, rotation=None):
         "label": f"{day:%a, %b} {day.day}",
         "title": f"{day:%b} {day.day} Daily Summary",
         "games": len(dm), "record": rec, "gf": sum(m["gf"] for m in dm), "ga": sum(m["ga"] for m in dm),
-        "points": 3 * rec["W"] + rec["D"], "club_ppg_before": round(club_ppg, 2) if club_ppg is not None else None,
+        "points": 3 * rec["W"] + rec["D"], "baseline": baseline,
         "score": score, "grade": grade_for(score),
         "players": players, "active": [p["name"] for p in players],
         "mvp": players[0]["name"] if players else None,
@@ -168,6 +196,10 @@ def key_stats(s):
     """Short stat lines shown under the speech (notification and site)."""
     r = s["record"]
     lines = [f"Day: {r['W']}W {r['D']}D {r['L']}L from {_plural(s['games'], 'match', 'matches')} · {s['gf']} scored, {s['ga']} conceded"]
+    b = s.get("baseline") or {}
+    if b.get("weight"):
+        day_ppg = (3 * r["W"] + r["D"]) / s["games"]
+        lines.append(f"Vs our usual: {day_ppg:.1f} pts per game today, {b['ppg']:.1f} normally ({b['matches']} matches)")
     if s["mvp"]:
         p = s["players"][0]
         lines.append(f"Player of the day: {p['name']} ({p['avg_rating']:.1f} avg, {_plural(p['goals'], 'goal')}, {_plural(p['assists'], 'assist')})")
@@ -199,6 +231,10 @@ def claude_speech(summary, tone):
         return None
     facts = {k: summary[k] for k in ("label", "games", "record", "gf", "ga", "players", "best_match", "worst_match", "matches")}
     facts["club_name"] = summary.get("club")
+    b = summary.get("baseline") or {}
+    facts["our_usual"] = ({"points_per_game": b["ppg"], "goal_diff_per_game": b["gd"], "avg_rating": b["rating"], "matches": b["matches"],
+                           "note": "Judge the day mostly against this team's own usual, not just league standards."}
+                          if b.get("weight") else None)
     facts["main_team_issue"] = pb.TAG_TITLES.get(summary["team_issue"]) if summary.get("team_issue") else None
     facts["coaching_points_for_that_issue"] = pb.tips_for(summary["team_issue"], "_", 4) if summary.get("team_issue") else []
     facts["league_ladder"] = {"where_we_are": summary["table"]["spoken"], "status": summary["table"]["status"],

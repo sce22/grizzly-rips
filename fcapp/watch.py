@@ -14,7 +14,7 @@ import urllib.request
 
 from .ea_client import EAClient
 from .run import daily_due, fetch, push_daily, rebuild, send_texts, write_daily
-from . import daily
+from . import daily, ladder_edits
 from .store import load_config
 
 BOT = "fc-sync-bot"
@@ -25,7 +25,7 @@ def git(*args, check=True):
 
 
 def commit_and_push(message):
-    git("add", "data", "docs")
+    git("add", "data", "docs", "config.json")
     if subprocess.run(["git", "diff", "--cached", "--quiet"]).returncode == 0:
         return False
     git("commit", "-q", "-m", message)
@@ -91,6 +91,10 @@ def main():
             rebuild(load_config())
             commit_and_push("Rebuild after update")
         config = load_config()
+        if ladder_edits.process(config):  # edits made with the gear on the ladder card
+            rebuild(load_config())
+            commit_and_push("Ladder edited in the app")
+            config = load_config()
         try:
             client = client or EAClient(platform=config["club"].get("platform", "common-gen5"))
             refresh_meta = time.time() - last_meta > 3600

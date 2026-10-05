@@ -80,6 +80,10 @@ def build(config, matches, players, model_info, out=OUT, meta=None):
     }
     from .league import snapshot as league_snapshot
     index["league"] = league_snapshot(matches, config)
+    from .league import rules as league_rules
+    lr = league_rules(config)
+    index["league_rules"] = {"points_targets": lr["points_targets"], "promotion": lr["promotion"], "lives": lr["lives"]}
+    index["league_edit_topic"] = config.get("league", {}).get("edit_topic")
     from .daily import load_all as load_daily
     summaries = load_daily()
     index["daily"] = [{"date": d["date"], "label": d["label"], "grade": d["grade"], "games": d["games"],

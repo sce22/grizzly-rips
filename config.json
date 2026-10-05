@@ -41,13 +41,13 @@
     "sms": false
   },
   "league": {
-    "_comment": "FC 27 ladder rules, confirmed by the club. promotion = [games, wins needed] by the division you're leaving. Elite is unlimited.",
+    "_comment": "FC 27 ladder rules (confirmed by the club; Div 2 target corrected to 16). promotion = [games, wins needed] by the division you're leaving. Elite is unlimited. edit_topic = ntfy topic the app's ladder editor posts to.",
     "rules": {
       "points_targets": {
         "5": 7,
         "4": 9,
         "3": 12,
-        "2": 14,
+        "2": 16,
         "1": 18
       },
       "lives": 3,
@@ -74,7 +74,8 @@
         ]
       },
       "relegation_win_needed": false
-    }
+    },
+    "edit_topic": "grizzly-rips-ladder-599a31d5fb45"
   },
   "daily": {
     "_comment": "Coach Lasso's nightly pep talk. A day runs 11pm-11pm CT; sent to that day's players when 3+ games were played.",

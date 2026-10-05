@@ -30,7 +30,7 @@ from .store import DATA, read_json
 SEED_FILE = "league_state.json"
 DIVISIONS = ["5", "4", "3", "2", "1", "Elite"]
 DEFAULT_RULES = {
-    "points_targets": {"5": 7, "4": 9, "3": 12, "2": 14, "1": 18},  # Elite: unlimited
+    "points_targets": {"5": 7, "4": 9, "3": 12, "2": 16, "1": 18},  # Elite: unlimited
     "lives": 3,
     # promotion matches by division you're leaving: [games, wins needed]
     "promotion": {"5": [3, 1], "4": [3, 2], "3": [4, 3], "2": [4, 4], "1": [5, 5]},

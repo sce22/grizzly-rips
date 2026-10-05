@@ -314,3 +314,27 @@ details[open] .chev { transform: rotate(180deg); }
 .lad-bar.gold { background: #d4af37; }
 .lad-bar.gold .lad-fill { background: #d4af37; }
 .lad-title span.promo-on { font-size: 15px; font-weight: 800; color: var(--ink); }
+
+/* ladder editor */
+.lad-title { position: relative; padding-right: 34px; }
+.lad-gear { position: absolute; right: -4px; top: -4px; width: 32px; height: 32px; border-radius: 8px; border: 0; background: transparent; color: var(--muted); display: grid; place-items: center; cursor: pointer; }
+.lad-gear svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.lad-gear:hover, .lad-gear:focus-visible { background: var(--bg); color: var(--ink); outline: none; }
+.lad-edit { display: grid; gap: 12px; }
+.ed-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; font-size: 14px; }
+.ed-row > span { color: var(--muted); font-weight: 600; }
+.ed-row select, .ed-row input { font: inherit; padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--ink); }
+.ed-row input[type=number] { width: 72px; text-align: center; }
+.seg-btns { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+.seg-btns button, .stepper button, .ed-actions button { font: 600 13px var(--body); padding: 7px 11px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; }
+.seg-btns button.on { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+.seg-btns button:disabled { opacity: .4; cursor: default; }
+.stepper { display: flex; gap: 6px; align-items: center; }
+.stepper button { width: 34px; padding: 6px 0; }
+.chances.tap button { width: 22px; height: 22px; border-radius: 50%; border: 0; padding: 0; cursor: pointer; }
+.chances.tap .on { background: #3fa34d; }
+.chances.tap .off { background: #111; box-shadow: inset 0 0 0 1px var(--line); }
+.ed-actions { display: flex; justify-content: flex-end; gap: 8px; }
+.ed-actions .primary { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+.ed-msg { margin: 0; font-size: 13px; color: var(--good); min-height: 1em; }
+.ed-msg.err { color: var(--bad); }

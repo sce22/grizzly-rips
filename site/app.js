@@ -155,8 +155,9 @@
             <div class="score">${m.gf} – ${m.ga}</div>
           </a>`).join("");
     }).join("");
-    const ladder = INDEX.league ? `<section class="card">${ladderCard(INDEX.league, { history: false })}</section>` : "";
+    const ladder = INDEX.league ? `<section class="card" id="ladder-card">${ladderCard(INDEX.league, { history: false, editable: true })}</section>` : "";
     app.innerHTML = `<div class="chips">${chips}</div>${ladder}${calendarHTML(pool)}${selection}${body || `<div class="empty">No matches yet. Play a game and check back soon.</div>`}`;
+    bindLadderGear();
     app.querySelectorAll("[data-season]").forEach((b) => b.onclick = () => {
       seasonFilter = b.dataset.season;
       selectedDays.clear();
@@ -446,7 +447,8 @@
       ? `<ul class="lad-hist">${[...t.history].reverse().slice(0, 5).map((e) => `<li><span>${new Date(e.ts * 1000).toLocaleDateString(undefined, { month: "short", day: "numeric" })}</span>${esc(e.text || "")}</li>`).join("")}</ul>` : "";
     return `
       <div class="ladder">
-        <div class="lad-title"><b>${esc(t.division_name)}</b><span class="${t.stage === "promotion" ? "promo-on" : ""}">${esc(t.stage_label)}</span></div>
+        <div class="lad-title"><b>${esc(t.division_name)}</b><span class="${t.stage === "promotion" ? "promo-on" : ""}">${esc(t.stage_label)}</span>
+          ${opts.editable && INDEX.league_edit_topic ? `<button type="button" class="lad-gear" id="lad-gear" aria-label="Edit the ladder" title="Edit the ladder"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>` : ""}</div>
         <div class="lad-track">
           ${shield(t.division, "cur")}
           <div class="lad-seg">${bar}<span class="lad-label">${label}</span></div>
@@ -460,6 +462,108 @@
   }
 
   const tableCard = (t) => ladderCard(t);
+
+  // ---------------------------------------------------- ladder editor (gear)
+  // Edits go to the club's ntfy edit topic; the GitHub watcher applies them
+  // within about a minute and rebuilds, then later matches carry on as usual.
+
+  function bindLadderGear() {
+    const gear = document.getElementById("lad-gear");
+    if (gear) gear.onclick = () => openLadderEditor();
+  }
+
+  function openLadderEditor() {
+    const card = document.getElementById("ladder-card");
+    const t = INDEX.league, R = INDEX.league_rules;
+    const st = {
+      division: t.division, stage: t.stage, points: t.points || 0,
+      target: t.target ?? R.points_targets[t.division] ?? "",
+      lives: t.lives ?? R.lives, results: t.promo ? [...t.promo.results] : [],
+    };
+    const series = () => R.promotion[st.division] || [0, 0];
+    const render = () => {
+      const [games, need] = series();
+      const won = st.results.filter((r) => r === "W").length;
+      const left = Math.max(0, games - st.results.length);
+      const elite = st.division === "Elite";
+      card.innerHTML = `
+        <div class="lad-edit">
+          <div class="lad-title"><b>Edit ladder</b><span>Match what the game shows</span></div>
+          <label class="ed-row"><span>Division</span>
+            <select id="ed-div">${DIVS.map((d) => `<option value="${d}" ${d === st.division ? "selected" : ""}>${d === "Elite" ? "Elite" : "Division " + d}</option>`).join("")}</select></label>
+          <div class="ed-row"><span>Stage</span><div class="seg-btns">
+            ${[["points", "Points phase"], ["promotion", "Promotion"], ["relegation", "Relegation match"]].filter(([k]) => !(elite && k === "promotion"))
+              .map(([k, l]) => `<button type="button" data-stage="${k}" class="${st.stage === k ? "on" : ""}">${l}</button>`).join("")}</div></div>
+          ${st.stage === "points" ? `
+            <div class="ed-row"><span>Points</span><div class="stepper"><button type="button" data-step="-1" aria-label="Fewer points">−</button>
+              <input id="ed-pts" type="number" min="0" max="99" inputmode="numeric" value="${st.points}"><button type="button" data-step="1" aria-label="More points">+</button></div></div>
+            ${elite ? "" : `<label class="ed-row"><span>Points needed for promotion</span><input id="ed-target" type="number" min="1" max="60" inputmode="numeric" value="${st.target}"></label>`}
+            <div class="ed-row"><span>Chances left</span><div class="chances tap" id="ed-lives">${Array.from({ length: R.lives }, (_, k) => `<button type="button" data-life="${k + 1}" aria-label="${k + 1} chance${k ? "s" : ""} left" class="${k < st.lives ? "on" : "off"}"></button>`).join("")}</div></div>` : ""}
+          ${st.stage === "promotion" ? `
+            <div class="ed-row"><span>Promotion results so far</span><div class="promo-pips">${st.results.map((r) => `<span class="pill ${r}">${r}</span>`).join("")}${Array.from({ length: left }, () => `<span class="pill todo">·</span>`).join("")}</div></div>
+            <div class="ed-row"><span></span><div class="seg-btns">${["W", "D", "L"].map((r) => `<button type="button" data-res="${r}" ${st.results.length >= games - 1 ? "disabled" : ""}>Add ${r}</button>`).join("")}<button type="button" data-res="undo" ${st.results.length ? "" : "disabled"}>Undo</button></div></div>
+            <p class="model-note">Win ${need} of ${games} · must win ${Math.max(0, need - won)} out of ${left}</p>` : ""}
+          ${st.stage === "relegation" ? `<p class="model-note">Next league match is the relegation match. A win or draw keeps us in this division.</p>` : ""}
+          <p class="ed-msg" id="ed-msg" role="status"></p>
+          <div class="ed-actions"><button type="button" id="ed-cancel">Cancel</button><button type="button" id="ed-save" class="primary">Save</button></div>
+        </div>`;
+      card.querySelector("#ed-div").onchange = (e) => {
+        st.division = e.target.value; st.target = R.points_targets[st.division] ?? ""; st.results = [];
+        if (st.division === "Elite" && st.stage === "promotion") st.stage = "points";
+        render();
+      };
+      card.querySelectorAll("[data-stage]").forEach((b) => b.onclick = () => { st.stage = b.dataset.stage; render(); });
+      card.querySelectorAll("[data-step]").forEach((b) => b.onclick = () => { st.points = Math.max(0, Math.min(99, (Number(st.points) || 0) + Number(b.dataset.step))); render(); });
+      const pts = card.querySelector("#ed-pts"); if (pts) pts.oninput = () => { st.points = pts.value; };
+      const tgt = card.querySelector("#ed-target"); if (tgt) tgt.oninput = () => { st.target = tgt.value; };
+      card.querySelectorAll("[data-life]").forEach((b) => b.onclick = () => {
+        const n = Number(b.dataset.life); st.lives = st.lives === n ? n - 1 : n; render();
+      });
+      card.querySelectorAll("[data-res]").forEach((b) => b.onclick = () => {
+        if (b.dataset.res === "undo") st.results.pop(); else st.results.push(b.dataset.res);
+        render();
+      });
+      card.querySelector("#ed-cancel").onclick = () => { card.innerHTML = ladderCard(INDEX.league, { history: false, editable: true }); bindLadderGear(); };
+      card.querySelector("#ed-save").onclick = () => saveLadder(st);
+    };
+    render();
+  }
+
+  async function saveLadder(st) {
+    const msg = document.getElementById("ed-msg");
+    const pts = Number(st.points), target = st.target === "" ? null : Number(st.target);
+    if (st.stage === "points" && (!Number.isInteger(pts) || pts < 0 || pts > 99)) { msg.textContent = "Enter points between 0 and 99."; msg.className = "ed-msg err"; return; }
+    if (st.stage === "points" && st.division !== "Elite" && (!Number.isInteger(target) || target < 1 || target > 60)) { msg.textContent = "Enter the points needed for promotion (1 to 60)."; msg.className = "ed-msg err"; return; }
+    if (st.stage === "points" && target && pts >= target) { msg.textContent = "Points must be below the promotion target. If you've reached it, choose Promotion."; msg.className = "ed-msg err"; return; }
+    const payload = { v: 1, division: st.division, stage: st.stage, points: pts, lives: st.lives, promo_results: st.results, target };
+    const save = document.getElementById("ed-save");
+    save.disabled = true; msg.className = "ed-msg"; msg.textContent = "Saving…";
+    try {
+      const r = await fetch(`https://ntfy.sh/${INDEX.league_edit_topic}`, { method: "POST", body: JSON.stringify(payload) });
+      if (!r.ok) throw new Error(r.status);
+    } catch (e) {
+      msg.textContent = "Couldn't save. Check your connection and try again."; msg.className = "ed-msg err"; save.disabled = false; return;
+    }
+    msg.textContent = "Saved. The ladder updates here in about a minute.";
+    waitForLadderUpdate(INDEX.generated);
+  }
+
+  async function waitForLadderUpdate(since) {
+    for (let i = 0; i < 24; i++) {
+      await new Promise((res) => setTimeout(res, 15000));
+      try {
+        const idx = await fetch(`data/index.json?t=${Date.now()}`, { cache: "no-store" }).then((r) => r.json());
+        if (idx.generated !== since) {
+          INDEX = idx; cache["data/index.json"] = Promise.resolve(idx);
+          const card = document.getElementById("ladder-card");
+          if (card) { card.innerHTML = ladderCard(INDEX.league, { history: false, editable: true }); bindLadderGear(); }
+          return;
+        }
+      } catch (e) { /* keep waiting */ }
+    }
+    const msg = document.getElementById("ed-msg");
+    if (msg) msg.textContent = "Still waiting for the update. Refresh in a minute.";
+  }
 
   async function dailyView(date) {
     const list = INDEX.daily || [];
@@ -485,6 +589,7 @@
           ${s.players.map((p) => `<a class="log-row" href="#/player/${encodeURIComponent(p.name)}"><span>${esc(p.name)}</span><span class="ppos">${p.games} gp · ${p.goals}G ${p.assists}A</span><span class="r" style="color:${ratingColor(p.avg_rating)}">${p.avg_rating.toFixed(1)}</span></a>`).join("")}
           <div class="section-label">Matches</div>
           ${s.matches.map((m) => `<a class="log-row" href="#/match/${m.id}"><span class="pill ${m.result}">${m.result}</span><span>${fmtTime(m.ts)} vs ${esc(m.opp)}</span><span class="r">${m.gf}-${m.ga}</span></a>`).join("")}
+          ${s.baseline ? `<p class="model-note">${s.baseline.weight ? `Graded ${Math.round(s.baseline.weight * 100)}% against Grizzly Rips' own baseline (${s.baseline.matches} matches before this day) and ${100 - Math.round(s.baseline.weight * 100)}% against league standards.` : `Graded on league standards. Our own baseline kicks in after 20 matches (${s.baseline.matches} so far).`}</p>` : ""}
           ${s.speech_by === "builtin" ? `<p class="model-note">Written by the app's built-in Coach Lasso writer.</p>` : ""}
         </article>`;
     }

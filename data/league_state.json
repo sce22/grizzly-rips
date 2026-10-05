@@ -1,18 +1,16 @@
 {
- "note": "Set from the Update league status form",
- "as_of_ts": 1790910652,
- "as_of_match": "55752127900301",
- "set_at": "2026-10-01T23:12-05:00",
+ "note": "Edited in the app",
+ "as_of_ts": 1791159440,
+ "as_of_match": "67342799280075",
+ "set_at": "2026-10-05T17:52-05:00",
  "state": {
-  "division": "3",
-  "stage": "promotion",
-  "points": 12,
+  "division": "2",
+  "stage": "points",
+  "points": 0,
   "lives": 3,
-  "promo_played": 1,
+  "promo_played": 0,
   "promo_wins": 0,
-  "promo_results": [
-   "D"
-  ],
+  "promo_results": [],
   "phase_results": []
  },
  "history": [
@@ -25,6 +23,22 @@
    "ts": 1790910652,
    "kind": "manual",
    "text": "Status: Division 3, promotion stage, promotion results D"
+  },
+  {
+   "ts": 1791150795,
+   "match": "66892943240145",
+   "result": "L",
+   "score": "1-3",
+   "opp": "man united2112",
+   "division": "3",
+   "stage": "promotion",
+   "text": "Promotion match 2 of 4: L 1-3 vs man united2112. Promotion missed; back to 0 pts in Division 3",
+   "kind": "promotion_failed"
+  },
+  {
+   "ts": 1791159440,
+   "kind": "manual",
+   "text": "Status: Division 2, points stage"
   }
  ]
 }
