@@ -108,6 +108,11 @@ def build(config, matches, players, model_info, out=OUT, meta=None):
     _dump(out / "manifest.json", manifest)
     html = (out / "index.html").read_text()
     html = html.replace("{{CLUB_NAME}}", brand["name"]).replace("{{THEME_COLOR}}", brand["colors"]["primary"])
+    # Cache-bust: browsers (and home-screen apps) otherwise keep old app files
+    # for a while after an update.
+    import hashlib
+    ver = hashlib.sha1((out / "app.js").read_bytes() + (out / "styles.css").read_bytes()).hexdigest()[:10]
+    html = html.replace('src="app.js"', f'src="app.js?v={ver}"').replace('href="styles.css"', f'href="styles.css?v={ver}"')
     (out / "index.html").write_text(html)
 
 
