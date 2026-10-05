@@ -528,7 +528,7 @@ def build(m, p, history, rotation):
         if drills:
             drill = f"{pick('drill', DRILL_LEAD)} {pick('t_' + drill_tag, drills)}"
     closer = pick("close_good", CLOSERS_GOOD) if (not p["weaknesses"] or tone.startswith("Top")) else pick("close_mixed", CLOSERS_MIXED)
-    lassoism = pick("lassoism", LASSOISMS)
+    lassoism = pick("closing_frame", CLOSING_FRAMES).format(name=p["name"], line=pick("lassoism", LASSOISMS))
     note = {"opener": _an(opener), "good": [_an(t) for _, t in g], "work": [_an(t) for _, t in w],
             "drill": drill, "lassoism": lassoism, "closer": closer, "coach": COACH}
     lines = [note["opener"], "", "DID WELL"] + [f"+ {t}" for t in note["good"]] + ["", "WORK ON"] + [f"- {t}" for t in note["work"]]
@@ -810,4 +810,4 @@ _PCT = re.compile(r"%|percent|quarter|top 10|top 25|average for|par for|league-w
 for _tone, _lines in OPENERS.items():
     OPENERS[_tone] = [x for x in _lines if not _PCT.search(x)] + _lasso_more.RANK_OPENERS[_tone]
 RANK_GOOD, RANK_WORK = _lasso_more.RANK_GOOD, _lasso_more.RANK_WORK
-WORK_TAIL, LASSOISMS = _lasso_more.WORK_TAIL, _lasso_more.LASSOISMS
+WORK_TAIL, LASSOISMS, CLOSING_FRAMES = _lasso_more.WORK_TAIL, _lasso_more.LASSOISMS, _lasso_more.CLOSING_FRAMES
