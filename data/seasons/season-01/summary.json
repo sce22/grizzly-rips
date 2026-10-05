@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 32,
+ "matches_played": 33,
  "record": {
-  "W": 14,
+  "W": 15,
   "D": 6,
   "L": 12
  },
- "goals_for": 77,
- "goals_against": 66,
+ "goals_for": 80,
+ "goals_against": 68,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-05T22:57:23+00:00",
+ "last_match": "2026-10-05T23:38:11+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -234,6 +234,13 @@
    "result": "L",
    "score": "1-2",
    "opponent": "Dagestan SC"
+  },
+  {
+   "id": "71026234040131",
+   "date": "2026-10-05T23:38:11+00:00",
+   "result": "W",
+   "score": "3-2",
+   "opponent": "Love To Win"
   }
  ]
 }
