@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 30,
+ "matches_played": 31,
  "record": {
   "W": 14,
   "D": 6,
-  "L": 10
+  "L": 11
  },
- "goals_for": 75,
- "goals_against": 60,
+ "goals_for": 76,
+ "goals_against": 64,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-04T23:54:24+00:00",
+ "last_match": "2026-10-05T00:17:20+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -220,6 +220,13 @@
    "result": "W",
    "score": "4-1",
    "opponent": "Real Munch"
+  },
+  {
+   "id": "67342799280075",
+   "date": "2026-10-05T00:17:20+00:00",
+   "result": "L",
+   "score": "1-4",
+   "opponent": "Real Zurich FC"
   }
  ]
 }
