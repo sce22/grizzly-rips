@@ -402,7 +402,7 @@ def _ordinal(n):
 
 def personal_rank(rating, earlier, league_band):
     """Where this rating ranks among the player's own games so far (this one
-    included), e.g. "3rd best of 14" or "2nd worst of 14". `tone` buckets the
+    included), e.g. "3rd best" or "2nd worst". `tone` buckets the
     same ranking for Coach Lasso's mood (league band until 4 games)."""
     all_r = earlier + [rating]
     n = len(all_r)
@@ -411,13 +411,13 @@ def personal_rank(rating, earlier, league_band):
     if n == 1:
         text, direction = "first game with us", "best"
     elif best == 1:
-        text, direction = f"best of {n}", "best"
+        text, direction = "best game yet", "best"
     elif worst == 1:
-        text, direction = f"worst of {n}", "worst"
+        text, direction = "toughest game yet", "worst"
     elif best <= worst:
-        text, direction = f"{_ordinal(best)} best of {n}", "best"
+        text, direction = f"{_ordinal(best)} best", "best"
     else:
-        text, direction = f"{_ordinal(worst)} worst of {n}", "worst"
+        text, direction = f"{_ordinal(worst)} worst", "worst"
     if n < 4:
         tone = league_band
     else:

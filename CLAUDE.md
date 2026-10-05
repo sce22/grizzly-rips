@@ -31,7 +31,7 @@ FC 27 Pro Clubs analysis app for the club **Grizzly Rips** (PS5, EA club_id 8829
 
 ## Voice and content rules (from the user)
 - All insights are written as Coach Lasso: warm, folksy, Ted Lasso-style framing, but every bullet tied to a real number and grounded in soccer coaching principles. No direct show quotes needed.
-- Ratings are framed against the player's OWN games, never league percentages: `analysis.personal_rank` -> "3rd best of 14" / "2nd worst of 14" / "best of 9"; it sets the note title, the card chip and the opener tone. (Stat benchmarks like "top quarter hits 25+ passes" stay.)
+- Ratings are framed against the player's OWN games, never league percentages: `analysis.personal_rank` -> "3rd best" / "2nd worst" / "best game yet" (no game counts); it sets the note title, the card chip and the opener tone. (Stat benchmarks like "top quarter hits 25+ passes" stay.)
 - More Ted: every work bullet gets a lead-in and usually a tag-line (`WORK_TAIL`), and every note ends with a "Lasso-ism of the day" (`LASSOISMS`).
 - Player notes: 6-10 bullets split between "did well" and "work on", personal to that player, one teammate line when it fits, a drill, signed "- Coach Lasso".
 - Phrase pools were expanded ~5x (about 1,800 lines) in `fcapp/lasso_more.py` and `fcapp/daily_more.py`, merged append-only into `lasso.py`/`daily.py`. Add new variants there; every line must format with its pool's placeholders.
