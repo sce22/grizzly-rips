@@ -82,6 +82,9 @@
     "send_at": "23:00",
     "timezone": "America/Chicago",
     "min_games": 3,
-    "start_date": "2026-10-02"
+    "start_date": "2026-10-02",
+    "hold": [
+      "2026-10-05"
+    ]
   }
 }

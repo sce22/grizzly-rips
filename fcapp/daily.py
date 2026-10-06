@@ -32,6 +32,7 @@ def settings(config):
         "send_at": time.fromisoformat(d.get("send_at", "23:00")),
         "min_games": d.get("min_games", 3),
         "start_date": d.get("start_date", "1970-01-01"),
+        "hold": set(d.get("hold", [])),  # dates not to write yet (e.g. while the writer is being upgraded)
     }
 
 
@@ -447,7 +448,7 @@ def due_days(matches, config, now=None):
     out = []
     for day, ms in sorted(by_day.items()):
         closed = window(day, cfg)[1] <= now
-        if closed and len(ms) >= cfg["min_games"] and not path_for(day).exists():
+        if closed and len(ms) >= cfg["min_games"] and not path_for(day).exists() and day.isoformat() not in cfg["hold"]:
             out.append(day)
     return out
 
