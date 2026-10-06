@@ -254,8 +254,8 @@
       <section class="card boxscore" aria-label="Box score">
         <h3>Box score</h3>
         <table>
-          <thead><tr><th>Player</th><th>Passes</th><th>Key passes</th><th>Assists</th><th>Goals</th></tr></thead>
-          <tbody>${rows.map((p) => `<tr><td>${esc(p.name)}${p.stats.rage_quit ? ` <span class="rq">RQ${p.stats.left_at ? ` ${p.stats.left_at}'` : ""}</span>` : ""}</td><td>${p.stats.passes_made}/${p.stats.passes_att}</td><td>${n(p.stats.key_passes || 0)}</td><td>${n(p.stats.assists)}</td><td>${n(p.stats.goals)}</td></tr>`).join("")}</tbody>
+          <thead><tr><th>Player</th><th>Passes</th><th>Shots</th><th>Assists</th><th>Goals</th></tr></thead>
+          <tbody>${rows.map((p) => `<tr><td>${esc(p.name)}${p.stats.rage_quit ? ` <span class="rq">RQ${p.stats.left_at ? ` ${p.stats.left_at}'` : ""}</span>` : ""}</td><td>${p.stats.passes_made}/${p.stats.passes_att}</td><td>${p.stats.shots_on ?? 0}/${p.stats.shots}</td><td>${n(p.stats.assists)}</td><td>${n(p.stats.goals)}</td></tr>`).join("")}</tbody>
         </table>
       </section>`;
   }
