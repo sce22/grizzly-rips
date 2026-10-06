@@ -42,6 +42,15 @@ def fetch(config, client=None, with_meta=True):
         for raw in client.matches(club["club_id"], mtype):
             if save_match(raw, mtype, season(raw)):
                 new_ids.append(str(raw["matchId"]))
+    if with_meta or new_ids:
+        # EA's all-time totals per member, including matches from before our
+        # archive started; the leaderboard builds on these
+        try:
+            from datetime import datetime, timezone
+            write_json("member_stats.json", {"fetched": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                                             "members": client.member_stats(club["club_id"])})
+        except Exception as e:
+            print(f"[fetch] member stats unavailable ({type(e).__name__})")
     return new_ids
 
 

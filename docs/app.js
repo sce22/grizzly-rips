@@ -304,10 +304,10 @@
     app.innerHTML = `<h2>Squad</h2>` + INDEX.players.map((p) => {
       const tr = p.trend == null ? "" : `<span class="trend ${p.trend >= 0 ? "up" : "down"}">${p.trend >= 0 ? "▲" : "▼"} ${Math.abs(p.trend).toFixed(1)}</span>`;
       return `<a class="card squad-row" href="#/player/${encodeURIComponent(p.name)}">
-        <div class="rating" style="background:${ratingColor(p.rating)}">${p.rating.toFixed(1)}</div>
-        <div><div class="pname">${esc(p.name)}</div><div class="meta" style="text-transform:capitalize">${esc(p.pos)} · ${p.matches} apps · ${p.goals}G ${p.assists}A</div></div>
+        <div class="rating" style="background:${ratingColor(p.all_rating ?? p.rating)}">${(p.all_rating ?? p.rating).toFixed(1)}</div>
+        <div><div class="pname">${esc(p.name)}</div><div class="meta" style="text-transform:capitalize">${esc(p.pos)} · ${p.all_matches ?? p.matches} apps · ${p.all_goals ?? p.goals}G ${p.all_assists ?? p.assists}A</div></div>
         ${tr}</a>`;
-    }).join("") + `<p class="model-note">Arrow = average rating over the last 5 matches vs. before that.</p>` + leaderboardCard();
+    }).join("") + `<p class="model-note">All-time average rating, matches, goals and assists for us. Arrow = average rating over the last 5 matches vs. before that.</p>` + leaderboardCard();
     bindLeaderboard();
   }
 
@@ -332,13 +332,14 @@
       if (y == null) return -1;
       return (x - y) * lbSort.dir || a.name.localeCompare(b.name);
     });
-    const head = lb.columns.map((c) => `<th data-lb="${c.key}" class="${c.key === lbSort.key ? "on" : ""}" title="${c.how === "sum" ? "Total" : c.how === "pct" ? "Rate from all-time totals" : c.how === "max" ? "Highest" : "Average"}">${esc(c.label)}${c.key === lbSort.key ? (lbSort.dir < 0 ? " ▼" : " ▲") : ""}</th>`).join("");
+    const head = lb.columns.map((c) => `<th data-lb="${c.key}" class="${c.key === lbSort.key ? "on" : ""}">${esc(c.label)}${c.scope === "tracked" ? "†" : ""}${c.key === lbSort.key ? (lbSort.dir < 0 ? " ▼" : " ▲") : ""}</th>`).join("");
     const body = rows.map((r, i) => `<tr><td class="lb-name"><a href="#/player/${encodeURIComponent(r.name)}"><span class="lb-rank">${i + 1}</span>${esc(r.name)}</a></td>${lb.columns.map((c) => `<td class="${c.key === lbSort.key ? "on" : ""}">${lbValue(c, r[c.key])}</td>`).join("")}</tr>`).join("");
     return `
       <section class="card leaderboard" id="leaderboard">
         <h3>All-time leaderboard</h3>
-        <p class="model-note">Every match we've ever played. Tap a column to sort; tap again to flip it. Most important stats on the left - swipe for more.</p>
+        <p class="model-note">Every match each player has ever played for us. Tap a column to sort; tap again to flip it. Most important stats on the left - swipe for more.</p>
         <div class="lb-scroll"><table><thead><tr><th class="lb-name">Player</th>${head}</tr></thead><tbody>${body}</tbody></table></div>
+        <p class="model-note">† Counted since ${esc(lb.tracked_since || "we started recording")}, when this app began saving every match. EA only keeps all-time totals for matches, goals, assists, MOTM, rating, win %, conversion, passes, tackles and red cards; everything else needs the match-by-match detail EA doesn't keep.</p>
       </section>`;
   }
 
