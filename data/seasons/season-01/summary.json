@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 38,
+ "matches_played": 39,
  "record": {
   "W": 17,
   "D": 6,
-  "L": 15
+  "L": 16
  },
- "goals_for": 93,
- "goals_against": 85,
+ "goals_for": 94,
+ "goals_against": 90,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-06T01:06:53+00:00",
+ "last_match": "2026-10-06T01:17:34+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -276,6 +276,13 @@
    "result": "W",
    "score": "4-2",
    "opponent": "viscabarca28"
+  },
+  {
+   "id": "71278278680260",
+   "date": "2026-10-06T01:17:34+00:00",
+   "result": "L",
+   "score": "1-5",
+   "opponent": "pilot grape"
   }
  ]
 }
