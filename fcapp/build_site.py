@@ -56,7 +56,6 @@ LEADERBOARD = [
     ("shots_on", "On target", "sum"), ("shot_acc", "Shot acc %", "pct"), ("conversion", "Conversion %", "pct"),
     ("passes_made", "Passes done", "sum"), ("passes_att", "Passes tried", "sum"), ("pass_pct", "Pass %", "pct"),
     ("tackles_made", "Tackles won", "sum"), ("tackles_att", "Tackles tried", "sum"), ("tackle_pct", "Tackle %", "pct"),
-    ("saves", "Saves", "sum"), ("save_pct", "Save %", "pct"), ("clean_sheets", "Clean sheets", "sum"),
     ("best", "Best rating", "max"), ("W", "W", "sum"), ("D", "D", "sum"), ("L", "L", "sum"),
     ("minutes", "Minutes", "sum"), ("red_cards", "Red cards", "sum"), ("rage_quits", "Rage quits", "sum"),
 ]
