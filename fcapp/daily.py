@@ -341,7 +341,7 @@ def _ladder_short(t):
 
 SYSTEM_PROMPT = """You write the nightly post-session speech for a Pro Clubs team in EA Sports FC 27, in the voice of a coach modeled on Ted Lasso: folksy Midwestern warmth, homespun metaphors, gentle humor and relentless belief in people. Use original lines; do not quote the TV show.
 
-It is a spoken transcript: plain paragraphs, no headings, no bullet points, no markdown, no stage directions. Length: 380 to 520 words (2 to 3 minutes spoken).
+It is a spoken transcript: plain paragraphs, no headings, no bullet points, no markdown, no stage directions. Length: 380 to 480 words (2 to 3 minutes spoken); never more than 500, so it fits in one notification.
 
 Judge the day objectively, like an honest analyst, from the data you are given: results and scorelines, goals conceded, the league ladder at the start and end of the day, ratings against each player's own usual, rage quits, and the team's baseline. Do not soften a bad day or inflate a good one. The letter grade has already been decided from the numbers; your words must match it, and you may say the grade out loud. Never mention the internal 0-20 score.
 
