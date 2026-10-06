@@ -168,6 +168,8 @@ def main(argv=None):
     ap.add_argument("--test-daily", action="store_true", help="push the latest Daily Summary (or --date) to --players")
     ap.add_argument("--preview-daily", action="store_true", help="write today's summary so far (not saved) and push it to --players")
     ap.add_argument("--date", default="", help="YYYY-MM-DD for --test-daily / --preview-daily")
+    ap.add_argument("--daily-now", action="store_true", help="write and save today's Daily Summary now (or --date)")
+    ap.add_argument("--everyone", action="store_true", help="with --test-daily: send to everyone who played that day")
     ap.add_argument("--show-only", action="store_true", help="with --preview-daily: print it, don't send")
     ap.add_argument("--match", default="", help="match id for --test-text (default: each player's latest)")
     ap.add_argument("--players", default="", help="comma-separated gamertags for --test-text (default: notify.my_player)")
@@ -181,6 +183,19 @@ def main(argv=None):
     print(f"New matches: {len(new_ids)}")
     matches = rebuild(config)
 
+    if args.daily_now:
+        # Write today's summary now instead of waiting for 11pm (saved for good,
+        # so the 11pm run won't redo it), then rebuild the site so it's in the app.
+        from datetime import datetime
+        cfg = daily.settings(config)
+        now = datetime.now(cfg["tz"])
+        day = datetime.fromisoformat(args.date).date() if args.date else daily.day_of(now.timestamp(), cfg)
+        table = league.snapshot(matches, config, until_ts=min(daily.window(day, cfg)[1].timestamp(), now.timestamp()))
+        summary = daily.generate(day, matches, config, table)
+        daily.save(summary)
+        rebuild(config)
+        print(f"[daily] wrote {summary['date']}: grade {summary['grade']}, speech by {summary['speech_by']}, players {', '.join(summary['active'])}")
+        return
     if args.preview_daily:
         # Tonight's summary as it stands right now, written fresh and pushed as a
         # test; nothing is saved, so the real one is still written at 11pm.
@@ -207,7 +222,7 @@ def main(argv=None):
         summary = next((x for x in summaries if x["date"] == args.date), None) if args.date else (summaries[-1] if summaries else None)
         if not summary:
             sys.exit("No Daily Summary saved for that date yet.")
-        names = [n.strip() for n in args.players.split(",") if n.strip()] or [config["notify"]["my_player"]]
+        names = None if args.everyone else ([n.strip() for n in args.players.split(",") if n.strip()] or [config["notify"]["my_player"]])
         if not push_daily(config, summary, names):
             sys.exit(1)
         return

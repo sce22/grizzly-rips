@@ -1,0 +1,44 @@
+name: Send Daily Summary now
+
+# Writes today's Daily Summary right away (instead of waiting for 11pm CT),
+# puts it in the app, then pushes it to everyone who played that day.
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Summary date YYYY-MM-DD (blank = today)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Write the summary
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DAY: ${{ inputs.date }}
+        run: python -m fcapp.run --no-fetch --daily-now --date "$DAY"
+      - name: Put it in the app
+        run: |
+          git config user.name "fc-sync-bot"
+          git config user.email "fc-sync-bot@users.noreply.github.com"
+          git add data docs
+          git commit -q -m "Daily Summary written"
+          for i in 1 2 3; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep 5; done
+      - name: Wait for the site to update, then send
+        env:
+          NTFY_SECRET: ${{ secrets.NTFY_SECRET }}
+          DAY: ${{ inputs.date }}
+        run: |
+          sleep 90
+          D="${DAY:-$(TZ=America/Chicago date -d '+1 hour' +%F)}"
+          python -m fcapp.run --no-fetch --test-daily --date "$D" --everyone
