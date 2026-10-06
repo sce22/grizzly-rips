@@ -46,6 +46,59 @@ def branding(config, out, meta=None):
     }
 
 
+# All-time leaderboard columns, most important first: (key, label, how)
+# Totals are sums; rates are worked out from the totals (e.g. pass % = all
+# completed / all attempted), not averages of per-match percentages.
+LEADERBOARD = [
+    ("rating", "Avg rating", "avg"), ("matches", "MP", "sum"), ("goals", "Goals", "sum"), ("assists", "Assists", "sum"),
+    ("ga", "G+A", "sum"), ("mom", "MOTM", "sum"), ("win_pct", "Win %", "pct"), ("perfect", "Perfect games", "sum"),
+    ("ga_pm", "G+A / match", "avg"), ("key_passes", "Key passes", "sum"), ("shots", "Shots", "sum"),
+    ("shots_on", "On target", "sum"), ("shot_acc", "Shot acc %", "pct"), ("conversion", "Conversion %", "pct"),
+    ("passes_made", "Passes done", "sum"), ("passes_att", "Passes tried", "sum"), ("pass_pct", "Pass %", "pct"),
+    ("tackles_made", "Tackles won", "sum"), ("tackles_att", "Tackles tried", "sum"), ("tackle_pct", "Tackle %", "pct"),
+    ("saves", "Saves", "sum"), ("save_pct", "Save %", "pct"), ("clean_sheets", "Clean sheets", "sum"),
+    ("best", "Best rating", "max"), ("W", "W", "sum"), ("D", "D", "sum"), ("L", "L", "sum"),
+    ("minutes", "Minutes", "sum"), ("red_cards", "Red cards", "sum"), ("rage_quits", "Rage quits", "sum"),
+]
+
+
+def leaderboard(matches):
+    """Every player's all-time numbers (all match types, every season)."""
+    acc = {}
+    for m in matches:
+        for p in m["players"]:
+            s = p["stats"]
+            a = acc.setdefault(p["name"], {"name": p["name"], "pos": {}, "ratings": [], **{k: 0 for k in (
+                "goals", "assists", "mom", "perfect", "key_passes", "shots", "shots_on", "passes_made", "passes_att",
+                "tackles_made", "tackles_att", "saves", "shots_faced", "clean_sheets", "W", "D", "L", "minutes",
+                "red_cards", "rage_quits")}})
+            a["ratings"].append(s["rating"])
+            a["pos"][p["pos"]] = a["pos"].get(p["pos"], 0) + 1
+            a[m["result"]] += 1
+            for k, src in (("goals", "goals"), ("assists", "assists"), ("mom", "mom"), ("perfect", "perfect"), ("key_passes", "key_passes"),
+                           ("shots", "shots"), ("shots_on", "shots_on"), ("passes_made", "passes_made"), ("passes_att", "passes_att"),
+                           ("tackles_made", "tackles_made"), ("tackles_att", "tackles_att"), ("saves", "saves"), ("shots_faced", "shots_faced"),
+                           ("minutes", "minutes"), ("red_cards", "red_cards"), ("rage_quits", "rage_quit")):
+                a[k] += s.get(src) or 0
+            a["clean_sheets"] += s.get("clean_sheet") or 0
+    pct = lambda n, d: round(n / d * 100, 1) if d else None
+    rows = []
+    for a in acc.values():
+        n = len(a["ratings"])
+        rows.append({
+            "name": a["name"], "pos": max(a["pos"], key=a["pos"].get), "matches": n,
+            "rating": round(sum(a["ratings"]) / n, 2), "best": max(a["ratings"]),
+            "ga": a["goals"] + a["assists"], "ga_pm": round((a["goals"] + a["assists"]) / n, 2),
+            "win_pct": pct(a["W"], n), "shot_acc": pct(a["shots_on"], a["shots"]), "conversion": pct(a["goals"], a["shots"]),
+            "pass_pct": pct(a["passes_made"], a["passes_att"]), "tackle_pct": pct(a["tackles_made"], a["tackles_att"]),
+            "save_pct": pct(a["saves"], a["shots_faced"]) if a["saves"] else None,  # keepers only
+            **{k: a[k] for k in ("goals", "assists", "mom", "perfect", "key_passes", "shots", "shots_on", "passes_made", "passes_att",
+                                 "tackles_made", "tackles_att", "saves", "clean_sheets", "W", "D", "L", "minutes", "red_cards", "rage_quits")},
+        })
+    return {"columns": [{"key": k, "label": l, "how": h} for k, l, h in LEADERBOARD],
+            "rows": sorted(rows, key=lambda r: -r["rating"])}
+
+
 def build(config, matches, players, model_info, out=OUT, meta=None):
     if out.exists():
         shutil.rmtree(out)
@@ -78,6 +131,7 @@ def build(config, matches, players, model_info, out=OUT, meta=None):
             key=lambda p: -p["matches"],
         ),
     }
+    index["leaderboard"] = leaderboard(matches)
     from .league import snapshot as league_snapshot
     index["league"] = league_snapshot(matches, config)
     from .league import rules as league_rules

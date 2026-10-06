@@ -307,7 +307,50 @@
         <div class="rating" style="background:${ratingColor(p.rating)}">${p.rating.toFixed(1)}</div>
         <div><div class="pname">${esc(p.name)}</div><div class="meta" style="text-transform:capitalize">${esc(p.pos)} · ${p.matches} apps · ${p.goals}G ${p.assists}A</div></div>
         ${tr}</a>`;
-    }).join("") + `<p class="model-note">Arrow = average rating over the last 5 matches vs. before that.</p>`;
+    }).join("") + `<p class="model-note">Arrow = average rating over the last 5 matches vs. before that.</p>` + leaderboardCard();
+    bindLeaderboard();
+  }
+
+  // ------------------------------------------------- all-time leaderboard
+  let lbSort = { key: "rating", dir: -1 };
+
+  function lbValue(c, v) {
+    if (v == null) return `<span class="zero">–</span>`;
+    if (c.how === "pct") return `${v.toFixed(1)}%`;
+    if (c.key === "rating" || c.key === "best") return v.toFixed(2).replace(/0$/, "");
+    if (c.key === "ga_pm") return v.toFixed(2);
+    return String(v);
+  }
+
+  function leaderboardCard() {
+    const lb = INDEX.leaderboard;
+    if (!lb || !lb.rows.length) return "";
+    const rows = [...lb.rows].sort((a, b) => {
+      const x = a[lbSort.key], y = b[lbSort.key];
+      if (x == null && y == null) return 0;
+      if (x == null) return 1;
+      if (y == null) return -1;
+      return (x - y) * lbSort.dir || a.name.localeCompare(b.name);
+    });
+    const head = lb.columns.map((c) => `<th data-lb="${c.key}" class="${c.key === lbSort.key ? "on" : ""}" title="${c.how === "sum" ? "Total" : c.how === "pct" ? "Rate from all-time totals" : c.how === "max" ? "Highest" : "Average"}">${esc(c.label)}${c.key === lbSort.key ? (lbSort.dir < 0 ? " ▼" : " ▲") : ""}</th>`).join("");
+    const body = rows.map((r, i) => `<tr><td class="lb-name"><a href="#/player/${encodeURIComponent(r.name)}"><span class="lb-rank">${i + 1}</span>${esc(r.name)}</a></td>${lb.columns.map((c) => `<td class="${c.key === lbSort.key ? "on" : ""}">${lbValue(c, r[c.key])}</td>`).join("")}</tr>`).join("");
+    return `
+      <section class="card leaderboard" id="leaderboard">
+        <h3>All-time leaderboard</h3>
+        <p class="model-note">Every match we've ever played. Tap a column to sort; tap again to flip it. Most important stats on the left - swipe for more.</p>
+        <div class="lb-scroll"><table><thead><tr><th class="lb-name">Player</th>${head}</tr></thead><tbody>${body}</tbody></table></div>
+      </section>`;
+  }
+
+  function bindLeaderboard() {
+    document.querySelectorAll("#leaderboard [data-lb]").forEach((th) => th.onclick = () => {
+      const key = th.dataset.lb;
+      lbSort = lbSort.key === key ? { key, dir: -lbSort.dir } : { key, dir: ["L", "red_cards", "rage_quits"].includes(key) ? 1 : -1 };
+      const scroll = document.querySelector("#leaderboard .lb-scroll").scrollLeft;
+      document.getElementById("leaderboard").outerHTML = leaderboardCard();
+      document.querySelector("#leaderboard .lb-scroll").scrollLeft = scroll;
+      bindLeaderboard();
+    });
   }
 
   function formChart(form) {

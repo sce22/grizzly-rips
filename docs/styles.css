@@ -364,3 +364,15 @@ details[open] .chev { transform: rotate(180deg); }
 .boxscore td:first-child { font-weight: 600; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .boxscore .zero { opacity: .35; }
 .boxscore .rq { font-size: 10px; }
+
+/* All-time leaderboard */
+.leaderboard h3 { margin: 0 0 4px; }
+.lb-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 8px -4px 0; }
+.leaderboard table { border-collapse: separate; border-spacing: 0; font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.leaderboard th { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); padding: 6px 8px; text-align: right; cursor: pointer; user-select: none; }
+.leaderboard td { padding: 8px; text-align: right; border-top: 1px solid var(--line, rgba(127,127,127,.2)); }
+.leaderboard th.on, .leaderboard td.on { color: var(--ink); font-weight: 700; background: var(--draw-bg); }
+.leaderboard .lb-name { position: sticky; left: 0; z-index: 1; text-align: left; background: var(--card, var(--bg)); max-width: 130px; overflow: hidden; text-overflow: ellipsis; }
+.leaderboard td.lb-name a { color: inherit; text-decoration: none; font-weight: 600; }
+.lb-rank { display: inline-block; width: 18px; color: var(--muted); font-weight: 400; }
+.leaderboard .zero { opacity: .35; }
