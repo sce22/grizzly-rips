@@ -9,6 +9,10 @@ on:
         description: "Summary date YYYY-MM-DD (blank = today)"
         required: false
         default: ""
+      notify:
+        description: "Send it to that day's players"
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -35,6 +39,7 @@ jobs:
           git commit -q -m "Daily Summary written"
           for i in 1 2 3; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep 5; done
       - name: Wait for the site to update, then send
+        if: ${{ inputs.notify }}
         env:
           NTFY_SECRET: ${{ secrets.NTFY_SECRET }}
           DAY: ${{ inputs.date }}
