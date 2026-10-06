@@ -2,7 +2,7 @@
  "note": "Edited in the app",
  "as_of_ts": 1791245194,
  "as_of_match": "71232070390205",
- "set_at": "2026-10-05T19:21-05:00",
+ "set_at": "2026-10-05T19:22-05:00",
  "state": {
   "division": "3",
   "stage": "points",
@@ -50,6 +50,11 @@
    "stage": "points",
    "kind": "relegation_match_due",
    "text": "Out of chances in Division 2 (L 0-5 vs SydSwny FanClub). Relegation match next"
+  },
+  {
+   "ts": 1791245194,
+   "kind": "manual",
+   "text": "Status: Division 3, points stage"
   },
   {
    "ts": 1791245194,
