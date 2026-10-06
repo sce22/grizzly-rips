@@ -42,9 +42,10 @@ def fetch(config, client=None, with_meta=True):
         for raw in client.matches(club["club_id"], mtype):
             if save_match(raw, mtype, season(raw)):
                 new_ids.append(str(raw["matchId"]))
-    if with_meta or new_ids:
-        # EA's all-time totals per member, including matches from before our
-        # archive started; the leaderboard builds on these
+    if new_ids:
+        # EA's all-time totals per member (including matches from before our
+        # archive started), refreshed after every new match; the leaderboard
+        # builds on these
         try:
             from datetime import datetime, timezone
             write_json("member_stats.json", {"fetched": datetime.now(timezone.utc).isoformat(timespec="seconds"),
