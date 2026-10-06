@@ -436,7 +436,7 @@
           ${["S", "M", "T", "W", "T", "F", "S"].map((w) => `<span class="cal-dow">${w}</span>`).join("")}
           ${cells.join("")}
         </div>
-        <div class="cal-legend"><span>Days with 3+ games get a summary and a grade from Coach Lasso</span><span class="cal-hint">Tap a day</span></div>
+        <div class="cal-legend"><span>Every day we play gets a summary and a grade from Coach Lasso</span><span class="cal-hint">Tap a day</span></div>
       </section>`;
   }
 
@@ -592,7 +592,7 @@
     const list = INDEX.daily || [];
     const chosen = date || (list.length ? list[list.length - 1].date : null);
     if (!dailyMonth || date) dailyMonth = (chosen || dayKey(Date.now() / 1000)).slice(0, 7);
-    let body = `<div class="empty">No daily summaries yet. Play 3+ games in a day and Coach Lasso will have words for you at 11pm CT.</div>`;
+    let body = `<div class="empty">No daily summaries yet. Play a match and Coach Lasso will have words for you at 11pm CT.</div>`;
     if (chosen && list.some((d) => d.date === chosen)) {
       const s = await load(`data/daily/${chosen}.json`);
       const r = s.record;

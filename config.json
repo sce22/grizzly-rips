@@ -78,10 +78,10 @@
     "edit_topic": "grizzly-rips-ladder-599a31d5fb45"
   },
   "daily": {
-    "_comment": "Coach Lasso's nightly pep talk. A day runs 11pm-11pm CT; sent to that day's players when 3+ games were played.",
+    "_comment": "Coach Lasso's nightly pep talk. A day runs 11pm-11pm CT; sent to that day's players whenever at least one match was played.",
     "send_at": "23:00",
     "timezone": "America/Chicago",
-    "min_games": 3,
+    "min_games": 1,
     "start_date": "2026-10-02"
   }
 }

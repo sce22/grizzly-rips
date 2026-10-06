@@ -168,6 +168,7 @@ def main(argv=None):
     ap.add_argument("--test-daily", action="store_true", help="push the latest Daily Summary (or --date) to --players")
     ap.add_argument("--preview-daily", action="store_true", help="write today's summary so far (not saved) and push it to --players")
     ap.add_argument("--date", default="", help="YYYY-MM-DD for --test-daily / --preview-daily")
+    ap.add_argument("--show-only", action="store_true", help="with --preview-daily: print it, don't send")
     ap.add_argument("--match", default="", help="match id for --test-text (default: each player's latest)")
     ap.add_argument("--players", default="", help="comma-separated gamertags for --test-text (default: notify.my_player)")
     args = ap.parse_args(argv)
@@ -190,6 +191,13 @@ def main(argv=None):
         summary = daily.generate(day, matches, config, table)
         summary["title"] = "TEST · " + summary["title"]
         print(f"[daily] preview {summary['date']}: grade {summary['grade']}, speech by {summary['speech_by']}, {len(summary['speech'].split())} words")
+        if args.show_only:  # print it, send nothing
+            print("=" * 60)
+            print(summary["title"], "| grade", summary["grade"])
+            print(summary["speech"])
+            print("\n".join("* " + x for x in summary["key_stats"]))
+            print("=" * 60)
+            return
         names = [n.strip() for n in args.players.split(",") if n.strip()] or [config["notify"]["my_player"]]
         if not push_daily(config, summary, names):
             sys.exit(1)

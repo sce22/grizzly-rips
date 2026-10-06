@@ -72,6 +72,22 @@ SIG_BAD = [
 ]
 
 UGLY = [
+    "That's not a bad night. That's a bad habit, and it ends now.",
+    "Flat out: that cost us the match.",
+    "No excuses on that one. None.",
+    "That's below the standard, and the standard doesn't move.",
+    "You were a passenger. We need drivers.",
+    "I've watched it twice. It doesn't get better.",
+    "That's the kind of thing that gets you benched on a real team.",
+    "That isn't a dip. That's a no-show.",
+    "Not good enough. Not close.",
+    "If you did that at practice, we'd run laps till sunrise.",
+    "That one's on you. Own it.",
+    "That's the number I'd hide from your mama.",
+    "We lost the match right there.",
+    "That's not football. That's spectating in boots.",
+    "Plain truth: that was poor, and you know it was poor.",
+    "We can't win with that. Simple as that.",
     "I'm gonna be straight with you: that's not good enough, and you know it.",
     "That one's ugly, friend. No sugar on it.",
     "I love you, but that wasn't football. That was a fire drill.",

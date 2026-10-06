@@ -462,6 +462,7 @@ def build(m, p, history, rotation):
     gap = next((f"{abs(d['impact']):.1f}" for d in p["impact"]["drivers"] if d["key"] == "other"), "0")
     blank = s.get("raw_rating", s["rating"]) <= 3.0 or s.get("stats_missing")
     good, work, ugly = [], [], []  # (priority, text, families)
+    bare = {}  # Bad item text -> (fact, fix): lets a Bad item be re-said bluntly if it moves to The Ugly
     used = set()
 
     for x in p["strengths"]:
@@ -476,7 +477,9 @@ def build(m, p, history, rotation):
         lead = pick("lead", WORK_LEADIN) + " "
         tail = " " + pick("tail", WORK_TAIL) if pick.rng.random() < 0.7 else ""
         keys = TAG_KEYS.get(w["tag"], {"rating"} if w["tag"] == "positioning" else {w["tag"]})
-        work.append((8.5, f"{_work_fact(w['tag'], s, c, gap)}. {lead}{tip}{tail}".strip(), _fams(keys)))
+        text = f"{_work_fact(w['tag'], s, c, gap)}. {lead}{tip}{tail}".strip()
+        bare[text] = (_work_fact(w["tag"], s, c, gap), f"{lead}{tip}".strip())
+        work.append((8.5, text, _fams(keys)))
         used |= TAG_KEYS.get(w["tag"], set())
 
     scorer = max(mates, key=lambda q: q["stats"]["goals"], default=None)
@@ -508,11 +511,11 @@ def build(m, p, history, rotation):
             good.append((x["w"], f"{x['text']}. {pick('sig_g', SIG_GOOD)}", fam))
         else:
             tips = pb.tips_for(x["tip"], p["pos"], limit=12) if x.get("tip") else []
-            if tips and pick.rng.random() < 0.5:
-                frame = f"{pick('lead', WORK_LEADIN)} {pick('t_' + x['tip'], tips)}"
-            else:
-                frame = pick("sig_b", SIG_BAD)
-            work.append((x["w"], f"{x['text']}. {frame}", fam))
+            fix = f"{pick('lead', WORK_LEADIN)} {pick('t_' + x['tip'], tips)}" if tips else ""
+            frame = fix if fix and pick.rng.random() < 0.5 else pick("sig_b", SIG_BAD)
+            text = f"{x['text']}. {frame}"
+            bare[text] = (x["text"], fix)
+            work.append((x["w"], text, fam))
 
     va = p.get("vs_average")
     if va is not None and va >= 0.3 and not blank:
@@ -575,7 +578,8 @@ def build(m, p, history, rotation):
         worst = next((x for x in w if not (x[2] & team_only)), None)
         if worst:
             w.remove(worst)
-            u.append(worst)
+            fact, fix = bare.get(worst[1], (worst[1].split(". ")[0], ""))
+            u.append((worst[0], f"{fact}. {pick('ugly', UGLY)}" + (f" {fix}" if fix else ""), worst[2]))
         else:
             va = p.get("vs_average")
             gap = f", {abs(va):.1f} under your usual" if va is not None and va < 0 else ""

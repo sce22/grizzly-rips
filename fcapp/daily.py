@@ -30,7 +30,7 @@ def settings(config):
     return {
         "tz": ZoneInfo(d.get("timezone", "America/Chicago")),
         "send_at": time.fromisoformat(d.get("send_at", "23:00")),
-        "min_games": d.get("min_games", 3),
+        "min_games": d.get("min_games", 1),
         "start_date": d.get("start_date", "1970-01-01"),
         "hold": set(d.get("hold", [])),  # dates not to write yet (e.g. while the writer is being upgraded)
     }
@@ -343,7 +343,7 @@ SYSTEM_PROMPT = """You write the nightly post-session speech for a Pro Clubs tea
 
 It is a spoken transcript: plain paragraphs, no headings, no bullet points, no markdown, no stage directions. Length: 380 to 480 words (2 to 3 minutes spoken); never more than 500, so it fits in one notification.
 
-Judge the day objectively, like an honest analyst, from the data you are given: results and scorelines, goals conceded, the league ladder at the start and end of the day, ratings against each player's own usual, rage quits, and the team's baseline. Do not soften a bad day or inflate a good one. The letter grade has already been decided from the numbers; your words must match it, and you may say the grade out loud. Never mention the internal 0-20 score.
+Be blunt: when something was bad, say so plainly and specifically, with no hedging or padding; save the warmth for the ending. Judge the day objectively, like an honest analyst, from the data you are given: results and scorelines, goals conceded, the league ladder at the start and end of the day, ratings against each player's own usual, rage quits, and the team's baseline. Do not soften a bad day or inflate a good one. The letter grade has already been decided from the numbers; your words must match it, and you may say the grade out loud. Never mention the internal 0-20 score.
 
 The ladder: say plainly where we started the day and where we finished it (division and stage), and what happened in between (e.g. relegated, promotion series failed, relegation match next). Do not list every ladder step.
 

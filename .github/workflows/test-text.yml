@@ -12,7 +12,7 @@ on:
       what:
         description: "Which message"
         type: choice
-        options: [match notes, daily summary, daily preview]
+        options: [match notes, daily summary, daily preview, daily preview (show only)]
         default: match notes
       date:
         description: "Daily summary date YYYY-MM-DD (blank = latest)"
@@ -54,7 +54,9 @@ jobs:
           DAY: ${{ inputs.date }}
           MATCH: ${{ inputs.match }}
         run: |
-          if [ "$WHAT" = "daily preview" ]; then
+          if [ "$WHAT" = "daily preview (show only)" ]; then
+            python -m fcapp.run --no-fetch --preview-daily --show-only --date "$DAY"
+          elif [ "$WHAT" = "daily preview" ]; then
             python -m fcapp.run --no-fetch --preview-daily --date "$DAY" --players "$PLAYERS"
           elif [ "$WHAT" = "daily summary" ]; then
             python -m fcapp.run --no-fetch --test-daily --date "$DAY" --players "$PLAYERS"
