@@ -13,7 +13,7 @@ import time
 import urllib.request
 
 from .ea_client import EAClient
-from .run import daily_due, fetch, push_daily, rebuild, send_texts, write_daily
+from .run import daily_due, fetch, push_daily, rebuild, refresh_member_stats, send_texts, write_daily
 from . import daily, ladder_edits
 from .store import load_config
 
@@ -117,6 +117,12 @@ def main():
             commit_and_push("Record texts sent")
         elif refresh_meta:
             commit_and_push("Refresh club info")
+        try:
+            if refresh_member_stats(config, client):  # EA's all-time totals caught up with the new match
+                rebuild(config)
+                commit_and_push("All-time totals updated")
+        except Exception as e:
+            print(f"[watch] member stats check failed: {e}")
 
         # Nightly Daily Summary (11:00pm CT) once a day with enough games closes
         if daily_due(config):

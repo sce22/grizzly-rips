@@ -9,6 +9,8 @@ The always-on watcher (python -m fcapp.watch) calls the same functions.
 """
 import argparse
 import sys
+import time
+from datetime import datetime, timezone
 
 from . import analysis, build_site, coach, daily, league, notify, push
 from .store import (load_config, load_matches, read_json, refile, save_match,
@@ -37,22 +39,46 @@ def fetch(config, client=None, with_meta=True):
             "kit_colors": [c for c in (kit_hex(kit.get(f"kitColor{i}")) for i in (1, 2, 3)) if c],
         })
     season = season_of(config)
-    new_ids = []
+    new_ids, new_appearances = [], 0
     for mtype in config.get("match_types", ["leagueMatch"]):
         for raw in client.matches(club["club_id"], mtype):
             if save_match(raw, mtype, season(raw)):
                 new_ids.append(str(raw["matchId"]))
+                new_appearances += len(raw.get("players", {}).get(str(club["club_id"]), {}))
     if new_ids:
-        # EA's all-time totals per member (including matches from before our
-        # archive started), refreshed after every new match; the leaderboard
-        # builds on these
-        try:
-            from datetime import datetime, timezone
-            write_json("member_stats.json", {"fetched": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-                                             "members": client.member_stats(club["club_id"])})
-        except Exception as e:
-            print(f"[fetch] member stats unavailable ({type(e).__name__})")
+        # EA's all-time member totals lag the match feed a little: remember how
+        # many more appearances to expect and keep checking (refresh_member_stats)
+        ms = read_json("member_stats.json") or {}
+        old_total = sum(int(x.get("gamesPlayed") or 0) for x in ms.get("members", []))
+        waiting = ms.get("pending") or {"expect_total": old_total, "had_total": old_total}  # still waiting on an earlier match?
+        ms["pending"] = {"expect_total": waiting["expect_total"] + new_appearances, "until": time.time() + MEMBER_WAIT,
+                         "had_total": waiting["had_total"]}
+        write_json("member_stats.json", ms)
     return new_ids
+
+
+MEMBER_WAIT = 30 * 60  # give EA up to 30 minutes to count a new match in its all-time totals
+
+
+def refresh_member_stats(config, client):
+    """After a new match, check EA's all-time member totals every tick until
+    they include it (or 30 minutes pass), then save them. Returns True when
+    new totals were saved (the caller rebuilds the site)."""
+    ms = read_json("member_stats.json") or {}
+    pending = ms.get("pending")
+    if not pending:
+        return False
+    try:
+        members = client.member_stats(config["club"]["club_id"])
+    except Exception as e:
+        print(f"[fetch] member stats unavailable ({type(e).__name__}); will retry")
+        return False
+    total = sum(int(x.get("gamesPlayed") or 0) for x in members)
+    if total < pending["expect_total"] and time.time() < pending["until"]:
+        return False  # EA hasn't counted the new match yet
+    write_json("member_stats.json", {"fetched": datetime.now(timezone.utc).isoformat(timespec="seconds"), "members": members})
+    print(f"[fetch] all-time totals updated ({total} appearances{'' if total >= pending['expect_total'] else ', EA still behind after 30 min'})")
+    return total != pending.get("had_total")
 
 
 def rebuild(config):
