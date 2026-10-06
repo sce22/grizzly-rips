@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 37,
+ "matches_played": 38,
  "record": {
-  "W": 16,
+  "W": 17,
   "D": 6,
   "L": 15
  },
- "goals_for": 89,
- "goals_against": 83,
+ "goals_for": 93,
+ "goals_against": 85,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-06T00:46:41+00:00",
+ "last_match": "2026-10-06T01:06:53+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -269,6 +269,13 @@
    "result": "L",
    "score": "0-2",
    "opponent": "Cuc United"
+  },
+  {
+   "id": "70954902210174",
+   "date": "2026-10-06T01:06:53+00:00",
+   "result": "W",
+   "score": "4-2",
+   "opponent": "viscabarca28"
   }
  ]
 }
