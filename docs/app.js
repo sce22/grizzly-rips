@@ -332,14 +332,13 @@
       if (y == null) return -1;
       return (x - y) * lbSort.dir || a.name.localeCompare(b.name);
     });
-    const head = lb.columns.map((c) => `<th data-lb="${c.key}" class="${c.key === lbSort.key ? "on" : ""}">${esc(c.label)}${c.scope === "tracked" ? "†" : ""}${c.key === lbSort.key ? (lbSort.dir < 0 ? " ▼" : " ▲") : ""}</th>`).join("");
+    const head = lb.columns.map((c) => `<th data-lb="${c.key}" class="${c.key === lbSort.key ? "on" : ""}">${esc(c.label)}${c.key === lbSort.key ? (lbSort.dir < 0 ? " ▼" : " ▲") : ""}</th>`).join("");
     const body = rows.map((r, i) => `<tr><td class="lb-name"><a href="#/player/${encodeURIComponent(r.name)}"><span class="lb-rank">${i + 1}</span>${esc(r.name)}</a></td>${lb.columns.map((c) => `<td class="${c.key === lbSort.key ? "on" : ""}">${lbValue(c, r[c.key])}</td>`).join("")}</tr>`).join("");
     return `
       <section class="card leaderboard" id="leaderboard">
         <h3>All-time leaderboard</h3>
         <p class="model-note">Every match each player has ever played for us. Tap a column to sort; tap again to flip it. Most important stats on the left - swipe for more.</p>
         <div class="lb-scroll"><table><thead><tr><th class="lb-name">Player</th>${head}</tr></thead><tbody>${body}</tbody></table></div>
-        <p class="model-note">† Counted since ${esc(lb.tracked_since || "we started recording")}, when this app began saving every match. EA only keeps all-time totals for matches, goals, assists, MOTM, rating, win %, conversion, passes, tackles and red cards; everything else needs the match-by-match detail EA doesn't keep.</p>
       </section>`;
   }
 
