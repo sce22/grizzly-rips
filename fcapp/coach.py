@@ -302,6 +302,8 @@ def annotate(matches, players, config):
         m["talk"] = _talk(m, club)
     for p in players.values():
         _profile(p)
+    from . import league, signals
+    signals.annotate(matches, list(league.match_events(matches, config).values()))  # what Coach weighs
     lasso.annotate(matches, players)  # player notes, team talks, profiles: one club-wide phrase rotation
 
 

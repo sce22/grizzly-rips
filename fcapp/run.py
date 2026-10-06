@@ -165,7 +165,8 @@ def main(argv=None):
     ap.add_argument("--test-text", action="store_true", help="send my latest match now, to check notifications")
     ap.add_argument("--channel", choices=["all", "push", "sms"], default="all")
     ap.add_argument("--test-daily", action="store_true", help="push the latest Daily Summary (or --date) to --players")
-    ap.add_argument("--date", default="", help="YYYY-MM-DD for --test-daily")
+    ap.add_argument("--preview-daily", action="store_true", help="write today's summary so far (not saved) and push it to --players")
+    ap.add_argument("--date", default="", help="YYYY-MM-DD for --test-daily / --preview-daily")
     ap.add_argument("--players", default="", help="comma-separated gamertags for --test-text (default: notify.my_player)")
     args = ap.parse_args(argv)
 
@@ -177,6 +178,20 @@ def main(argv=None):
     print(f"New matches: {len(new_ids)}")
     matches = rebuild(config)
 
+    if args.preview_daily:
+        # Tonight's summary as it stands right now, written fresh and pushed as a
+        # test; nothing is saved, so the real one is still written at 11pm.
+        from datetime import datetime
+        cfg = daily.settings(config)
+        day = datetime.fromisoformat(args.date).date() if args.date else daily.day_of(datetime.now(cfg["tz"]).timestamp(), cfg)
+        table = league.snapshot(matches, config, until_ts=min(daily.window(day, cfg)[1].timestamp(), datetime.now(cfg["tz"]).timestamp()))
+        summary = daily.generate(day, matches, config, table)
+        summary["title"] = "TEST · " + summary["title"]
+        print(f"[daily] preview {summary['date']}: grade {summary['grade']}, speech by {summary['speech_by']}, {len(summary['speech'].split())} words")
+        names = [n.strip() for n in args.players.split(",") if n.strip()] or [config["notify"]["my_player"]]
+        if not push_daily(config, summary, names):
+            sys.exit(1)
+        return
     if args.test_daily:
         summaries = daily.load_all()
         summary = next((x for x in summaries if x["date"] == args.date), None) if args.date else (summaries[-1] if summaries else None)

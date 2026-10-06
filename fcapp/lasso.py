@@ -432,110 +432,177 @@ def _driver_what(d):
 
 # --------------------------------------------------------------- the note
 
+FAMILY = {}
+for _fam, _keys in {
+    "passing": ("passes_att", "passes_made", "passes_missed", "pass_pct", "errors", "actions"),
+    "tackling": ("tackles_att", "tackles_made", "missed_tackles", "tackle_pct"),
+    "shooting": ("shots", "shots_on", "shots_off", "shot_accuracy", "conversion", "finishing", "goals", "goal_involvements"),
+    "creating": ("key_passes", "assists"),
+    "keeping": ("saves", "conceded", "save_pct", "shots_faced"),
+    "rating": ("rating", "positioning"),
+}.items():
+    for _k in _keys:
+        FAMILY[_k] = _fam
+
+
+def _fams(keys):
+    return {FAMILY.get(k, k) for k in keys}
+
+
 def build(m, p, history, rotation):
-    """Returns (title, body, used_phrase_ids) for one player's note."""
+    """Returns (title, body, used_phrase_ids, note) for one player's note:
+    The Good, The Bad and (when earned) The Ugly, 6-10 bullets in all, chosen
+    from every signal Coach weighed (fcapp/signals.py)."""
     s = p["stats"]
     c = Context(m, p, history)
     pick = Picker(f"{m['id']}|{p['name']}|lasso", rotation)
     mates = [q for q in m["players"] if q["name"] != p["name"]]
     role = pb.LABELS[p["pos"]].lower()
     gap = next((f"{abs(d['impact']):.1f}" for d in p["impact"]["drivers"] if d["key"] == "other"), "0")
-    good, work, used = [], [], set()  # (priority, text)
+    blank = s.get("rage_quit") or s.get("stats_missing")
+    good, work, ugly = [], [], []  # (priority, text, families)
+    used = set()
 
     for x in p["strengths"]:
         fact = _good_fact(x["tag"], s, c)
         if fact and x["tag"] in GOOD:
-            good.append((10, f"{fact}. {pick('g_' + x['tag'], GOOD[x['tag']])}"))
+            good.append((8.5, f"{fact}. {pick('g_' + x['tag'], GOOD[x['tag']])}", _fams(TAG_KEYS.get(x["tag"], {x["tag"]}))))
             used |= TAG_KEYS.get(x["tag"], set())
     weak = [w for w in p["weaknesses"] if _work_fact(w["tag"], s, c, gap)]
-    drill_tag = weak[0]["tag"] if weak else None
     for w in weak:
         tips = pb.tips_for(w["tag"], p["pos"], limit=12)
         tip = pick("t_" + w["tag"], tips) if tips else ""
         lead = pick("lead", WORK_LEADIN) + " "
         tail = " " + pick("tail", WORK_TAIL) if pick.rng.random() < 0.7 else ""
-        work.append((10, f"{_work_fact(w['tag'], s, c, gap)}. {lead}{tip}{tail}".strip()))
+        keys = TAG_KEYS.get(w["tag"], {"rating"} if w["tag"] == "positioning" else {w["tag"]})
+        work.append((8.5, f"{_work_fact(w['tag'], s, c, gap)}. {lead}{tip}{tail}".strip(), _fams(keys)))
         used |= TAG_KEYS.get(w["tag"], set())
 
     scorer = max(mates, key=lambda q: q["stats"]["goals"], default=None)
     if scorer and scorer["stats"]["goals"] and ((s.get("key_passes") or 0) + s["assists"]):
-        good.append((9, pick("mate_g", TEAMMATE_GOOD).format(mate=scorer["name"])))
+        good.append((6, pick("mate_g", TEAMMATE_GOOD).format(mate=scorer["name"]), {"mate"}))
     for w in weak:
         mate = next((q for q in mates if any(x["tag"] == w["tag"] for x in q["weaknesses"])), None)
         if mate and w["tag"] in TOGETHER:
-            work.append((8, pick("mate_w", TEAMMATE_WORK).format(mate=mate["name"], issue=pb.TAG_TITLES[w["tag"]].lower(), fix=TOGETHER[w["tag"]])))
+            work.append((5.5, pick("mate_w", TEAMMATE_WORK).format(mate=mate["name"], issue=pb.TAG_TITLES[w["tag"]].lower(), fix=TOGETHER[w["tag"]]), {"mate"}))
             break
 
-    va = p.get("vs_average")
-    if va is not None and va >= 0.3:
-        good.append((7, pick("form_up", FORM_UP).format(x=f"{va:.1f}")))
-    elif va is not None and va <= -0.3:
-        work.append((7, pick("form_down", FORM_DOWN).format(x=f"{abs(va):.1f}")))
+    # Everything else Coach weighed: vs your usual, all-time, teammates, the
+    # opponent's humans, the session, the season, the ladder...
+    for x in p.get("signals", []):
+        fam = _fams([x["metric"]])
+        if x["side"] == "ugly":
+            if x["metric"] == "rage_quit":
+                ugly.append((20, f"{x['text']}. {pick('rage', RAGE)}", fam))
+                continue
+            tips = pb.tips_for(x["tip"], p["pos"], limit=12) if x.get("tip") else []
+            fix = f" {pick('lead', WORK_LEADIN)} {pick('t_' + x['tip'], tips)}" if tips else ""
+            ugly.append((x["w"] + 5, f"{x['text']}. {pick('ugly', UGLY)}{fix}", fam))
+        elif x["metric"] == "stats_missing":
+            work.append((x["w"], x["text"] + ".", fam))  # EA's blank, not the player's fault: no framing
+        elif x["metric"] in TEAM_METRICS:
+            side, pool = (good, TEAM_GOOD) if x["side"] == "good" else (work, TEAM_BAD)
+            side.append((x["w"], f"{x['text']}. {pick('sig_team_' + x['side'], pool)}", fam))
+        elif x["side"] == "good":
+            good.append((x["w"], f"{x['text']}. {pick('sig_g', SIG_GOOD)}", fam))
+        else:
+            tips = pb.tips_for(x["tip"], p["pos"], limit=12) if x.get("tip") else []
+            if tips and pick.rng.random() < 0.5:
+                frame = f"{pick('lead', WORK_LEADIN)} {pick('t_' + x['tip'], tips)}"
+            else:
+                frame = pick("sig_b", SIG_BAD)
+            work.append((x["w"], f"{x['text']}. {frame}", fam))
 
-    drivers = [d for d in p["impact"]["drivers"] if d["key"] not in ("other", "result_val") and d.get("count") and d["key"] not in used]
+    va = p.get("vs_average")
+    if va is not None and va >= 0.3 and not blank:
+        good.append((5, pick("form_up", FORM_UP).format(x=f"{va:.1f}"), {"rating"}))
+    elif va is not None and va <= -0.3 and not blank:
+        work.append((5, pick("form_down", FORM_DOWN).format(x=f"{abs(va):.1f}"), {"rating"}))
+
+    drivers = [] if blank else [d for d in p["impact"]["drivers"] if d["key"] not in ("other", "result_val") and d.get("count") and d["key"] not in used]
     for d in drivers:
         if d["impact"] > 0:
-            good.append((5, pick("drv_g", DRIVER_GOOD).format(what=_driver_what(d), x=f"{d['impact']:.1f}")))
+            good.append((3.5, pick("drv_g", DRIVER_GOOD).format(what=_driver_what(d), x=f"{d['impact']:.1f}"), _fams([d["key"]])))
     for d in reversed(drivers):
         if d["impact"] < 0:
-            work.append((5, pick("drv_w", DRIVER_WORK).format(what=_driver_what(d), x=f"{abs(d['impact']):.1f}")))
+            work.append((3.5, pick("drv_w", DRIVER_WORK).format(what=_driver_what(d), x=f"{abs(d['impact']):.1f}"), _fams([d["key"]])))
 
-    for metric, (top, poor, gate) in pb.BENCHMARKS[p["pos"]].items():
+    for metric, (top, poor, gate) in ({} if blank else pb.BENCHMARKS[p["pos"]]).items():
         val = s.get(metric)
         if val is None or metric in used or (gate and (s.get(gate[0]) or 0) < gate[1]) or val >= top or (poor is not None and val <= poor):
             continue
         pct = metric in pb.PERCENT_METRICS
-        work.append((4, pick("bench", BENCHMARK).format(label=pb.METRIC_LABELS[metric], role=role,
-                                                         val=f"{val:.0f}%" if pct else f"{val:.0f}", target=f"{top}%" if pct else top)))
+        work.append((3, pick("bench", BENCHMARK).format(label=pb.METRIC_LABELS[metric], role=role,
+                                                        val=f"{val:.0f}%" if pct else f"{val:.0f}", target=f"{top}%" if pct else top), _fams([metric])))
 
-    if c.season_high("rating"):
-        good.append((8, pick("career_high", CAREER_HIGH).format(r=f"{s['rating']:.1f}", n=len(c.all) + 1)))
+    if c.season_high("rating") and not blank:
+        good.append((8, pick("career_high", CAREER_HIGH).format(r=f"{s['rating']:.1f}", n=len(c.all) + 1), {"rating"}))
     rk = p.get("rank")
-    if rk and rk["of"] >= 3:
+    if rk and rk["of"] >= 3 and not blank:
         line_args = dict(r=f"{s['rating']:.1f}", rank=rk["text"])
         if rk["dir"] == "best" and rk["best"] <= max(3, rk["of"] // 4):
-            good.append((6, pick("rank_g", RANK_GOOD).format(**line_args)))
+            good.append((6, pick("rank_g", RANK_GOOD).format(**line_args), {"rating"}))
         elif rk["dir"] == "worst" and rk["worst"] <= max(3, rk["of"] // 4):
-            work.append((6, pick("rank_w", RANK_WORK).format(**line_args)))
+            work.append((6, pick("rank_w", RANK_WORK).format(**line_args), {"rating"}))
     team = {"W": ("team_w", TEAM_W, good), "D": ("team_d", TEAM_D, good), "L": ("team_l", TEAM_L, work)}[m["result"]]
-    team[2].append((2, pick(team[0], team[1]).format(score=c.score, opp=c.opp)))
-    good.append((1, pick("mins", MINUTES).format(mins=s["minutes"])))
-    work.append((1, pick("one", ONE_THING)))
+    team[2].append((2, pick(team[0], team[1]).format(score=c.score, opp=c.opp), {"scoreline"}))
+    if not blank:
+        good.append((1, pick("mins", MINUTES).format(mins=s["minutes"]), {"minutes"}))
+    work.append((1, pick("one", ONE_THING), {"one"}))
 
-    # 6-10 bullets: up to 5 per side, top up the thin side, trim fillers
-    good.sort(key=lambda x: -x[0])
-    work.sort(key=lambda x: -x[0])
-    g, w = good[:5], work[:5]
-    if len(g) + len(w) < 6:
-        g, w = good[:max(5, 6 - len(w))], work[:max(5, 6 - len(g))]
+    def choose(items, limit, taken=()):
+        """Strongest first, one bullet per stat family, nothing already said in The Ugly."""
+        out, fams = [], set(taken)
+        for x in sorted(items, key=lambda x: -x[0]):
+            if x[2] & fams:
+                continue
+            out.append(x)
+            fams |= x[2]
+            if len(out) == limit:
+                break
+        return out
+
+    u = choose(ugly, 3)
+    ugly_fams = {f for x in u for f in x[2]} - {"scoreline", "ladder"}
+    g, w = choose(good, 5), choose(work, 5, ugly_fams)
+    if len(g) + len(w) + len(u) < 6:
+        g, w = choose(good, max(5, 6 - len(w) - len(u))), choose(work, max(5, 6 - len(g) - len(u)), ugly_fams)
 
     def weakest():
         last = lambda side: side[-1][0] if side else 99
         return g if last(g) <= last(w) else w
 
-    while len(g) + len(w) > 10:
+    while len(g) + len(w) + len(u) > 10:
         weakest().pop()
-    while len(g) + len(w) > 6 and min((x[-1][0] for x in (g, w) if x), default=99) <= 1:
+    while len(g) + len(w) + len(u) > 6 and min((x[-1][0] for x in (g, w) if x), default=99) <= 1:
         weakest().pop()
 
     tone = p.get("rank", {}).get("tone", p["band"])
     rank = p.get("rank", {}).get("text", "")
     opener = pick(f"open_{tone}", OPENERS[tone]).format(name=p["name"], r=f"{s['rating']:.1f}", pos=role, opp=c.opp, rank=rank)
+    if s.get("rage_quit"):
+        opener = pick("rage_open", RAGE_OPEN).format(name=p["name"], score=c.score)
+    drill_tag = next((x["tag"] for x in weak), None) or next((x["tip"] for x in p.get("signals", []) if x["side"] != "good" and x.get("tip")), None)
     drill = None
     if drill_tag:
-        bullet_text = "\n".join(t for _, t in w)
+        bullet_text = "\n".join(x[1] for x in w + u)
         drills = [t for t in pb.tips_for(drill_tag, p["pos"], limit=12) if t not in bullet_text]
         if drills:
             drill = f"{pick('drill', DRILL_LEAD)} {pick('t_' + drill_tag, drills)}"
-    closer = pick("close_good", CLOSERS_GOOD) if (not p["weaknesses"] or tone.startswith("Top")) else pick("close_mixed", CLOSERS_MIXED)
+    closer = pick("close_good", CLOSERS_GOOD) if (not w and not u) or tone.startswith("Top") else pick("close_mixed", CLOSERS_MIXED)
     lassoism = pick("closing_frame", CLOSING_FRAMES).format(name=p["name"], line=pick("lassoism", LASSOISMS))
-    note = {"opener": _an(opener), "good": [_an(t) for _, t in g], "work": [_an(t) for _, t in w],
-            "drill": drill, "lassoism": lassoism, "closer": closer, "coach": COACH}
-    lines = [note["opener"], "", "DID WELL"] + [f"+ {t}" for t in note["good"]] + ["", "WORK ON"] + [f"- {t}" for t in note["work"]]
+    note = {"opener": _an(opener), "good": [_an(x[1]) for x in g], "work": [_an(x[1]) for x in w], "ugly": [_an(x[1]) for x in u],
+            "drill": drill, "lassoism": lassoism, "closer": closer, "coach": COACH, "weighed": p.get("signals_checked", 0)}
+    lines = [note["opener"]]
+    for head, mark, items in ((GOOD_HEAD, "+", note["good"]), (BAD_HEAD, "-", note["work"]), (UGLY_HEAD, "!", note["ugly"])):
+        if items:
+            lines += ["", head] + [f"{mark} {t}" for t in items]
     if drill:
         lines += ["", drill]
     lines += ["", lassoism, "", f"{closer} - {COACH}"]
     title = f"{m['result']} {c.score} vs {c.opp} | You: {s['rating']:.1f} ({rank or p['band'].lower()})"
+    if s.get("rage_quit"):
+        title = f"{m['result']} {c.score} vs {c.opp} | You: rage quit"
     return title, "\n".join(lines), pick.used, note
 
 
@@ -811,3 +878,5 @@ for _tone, _lines in OPENERS.items():
     OPENERS[_tone] = [x for x in _lines if not _PCT.search(x)] + _lasso_more.RANK_OPENERS[_tone]
 RANK_GOOD, RANK_WORK = _lasso_more.RANK_GOOD, _lasso_more.RANK_WORK
 WORK_TAIL, LASSOISMS, CLOSING_FRAMES = _lasso_more.WORK_TAIL, _lasso_more.LASSOISMS, _lasso_more.CLOSING_FRAMES
+from .lasso_ugly import (BAD_HEAD, GOOD_HEAD, RAGE, RAGE_OPEN, SIG_BAD, SIG_GOOD, TEAM_BAD, TEAM_GOOD,  # noqa: E402
+                         TEAM_METRICS, UGLY, UGLY_HEAD)

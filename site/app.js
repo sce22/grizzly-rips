@@ -214,6 +214,7 @@
       : p.strengths.map((s) => `<div class="note good"><b>${esc(s.title)}</b><small>${esc(s.detail)}</small></div>`).join("");
     const weaknesses = n ? (n.work.length ? `<ul class="notes bad">${n.work.map(bullet("bad")).join("")}</ul>` : "")
       : p.weaknesses.map((w) => `<div class="note bad"><b>${esc(w.title)}</b><small>${esc(w.detail)}</small></div>`).join("");
+    const ugly = n && n.ugly && n.ugly.length ? `<ul class="notes ugly">${n.ugly.map(bullet("ugly")).join("")}</ul>` : "";
     const drill = n && n.drill ? `<p class="drill">${esc(n.drill)}</p>` : "";
     const vs = p.vs_average != null ? ` · ${p.vs_average >= 0 ? "▲" : "▼"} ${Math.abs(p.vs_average).toFixed(1)} vs avg` : "";
     return `
@@ -232,11 +233,13 @@
           ${statGrid(p)}
           <div class="section-label">What moved the rating</div>
           ${driversBlock(p.impact)}
-          ${strengths ? `<div class="section-label">Did well</div>${strengths}` : ""}
-          ${weaknesses ? `<div class="section-label">To work on</div>${weaknesses}` : ""}
+          ${strengths ? `<div class="section-label good-label">The Good</div>${strengths}` : ""}
+          ${weaknesses ? `<div class="section-label bad-label">The Bad</div>${weaknesses}` : ""}
+          ${ugly ? `<div class="section-label ugly-label">The Ugly</div>${ugly}` : ""}
           ${drill}
           ${n && n.lassoism ? `<p class="lassoism">${esc(n.lassoism)}</p>` : ""}
           ${n ? `<p class="coach-say closer">${esc(n.closer)} <span>- ${esc(n.coach || "Coach Lasso")}</span></p>` : ""}
+          ${n && n.weighed ? `<p class="weighed">Coach weighed ${n.weighed} checks on this performance before picking these.</p>` : ""}
           <a class="back" href="#/player/${encodeURIComponent(p.name)}">Full profile & trends →</a>
         </div>
       </details>`;
@@ -248,8 +251,8 @@
       <section class="card talk" aria-label="Coach's team talk">
         <div class="talk-head"><span class="whistle" aria-hidden="true">📣</span><div><h3>Coach's team talk</h3><p class="coach-say">${esc(talk.opener)}</p></div></div>
         <div class="talk-cols">
-          <div><div class="section-label good-label">What we did well</div><ol class="talk-list good">${talk.well.map(item).join("")}</ol></div>
-          <div><div class="section-label bad-label">Work on next match</div><ol class="talk-list bad">${talk.work_on.map(item).join("")}</ol></div>
+          <div><div class="section-label good-label">The Good</div><ol class="talk-list good">${talk.well.map(item).join("")}</ol></div>
+          <div><div class="section-label bad-label">The Bad</div><ol class="talk-list bad">${talk.work_on.map(item).join("")}</ol></div>
         </div>
         <p class="coach-say closer">${esc(talk.signoff.replace(/ - Coach$/, ""))} <span>- ${esc(talk.coach || "Coach Lasso")}</span></p>
       </section>`;
@@ -362,6 +365,7 @@
           ${statCell(p.totals.goals || 0, "Goals")}
           ${statCell(p.totals.assists || 0, "Assists")}
           ${statCell(p.totals.mom || 0, "MOTM")}
+          ${statCell(p.rage_quits ? p.rage_quits.count : 0, "Rage quits")}
         </div>
       </div>
       <div class="card">
@@ -371,7 +375,8 @@
       </div>
       <div class="card">
         <h3>Match log</h3>
-        ${[...p.form].reverse().map((f) => `<a class="log-row" href="#/match/${f.match}/${encodeURIComponent(p.name)}"><span>${fmtDate(f.ts)}</span><span class="ppos cap">${esc(f.pos)}</span><span class="r" style="color:${ratingColor(f.rating)}">${f.rating.toFixed(1)}</span></a>`).join("")}
+        ${p.rage_quits && p.rage_quits.count ? `<p class="model-note"><span class="rq">${p.rage_quits.count} rage quit${p.rage_quits.count > 1 ? "s" : ""}</span> all-time (${p.rage_quits.rate}% of matches). EA rates a walk-off 3.0 or lower; we count it as 5.0 so one doesn't wreck the average.</p>` : ""}
+        ${[...p.form].reverse().map((f) => `<a class="log-row" href="#/match/${f.match}/${encodeURIComponent(p.name)}"><span>${fmtDate(f.ts)}</span><span class="ppos cap">${esc(f.pos)}${f.rq ? ` · <span class="rq">rage quit</span>` : ""}</span><span class="r" style="color:${ratingColor(f.rating)}">${f.rating.toFixed(1)}</span></a>`).join("")}
       </div>`;
   }
 
@@ -583,11 +588,16 @@
           </div>
           <div class="speech">${s.speech.split("\n\n").map((p) => `<p>${esc(p)}</p>`).join("")}<p class="sig">- ${esc(s.coach || "Coach Lasso")}</p></div>
           <div class="section-label">Key stats</div>
-          <ul class="keystats">${s.key_stats.filter((x) => !x.startsWith("League:") && !x.startsWith("Table:") && !(s.table && s.table.status.includes(x)) && !x.startsWith("Games left")).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+          <ul class="keystats">${s.key_stats.filter((x) => !x.startsWith("League:") && !x.startsWith("Ladder:") && !x.startsWith("Table:") && !(s.table && s.table.status.includes(x)) && !x.startsWith("Games left")).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
           <div class="section-label">League ladder at the end of the day</div>
+          ${s.ladder_day && s.ladder_day.start ? `<p class="ladder-day">Started the day: <b>${esc(s.ladder_day.start.division_name)}</b>, ${esc(s.ladder_day.start.stage_label)}${s.ladder_day.start.target && s.ladder_day.start.stage === "points" ? ` (${s.ladder_day.start.points}/${s.ladder_day.start.target} pts)` : ""}. Finished: <b>${esc(s.ladder_day.end.division_name)}</b>, ${esc(s.ladder_day.end.stage_label)}.${s.ladder_day.relegated_from ? ` Relegated from ${esc(s.ladder_day.relegated_from)}.` : ""}${s.ladder_day.promoted_from ? ` Promoted from ${esc(s.ladder_day.promoted_from)}!` : ""}</p>` : ""}
           ${tableCard(s.table)}
           <div class="section-label">Players</div>
-          ${s.players.map((p) => `<a class="log-row" href="#/player/${encodeURIComponent(p.name)}"><span>${esc(p.name)}</span><span class="ppos">${p.games} gp · ${p.goals}G ${p.assists}A</span><span class="r" style="color:${ratingColor(p.avg_rating)}">${p.avg_rating.toFixed(1)}</span></a>`).join("")}
+          ${s.players.map((p) => (p.lowlights || p.highlights) ? `<details class="dplayer"><summary><span>${esc(p.name)}${p.rage_quits ? ` <span class="rq">· rage quit${p.rage_quits > 1 ? " x" + p.rage_quits : ""}</span>` : ""}</span><span class="ppos">${p.games} gp · ${p.goals}G ${p.assists}A</span><span class="r" style="color:${ratingColor(p.avg_rating)}">${p.avg_rating.toFixed(1)}</span></summary>
+            ${p.highlights && p.highlights.length ? `<ul class="notes">${p.highlights.map((x) => `<li class="good">${esc(x)}</li>`).join("")}</ul>` : ""}
+            ${p.lowlights && p.lowlights.length ? `<ul class="notes">${p.lowlights.map((x) => `<li class="bad">${esc(x)}</li>`).join("")}</ul>` : ""}
+            <a class="back" href="#/player/${encodeURIComponent(p.name)}">Profile →</a></details>`
+            : `<a class="log-row" href="#/player/${encodeURIComponent(p.name)}"><span>${esc(p.name)}</span><span class="ppos">${p.games} gp · ${p.goals}G ${p.assists}A</span><span class="r" style="color:${ratingColor(p.avg_rating)}">${p.avg_rating.toFixed(1)}</span></a>`).join("")}
           <div class="section-label">Matches</div>
           ${s.matches.map((m) => `<a class="log-row" href="#/match/${m.id}"><span class="pill ${m.result}">${m.result}</span><span>${fmtTime(m.ts)} vs ${esc(m.opp)}</span><span class="r">${m.gf}-${m.ga}</span></a>`).join("")}
           ${s.baseline ? `<p class="model-note">${s.baseline.weight ? `Graded ${Math.round(s.baseline.weight * 100)}% against Grizzly Rips' own baseline (${s.baseline.matches} matches before this day) and ${100 - Math.round(s.baseline.weight * 100)}% against league standards.` : `Graded on league standards. Our own baseline kicks in after 20 matches (${s.baseline.matches} so far).`}</p>` : ""}
@@ -606,7 +616,7 @@
       <div class="card">
         <p>After every match, this site pulls the official EA Pro Clubs match report for <b>${esc(INDEX.club.name)}</b>. Only human-controlled players on our side are analysed - AI teammates and opponents are ignored.</p>
         <ul>
-          <li><b>Did well / To improve</b> compares each player's passing, tackling, shooting, key passes and saves with real FC 27 benchmarks for their position (top quarter = strength, bottom quarter = flag), then reads stats in pairs: forcing passes, diving into tackles, shooting at the keeper, and rating below what the stats predict (positioning).</li>
+          <li><b>The Good / The Bad / The Ugly</b>: Coach weighs a couple of hundred checks per player per match (every stat against your usual, your all-time best and worst, teammates, the opponent's humans, the session, the season, the club's history at your position, streaks and the ladder stakes) and keeps the strongest 6-10. The Ugly only appears when something was genuinely bad: a rage quit, a red card, a collapse in passing or tackling, or a rating far below your usual. A rating of 3.0 or lower means EA logged a rage quit; it counts as 5.0 in averages and rankings. The base check compares each player's passing, tackling, shooting, key passes and saves with real FC 27 benchmarks for their position (top quarter = strength, bottom quarter = flag), then reads stats in pairs: forcing passes, diving into tackles, shooting at the keeper, and rating below what the stats predict (positioning).</li>
           <li><b>Rating badge</b> places each rating against players in the same position. A 6.6 is a strong game for a keeper but a quiet one for a midfielder.</li>
           <li><b>What moved the rating</b> estimates how many rating points each action was worth, using weights measured from thousands of real FC 27 matches. "Everything else" is the part of EA's rating the match report doesn't break down (positioning, dribbles, interceptions).</li>
           <li><b>Coach's team talk</b> picks the three things the team did best and the three that most need work after every match. The same talk is texted to you within a couple of minutes of the final whistle.</li>

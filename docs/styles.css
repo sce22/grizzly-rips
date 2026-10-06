@@ -340,3 +340,15 @@ details[open] .chev { transform: rotate(180deg); }
 .ed-msg.err { color: var(--bad); }
 
 .lassoism { margin: 12px 0 0; padding: 10px 12px; border-left: 3px solid var(--secondary); font-size: 14px; font-style: italic; }
+
+/* The Good / The Bad / The Ugly */
+.notes li.ugly::before { content: "!"; color: var(--ugly, #b3261e); }
+.notes li.ugly { font-weight: 600; }
+.ugly-label { color: var(--ugly, #b3261e); }
+.weighed { font-size: 12px; opacity: .7; margin: 6px 0 0; }
+.dplayer { border-top: 1px solid var(--line, rgba(127,127,127,.2)); padding: 10px 0; }
+.dplayer summary { display: flex; justify-content: space-between; align-items: center; gap: 8px; cursor: pointer; list-style: none; }
+.dplayer summary::-webkit-details-marker { display: none; }
+.dplayer ul { margin: 8px 0 0; }
+.ladder-day { font-size: 14px; margin: 0 0 8px; }
+.rq { color: var(--ugly, #b3261e); font-weight: 700; }

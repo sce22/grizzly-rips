@@ -28,6 +28,7 @@ from zoneinfo import ZoneInfo
 from .store import DATA, read_json
 
 SEED_FILE = "league_state.json"
+SEEDS_LOG = "league_seeds.json"  # every confirmed starting point, so past days replay from the right one
 DIVISIONS = ["5", "4", "3", "2", "1", "Elite"]
 DEFAULT_RULES = {
     "points_targets": {"5": 7, "4": 9, "3": 12, "2": 16, "1": 18},  # Elite: unlimited
@@ -141,10 +142,20 @@ def apply(state, m, r):
     return ev
 
 
+def seed_for(until_ts=None):
+    """The confirmed starting point in force at `until_ts`: the current seed,
+    or for an earlier moment the latest logged seed from before it."""
+    seed = read_json(SEED_FILE)
+    if until_ts is None or not seed or seed["as_of_ts"] < until_ts:
+        return seed
+    older = [x for x in (read_json(SEEDS_LOG) or []) if x["as_of_ts"] < until_ts]
+    return max(older, key=lambda x: (x["as_of_ts"], x.get("set_at", ""))) if older else seed
+
+
 def track(matches, config, until_ts=None):
     """Ladder state after every league match up to `until_ts` (default: now).
     Returns (state, events, seed) or (None, [], None) without a seed."""
-    seed = read_json(SEED_FILE)
+    seed = seed_for(until_ts)
     if not seed:
         return None, [], None
     r = rules(config)
@@ -225,4 +236,48 @@ def write_seed(division, stage, points, lives, promo_results, as_of_match, histo
         "history": history or [],
     }
     (DATA / SEED_FILE).write_text(json.dumps(seed, indent=1))
+    log = read_json(SEEDS_LOG) or []
+    log.append({k: seed[k] for k in ("as_of_ts", "as_of_match", "set_at", "note", "state", "history")})
+    (DATA / SEEDS_LOG).write_text(json.dumps(log, indent=1))
     return seed
+
+
+def match_events(matches, config):
+    """Ladder event for every league match we can place (match id -> event),
+    replaying each confirmed starting point up to the next one."""
+    r = rules(config)
+    seeds = sorted((read_json(SEEDS_LOG) or []) + [read_json(SEED_FILE) or {}], key=lambda x: x.get("as_of_ts", 0))
+    seeds = [x for x in seeds if x.get("state")]
+    out = {}
+    for i, seed in enumerate(seeds):
+        stop = seeds[i + 1]["as_of_ts"] if i + 1 < len(seeds) else None
+        state = json.loads(json.dumps(seed["state"]))
+        for m in sorted(matches, key=lambda x: x["ts"]):
+            if m["type"] != "leagueMatch" or m["ts"] <= seed["as_of_ts"] or (stop is not None and m["ts"] > stop):
+                continue
+            out[m["id"]] = apply(state, m, r)
+    for seed in seeds:  # matches whose effect is only recorded in a seed's history
+        for e in seed.get("history", []):
+            if e.get("match") and e["match"] not in out:
+                out[e["match"]] = e
+    return out
+
+
+def day_story(matches, config, start_ts, end_ts):
+    """Where the ladder stood when a day opened and when it closed, plus what
+    happened in between (promotions, relegations, corrections)."""
+    start, end = snapshot(matches, config, until_ts=start_ts), snapshot(matches, config, until_ts=end_ts)
+    if not end:
+        return None
+    _, events, _ = track(matches, config, until_ts=end_ts)
+    during = [e for e in events if start_ts <= e["ts"] < end_ts and e.get("text")]
+    order = {d: i for i, d in enumerate(DIVISIONS)}
+    moved = None
+    if start and start["division"] != end["division"]:
+        moved = "up" if order[end["division"]] > order[start["division"]] else "down"
+    pick = lambda t: t and {k: t[k] for k in ("division_name", "stage", "stage_label", "points", "target", "lives", "max_lives", "status", "spoken", "taken_at") if k in t}
+    return {"start": pick(start), "end": pick(end), "moved": moved,
+            "events": [{"ts": e["ts"], "kind": e.get("kind"), "text": e["text"]} for e in during],
+            "relegated_from": start["division_name"] if moved == "down" else None,
+            "promoted_from": start["division_name"] if moved == "up" else None,
+            "facing_relegation": end["stage"] == "relegation"}

@@ -1,0 +1,155 @@
+[
+ {
+  "as_of_ts": 1790910652,
+  "as_of_match": "55752127900301",
+  "set_at": "2026-10-01T22:54-05:00",
+  "note": "Confirmed by tuxedo_slide on Oct 1: Division 3 (12 pts reached), promotion matches to Division 2, 1 played (2-2 draw), 3 left, need 3 wins",
+  "state": {
+   "division": "3",
+   "stage": "promotion",
+   "points": 12,
+   "lives": 3,
+   "promo_played": 1,
+   "promo_results": [
+    "D"
+   ],
+   "phase_results": []
+  },
+  "history": [
+   {
+    "ts": 1790910652,
+    "kind": "promo_match",
+    "text": "Promotion match 1: D 2-2 vs unbeatables FC"
+   }
+  ]
+ },
+ {
+  "as_of_ts": 1790910652,
+  "as_of_match": "55752127900301",
+  "set_at": "2026-10-01T23:09-05:00",
+  "note": "Confirmed by tuxedo_slide on Oct 1: Division 3, promotion matches to Division 2 (win 3 of 4), 1 played (2-2 draw)",
+  "state": {
+   "division": "3",
+   "stage": "promotion",
+   "points": 12,
+   "lives": 3,
+   "promo_played": 1,
+   "promo_wins": 0,
+   "promo_results": [
+    "D"
+   ],
+   "phase_results": []
+  },
+  "history": [
+   {
+    "ts": 1790910652,
+    "kind": "promo_match",
+    "text": "Promotion match 1 of 4: D 2-2 vs unbeatables FC"
+   }
+  ]
+ },
+ {
+  "as_of_ts": 1791159440,
+  "as_of_match": "67342799280075",
+  "set_at": "2026-10-05T17:52-05:00",
+  "note": "Edited in the app",
+  "state": {
+   "division": "2",
+   "stage": "points",
+   "points": 0,
+   "lives": 3,
+   "promo_played": 0,
+   "promo_wins": 0,
+   "promo_results": [],
+   "phase_results": []
+  },
+  "history": [
+   {
+    "ts": 1790910652,
+    "kind": "promo_match",
+    "text": "Promotion match 1 of 4: D 2-2 vs unbeatables FC"
+   },
+   {
+    "ts": 1790910652,
+    "kind": "manual",
+    "text": "Status: Division 3, promotion stage, promotion results D"
+   },
+   {
+    "ts": 1791150795,
+    "match": "66892943240145",
+    "result": "L",
+    "score": "1-3",
+    "opp": "man united2112",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 2 of 4: L 1-3 vs man united2112. Promotion missed; back to 0 pts in Division 3",
+    "kind": "promotion_failed"
+   },
+   {
+    "ts": 1791159440,
+    "kind": "manual",
+    "text": "Status: Division 2, points stage"
+   }
+  ]
+ },
+ {
+  "as_of_ts": 1791245194,
+  "as_of_match": "71232070390205",
+  "set_at": "2026-10-05T19:21-05:00",
+  "note": "Edited in the app",
+  "state": {
+   "division": "3",
+   "stage": "points",
+   "points": 0,
+   "lives": 3,
+   "promo_played": 0,
+   "promo_wins": 0,
+   "promo_results": [],
+   "phase_results": []
+  },
+  "history": [
+   {
+    "ts": 1790910652,
+    "kind": "promo_match",
+    "text": "Promotion match 1 of 4: D 2-2 vs unbeatables FC"
+   },
+   {
+    "ts": 1790910652,
+    "kind": "manual",
+    "text": "Status: Division 3, promotion stage, promotion results D"
+   },
+   {
+    "ts": 1791150795,
+    "match": "66892943240145",
+    "result": "L",
+    "score": "1-3",
+    "opp": "man united2112",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 2 of 4: L 1-3 vs man united2112. Promotion missed; back to 0 pts in Division 3",
+    "kind": "promotion_failed"
+   },
+   {
+    "ts": 1791159440,
+    "kind": "manual",
+    "text": "Status: Division 2, points stage"
+   },
+   {
+    "ts": 1791245194,
+    "match": "71232070390205",
+    "result": "L",
+    "score": "0-5",
+    "opp": "SydSwny FanClub",
+    "division": "2",
+    "stage": "points",
+    "kind": "relegation_match_due",
+    "text": "Out of chances in Division 2 (L 0-5 vs SydSwny FanClub). Relegation match next"
+   },
+   {
+    "ts": 1791245194,
+    "kind": "manual",
+    "text": "Status: Division 3, points stage"
+   }
+  ]
+ }
+]

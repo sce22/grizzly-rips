@@ -82,23 +82,43 @@ def team_baseline(before):
             "ppg": round(b["ppg"], 2), "gd": round(b["gd"], 2), "rating": round(b["rating"], 2)}
 
 
-def score_day(day_matches, baseline):
-    """Internal 0-20 mood scale (never shown).
+def _clamp(x, lo, hi):
+    return max(lo, min(hi, x))
 
-    Two views, blended by how much of our own history we have:
-      * league standard - results, margins and ratings on a fixed scale
-      * our baseline - the same three things compared with our usual, so a
-        day is graded against what this team normally does (10 = a normal day)
+
+def score_day(day_matches, baseline, story=None):
+    """Internal 0-20 scale (never shown; 10 = an ordinary day).
+
+    Results, goal margin and ratings are judged two ways and blended by how
+    much of our own history we have:
+      * league standard - a fixed scale (1.5 pts per match, level goals and a
+        6.8 average rating is a 10)
+      * our baseline - the same three things against this team's own usual
+    Then the ladder and conduct apply on top, whatever the blend: dropping a
+    division, burning our last chance, a failed promotion or rage quits cost
+    marks; promotions and survived relegation matches earn them.
     """
     d = _day_stats(day_matches)
-    standard = d["ppg"] / 3 * 14 + (max(-3.0, min(3.0, d["gd"])) + 3) / 6 * 4.5 + max(0.0, min(1.5, d["rating"] - 6.5))
+    standard = 10 + (d["ppg"] - 1.5) * 5 + _clamp(d["gd"], -3, 3) * 1.5 + _clamp(d["rating"] - 6.8, -1.5, 1.5) * 2
     w = baseline.get("weight", 0.0)
-    if not w:
-        return max(0, min(20, round(standard)))
-    relative = (10 + (d["ppg"] - baseline["ppg"]) * 6 + max(-3.0, min(3.0, d["gd"] - baseline["gd"])) * 1.2
-                + max(-1.5, min(1.5, d["rating"] - baseline["rating"])) * 2)
-    relative = max(0.0, min(20.0, relative))
-    return max(0, min(20, round((1 - w) * standard + w * relative)))
+    base = standard
+    if w:
+        relative = (10 + (d["ppg"] - baseline["ppg"]) * 6 + _clamp(d["gd"] - baseline["gd"], -3, 3) * 1.2
+                    + _clamp(d["rating"] - baseline["rating"], -1.5, 1.5) * 2)
+        base = (1 - w) * standard + w * relative
+    return round(_clamp(base + ladder_and_conduct(day_matches, story), 0, 20))
+
+
+def ladder_and_conduct(day_matches, story):
+    adj = 0.0
+    if story:
+        adj += {"down": -4.0, "up": 3.0}.get(story.get("moved"), 0.0)
+        if story.get("facing_relegation") and story["start"] and story["start"]["stage"] != "relegation":
+            adj -= 1.5
+        kinds = [e["kind"] for e in story.get("events", [])]
+        adj += -1.0 * kinds.count("promotion_failed") + 1.5 * kinds.count("qualified") + 1.0 * kinds.count("survived")
+    quits = sum(1 for m in day_matches for p in m["players"] if p["stats"].get("rage_quit"))
+    return adj - min(3, quits)
 
 
 def grade_for(score):
@@ -106,12 +126,17 @@ def grade_for(score):
 
 
 TONE = [  # (max score, guidance) - drives both Claude and the built-in writer
-    (3, "Deeply disappointed. Open with honest, firm scolding about what went wrong, name it plainly, then build a long, sincere through-line to hope by the end."),
-    (6, "Frustrated but fatherly. Tough love first, specific about the problems, then turn the corner into steady optimism."),
-    (9, "Mixed day, slightly below par. Measured and honest, credit what worked, challenge what didn't, end encouraged."),
-    (12, "Solid, mixed-to-good day. Warm and proud with clear notes for improvement."),
-    (15, "Good day. Proud and upbeat, celebrate specifics, still one or two coaching notes."),
-    (18, "Great day. Jubilant, big praise, playful, hype them up with a light coaching touch."),
+    (2, "SCATHING. This was a disaster and the speech has to say so. Open by absolutely laying into the team: blunt, loud, specific, "
+        "naming the worst results, the goals conceded, any relegation or burned chances, and rage quits. Then go round the room and give "
+        "EVERY player 2-3 explicit, number-backed things they did badly (still credit a genuine bright spot if one exists). Only in the "
+        "last third does Coach soften: in classic Ted Lasso style he turns it around with warmth, belief and a homespun story, and ends "
+        "on a genuinely high, hopeful note about tomorrow."),
+    (5, "Furious-but-fatherly. Lead with hard, honest criticism of the day and specific failures, call out every player's 2-3 worst "
+        "habits with numbers while noting real positives, then turn the corner into belief and finish on a high note."),
+    (8, "Below par. Honest and firm: name what went wrong and who needs to sharpen what, credit what worked, end encouraged and upbeat."),
+    (11, "An ordinary day. Measured and warm: credit what worked, challenge what didn't, end with optimism."),
+    (14, "Good day. Proud and upbeat, celebrate specifics, still one or two coaching notes, finish buzzing."),
+    (17, "Great day. Jubilant, big praise, playful, hype them up with a light coaching touch."),
     (20, "Phenomenal day. Maximum hype, over-the-top joy and celebration, the full Lasso fireworks."),
 ]
 
@@ -131,33 +156,99 @@ def _plural(n, word, plural=None):
 
 # ------------------------------------------------------------ the summary
 
-def summarize_players(day_matches):
+FAMILY_OF = None
+
+
+def _family(metric):
+    from .lasso import FAMILY
+    return FAMILY.get(metric, metric)
+
+
+def _pct_of(made, att):
+    return round(made / att * 100) if att else None
+
+
+def summarize_players(day_matches, before):
+    """Each player's day: numbers, how it compares with their own usual, and
+    the strongest good / bad / ugly signals from their matches (one per stat
+    family, so the 2-3 lowlights are different problems)."""
+    usual = {}
+    for m in before:
+        for p in m["players"]:
+            if not p["stats"].get("rage_quit") and not p["stats"].get("stats_missing"):
+                usual.setdefault(p["name"], []).append(p["stats"])
     agg = {}
-    for m in day_matches:
+    for i, m in enumerate(day_matches, 1):
         for p in m["players"]:
             a = agg.setdefault(p["name"], {"name": p["name"], "games": 0, "goals": 0, "assists": 0, "key_passes": 0,
-                                           "tackles_won": 0, "ratings": [], "mom": 0, "pos": p["pos"], "tags": {}})
+                                           "tackles_won": 0, "tackles_att": 0, "passes_made": 0, "passes_att": 0, "shots": 0,
+                                           "shots_on": 0, "ratings": [], "mom": 0, "pos": p["pos"], "tags": {}, "rage_quits": 0,
+                                           "record": {"W": 0, "D": 0, "L": 0}, "signals": [], "log": []})
             s = p["stats"]
             a["games"] += 1
-            a["goals"] += s["goals"]
-            a["assists"] += s["assists"]
+            a["record"][m["result"]] += 1
+            for k_out, k_in in (("goals", "goals"), ("assists", "assists"), ("tackles_won", "tackles_made"), ("tackles_att", "tackles_att"),
+                                ("passes_made", "passes_made"), ("passes_att", "passes_att"), ("shots", "shots"), ("mom", "mom")):
+                a[k_out] += s.get(k_in) or 0
             a["key_passes"] += s.get("key_passes") or 0
-            a["tackles_won"] += s["tackles_made"]
+            a["shots_on"] += s.get("shots_on") or 0
             a["ratings"].append(s["rating"])
-            a["mom"] += s["mom"]
+            a["rage_quits"] += s.get("rage_quit", 0)
+            a["log"].append({"match": i, "opp": m["opponent"]["name"], "score": f"{m['gf']}-{m['ga']}", "result": m["result"],
+                             "rating": s["rating"], **({"rage_quit": True} if s.get("rage_quit") else {})})
+            for x in p.get("signals", []):
+                a["signals"].append({**x, "match": i, "opp": m["opponent"]["name"]})
             for w in p["weaknesses"]:
                 a["tags"][w["tag"]] = a["tags"].get(w["tag"], 0) + 1
     out = []
     for a in agg.values():
         a["avg_rating"] = round(sum(a["ratings"]) / len(a["ratings"]), 2)
-        a["best_rating"] = max(a["ratings"])
+        a["best_rating"], a["worst_rating"] = max(a["ratings"]), min(a["ratings"])
         a["top_issue"] = max(a["tags"], key=a["tags"].get) if a["tags"] else None
-        del a["ratings"], a["tags"]
+        a["pass_pct"] = _pct_of(a["passes_made"], a["passes_att"])
+        a["tackle_pct"] = _pct_of(a["tackles_won"], a["tackles_att"])
+        u = usual.get(a["name"], [])
+        if len(u) >= 3:
+            a["usual"] = {"rating": round(sum(x["rating"] for x in u[-15:]) / len(u[-15:]), 2),
+                          "pass_pct": _pct_of(sum(x["passes_made"] for x in u[-15:]), sum(x["passes_att"] for x in u[-15:])),
+                          "tackle_pct": _pct_of(sum(x["tackles_made"] for x in u[-15:]), sum(x["tackles_att"] for x in u[-15:])),
+                          "matches": len(u)}
+        a["lowlights"], a["highlights"] = _pick_signals(a, ("ugly", "bad"), 3), _pick_signals(a, ("good",), 2)
+        del a["ratings"], a["tags"], a["signals"]
         out.append(a)
     return sorted(out, key=lambda a: -a["avg_rating"])
 
 
-def build(day, matches, cfg, table=None, rotation=None):
+TEAMWIDE = {"scoreline", "ladder", "opp_strength", "stats_missing"}
+
+
+def _pick_signals(a, sides, limit):
+    """Strongest distinct signals for the day (team-wide ones left for the team section)."""
+    items = sorted((x for x in a["signals"] if x["side"] in sides and x["metric"] not in TEAMWIDE),
+                   key=lambda x: (-(x["w"] + (4 if x["side"] == "ugly" else 0))))
+    out, fams = [], set()
+    # day-level verdicts first: they sum up the whole day, not one match
+    u = a.get("usual")
+    if u and "bad" in sides:
+        if a["avg_rating"] <= u["rating"] - 0.7:
+            out.append(f"Averaged {a['avg_rating']:.1f} on the day against a usual {u['rating']:.1f}")
+            fams.add("rating")
+        if a["pass_pct"] is not None and u["pass_pct"] and a["passes_att"] >= 15 and a["pass_pct"] <= u["pass_pct"] - 8:
+            out.append(f"Passed at {a['pass_pct']}% across the day ({a['passes_made']} of {a['passes_att']}), down from a usual {u['pass_pct']}%")
+            fams.add("passing")
+    if a["rage_quits"] and "bad" in sides:
+        out.insert(0, f"Rage quit {a['rage_quits']} time{'s' if a['rage_quits'] > 1 else ''} today")
+        fams.add("rage_quit")
+    for x in items:
+        f = _family(x["metric"])
+        if f in fams or len(out) >= limit:
+            continue
+        out.append(f"Match {x['match']} vs {x['opp']}: {x['text']}")
+        fams.add(f)
+    return out[:limit]
+
+
+def build(day, matches, cfg, table=None, rotation=None, story=None):
     """Build the summary data (everything except the speech)."""
     start, end = window(day, cfg)
     dm = [m for m in matches if start.timestamp() <= m["ts"] < end.timestamp()]
@@ -166,8 +257,8 @@ def build(day, matches, cfg, table=None, rotation=None):
     rec = {"W": 0, "D": 0, "L": 0}
     for m in dm:
         rec[m["result"]] += 1
-    score = score_day(dm, baseline)
-    players = summarize_players(dm)
+    score = score_day(dm, baseline, story)
+    players = summarize_players(dm, before)
     best = max(dm, key=lambda m: (m["gf"] - m["ga"], m["gf"]))
     worst = min(dm, key=lambda m: (m["gf"] - m["ga"], m["gf"]))
     issues = {}
@@ -176,6 +267,17 @@ def build(day, matches, cfg, table=None, rotation=None):
             for w in p["weaknesses"]:
                 issues[w["tag"]] = issues.get(w["tag"], 0) + 1
     team_issue = max(issues, key=issues.get) if issues else None
+    run = longest = 0
+    for m in dm:
+        run = run + 1 if m["result"] == "L" else 0
+        longest = max(longest, run)
+    half = len(dm) // 2
+    first, second = dm[:half], dm[half:]
+    pts = lambda ms: sum({"W": 3, "D": 1, "L": 0}[m["result"]] for m in ms)
+    opp_r = [q["stats"]["rating"] for m in dm for q in m.get("opp_players", []) if not q["stats"].get("rage_quit")]
+    our_r = [q["stats"]["rating"] for m in dm for q in m["players"] if not q["stats"].get("rage_quit")]
+    quits = [{"name": p["name"], "match": i, "opp": m["opponent"]["name"], "score": f"{m['gf']}-{m['ga']}"}
+             for i, m in enumerate(dm, 1) for p in m["players"] if p["stats"].get("rage_quit")]
     return {
         "date": day.isoformat(),
         "label": f"{day:%a, %b} {day.day}",
@@ -188,6 +290,12 @@ def build(day, matches, cfg, table=None, rotation=None):
         "best_match": {"id": best["id"], "score": f"{best['gf']}-{best['ga']}", "opp": best["opponent"]["name"], "result": best["result"]},
         "worst_match": {"id": worst["id"], "score": f"{worst['gf']}-{worst['ga']}", "opp": worst["opponent"]["name"], "result": worst["result"]},
         "team_issue": team_issue,
+        "team": {"longest_losing_run": longest, "conceded_per_match": round(sum(m["ga"] for m in dm) / len(dm), 2),
+                 "first_half_points": pts(first), "second_half_points": pts(second), "rage_quits": quits,
+                 "their_avg_rating": round(sum(opp_r) / len(opp_r), 2) if opp_r else None,
+                 "our_avg_rating": round(sum(our_r) / len(our_r), 2) if our_r else None,
+                 "four_goal_losses": sum(1 for m in dm if m["ga"] - m["gf"] >= 4)},
+        "ladder_day": story,
         "matches": [{"id": m["id"], "ts": m["ts"], "result": m["result"], "gf": m["gf"], "ga": m["ga"], "opp": m["opponent"]["name"]} for m in dm],
         "table": table,
     }
@@ -204,6 +312,16 @@ def key_stats(s):
     if s["mvp"]:
         p = s["players"][0]
         lines.append(f"Player of the day: {p['name']} ({p['avg_rating']:.1f} avg, {_plural(p['goals'], 'goal')}, {_plural(p['assists'], 'assist')})")
+    ld = s.get("ladder_day")
+    if ld and ld.get("start") and ld.get("end"):
+        a, b = ld["start"], ld["end"]
+        lines.append(f"Ladder: started {_ladder_short(a)}, finished {_ladder_short(b)}")
+    q = (s.get("team") or {}).get("rage_quits") or []
+    if q:
+        who = {}
+        for x in q:
+            who[x["name"]] = who.get(x["name"], 0) + 1
+        lines.append("Rage quits: " + ", ".join(f"{n}" + (f" x{c}" if c > 1 else "") for n, c in who.items()))
     t = s.get("table")
     if t:
         lines.append(f"League: {t['stage_label']}")
@@ -211,15 +329,53 @@ def key_stats(s):
     return lines
 
 
+def _ladder_short(t):
+    if t["stage"] == "promotion":
+        return f"{t['division_name']}, promotion matches"
+    if t["stage"] == "relegation":
+        return f"{t['division_name']}, relegation match next"
+    return f"{t['division_name']}, {t['points']}/{t['target']} pts, {t['lives']} of {t['max_lives']} chances" if t.get("target") else f"{t['division_name']}, {t['points']} pts"
+
+
 # ------------------------------------------------------- the speech: Claude
 
-SYSTEM_PROMPT = """You write a post-game pep talk transcript for a Pro Clubs team in EA Sports FC 27, in the voice of a coach modeled on Ted Lasso: folksy Midwestern warmth, relentless belief in people, homespun metaphors, gentle humor, sincere, never mean-spirited even when stern. Use original lines; do not quote the TV show.
+SYSTEM_PROMPT = """You write the nightly post-session speech for a Pro Clubs team in EA Sports FC 27, in the voice of a coach modeled on Ted Lasso: folksy Midwestern warmth, homespun metaphors, gentle humor and relentless belief in people. Use original lines; do not quote the TV show.
 
-The coach is speaking directly to the players after their day of matches. It is a spoken speech transcript: plain paragraphs, no headings, no bullet points, no markdown, no stage directions. Length: 330 to 430 words (about 2 to 3 minutes spoken).
+It is a spoken transcript: plain paragraphs, no headings, no bullet points, no markdown, no stage directions. Length: 380 to 520 words (2 to 3 minutes spoken).
 
-Be specific and informative: mention the actual results, scores, opponents and named players with their real numbers, the main thing to fix next time with a concrete soccer coaching point, and where the team stands in the league if table data is given. Do not invent statistics that aren't in the data.
+Judge the day objectively, like an honest analyst, from the data you are given: results and scorelines, goals conceded, the league ladder at the start and end of the day, ratings against each player's own usual, rage quits, and the team's baseline. Do not soften a bad day or inflate a good one. The letter grade has already been decided from the numbers; your words must match it, and you may say the grade out loud. Never mention the internal 0-20 score.
 
-Match the emotional register given in the tone guidance exactly. Never mention a numeric score, scale, grade or rating out of anything for the day."""
+The ladder: say plainly where we started the day and where we finished it (division and stage), and what happened in between (e.g. relegated, promotion series failed, relegation match next). Do not list every ladder step.
+
+Players: talk to every player by name. Use their "lowlights" and "highlights" (each is a real fact with a number). On a poor day (grade D or F) every player gets 2-3 explicit things they did badly, with the numbers; still credit a genuine positive where one exists. A rating marked rage_quit means the player quit the match: call it out directly but without cruelty. Their averages already count a rage quit as 5.0.
+
+Follow the tone guidance exactly. Whatever the tone, Coach always brings it home in classic Ted Lasso style and the very last lines are hopeful and uplifting. Do not invent statistics that are not in the data."""
+
+
+def claude_facts(summary):
+    facts = {k: summary.get(k) for k in ("label", "grade", "games", "record", "gf", "ga", "best_match", "worst_match", "matches", "team")}
+    facts["club_name"] = summary.get("club")
+    facts["players"] = [{k: p.get(k) for k in ("name", "pos", "games", "record", "avg_rating", "best_rating", "worst_rating", "goals", "assists",
+                                              "key_passes", "shots", "shots_on", "pass_pct", "passes_made", "passes_att", "tackle_pct", "tackles_won",
+                                              "tackles_att", "mom", "rage_quits", "usual", "lowlights", "highlights", "log", "all_time")}
+                        for p in summary["players"]]
+    b = summary.get("baseline") or {}
+    facts["our_usual"] = ({"points_per_game": b["ppg"], "goal_diff_per_game": b["gd"], "avg_rating": b["rating"], "matches": b["matches"],
+                           "note": "Judge the day against this team's own usual as well as league standards."}
+                          if b.get("weight") else None)
+    facts["main_team_issue"] = pb.TAG_TITLES.get(summary["team_issue"]) if summary.get("team_issue") else None
+    facts["coaching_points_for_that_issue"] = pb.tips_for(summary["team_issue"], "_", 4) if summary.get("team_issue") else []
+    ld = summary.get("ladder_day")
+    if ld:
+        facts["ladder_today"] = {"start_of_day": ld["start"] and ld["start"]["spoken"], "end_of_day": ld["end"]["spoken"],
+                                 "relegated_from": ld.get("relegated_from"), "promoted_from": ld.get("promoted_from"),
+                                 "facing_relegation_match_next": ld.get("facing_relegation"),
+                                 "events": [e["text"] for e in ld.get("events", []) if e.get("kind") != "manual"]}
+    if summary.get("table"):
+        facts["ladder_now"] = {"where_we_are": summary["table"]["spoken"], "status": summary["table"]["status"]}
+    facts["previous_summary"] = summary.get("previous")
+    facts["season_so_far"] = summary.get("season_so_far")
+    return facts
 
 
 def claude_speech(summary, tone):
@@ -230,16 +386,7 @@ def claude_speech(summary, tone):
         import anthropic
     except ImportError:
         return None
-    facts = {k: summary[k] for k in ("label", "games", "record", "gf", "ga", "players", "best_match", "worst_match", "matches")}
-    facts["club_name"] = summary.get("club")
-    b = summary.get("baseline") or {}
-    facts["our_usual"] = ({"points_per_game": b["ppg"], "goal_diff_per_game": b["gd"], "avg_rating": b["rating"], "matches": b["matches"],
-                           "note": "Judge the day mostly against this team's own usual, not just league standards."}
-                          if b.get("weight") else None)
-    facts["main_team_issue"] = pb.TAG_TITLES.get(summary["team_issue"]) if summary.get("team_issue") else None
-    facts["coaching_points_for_that_issue"] = pb.tips_for(summary["team_issue"], "_", 4) if summary.get("team_issue") else []
-    facts["league_ladder"] = {"where_we_are": summary["table"]["spoken"], "status": summary["table"]["status"],
-                              "recent_ladder_events": [e.get("text") for e in summary["table"]["history"][-4:]]} if summary.get("table") else None
+    facts = claude_facts(summary)
     try:
         client = anthropic.Anthropic()
         response = client.beta.messages.create(
@@ -250,7 +397,8 @@ def claude_speech(summary, tone):
             output_config={"effort": "medium"},
             system=SYSTEM_PROMPT,
             messages=[{"role": "user", "content":
-                       f"Tone guidance for today: {tone}\n\nToday's data (JSON):\n{json.dumps(facts, indent=1)}\n\nWrite the speech."}],
+                       f"Grade for today: {summary['grade']}\nTone guidance for today: {tone}\n\nToday's data (JSON):\n"
+                       f"{json.dumps(facts, indent=1, ensure_ascii=False)}\n\nWrite the speech."}],
         )
     except anthropic.APIConnectionError:
         print("[daily] Claude unreachable - using the built-in writer")
@@ -347,7 +495,37 @@ RALLY = {
 
 
 def _mood(score):
-    return "low" if score <= 6 else "mid" if score <= 12 else "high"
+    return "scathing" if score <= 2 else "low" if score <= 8 else "mid" if score <= 13 else "high"
+
+
+SCATHING_OPEN = [
+    "Sit down. All of you. No, don't look at your phones, look at me. That was the worst football I've watched since I started this job, and I once watched a goat referee a pee-wee match.",
+    "I've been chewing on what to say for an hour and I keep landing on the same word: unacceptable. Not you as people. What we put on that pitch tonight.",
+    "Y'all, I am not gonna sugarcoat this, because sugar is for biscuits and tonight doesn't deserve a biscuit. That was a mess from the first whistle to the last.",
+    "Grab a seat and grab a mirror, because the problem tonight isn't the other team. It's us.",
+]
+SCATHING_LADDER = [
+    "We started the day {start}. We finished it {end}. {fall} Let that sink all the way in, because I need it to.",
+    "This morning we were {start}. Tonight we're {end}. {fall} That's not bad luck. That's a day of bad decisions stacked on top of each other.",
+    "Here's the whole story in two sentences. We woke up {start}. We're going to bed {end}. {fall}",
+]
+SCATHING_PLAYER = [
+    "{name}, you're not hiding from this one: {items}.",
+    "{name}. {items}. That's not the player I know.",
+    "{name}, I wrote yours down so I'd get it right: {items}.",
+    "And {name}: {items}. We both know you're better than that.",
+    "{name}, let's be honest with each other: {items}.",
+]
+SCATHING_TURN = [
+    "Now. I've said my piece, and every word of it was true. But here's something else that's true: I wouldn't be this upset if I didn't believe in every single one of you. You don't yell at a tomato plant for not growing unless you know it can.",
+    "Okay. Deep breath. That's the hard part done. Because here's what a day like this really is: it's the bottom of the hill. And the nice thing about the bottom of the hill is there's only one direction left to go.",
+    "That's the last time I'm raising my voice about today. Now listen, because this next part matters more. Bad days don't make bad teams. How you answer them does.",
+]
+SCATHING_CLOSE = [
+    "So tomorrow we walk in, we win that relegation match, and we start the climb back. Together. I believe in this team more right now than I did this morning, because now I know exactly what we're fixing. Get some sleep. Believe.",
+    "Go home. Rest. Drink some water. Tomorrow's a brand-new pitch, and I want us to stomp all over it. I'm proud to be your coach, today of all days. Believe.",
+    "Here's my promise: I'm not going anywhere, and neither are you. We're gonna fix this one pass, one tackle, one match at a time, and one day we'll laugh about tonight. Believe.",
+]
 
 
 def player_line(p, mood, pick):
@@ -372,10 +550,55 @@ def player_line(p, mood, pick):
     ]).format(name=p["name"], r=f"{p['avg_rating']:.1f}", games=_plural(p["games"], "game"), issue=issue)
 
 
+def _join(items):
+    items = [x[0].lower() + x[1:] for x in items]
+    return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " and " + items[-1]
+
+
+def scathing_speech(s, pick):
+    """The F-day speech: lay into them, every player's lowlights, then turn it home."""
+    r = s["record"]
+    paras = [pick("d_scath_open", SCATHING_OPEN),
+             (f"{s['games']} matches. {r['W']} won, {r['D']} drawn, {r['L']} lost. {s['gf']} scored and {s['ga']} conceded. "
+             + (f"We lost {s['team']['four_goal_losses']} of them by four or more. " if s["team"].get("four_goal_losses") else "")
+             + (f"At one point we lost {s['team']['longest_losing_run']} on the bounce." if s["team"].get("longest_losing_run", 0) >= 3 else "")).strip()]
+    ld = s.get("ladder_day")
+    if ld and ld.get("start"):
+        fall = (f"We got relegated out of {ld['relegated_from']}, and now we've got a relegation match to keep us in {ld['end']['division_name']}."
+                if ld.get("relegated_from") and ld.get("facing_relegation") else
+                f"We got relegated out of {ld['relegated_from']}." if ld.get("relegated_from") else
+                "And we've burned every chance we had." if ld.get("facing_relegation") else "")
+        paras.append(pick("d_scath_ladder", SCATHING_LADDER).format(start=_ladder_short(ld["start"]).replace(",", " with", 1),
+                                                                   end=_ladder_short(ld["end"]).replace(",", " with", 1), fall=fall))
+    quits = s["team"].get("rage_quits") or []
+    if quits:
+        names = sorted({q["name"] for q in quits})
+        paras.append(f"And some of us didn't even finish. {' and '.join(names)}, you walked off. "
+                     "I understand frustration. I don't accept leaving your teammates short.")
+    lines = []
+    for p in s["players"]:
+        items = p.get("lowlights") or []
+        if items:
+            lines.append(pick("d_scath_player", SCATHING_PLAYER).format(name=p["name"], items=_join(items[:3])))
+        if p.get("highlights"):
+            lines.append(f"The one thing I'll keep from your day, {p['name']}: {p['highlights'][0][0].lower() + p['highlights'][0][1:]}.")
+    paras.append(" ".join(lines))
+    if s.get("team_issue"):
+        tips = pb.tips_for(s["team_issue"], "_", 12)
+        paras.append(pick("d_focus", FOCUS).format(issue=pb.TAG_TITLES[s["team_issue"]].lower(), tip=pick("t_" + s["team_issue"], tips)))
+    paras.append(pick("d_scath_turn", SCATHING_TURN))
+    paras.append(pick("d_story_low", STORY["low"]))
+    paras.append(pick("d_rally_low", RALLY["low"]))
+    paras.append(pick("d_scath_close", SCATHING_CLOSE))
+    return paras
+
+
 def builtin_speech(s, rotation):
     """Returns (speech, phrase ids used) so later days rotate away from them."""
     pick = Picker(f"daily|{s['date']}", rotation)
     mood = _mood(s["score"])
+    if mood == "scathing":
+        return _an("\n\n".join(scathing_speech(s, pick))), sorted(pick.used)
     r = s["record"]
     word = lambda n, one, many: one if n == 1 else many
     paras = [pick("d_open_" + mood, OPEN[mood]),
@@ -422,9 +645,25 @@ def past_rotation():
 
 
 def generate(day, matches, config, table=None, rotation=None):
+    from . import league
     cfg = settings(config)
-    s = build(day, matches, cfg, table)
+    start, end = window(day, cfg)
+    story = league.day_story(matches, config, start.timestamp(), end.timestamp())
+    s = build(day, matches, cfg, table, story=story)
     s["club"] = config["club"]["name"]
+    prev = [x for x in load_all() if x["date"] < s["date"]]
+    if prev:
+        s["previous"] = {"date": prev[-1]["date"], "grade": prev[-1]["grade"], "record": prev[-1]["record"]}
+    season = [m for m in matches if m["ts"] < end.timestamp() and m.get("season") == (next((m["season"] for m in matches if start.timestamp() <= m["ts"] < end.timestamp()), None))]
+    if season:
+        r = {"W": 0, "D": 0, "L": 0}
+        for m in season:
+            r[m["result"]] += 1
+        s["season_so_far"] = {"season": season[0]["season"], "record": r, "gf": sum(m["gf"] for m in season), "ga": sum(m["ga"] for m in season)}
+    for p in s["players"]:
+        rows = [q["stats"] for m in matches if m["ts"] < end.timestamp() for q in m["players"] if q["name"] == p["name"]]
+        rq = sum(1 for x in rows if x.get("rage_quit"))
+        p["all_time"] = {"matches": len(rows), "avg_rating": round(sum(x["rating"] for x in rows) / len(rows), 2), "rage_quits": rq}
     tone = tone_for(s["score"])
     speech = claude_speech(s, tone)
     s["speech_by"] = "claude" if speech else "builtin"

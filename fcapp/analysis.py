@@ -78,6 +78,10 @@ def decode_events(raw):
     return {k: counts.get(k, 0) for k in EVENT_CODES.values()}
 
 
+RAGE_QUIT_MAX = 3.0   # a rating at or under this means the player rage quit
+RAGE_QUIT_AS = 5.0    # ...and counts as this in averages and rankings
+
+
 def player_line(raw, result):
     goals, shots = _i(raw.get("goals")), _i(raw.get("shots"))
     ev = decode_events(raw)
@@ -90,8 +94,14 @@ def player_line(raw, result):
     p_att, p_made = _i(raw.get("passattempts")), _i(raw.get("passesmade"))
     t_att, t_made = _i(raw.get("tackleattempts")), _i(raw.get("tacklesmade"))
     saves, conceded = _i(raw.get("saves")), _i(raw.get("goalsconceded"))
+    raw_rating = round(_f(raw.get("rating")), 2)
+    rage_quit = 0 < raw_rating <= RAGE_QUIT_MAX
     return {
-        "rating": round(_f(raw.get("rating")), 2),
+        # EA gives 3.0 or lower to a player who quits mid-match; we count it as
+        # 5.0 so one walk-off doesn't wreck an average (raw value kept)
+        "rating": RAGE_QUIT_AS if rage_quit else raw_rating,
+        "raw_rating": raw_rating,
+        "rage_quit": int(rage_quit),
         "minutes": round(_i(raw.get("secondsPlayed")) / 60),
         "goals": goals,
         "assists": _i(raw.get("assists")),
@@ -119,6 +129,11 @@ def player_line(raw, result):
         "clean_sheet": 1 if conceded == 0 and _i(raw.get("cleansheetsany")) else 0,
         "mom": _i(raw.get("mom")),
         "idle_share": round(idle / real, 2) if real else 0,
+        "goal_involvements": goals + _i(raw.get("assists")),
+        "actions": p_att + shots + t_att + saves,                         # everything EA counts you doing on the ball
+        "errors": max(p_att - p_made, 0) + max(t_att - t_made, 0),        # misplaced passes + missed tackles
+        # EA sometimes zeroes a player's whole stat line for a full match; don't coach off blanks
+        "stats_missing": int(_i(raw.get("secondsPlayed")) >= 1800 and not (p_att or t_att or shots or saves or goals)),
         "result": result,
     }
 
@@ -156,13 +171,16 @@ def normalise(raw, club_id, seasons, roster):
         "gf": gf,
         "ga": ga,
         "dnf": _i(ours.get("winnerByDnf")) == 1,
-        "ea_result": _i(ours.get("result")),  # bit 16384 = EA flags this match as reaching the league target
+        "ea_result": _i(ours.get("result")),  # EA's raw result code (bit meanings unconfirmed)
         "opponent": {
             "name": opp.get("details", {}).get("name", "Opponent"),
             "id": opp_id,
             "crest": opp.get("details", {}).get("customKit", {}).get("crestAssetId"),
         },
         "players": players,
+        # the other side's humans, anonymous, for head-to-head context
+        "opp_players": [{"pos": (q.get("pos") or "midfielder").lower(), "stats": player_line(q, {"W": "L", "L": "W"}.get(result, "D"))}
+                        for q in raw.get("players", {}).get(opp_id, {}).values()] if opp_id else [],
     }
 
 
@@ -465,7 +483,8 @@ def analyse_all(raw_matches, config):
     matches = [m for m in (normalise(r, club_id, seasons, roster) for r in raw_matches) if m]
     matches.sort(key=lambda m: m["ts"])
 
-    samples = [(p["pos"], p["stats"]) for m in matches for p in m["players"] if p["stats"]["minutes"] >= 20]
+    samples = [(p["pos"], p["stats"]) for m in matches for p in m["players"]
+               if p["stats"]["minutes"] >= 20 and not p["stats"]["rage_quit"]]  # walk-offs would skew the weights
     models = fit_models(samples, acfg.get("prior_matches", 30))
 
     history = defaultdict(list)  # player -> prior analyses
@@ -475,6 +494,8 @@ def analyse_all(raw_matches, config):
             factor = min(max(s["minutes"], 1) / 90.0, 1.0)
             p["impact"] = rating_drivers(s, models[p["pos"]])
             strengths, weaknesses = assess(p["pos"], s, factor, p["impact"])
+            if s["rage_quit"] or s["stats_missing"]:
+                strengths, weaknesses = [], []  # nothing real to grade
             p["strengths"], p["weaknesses"] = strengths, weaknesses
             p["band"] = rating_band(p["pos"], s["rating"])
             p["rank"] = personal_rank(s["rating"], [x["stats"]["rating"] for x in history[p["name"]]], p["band"])
@@ -526,6 +547,7 @@ def player_profile(name, rows, acfg):
     averages = {k: _avg(rows, k) for k in ("rating", "pass_pct", "tackle_pct", "conversion", "shot_accuracy", "finishing",
                                            "shots", "key_passes", "passes_att", "tackles_att", "missed_tackles", "save_pct")}
     record = Counter(r["stats"]["result"] for r in rows)
+    rage = [r for r in rows if r["stats"].get("rage_quit")]
 
     # Which actions have moved this player's rating the most, on average
     impact = defaultdict(list)
@@ -552,13 +574,15 @@ def player_profile(name, rows, acfg):
         "record": {"W": record["W"], "D": record["D"], "L": record["L"]},
         "totals": dict(totals),
         "averages": averages,
-        "form": [{"match": r["match"], "ts": r["ts"], "rating": r["stats"]["rating"], "pos": r["pos"]} for r in rows],
+        "form": [{"match": r["match"], "ts": r["ts"], "rating": r["stats"]["rating"], "pos": r["pos"], "rq": r["stats"].get("rage_quit", 0)} for r in rows],
         "trend": trend,
         "band": rating_band(main_pos, averages["rating"]),
         "impact": impact_avg,
         "themes": themes,
         "themes_progress": {"have": n, "need": min_n},
         "best": max(rows, key=lambda r: r["stats"]["rating"])["match"],
+        "rage_quits": {"count": len(rage), "rate": round(len(rage) / n * 100), "matches": [
+            {"match": r["match"], "ts": r["ts"], "raw_rating": r["stats"]["raw_rating"]} for r in rage]},
     }
 
 
