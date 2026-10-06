@@ -140,7 +140,8 @@ def send_tests(config, matches, args):
     base, club = config["site"]["base_url"], config["club"]["name"]
     failures = 0
     for name in names:
-        m = latest_for(matches, name)
+        m = (next((x for x in matches if x["id"] == args.match and any(p["name"] == name for p in x["players"])), None)
+             if args.match else latest_for(matches, name))
         if not m:
             print(f"{name}: no stored match - check the gamertag spelling")
             failures += 1
@@ -167,6 +168,7 @@ def main(argv=None):
     ap.add_argument("--test-daily", action="store_true", help="push the latest Daily Summary (or --date) to --players")
     ap.add_argument("--preview-daily", action="store_true", help="write today's summary so far (not saved) and push it to --players")
     ap.add_argument("--date", default="", help="YYYY-MM-DD for --test-daily / --preview-daily")
+    ap.add_argument("--match", default="", help="match id for --test-text (default: each player's latest)")
     ap.add_argument("--players", default="", help="comma-separated gamertags for --test-text (default: notify.my_player)")
     args = ap.parse_args(argv)
 

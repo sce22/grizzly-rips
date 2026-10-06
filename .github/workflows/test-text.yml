@@ -18,6 +18,10 @@ on:
         description: "Daily summary date YYYY-MM-DD (blank = latest)"
         required: false
         default: ""
+      match:
+        description: "Match id for match notes (blank = latest)"
+        required: false
+        default: ""
       players:
         description: "Gamertags, comma-separated (blank = just you)"
         required: false
@@ -48,11 +52,12 @@ jobs:
           PLAYERS: ${{ inputs.players }}
           WHAT: ${{ inputs.what }}
           DAY: ${{ inputs.date }}
+          MATCH: ${{ inputs.match }}
         run: |
           if [ "$WHAT" = "daily preview" ]; then
             python -m fcapp.run --no-fetch --preview-daily --date "$DAY" --players "$PLAYERS"
           elif [ "$WHAT" = "daily summary" ]; then
             python -m fcapp.run --no-fetch --test-daily --date "$DAY" --players "$PLAYERS"
           else
-            python -m fcapp.run --no-fetch --test-text --channel "${{ inputs.channel }}" --players "$PLAYERS"
+            python -m fcapp.run --no-fetch --test-text --channel "${{ inputs.channel }}" --players "$PLAYERS" --match "$MATCH"
           fi

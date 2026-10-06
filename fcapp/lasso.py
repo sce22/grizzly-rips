@@ -17,6 +17,7 @@ import zlib
 from . import playbook as pb
 
 COACH = "Coach Lasso"
+UGLY_BELOW = 6.7  # any match rated under this gets The Ugly
 
 
 # ------------------------------------------------------------------ helpers
@@ -567,6 +568,18 @@ def build(m, p, history, rotation):
     g, w = choose(good, 5), choose(work, 5, ugly_fams)
     if len(g) + len(w) + len(u) < 6:
         g, w = choose(good, max(5, 6 - len(w) - len(u))), choose(work, max(5, 6 - len(g) - len(u)), ugly_fams)
+
+    # Every match under 6.7 gets The Ugly: the worst individual problem moves there
+    if s["rating"] < UGLY_BELOW and not u:
+        team_only = {"scoreline", "ladder", "opp_strength", "results", "one", "mate", "stats_missing"}
+        worst = next((x for x in w if not (x[2] & team_only)), None)
+        if worst:
+            w.remove(worst)
+            u.append(worst)
+        else:
+            va = p.get("vs_average")
+            gap = f", {abs(va):.1f} under your usual" if va is not None and va < 0 else ""
+            u.append((9, f"A {s['rating']:.1f} rating{gap}. {pick('ugly', UGLY)}", {"rating"}))
 
     def weakest():
         last = lambda side: side[-1][0] if side else 99
