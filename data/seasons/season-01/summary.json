@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 34,
+ "matches_played": 35,
  "record": {
   "W": 15,
   "D": 6,
-  "L": 13
+  "L": 14
  },
  "goals_for": 84,
- "goals_against": 73,
+ "goals_against": 78,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-05T23:58:43+00:00",
+ "last_match": "2026-10-06T00:06:34+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -247,6 +247,13 @@
    "date": "2026-10-05T23:58:43+00:00",
    "result": "L",
    "score": "4-5",
+   "opponent": "SydSwny FanClub"
+  },
+  {
+   "id": "71232070390205",
+   "date": "2026-10-06T00:06:34+00:00",
+   "result": "L",
+   "score": "0-5",
    "opponent": "SydSwny FanClub"
   }
  ]
