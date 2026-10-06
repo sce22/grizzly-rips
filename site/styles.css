@@ -361,5 +361,6 @@ details[open] .chev { transform: rotate(180deg); }
 .boxscore th { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; opacity: .7; text-align: center; padding: 4px 4px 6px; }
 .boxscore th:first-child, .boxscore td:first-child { text-align: left; }
 .boxscore td { text-align: center; padding: 6px 4px; border-top: 1px solid var(--line, rgba(127,127,127,.2)); }
-.boxscore td:first-child { font-weight: 600; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.boxscore td:first-child { font-weight: 600; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .boxscore .zero { opacity: .35; }
+.boxscore .rq { font-size: 10px; }
