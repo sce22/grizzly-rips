@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 33,
+ "matches_played": 34,
  "record": {
   "W": 15,
   "D": 6,
-  "L": 12
+  "L": 13
  },
- "goals_for": 80,
- "goals_against": 68,
+ "goals_for": 84,
+ "goals_against": 73,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-05T23:38:11+00:00",
+ "last_match": "2026-10-05T23:58:43+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -241,6 +241,13 @@
    "result": "W",
    "score": "3-2",
    "opponent": "Love To Win"
+  },
+  {
+   "id": "70840772150125",
+   "date": "2026-10-05T23:58:43+00:00",
+   "result": "L",
+   "score": "4-5",
+   "opponent": "SydSwny FanClub"
   }
  ]
 }
