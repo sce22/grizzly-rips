@@ -224,7 +224,9 @@
           <div>
             <div class="pname">${esc(p.name)}${p.stats.mom ? " ⭐" : ""}</div>
             <div class="ppos"><span class="cap">${esc(p.pos)}</span> · ${p.stats.minutes}'${vs}</div>
-            ${p.rank ? `<span class="band ${p.rank.dir === "best" && p.rank.best <= Math.max(3, p.rank.of / 4) ? "band-top" : p.rank.dir === "worst" && p.rank.worst <= Math.max(3, p.rank.of / 4) ? "band-bottom" : ""}">${esc(p.rank.text.charAt(0).toUpperCase() + p.rank.text.slice(1))}</span>` : ""}
+            ${p.rank && p.rank.perfect ? `<span class="band band-perfect">★ ${esc(p.rank.text)}</span>`
+              : (p.rank_now || p.rank) && (p.rank_now || p.rank).show ? `<span class="band ${(p.rank_now || p.rank).dir === "best" ? "band-top" : "band-bottom"}">${esc((p.rank_now || p.rank).text.charAt(0).toUpperCase() + (p.rank_now || p.rank).text.slice(1))}</span>` : ""}
+            ${p.stats.rage_quit ? `<span class="band band-bottom">Rage quit${p.stats.left_at ? ` · left ${p.stats.left_at}'` : ""}</span>` : ""}
           </div>
           <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </summary>
@@ -243,6 +245,20 @@
           <a class="back" href="#/player/${encodeURIComponent(p.name)}">Full profile & trends →</a>
         </div>
       </details>`;
+  }
+
+  function boxScore(players) {
+    const rows = players.filter((p) => !p.stats.stats_missing && (p.stats.passes_att || p.stats.key_passes || p.stats.assists || p.stats.goals));
+    if (!rows.length) return "";
+    const n = (v) => (v ? v : `<span class="zero">0</span>`);
+    return `
+      <section class="card boxscore" aria-label="Box score">
+        <h3>Box score</h3>
+        <table>
+          <thead><tr><th>Player</th><th>Passes</th><th>Key passes</th><th>Assists</th><th>Goals</th></tr></thead>
+          <tbody>${rows.map((p) => `<tr><td>${esc(p.name)}</td><td>${p.stats.passes_made}/${p.stats.passes_att}</td><td>${n(p.stats.key_passes)}</td><td>${n(p.stats.assists)}</td><td>${n(p.stats.goals)}</td></tr>`).join("")}</tbody>
+        </table>
+      </section>`;
   }
 
   function talkCard(talk) {
@@ -278,6 +294,7 @@
           <div><b>${t.key_passes ?? "–"}</b><span>Key passes</span></div>
         </div>
       </div>
+      ${boxScore(m.players)}
       ${m.talk ? talkCard(m.talk) : ""}
       <h2>Player breakdowns</h2>
       ${m.players.map((p) => playerCard(p, focus ? p.name === focus : false)).join("") || `<div class="empty">No human players recorded.</div>`}`;
@@ -366,6 +383,7 @@
           ${statCell(p.totals.assists || 0, "Assists")}
           ${statCell(p.totals.mom || 0, "MOTM")}
           ${statCell(p.rage_quits ? p.rage_quits.count : 0, "Rage quits")}
+          ${statCell(p.perfect_games ? p.perfect_games.count : 0, "Perfect Games")}
         </div>
       </div>
       <div class="card">
@@ -375,8 +393,8 @@
       </div>
       <div class="card">
         <h3>Match log</h3>
-        ${p.rage_quits && p.rage_quits.count ? `<p class="model-note"><span class="rq">${p.rage_quits.count} rage quit${p.rage_quits.count > 1 ? "s" : ""}</span> all-time (${p.rage_quits.rate}% of matches). EA rates a walk-off 3.0 or lower; we count it as 5.0 so one doesn't wreck the average.</p>` : ""}
-        ${[...p.form].reverse().map((f) => `<a class="log-row" href="#/match/${f.match}/${encodeURIComponent(p.name)}"><span>${fmtDate(f.ts)}</span><span class="ppos cap">${esc(f.pos)}${f.rq ? ` · <span class="rq">rage quit</span>` : ""}</span><span class="r" style="color:${ratingColor(f.rating)}">${f.rating.toFixed(1)}</span></a>`).join("")}
+        ${p.rage_quits && p.rage_quits.count ? `<p class="model-note"><span class="rq">${p.rage_quits.count} rage quit${p.rage_quits.count > 1 ? "s" : ""}</span> all-time (${p.rage_quits.rate}% of matches): left before the final whistle. A rating of 3.0 or lower counts as 5.0 so one walk-off doesn't wreck the average.</p>` : ""}
+        ${[...p.form].reverse().map((f) => `<a class="log-row" href="#/match/${f.match}/${encodeURIComponent(p.name)}"><span>${fmtDate(f.ts)}</span><span class="ppos cap">${esc(f.pos)}${f.rq ? ` · <span class="rq">rage quit${f.left ? ` ${f.left}'` : ""}</span>` : ""}${f.pg ? ` · <span class="pg">★ Perfect Game</span>` : ""}</span><span class="r" style="color:${ratingColor(f.rating)}">${f.rating.toFixed(1)}</span></a>`).join("")}
       </div>`;
   }
 
@@ -616,7 +634,7 @@
       <div class="card">
         <p>After every match, this site pulls the official EA Pro Clubs match report for <b>${esc(INDEX.club.name)}</b>. Only human-controlled players on our side are analysed - AI teammates and opponents are ignored.</p>
         <ul>
-          <li><b>The Good / The Bad / The Ugly</b>: Coach weighs a couple of hundred checks per player per match (every stat against your usual, your all-time best and worst, teammates, the opponent's humans, the session, the season, the club's history at your position, streaks and the ladder stakes) and keeps the strongest 6-10. The Ugly only appears when something was genuinely bad: a rage quit, a red card, a collapse in passing or tackling, or a rating far below your usual. A rating of 3.0 or lower means EA logged a rage quit; it counts as 5.0 in averages and rankings. The base check compares each player's passing, tackling, shooting, key passes and saves with real FC 27 benchmarks for their position (top quarter = strength, bottom quarter = flag), then reads stats in pairs: forcing passes, diving into tackles, shooting at the keeper, and rating below what the stats predict (positioning).</li>
+          <li><b>The Good / The Bad / The Ugly</b>: Coach weighs a couple of hundred checks per player per match (every stat against your usual, your all-time best and worst, teammates, the opponent's humans, the session, the season, the club's history at your position, streaks and the ladder stakes) and keeps the strongest 6-10. The Ugly only appears when something was genuinely bad: a rage quit, a red card, a collapse in passing or tackling, or a rating far below your usual. Leaving before the final whistle counts as a rage quit (EA can't tell a quit from a disconnect); a rating of 3.0 or lower counts as 5.0 in averages and rankings. The rating banner only appears for a player's 5 best and 5 worst matches of the season, and a 10.0 is a Perfect Game. The base check compares each player's passing, tackling, shooting, key passes and saves with real FC 27 benchmarks for their position (top quarter = strength, bottom quarter = flag), then reads stats in pairs: forcing passes, diving into tackles, shooting at the keeper, and rating below what the stats predict (positioning).</li>
           <li><b>Rating badge</b> places each rating against players in the same position. A 6.6 is a strong game for a keeper but a quiet one for a midfielder.</li>
           <li><b>What moved the rating</b> estimates how many rating points each action was worth, using weights measured from thousands of real FC 27 matches. "Everything else" is the part of EA's rating the match report doesn't break down (positioning, dribbles, interceptions).</li>
           <li><b>Coach's team talk</b> picks the three things the team did best and the three that most need work after every match. The same talk is texted to you within a couple of minutes of the final whistle.</li>

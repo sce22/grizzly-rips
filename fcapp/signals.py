@@ -123,19 +123,24 @@ def player_signals(m, p, history, earlier_in_session, ladder_event=None, club_po
     every = [h["stats"] for h in history]
     prev = [x for x in every if not x.get("rage_quit") and not x.get("stats_missing")]  # real performances only
     recent = prev[-10:]
-    played = s["minutes"] > 0 and not s.get("rage_quit")
+    played = s["minutes"] > 0 and s.get("raw_rating", s["rating"]) > 3.0
 
     # ---------------------------------------------------------- the match itself
     margin = m["gf"] - m["ga"]
     c.check()
     if s.get("rage_quit"):
         n = sum(1 for h in every if h.get("rage_quit")) + 1
+        when = f"at {s['left_at']}'" if s.get("left_at") else "before your stats even counted"
         c.add("ugly", 10, "rage_quit", "match",
-              f"Rage quit. EA logged a {s['raw_rating']:.1f} and {s['minutes']} minutes, leaving the team a player short"
+              f"Rage quit: you left {when}, before the final whistle, and the team played a player short"
               + (f". That's your {_ordinal(n)} walk-off for us" if n > 1 else ""))
     c.check()
     quitters = [q["name"] for q in mates if q["stats"].get("rage_quit")]
-    if quitters and played:
+    c.check()
+    if s.get("perfect"):
+        n = sum(1 for h in every if h.get("perfect")) + 1
+        c.add("good", 12, "perfect", "match", "A perfect 10.0" + (f", your {_ordinal(n)} Perfect Game for us" if n > 1 else ", your first Perfect Game for us"))
+    if quitters and played and not s.get("rage_quit"):
         c.add("good", 4.5, "stayed", "match", f"Stayed on and finished the match after {' and '.join(quitters)} walked off")
     c.check()
     if s["red_cards"]:

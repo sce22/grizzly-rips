@@ -147,3 +147,11 @@ RAGE_OPEN = [
     "{name}, you left this one early. Let's talk about that before anything else.",
 ]
 TEAM_METRICS = {"scoreline", "ladder", "opp_strength", "results"}
+
+PERFECT_OPEN = [
+    "{name}, a perfect 10.0 against {opp}. {rank}. I don't have a speech for this. I'm just gonna stand here and clap.",
+    "Ten. Point. Zero. {name}, that's a {rank} and I'd like it laminated, please.",
+    "{name}, they don't make the rating any higher than that. {rank} against {opp}. Somebody ring a bell.",
+    "{rank}, {name}. A 10.0 against {opp}. If football had a dictionary, your picture would be next to 'flawless'.",
+    "{name}, a 10.0. {rank}. I've been coaching a long time and I still got goosebumps.",
+]

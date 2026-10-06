@@ -459,7 +459,7 @@ def build(m, p, history, rotation):
     mates = [q for q in m["players"] if q["name"] != p["name"]]
     role = pb.LABELS[p["pos"]].lower()
     gap = next((f"{abs(d['impact']):.1f}" for d in p["impact"]["drivers"] if d["key"] == "other"), "0")
-    blank = s.get("rage_quit") or s.get("stats_missing")
+    blank = s.get("raw_rating", s["rating"]) <= 3.0 or s.get("stats_missing")
     good, work, ugly = [], [], []  # (priority, text, families)
     used = set()
 
@@ -538,7 +538,7 @@ def build(m, p, history, rotation):
     if c.season_high("rating") and not blank:
         good.append((8, pick("career_high", CAREER_HIGH).format(r=f"{s['rating']:.1f}", n=len(c.all) + 1), {"rating"}))
     rk = p.get("rank")
-    if rk and rk["of"] >= 3 and not blank:
+    if rk and rk["of"] >= 3 and rk.get("show") and not rk.get("perfect") and not blank:
         line_args = dict(r=f"{s['rating']:.1f}", rank=rk["text"])
         if rk["dir"] == "best" and rk["best"] <= max(3, rk["of"] // 4):
             good.append((6, pick("rank_g", RANK_GOOD).format(**line_args), {"rating"}))
@@ -578,8 +578,13 @@ def build(m, p, history, rotation):
         weakest().pop()
 
     tone = p.get("rank", {}).get("tone", p["band"])
-    rank = p.get("rank", {}).get("text", "")
-    opener = pick(f"open_{tone}", OPENERS[tone]).format(name=p["name"], r=f"{s['rating']:.1f}", pos=role, opp=c.opp, rank=rank)
+    shown = p.get("rank", {}).get("show")
+    rank = p.get("rank", {}).get("text", "") if shown else ""
+    # only a season top-5 / bottom-5 (or a Perfect Game) gets its ranking said out loud
+    openers = OPENERS[tone] if shown else [x for x in OPENERS[tone] if "{rank}" not in x]
+    opener = pick(f"open_{tone}", openers).format(name=p["name"], r=f"{s['rating']:.1f}", pos=role, opp=c.opp, rank=rank)
+    if s.get("perfect"):
+        opener = pick("perfect_open", PERFECT_OPEN).format(name=p["name"], opp=c.opp, rank=rank)
     if s.get("rage_quit"):
         opener = pick("rage_open", RAGE_OPEN).format(name=p["name"], score=c.score)
     drill_tag = next((x["tag"] for x in weak), None) or next((x["tip"] for x in p.get("signals", []) if x["side"] != "good" and x.get("tip")), None)
@@ -600,7 +605,7 @@ def build(m, p, history, rotation):
     if drill:
         lines += ["", drill]
     lines += ["", lassoism, "", f"{closer} - {COACH}"]
-    title = f"{m['result']} {c.score} vs {c.opp} | You: {s['rating']:.1f} ({rank or p['band'].lower()})"
+    title = f"{m['result']} {c.score} vs {c.opp} | You: {s['rating']:.1f}" + (f" ({rank})" if rank else "")
     if s.get("rage_quit"):
         title = f"{m['result']} {c.score} vs {c.opp} | You: rage quit"
     return title, "\n".join(lines), pick.used, note
@@ -878,5 +883,5 @@ for _tone, _lines in OPENERS.items():
     OPENERS[_tone] = [x for x in _lines if not _PCT.search(x)] + _lasso_more.RANK_OPENERS[_tone]
 RANK_GOOD, RANK_WORK = _lasso_more.RANK_GOOD, _lasso_more.RANK_WORK
 WORK_TAIL, LASSOISMS, CLOSING_FRAMES = _lasso_more.WORK_TAIL, _lasso_more.LASSOISMS, _lasso_more.CLOSING_FRAMES
-from .lasso_ugly import (BAD_HEAD, GOOD_HEAD, RAGE, RAGE_OPEN, SIG_BAD, SIG_GOOD, TEAM_BAD, TEAM_GOOD,  # noqa: E402
+from .lasso_ugly import (BAD_HEAD, GOOD_HEAD, PERFECT_OPEN, RAGE, RAGE_OPEN, SIG_BAD, SIG_GOOD, TEAM_BAD, TEAM_GOOD,  # noqa: E402
                          TEAM_METRICS, UGLY, UGLY_HEAD)

@@ -82,7 +82,10 @@ RAGE_QUIT_MAX = 3.0   # a rating at or under this means the player rage quit
 RAGE_QUIT_AS = 5.0    # ...and counts as this in averages and rankings
 
 
-def player_line(raw, result):
+LEAVE_GRACE = 60  # seconds of game clock: leaving this close to the whistle isn't leaving early
+
+
+def player_line(raw, result, match_end=None, forfeit_win=False):
     goals, shots = _i(raw.get("goals")), _i(raw.get("shots"))
     ev = decode_events(raw)
     if ev:
@@ -95,13 +98,19 @@ def player_line(raw, result):
     t_att, t_made = _i(raw.get("tackleattempts")), _i(raw.get("tacklesmade"))
     saves, conceded = _i(raw.get("saves")), _i(raw.get("goalsconceded"))
     raw_rating = round(_f(raw.get("rating")), 2)
-    rage_quit = 0 < raw_rating <= RAGE_QUIT_MAX
+    clock = _i(raw.get("gameTime"))  # game-clock second the player's match ended
+    left_early = match_end is not None and clock < match_end - LEAVE_GRACE
+    # A rage quit: their clock stopped before the final whistle (a disconnect
+    # looks the same to EA). Not when the other side quit and we won by forfeit.
+    rage_quit = (left_early or 0 < raw_rating <= RAGE_QUIT_MAX) and not forfeit_win
     return {
-        # EA gives 3.0 or lower to a player who quits mid-match; we count it as
-        # 5.0 so one walk-off doesn't wreck an average (raw value kept)
-        "rating": RAGE_QUIT_AS if rage_quit else raw_rating,
+        # EA gives 3.0 or lower when a player quits before their stats count;
+        # we count it as 5.0 so one walk-off doesn't wreck an average (raw kept)
+        "rating": RAGE_QUIT_AS if 0 < raw_rating <= RAGE_QUIT_MAX else raw_rating,
         "raw_rating": raw_rating,
         "rage_quit": int(rage_quit),
+        "left_at": round(clock / 60) if rage_quit and clock else (0 if rage_quit else None),  # minute they left
+        "perfect": int(raw_rating >= 10.0),
         "minutes": round(_i(raw.get("secondsPlayed")) / 60),
         "goals": goals,
         "assists": _i(raw.get("assists")),
@@ -148,6 +157,9 @@ def normalise(raw, club_id, seasons, roster):
     gf, ga = _i(ours.get("goals")), _i(ours.get("goalsAgainst"))
     result = "W" if _i(ours.get("wins")) else "L" if _i(ours.get("losses")) else "D"
     ts = _i(raw.get("timestamp"))
+    end = max((_i(q.get("gameTime")) for side in raw.get("players", {}).values() for q in side.values()), default=None)
+    our_forfeit_win = _i(ours.get("winnerByDnf")) == 1 and result == "W"
+    their_forfeit_win = _i(ours.get("winnerByDnf")) == 1 and result == "L"
     players = []
     for pid, p in raw.get("players", {}).get(cid, {}).items():
         name = p.get("playername", pid)
@@ -158,7 +170,7 @@ def normalise(raw, club_id, seasons, roster):
             "pid": pid,
             "name": name,
             "pos": pos if pos in pb.POSITIONS else "midfielder",
-            "stats": player_line(p, result),
+            "stats": player_line(p, result, end, our_forfeit_win),
             "event_codes": p.get("match_event_aggregate_0", ""),
         })
     return {
@@ -179,7 +191,7 @@ def normalise(raw, club_id, seasons, roster):
         },
         "players": players,
         # the other side's humans, anonymous, for head-to-head context
-        "opp_players": [{"pos": (q.get("pos") or "midfielder").lower(), "stats": player_line(q, {"W": "L", "L": "W"}.get(result, "D"))}
+        "opp_players": [{"pos": (q.get("pos") or "midfielder").lower(), "stats": player_line(q, {"W": "L", "L": "W"}.get(result, "D"), end, their_forfeit_win)}
                         for q in raw.get("players", {}).get(opp_id, {}).values()] if opp_id else [],
     }
 
@@ -418,31 +430,41 @@ def _ordinal(n):
     return f"{n}{'th' if 10 <= n % 100 <= 20 else {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')}"
 
 
-def personal_rank(rating, earlier, league_band):
-    """Where this rating ranks among the player's own games so far (this one
-    included), e.g. "3rd best match performance". `tone` buckets the
-    same ranking for Coach Lasso's mood (league band until 4 games)."""
+BANNER_TOP = 5  # banner only for a player's 5 best and 5 worst of the season
+
+
+def personal_rank(rating, earlier, league_band, perfect_no=0):
+    """Where this rating ranks among the player's own matches this season (this
+    one included), e.g. "3rd best match performance". `show` is True only for
+    the season's top 5 and bottom 5 (or a Perfect Game) - the banner and the
+    notification title use it. `tone` buckets the ranking for Coach's mood."""
     all_r = earlier + [rating]
     n = len(all_r)
     best = 1 + sum(r > rating for r in all_r)
     worst = 1 + sum(r < rating for r in all_r)
     if n == 1:
-        text, direction = "first match performance", "best"
+        text, direction = "first match performance of the season", "best"
     elif best == 1:
-        text, direction = "best match performance", "best"
+        text, direction = "best match performance of the season", "best"
     elif worst == 1:
-        text, direction = "worst match performance", "worst"
+        text, direction = "worst match performance of the season", "worst"
     elif best <= worst:
-        text, direction = f"{_ordinal(best)} best match performance", "best"
+        text, direction = f"{_ordinal(best)} best match performance of the season", "best"
     else:
-        text, direction = f"{_ordinal(worst)} worst match performance", "worst"
+        text, direction = f"{_ordinal(worst)} worst match performance of the season", "worst"
+    show = (best if direction == "best" else worst) <= BANNER_TOP
+    if perfect_no:
+        text, direction, show = f"Perfect Game #{perfect_no}" if perfect_no > 1 else "Perfect Game", "best", True
     if n < 4:
         tone = league_band
     else:
         pct = (best - 1) / (n - 1)
         tone = ("Top 10%" if pct <= 0.1 else "Top 25%" if pct <= 0.3 else "Above average" if pct <= 0.55
                 else "Below average" if pct <= 0.8 else "Bottom 25%")
-    return {"best": best, "worst": worst, "of": n, "text": text, "dir": direction, "tone": tone}
+    if perfect_no:
+        tone = "Top 10%"
+    return {"best": best, "worst": worst, "of": n, "text": text, "dir": direction, "tone": tone, "show": show,
+            "perfect": perfect_no}
 
 
 def rating_band(pos, r):
@@ -494,19 +516,34 @@ def analyse_all(raw_matches, config):
             factor = min(max(s["minutes"], 1) / 90.0, 1.0)
             p["impact"] = rating_drivers(s, models[p["pos"]])
             strengths, weaknesses = assess(p["pos"], s, factor, p["impact"])
-            if s["rage_quit"] or s["stats_missing"]:
+            if s["raw_rating"] <= RAGE_QUIT_MAX or s["stats_missing"]:
                 strengths, weaknesses = [], []  # nothing real to grade
             p["strengths"], p["weaknesses"] = strengths, weaknesses
             p["band"] = rating_band(p["pos"], s["rating"])
-            p["rank"] = personal_rank(s["rating"], [x["stats"]["rating"] for x in history[p["name"]]], p["band"])
+            perfect_no = (sum(x["stats"].get("perfect", 0) for x in history[p["name"]]) + 1) if s.get("perfect") else 0
+            p["rank"] = personal_rank(s["rating"], [x["stats"]["rating"] for x in history[p["name"]] if x["season"] == m["season"]],
+                                      p["band"], perfect_no)
             prior = history[p["name"]]
             if len(prior) >= 3:
                 avg = sum(x["stats"]["rating"] for x in prior) / len(prior)
                 p["vs_average"] = round(s["rating"] - avg, 2)
             p["headline"] = headline(p["name"], p["pos"], s, strengths, weaknesses)
-            history[p["name"]].append({"match": m["id"], "ts": m["ts"], "pos": p["pos"], **p})
+            history[p["name"]].append({"match": m["id"], "ts": m["ts"], "pos": p["pos"], "season": m["season"], **p})
         m["players"].sort(key=lambda p: p["stats"]["rating"], reverse=True)
         m["team"] = team_totals(m["players"])
+
+    # The site's banner uses where each match stands in the season *now*, so
+    # each player shows at most their 5 best and 5 worst of the season.
+    live = {(m["id"], q["name"]): q for m in matches for q in m["players"]}
+    for name, rows in history.items():
+        by_season = defaultdict(list)
+        for r in rows:
+            by_season[r["season"]].append(r)
+        for season_rows in by_season.values():
+            for r in season_rows:
+                others = [x["stats"]["rating"] for x in season_rows if x is not r]
+                now = personal_rank(r["stats"]["rating"], others, r["band"], r["rank"]["perfect"])
+                live[(r["match"], name)]["rank_now"] = {k: now[k] for k in ("text", "dir", "show", "perfect")}
 
     players = {name: player_profile(name, rows, acfg) for name, rows in history.items()}
     model_info = {
@@ -574,7 +611,7 @@ def player_profile(name, rows, acfg):
         "record": {"W": record["W"], "D": record["D"], "L": record["L"]},
         "totals": dict(totals),
         "averages": averages,
-        "form": [{"match": r["match"], "ts": r["ts"], "rating": r["stats"]["rating"], "pos": r["pos"], "rq": r["stats"].get("rage_quit", 0)} for r in rows],
+        "form": [{"match": r["match"], "ts": r["ts"], "rating": r["stats"]["rating"], "pos": r["pos"], "rq": r["stats"].get("rage_quit", 0), "left": r["stats"].get("left_at"), "pg": r["stats"].get("perfect", 0)} for r in rows],
         "trend": trend,
         "band": rating_band(main_pos, averages["rating"]),
         "impact": impact_avg,
@@ -582,7 +619,9 @@ def player_profile(name, rows, acfg):
         "themes_progress": {"have": n, "need": min_n},
         "best": max(rows, key=lambda r: r["stats"]["rating"])["match"],
         "rage_quits": {"count": len(rage), "rate": round(len(rage) / n * 100), "matches": [
-            {"match": r["match"], "ts": r["ts"], "raw_rating": r["stats"]["raw_rating"]} for r in rage]},
+            {"match": r["match"], "ts": r["ts"], "raw_rating": r["stats"]["raw_rating"], "left_at": r["stats"].get("left_at")} for r in rage]},
+        "perfect_games": {"count": sum(1 for r in rows if r["stats"].get("perfect")),
+                          "matches": [{"match": r["match"], "ts": r["ts"]} for r in rows if r["stats"].get("perfect")]},
     }
 
 
