@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 44,
+ "matches_played": 45,
  "record": {
-  "W": 20,
+  "W": 21,
   "D": 6,
   "L": 18
  },
- "goals_for": 107,
- "goals_against": 106,
+ "goals_for": 112,
+ "goals_against": 108,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-13T01:39:19+00:00",
+ "last_match": "2026-10-13T01:56:37+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -318,6 +318,13 @@
    "result": "W",
    "score": "5-1",
    "opponent": "AC Jarca"
+  },
+  {
+   "id": "96424134710336",
+   "date": "2026-10-13T01:56:37+00:00",
+   "result": "W",
+   "score": "5-2",
+   "opponent": "Warrior Minded"
   }
  ]
 }
