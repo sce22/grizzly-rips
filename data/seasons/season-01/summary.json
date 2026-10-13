@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 45,
+ "matches_played": 46,
  "record": {
   "W": 21,
   "D": 6,
-  "L": 18
+  "L": 19
  },
- "goals_for": 112,
- "goals_against": 108,
+ "goals_for": 116,
+ "goals_against": 114,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-13T01:56:37+00:00",
+ "last_match": "2026-10-13T02:17:56+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -325,6 +325,13 @@
    "result": "W",
    "score": "5-2",
    "opponent": "Warrior Minded"
+  },
+  {
+   "id": "96322446730452",
+   "date": "2026-10-13T02:17:56+00:00",
+   "result": "L",
+   "score": "4-6",
+   "opponent": "FcCHI400s"
   }
  ]
 }
