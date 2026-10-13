@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 47,
+ "matches_played": 48,
  "record": {
   "W": 21,
   "D": 6,
-  "L": 20
+  "L": 21
  },
- "goals_for": 118,
- "goals_against": 122,
+ "goals_for": 119,
+ "goals_against": 125,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-13T02:38:25+00:00",
+ "last_match": "2026-10-13T23:08:22+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -339,6 +339,13 @@
    "result": "L",
    "score": "2-8",
    "opponent": "kromium"
+  },
+  {
+   "id": "98986624430457",
+   "date": "2026-10-13T23:08:22+00:00",
+   "result": "L",
+   "score": "1-3",
+   "opponent": "217 Footy"
   }
  ]
 }
