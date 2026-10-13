@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 43,
+ "matches_played": 44,
  "record": {
-  "W": 19,
+  "W": 20,
   "D": 6,
   "L": 18
  },
- "goals_for": 102,
- "goals_against": 105,
+ "goals_for": 107,
+ "goals_against": 106,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-13T01:24:38+00:00",
+ "last_match": "2026-10-13T01:39:19+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -311,6 +311,13 @@
    "result": "L",
    "score": "0-5",
    "opponent": "Mohamedudeman"
+  },
+  {
+   "id": "96436065820301",
+   "date": "2026-10-13T01:39:19+00:00",
+   "result": "W",
+   "score": "5-1",
+   "opponent": "AC Jarca"
   }
  ]
 }
