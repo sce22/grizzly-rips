@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 46,
+ "matches_played": 47,
  "record": {
   "W": 21,
   "D": 6,
-  "L": 19
+  "L": 20
  },
- "goals_for": 116,
- "goals_against": 114,
+ "goals_for": 118,
+ "goals_against": 122,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-13T02:17:56+00:00",
+ "last_match": "2026-10-13T02:38:25+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -332,6 +332,13 @@
    "result": "L",
    "score": "4-6",
    "opponent": "FcCHI400s"
+  },
+  {
+   "id": "96360414110435",
+   "date": "2026-10-13T02:38:25+00:00",
+   "result": "L",
+   "score": "2-8",
+   "opponent": "kromium"
   }
  ]
 }
