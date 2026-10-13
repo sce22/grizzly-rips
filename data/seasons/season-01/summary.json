@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 49,
+ "matches_played": 50,
  "record": {
   "W": 21,
   "D": 7,
-  "L": 21
+  "L": 22
  },
  "goals_for": 121,
- "goals_against": 127,
+ "goals_against": 131,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-13T23:29:45+00:00",
+ "last_match": "2026-10-13T23:44:33+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -353,6 +353,13 @@
    "result": "D",
    "score": "2-2",
    "opponent": "FFC Bradar"
+  },
+  {
+   "id": "99158479300361",
+   "date": "2026-10-13T23:44:33+00:00",
+   "result": "L",
+   "score": "0-4",
+   "opponent": "Gurjots Army"
   }
  ]
 }
