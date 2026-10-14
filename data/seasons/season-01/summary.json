@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 50,
+ "matches_played": 51,
  "record": {
-  "W": 21,
+  "W": 22,
   "D": 7,
   "L": 22
  },
- "goals_for": 121,
- "goals_against": 131,
+ "goals_for": 124,
+ "goals_against": 133,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-13T23:44:33+00:00",
+ "last_match": "2026-10-14T00:02:46+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -360,6 +360,13 @@
    "result": "L",
    "score": "0-4",
    "opponent": "Gurjots Army"
+  },
+  {
+   "id": "99018836530151",
+   "date": "2026-10-14T00:02:46+00:00",
+   "result": "W",
+   "score": "3-2",
+   "opponent": "Boko harma"
   }
  ]
 }
