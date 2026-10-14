@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 52,
+ "matches_played": 53,
  "record": {
   "W": 22,
-  "D": 8,
+  "D": 9,
   "L": 22
  },
- "goals_for": 128,
- "goals_against": 137,
+ "goals_for": 131,
+ "goals_against": 140,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-14T00:22:06+00:00",
+ "last_match": "2026-10-14T20:40:59+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -374,6 +374,13 @@
    "result": "D",
    "score": "4-4",
    "opponent": "YSLincorporated"
+  },
+  {
+   "id": "101820571140042",
+   "date": "2026-10-14T20:40:59+00:00",
+   "result": "D",
+   "score": "3-3",
+   "opponent": "Chody Chums"
   }
  ]
 }
