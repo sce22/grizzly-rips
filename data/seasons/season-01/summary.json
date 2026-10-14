@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 51,
+ "matches_played": 52,
  "record": {
   "W": 22,
-  "D": 7,
+  "D": 8,
   "L": 22
  },
- "goals_for": 124,
- "goals_against": 133,
+ "goals_for": 128,
+ "goals_against": 137,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-14T00:02:46+00:00",
+ "last_match": "2026-10-14T00:22:06+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -367,6 +367,13 @@
    "result": "W",
    "score": "3-2",
    "opponent": "Boko harma"
+  },
+  {
+   "id": "99434017930418",
+   "date": "2026-10-14T00:22:06+00:00",
+   "result": "D",
+   "score": "4-4",
+   "opponent": "YSLincorporated"
   }
  ]
 }
