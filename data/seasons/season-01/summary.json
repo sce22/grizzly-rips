@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 55,
+ "matches_played": 56,
  "record": {
   "W": 23,
   "D": 9,
-  "L": 23
+  "L": 24
  },
- "goals_for": 134,
- "goals_against": 143,
+ "goals_for": 136,
+ "goals_against": 146,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-14T21:25:42+00:00",
+ "last_match": "2026-10-14T21:47:27+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -395,6 +395,13 @@
    "result": "L",
    "score": "1-2",
    "opponent": "Flex musix"
+  },
+  {
+   "id": "101858959220201",
+   "date": "2026-10-14T21:47:27+00:00",
+   "result": "L",
+   "score": "2-3",
+   "opponent": "NorthStar"
   }
  ]
 }
