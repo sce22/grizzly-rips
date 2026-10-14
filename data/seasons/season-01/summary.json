@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 53,
+ "matches_played": 54,
  "record": {
-  "W": 22,
+  "W": 23,
   "D": 9,
   "L": 22
  },
- "goals_for": 131,
- "goals_against": 140,
+ "goals_for": 133,
+ "goals_against": 141,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-14T20:40:59+00:00",
+ "last_match": "2026-10-14T21:06:05+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -381,6 +381,13 @@
    "result": "D",
    "score": "3-3",
    "opponent": "Chody Chums"
+  },
+  {
+   "id": "101688947730355",
+   "date": "2026-10-14T21:06:05+00:00",
+   "result": "W",
+   "score": "2-1",
+   "opponent": "Flex musix"
   }
  ]
 }
