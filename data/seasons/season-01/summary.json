@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 58,
+ "matches_played": 59,
  "record": {
-  "W": 25,
+  "W": 26,
   "D": 9,
   "L": 24
  },
- "goals_for": 144,
- "goals_against": 149,
+ "goals_for": 150,
+ "goals_against": 151,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-14T22:28:14+00:00",
+ "last_match": "2026-10-14T22:49:38+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -415,6 +415,13 @@
    "date": "2026-10-14T22:28:14+00:00",
    "result": "W",
    "score": "5-3",
+   "opponent": "Drew Peacox FC"
+  },
+  {
+   "id": "102242626390439",
+   "date": "2026-10-14T22:49:38+00:00",
+   "result": "W",
+   "score": "6-2",
    "opponent": "Drew Peacox FC"
   }
  ]
