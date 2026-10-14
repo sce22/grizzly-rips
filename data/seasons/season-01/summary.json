@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 60,
+ "matches_played": 61,
  "record": {
   "W": 27,
   "D": 9,
-  "L": 24
+  "L": 25
  },
- "goals_for": 153,
- "goals_against": 153,
+ "goals_for": 155,
+ "goals_against": 156,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-14T23:10:29+00:00",
+ "last_match": "2026-10-14T23:48:46+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -430,6 +430,13 @@
    "result": "W",
    "score": "3-2",
    "opponent": "NorthStar"
+  },
+  {
+   "id": "102618218300426",
+   "date": "2026-10-14T23:48:46+00:00",
+   "result": "L",
+   "score": "2-3",
+   "opponent": "Stinging Beez"
   }
  ]
 }
