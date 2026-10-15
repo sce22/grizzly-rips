@@ -1,0 +1,690 @@
+{
+ "date": "2026-10-14",
+ "label": "Wed, Oct 14",
+ "title": "Oct 14 Daily Summary",
+ "games": 9,
+ "record": {
+  "W": 5,
+  "D": 1,
+  "L": 3
+ },
+ "gf": 27,
+ "ga": 19,
+ "points": 16,
+ "baseline": {
+  "matches": 52,
+  "weight": 0.57,
+  "ppg": 1.42,
+  "gd": -0.17,
+  "rating": 7.69
+ },
+ "score": 11,
+ "grade": "B-",
+ "players": [
+  {
+   "name": "buddskees",
+   "games": 9,
+   "goals": 3,
+   "assists": 8,
+   "key_passes": 13,
+   "tackles_won": 14,
+   "tackles_att": 18,
+   "passes_made": 170,
+   "passes_att": 220,
+   "shots": 16,
+   "shots_on": 6,
+   "mom": 4,
+   "pos": "midfielder",
+   "rage_quits": 1,
+   "record": {
+    "W": 5,
+    "D": 1,
+    "L": 3
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Chody Chums",
+     "score": "3-3",
+     "result": "D",
+     "rating": 9.0
+    },
+    {
+     "match": 2,
+     "opp": "Flex musix",
+     "score": "2-1",
+     "result": "W",
+     "rating": 8.8
+    },
+    {
+     "match": 3,
+     "opp": "Flex musix",
+     "score": "1-2",
+     "result": "L",
+     "rating": 7.6
+    },
+    {
+     "match": 4,
+     "opp": "NorthStar",
+     "score": "2-3",
+     "result": "L",
+     "rating": 7.5
+    },
+    {
+     "match": 5,
+     "opp": "Liquid Cf",
+     "score": "3-0",
+     "result": "W",
+     "rating": 8.4
+    },
+    {
+     "match": 6,
+     "opp": "Drew Peacox FC",
+     "score": "5-3",
+     "result": "W",
+     "rating": 10.0
+    },
+    {
+     "match": 7,
+     "opp": "Drew Peacox FC",
+     "score": "6-2",
+     "result": "W",
+     "rating": 10.0,
+     "rage_quit": true
+    },
+    {
+     "match": 8,
+     "opp": "NorthStar",
+     "score": "3-2",
+     "result": "W",
+     "rating": 8.4
+    },
+    {
+     "match": 9,
+     "opp": "Stinging Beez",
+     "score": "2-3",
+     "result": "L",
+     "rating": 7.2
+    }
+   ],
+   "avg_rating": 8.54,
+   "best_rating": 10.0,
+   "worst_rating": 7.2,
+   "top_issue": "defensive_work_rate",
+   "pass_pct": 77,
+   "tackle_pct": 78,
+   "usual": {
+    "rating": 7.8,
+    "pass_pct": 80,
+    "tackle_pct": 53,
+    "matches": 16
+   },
+   "lowlights": [
+    "Rage quit 1 time today",
+    "Match 3 vs Flex musix: Shot accuracy 0%, down from your usual 68%",
+    "Match 9 vs Stinging Beez: Their best midfielder posted 9.8 to your 7.2"
+   ],
+   "highlights": [
+    "Match 6 vs Drew Peacox FC: A perfect 10.0, your 2nd Perfect Game for us",
+    "Match 6 vs Drew Peacox FC: Key passes 5, up from your usual 1"
+   ],
+   "all_time": {
+    "matches": 29,
+    "avg_rating": 8.06,
+    "rage_quits": 4
+   }
+  },
+  {
+   "name": "PhogsToffees",
+   "games": 9,
+   "goals": 11,
+   "assists": 8,
+   "key_passes": 20,
+   "tackles_won": 9,
+   "tackles_att": 56,
+   "passes_made": 205,
+   "passes_att": 262,
+   "shots": 33,
+   "shots_on": 21,
+   "mom": 2,
+   "pos": "forward",
+   "rage_quits": 0,
+   "record": {
+    "W": 5,
+    "D": 1,
+    "L": 3
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Chody Chums",
+     "score": "3-3",
+     "result": "D",
+     "rating": 7.9
+    },
+    {
+     "match": 2,
+     "opp": "Flex musix",
+     "score": "2-1",
+     "result": "W",
+     "rating": 8.0
+    },
+    {
+     "match": 3,
+     "opp": "Flex musix",
+     "score": "1-2",
+     "result": "L",
+     "rating": 6.6
+    },
+    {
+     "match": 4,
+     "opp": "NorthStar",
+     "score": "2-3",
+     "result": "L",
+     "rating": 7.9
+    },
+    {
+     "match": 5,
+     "opp": "Liquid Cf",
+     "score": "3-0",
+     "result": "W",
+     "rating": 7.6
+    },
+    {
+     "match": 6,
+     "opp": "Drew Peacox FC",
+     "score": "5-3",
+     "result": "W",
+     "rating": 9.8
+    },
+    {
+     "match": 7,
+     "opp": "Drew Peacox FC",
+     "score": "6-2",
+     "result": "W",
+     "rating": 9.3
+    },
+    {
+     "match": 8,
+     "opp": "NorthStar",
+     "score": "3-2",
+     "result": "W",
+     "rating": 9.2
+    },
+    {
+     "match": 9,
+     "opp": "Stinging Beez",
+     "score": "2-3",
+     "result": "L",
+     "rating": 8.4
+    }
+   ],
+   "avg_rating": 8.3,
+   "best_rating": 9.8,
+   "worst_rating": 6.6,
+   "top_issue": "tackle_timing",
+   "pass_pct": 78,
+   "tackle_pct": 16,
+   "usual": {
+    "rating": 8.19,
+    "pass_pct": 78,
+    "tackle_pct": 22,
+    "matches": 49
+   },
+   "lowlights": [
+    "Match 3 vs Flex musix: Match rating 6.6, down from your usual 8.4",
+    "Match 3 vs Flex musix: Missed tackles 12, up from your usual 4",
+    "Match 3 vs Flex musix: Giveaways 21, up from your usual 10"
+   ],
+   "highlights": [
+    "Match 3 vs Flex musix: Tackles attempted 13, up from your usual 4",
+    "Match 6 vs Drew Peacox FC: Shot conversion 100%, up from your usual 27%"
+   ],
+   "all_time": {
+    "matches": 61,
+    "avg_rating": 7.87,
+    "rage_quits": 1
+   }
+  },
+  {
+   "name": "BellyTb1",
+   "games": 9,
+   "goals": 8,
+   "assists": 4,
+   "key_passes": 8,
+   "tackles_won": 12,
+   "tackles_att": 33,
+   "passes_made": 135,
+   "passes_att": 180,
+   "shots": 34,
+   "shots_on": 26,
+   "mom": 0,
+   "pos": "midfielder",
+   "rage_quits": 0,
+   "record": {
+    "W": 5,
+    "D": 1,
+    "L": 3
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Chody Chums",
+     "score": "3-3",
+     "result": "D",
+     "rating": 8.0
+    },
+    {
+     "match": 2,
+     "opp": "Flex musix",
+     "score": "2-1",
+     "result": "W",
+     "rating": 7.7
+    },
+    {
+     "match": 3,
+     "opp": "Flex musix",
+     "score": "1-2",
+     "result": "L",
+     "rating": 6.8
+    },
+    {
+     "match": 4,
+     "opp": "NorthStar",
+     "score": "2-3",
+     "result": "L",
+     "rating": 7.1
+    },
+    {
+     "match": 5,
+     "opp": "Liquid Cf",
+     "score": "3-0",
+     "result": "W",
+     "rating": 8.3
+    },
+    {
+     "match": 6,
+     "opp": "Drew Peacox FC",
+     "score": "5-3",
+     "result": "W",
+     "rating": 9.2
+    },
+    {
+     "match": 7,
+     "opp": "Drew Peacox FC",
+     "score": "6-2",
+     "result": "W",
+     "rating": 9.1
+    },
+    {
+     "match": 8,
+     "opp": "NorthStar",
+     "score": "3-2",
+     "result": "W",
+     "rating": 6.4
+    },
+    {
+     "match": 9,
+     "opp": "Stinging Beez",
+     "score": "2-3",
+     "result": "L",
+     "rating": 8.4
+    }
+   ],
+   "avg_rating": 7.89,
+   "best_rating": 9.2,
+   "worst_rating": 6.4,
+   "top_issue": "finishing",
+   "pass_pct": 75,
+   "tackle_pct": 36,
+   "usual": {
+    "rating": 7.71,
+    "pass_pct": 73,
+    "tackle_pct": 36,
+    "matches": 48
+   },
+   "lowlights": [
+    "Match 6 vs Drew Peacox FC: Tackle success 0% (0 of 5)",
+    "Match 8 vs NorthStar: Match rating 6.4, down from your usual 8.2",
+    "Match 6 vs Drew Peacox FC: Giveaways 11, up from your usual 8"
+   ],
+   "highlights": [
+    "Match 4 vs NorthStar: Tackles attempted 7, up from your usual 3",
+    "Match 8 vs NorthStar: Misplaced passes 2, down from your usual 5"
+   ],
+   "all_time": {
+    "matches": 61,
+    "avg_rating": 7.66,
+    "rage_quits": 3
+   }
+  }
+ ],
+ "active": [
+  "buddskees",
+  "PhogsToffees",
+  "BellyTb1"
+ ],
+ "mvp": "buddskees",
+ "best_match": {
+  "id": "102242626390439",
+  "score": "6-2",
+  "opp": "Drew Peacox FC",
+  "result": "W"
+ },
+ "worst_match": {
+  "id": "101802909950186",
+  "score": "1-2",
+  "opp": "Flex musix",
+  "result": "L"
+ },
+ "team_issue": "finishing",
+ "team": {
+  "longest_losing_run": 2,
+  "conceded_per_match": 2.11,
+  "first_half_points": 4,
+  "second_half_points": 12,
+  "rage_quits": [
+   {
+    "name": "buddskees",
+    "match": 7,
+    "opp": "Drew Peacox FC",
+    "score": "6-2"
+   }
+  ],
+  "their_avg_rating": 7.43,
+  "our_avg_rating": 8.18,
+  "four_goal_losses": 0
+ },
+ "ladder_day": {
+  "start": {
+   "division_name": "Division 3",
+   "stage": "points",
+   "stage_label": "Points phase",
+   "points": 5,
+   "target": 12,
+   "lives": 1,
+   "max_lives": 3,
+   "status": [
+    "5/12 pts: 7 more to reach promotion to Division 2"
+   ],
+   "spoken": "We're in Division 3 with 5 of 12 points and 1 of 3 chances left",
+   "taken_at": "2026-10-13T23:00-05:00"
+  },
+  "end": {
+   "division_name": "Division 4",
+   "stage": "promotion",
+   "stage_label": "Promotion → Division 3",
+   "points": 9,
+   "target": 9,
+   "lives": 3,
+   "max_lives": 3,
+   "status": [
+    "Must win 1 out of 1"
+   ],
+   "spoken": "We're in Division 4, playing promotion matches for Division 3. 2 down, 1 to go, and we need 1 more win",
+   "taken_at": "2026-10-14T23:00-05:00"
+  },
+  "moved": "down",
+  "events": [
+   {
+    "ts": 1792013142,
+    "kind": "relegation_match_due",
+    "text": "Out of chances in Division 3 (L 1-2 vs Flex musix). Relegation match next"
+   },
+   {
+    "ts": 1792014447,
+    "kind": "relegated",
+    "text": "Relegation match L 2-3 vs NorthStar. Down to Division 4"
+   },
+   {
+    "ts": 1792018178,
+    "kind": "qualified",
+    "text": "Reached 9 pts in Division 4 (W 6-2 vs Drew Peacox FC). Promotion matches to Division 3: win 2 of 3"
+   },
+   {
+    "ts": 1792019429,
+    "kind": "promo_match",
+    "text": "Promotion match 1 of 3: W 3-2 vs NorthStar"
+   },
+   {
+    "ts": 1792021726,
+    "kind": "promo_match",
+    "text": "Promotion match 2 of 3: L 2-3 vs Stinging Beez"
+   }
+  ],
+  "relegated_from": "Division 3",
+  "promoted_from": null,
+  "facing_relegation": false
+ },
+ "matches": [
+  {
+   "id": "101820571140042",
+   "ts": 1792010459,
+   "result": "D",
+   "gf": 3,
+   "ga": 3,
+   "opp": "Chody Chums"
+  },
+  {
+   "id": "101688947730355",
+   "ts": 1792011965,
+   "result": "W",
+   "gf": 2,
+   "ga": 1,
+   "opp": "Flex musix"
+  },
+  {
+   "id": "101802909950186",
+   "ts": 1792013142,
+   "result": "L",
+   "gf": 1,
+   "ga": 2,
+   "opp": "Flex musix"
+  },
+  {
+   "id": "101858959220201",
+   "ts": 1792014447,
+   "result": "L",
+   "gf": 2,
+   "ga": 3,
+   "opp": "NorthStar"
+  },
+  {
+   "id": "102180553360341",
+   "ts": 1792015765,
+   "result": "W",
+   "gf": 3,
+   "ga": 0,
+   "opp": "Liquid Cf"
+  },
+  {
+   "id": "102312365680101",
+   "ts": 1792016894,
+   "result": "W",
+   "gf": 5,
+   "ga": 3,
+   "opp": "Drew Peacox FC"
+  },
+  {
+   "id": "102242626390439",
+   "ts": 1792018178,
+   "result": "W",
+   "gf": 6,
+   "ga": 2,
+   "opp": "Drew Peacox FC"
+  },
+  {
+   "id": "102336594140327",
+   "ts": 1792019429,
+   "result": "W",
+   "gf": 3,
+   "ga": 2,
+   "opp": "NorthStar"
+  },
+  {
+   "id": "102618218300426",
+   "ts": 1792021726,
+   "result": "L",
+   "gf": 2,
+   "ga": 3,
+   "opp": "Stinging Beez"
+  }
+ ],
+ "table": {
+  "division": "4",
+  "division_name": "Division 4",
+  "next_name": "Division 3",
+  "stage": "promotion",
+  "points": 9,
+  "target": 9,
+  "lives": 3,
+  "max_lives": 3,
+  "phase_results": [
+   "W",
+   "W",
+   "W"
+  ],
+  "taken_at": "2026-10-14T23:00-05:00",
+  "promo": {
+   "played": 2,
+   "total": 3,
+   "wins": 1,
+   "target_wins": 2,
+   "results": [
+    "W",
+    "L"
+   ],
+   "left": 1,
+   "wins_needed": 1
+  },
+  "stage_label": "Promotion → Division 3",
+  "status": [
+   "Must win 1 out of 1"
+  ],
+  "spoken": "We're in Division 4, playing promotion matches for Division 3. 2 down, 1 to go, and we need 1 more win",
+  "history": [
+   {
+    "ts": 1791856597,
+    "match": "96424134710336",
+    "result": "W",
+    "score": "5-2",
+    "opp": "Warrior Minded",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 1 of 4: W 5-2 vs Warrior Minded",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1791857876,
+    "match": "96322446730452",
+    "result": "L",
+    "score": "4-6",
+    "opp": "FcCHI400s",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 2 of 4: L 4-6 vs FcCHI400s",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1791859105,
+    "match": "96360414110435",
+    "result": "L",
+    "score": "2-8",
+    "opp": "kromium",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 3 of 4: L 2-8 vs kromium. Promotion missed; back to 0 pts in Division 3",
+    "kind": "promotion_failed"
+   },
+   {
+    "ts": 1792013142,
+    "match": "101802909950186",
+    "result": "L",
+    "score": "1-2",
+    "opp": "Flex musix",
+    "division": "3",
+    "stage": "points",
+    "kind": "relegation_match_due",
+    "text": "Out of chances in Division 3 (L 1-2 vs Flex musix). Relegation match next"
+   },
+   {
+    "ts": 1792014447,
+    "match": "101858959220201",
+    "result": "L",
+    "score": "2-3",
+    "opp": "NorthStar",
+    "division": "3",
+    "stage": "relegation",
+    "kind": "relegated",
+    "text": "Relegation match L 2-3 vs NorthStar. Down to Division 4"
+   },
+   {
+    "ts": 1792018178,
+    "match": "102242626390439",
+    "result": "W",
+    "score": "6-2",
+    "opp": "Drew Peacox FC",
+    "division": "4",
+    "stage": "points",
+    "kind": "qualified",
+    "text": "Reached 9 pts in Division 4 (W 6-2 vs Drew Peacox FC). Promotion matches to Division 3: win 2 of 3"
+   },
+   {
+    "ts": 1792019429,
+    "match": "102336594140327",
+    "result": "W",
+    "score": "3-2",
+    "opp": "NorthStar",
+    "division": "4",
+    "stage": "promotion",
+    "text": "Promotion match 1 of 3: W 3-2 vs NorthStar",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1792021726,
+    "match": "102618218300426",
+    "result": "L",
+    "score": "2-3",
+    "opp": "Stinging Beez",
+    "division": "4",
+    "stage": "promotion",
+    "text": "Promotion match 2 of 3: L 2-3 vs Stinging Beez",
+    "kind": "promo_match"
+   }
+  ]
+ },
+ "club": "Grizzly Rips",
+ "previous": {
+  "date": "2026-10-13",
+  "grade": "C",
+  "record": {
+   "W": 1,
+   "D": 2,
+   "L": 2
+  }
+ },
+ "season_so_far": {
+  "season": "Season 1 · Sep 17 – Oct 22",
+  "record": {
+   "W": 27,
+   "D": 9,
+   "L": 25
+  },
+  "gf": 155,
+  "ga": 156
+ },
+ "speech_by": "claude",
+ "speech": "Alright, Grizzly Rips, pull up a chair. Today's a B-minus, and that's an honest B-minus. 5 wins, 1 draw, 3 losses, 27 scored, 19 let in. That's better than our usual, but it came with a bruise we can't ignore.\n\nWe woke up in Division 3 with 5 of 12 points and 1 chance left. We spent it losing 1-2 to Flex musix, then dropped the relegation match 2-3 to NorthStar. That's relegated, plain and simple. Then y'all dusted yourselves off, climbed straight into a promotion series, and now sit at 1 and 1. One more win and we're back where we started. The first half of the day earned 4 points; the second half earned 12. That tells me the fight was there. It just showed up late to the dance.\n\nAnd we're still leaking. 2.11 conceded per match won't hold up in Division 3.\n\nbuddskees, you were the engine. An 8.54 against your usual 7.8, 8 assists, and a perfect 10.0 against Drew Peacox, your second one for us. Your tackling jumped to 78% from a usual 53%. That's somebody who came to work. But you rage quit match 7. You were winning 6-2 with a 10.0 on the board, and you still walked out. I can't make sense of that, and the team can't afford it. Match 3 against Flex musix you put 0% of your shots on target, and Stinging Beez's best midfielder outplayed you 9.8 to 7.2 in the match we needed.\n\nPhogsToffees, 11 goals and 8 assists. You were the most dangerous person on the pitch, and in the Drew Peacox 5-3 everything you shot went in. But match 3 was rough: a 6.6, 12 missed tackles, and 21 giveaways. That loss is the one that sent us down. Your tackling sat at 16% all day, 9 won from 56 tries. I love that you're chasing. Now chase smarter.\n\nBellyTb1, solid day, a 7.89 above your 7.71, and 8 goals. In match 4 you stepped up with 7 tackle attempts when it mattered. But in match 6 you went 0 for 5 in tackles with 11 giveaways, and against NorthStar in the promotion opener you dipped to a 6.4.\n\nNow, finishing. BellyTb1 put 26 of 34 on target, and PhogsToffees put 21 of 33. That's great aim at the wrong spot. Keepers love a shot right down the middle. Aim for the corners. From an angle, finesse it to the far post. One-on-one, go low and hard across the keeper, because that's the toughest save and the easiest rebound. Use timed finishing only when you trust it.\n\nHere's the thing, friends. A tree that gets knocked down a hill grows roots wherever it lands, and today y'all grew roots fast. We've got one match standing between us and getting back home. I believe in this group like I believe a biscuit needs gravy. Rest up, and let's go win it together.",
+ "phrases": [],
+ "key_stats": [
+  "Day: 5W 1D 3L from 9 matches · 27 scored, 19 conceded",
+  "Vs our usual: 1.8 pts per game today, 1.4 normally (52 matches)",
+  "Player of the day: buddskees (8.5 avg, 3 goals, 8 assists)",
+  "Ladder: started Division 3, 5/12 pts, 1 of 3 chances, finished Division 4, promotion matches",
+  "Rage quits: buddskees",
+  "League: Promotion → Division 3",
+  "Must win 1 out of 1"
+ ],
+ "coach": "Coach Lasso",
+ "generated_at": "2026-10-14T23:01-05:00"
+}
