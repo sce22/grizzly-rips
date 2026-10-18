@@ -1,5 +1,5 @@
 {
- "fetched": "2026-10-18T21:43:13+00:00",
+ "fetched": "2026-10-18T21:52:47+00:00",
  "members": [
   {
    "name": "tuxedo_slide",
@@ -39,16 +39,16 @@
   },
   {
    "name": "buddskees",
-   "gamesPlayed": "33",
-   "winRate": "51",
+   "gamesPlayed": "34",
+   "winRate": "50",
    "goals": "18",
    "assists": "22",
    "cleanSheetsDef": "0",
    "cleanSheetsGK": "0",
    "shotSuccessRate": "40",
-   "passesMade": "427",
+   "passesMade": "430",
    "passSuccessRate": "78",
-   "ratingAve": "8.2",
+   "ratingAve": "8.1",
    "tacklesMade": "39",
    "tackleSuccessRate": "62",
    "proName": "Buddskees",
@@ -60,9 +60,9 @@
    "proOverallStr": "74",
    "manOfTheMatch": "9",
    "redCards": "0",
-   "prevGoals": "1",
-   "prevGoals1": "1",
-   "prevGoals2": "1",
+   "prevGoals": "0",
+   "prevGoals1": "0",
+   "prevGoals2": "2",
    "prevGoals3": "0",
    "prevGoals4": "0",
    "prevGoals5": "0",
@@ -75,14 +75,14 @@
   },
   {
    "name": "PhogsToffees",
-   "gamesPlayed": "77",
-   "winRate": "44",
+   "gamesPlayed": "78",
+   "winRate": "43",
    "goals": "71",
    "assists": "56",
    "cleanSheetsDef": "0",
    "cleanSheetsGK": "0",
    "shotSuccessRate": "36",
-   "passesMade": "1434",
+   "passesMade": "1447",
    "passSuccessRate": "75",
    "ratingAve": "7.9",
    "tacklesMade": "48",
@@ -96,9 +96,9 @@
    "proOverallStr": "79",
    "manOfTheMatch": "19",
    "redCards": "0",
-   "prevGoals": "3",
-   "prevGoals1": "3",
-   "prevGoals2": "2",
+   "prevGoals": "0",
+   "prevGoals1": "0",
+   "prevGoals2": "5",
    "prevGoals3": "3",
    "prevGoals4": "1",
    "prevGoals5": "2",
@@ -111,8 +111,8 @@
   },
   {
    "name": "BellyTb1",
-   "gamesPlayed": "77",
-   "winRate": "44",
+   "gamesPlayed": "78",
+   "winRate": "43",
    "goals": "54",
    "assists": "35",
    "cleanSheetsDef": "0",
@@ -128,8 +128,8 @@
    "proStyle": "0",
    "proHeight": "171",
    "proNationality": "95",
-   "proOverall": "75",
-   "proOverallStr": "75",
+   "proOverall": "76",
+   "proOverallStr": "76",
    "manOfTheMatch": "9",
    "redCards": "0",
    "prevGoals": "2",
@@ -145,10 +145,5 @@
    "prevGoals10": "0",
    "favoritePosition": "forward"
   }
- ],
- "pending": {
-  "expect_total": 223,
-  "until": 1792362142.7113786,
-  "had_total": 220
- }
+ ]
 }
