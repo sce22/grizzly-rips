@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 61,
+ "matches_played": 62,
  "record": {
-  "W": 27,
+  "W": 28,
   "D": 9,
   "L": 25
  },
- "goals_for": 155,
- "goals_against": 156,
+ "goals_for": 159,
+ "goals_against": 159,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-14T23:48:46+00:00",
+ "last_match": "2026-10-18T21:42:22+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -437,6 +437,13 @@
    "result": "L",
    "score": "2-3",
    "opponent": "Stinging Beez"
+  },
+  {
+   "id": "115992079690313",
+   "date": "2026-10-18T21:42:22+00:00",
+   "result": "W",
+   "score": "4-3",
+   "opponent": "FC Amarillo"
   }
  ]
 }
