@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 66,
+ "matches_played": 67,
  "record": {
-  "W": 31,
+  "W": 32,
   "D": 9,
   "L": 26
  },
- "goals_for": 181,
+ "goals_for": 190,
  "goals_against": 167,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-18T22:54:51+00:00",
+ "last_match": "2026-10-18T23:33:04+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -472,6 +472,13 @@
    "result": "W",
    "score": "3-1",
    "opponent": "Red 3"
+  },
+  {
+   "id": "116014855200108",
+   "date": "2026-10-18T23:33:04+00:00",
+   "result": "W",
+   "score": "9-0",
+   "opponent": "fanum taxers"
   }
  ]
 }
