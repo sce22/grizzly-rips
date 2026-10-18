@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 64,
+ "matches_played": 65,
  "record": {
-  "W": 29,
+  "W": 30,
   "D": 9,
   "L": 26
  },
- "goals_for": 170,
- "goals_against": 164,
+ "goals_for": 178,
+ "goals_against": 166,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-18T22:12:18+00:00",
+ "last_match": "2026-10-18T22:31:24+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -458,6 +458,13 @@
    "result": "W",
    "score": "11-0",
    "opponent": "Big Creamers"
+  },
+  {
+   "id": "116112163830463",
+   "date": "2026-10-18T22:31:24+00:00",
+   "result": "W",
+   "score": "8-2",
+   "opponent": "Los Condenados"
   }
  ]
 }
