@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 67,
+ "matches_played": 68,
  "record": {
-  "W": 32,
+  "W": 33,
   "D": 9,
   "L": 26
  },
- "goals_for": 190,
- "goals_against": 167,
+ "goals_for": 193,
+ "goals_against": 169,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-18T23:33:04+00:00",
+ "last_match": "2026-10-19T00:00:23+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -479,6 +479,13 @@
    "result": "W",
    "score": "9-0",
    "opponent": "fanum taxers"
+  },
+  {
+   "id": "116190526640395",
+   "date": "2026-10-19T00:00:23+00:00",
+   "result": "W",
+   "score": "3-2",
+   "opponent": "Little Rocke FC"
   }
  ]
 }
