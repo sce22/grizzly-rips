@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 69,
+ "matches_played": 70,
  "record": {
   "W": 33,
   "D": 9,
-  "L": 27
+  "L": 28
  },
- "goals_for": 193,
- "goals_against": 171,
+ "goals_for": 195,
+ "goals_against": 175,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-19T00:19:05+00:00",
+ "last_match": "2026-10-19T02:05:22+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -493,6 +493,13 @@
    "result": "L",
    "score": "0-2",
    "opponent": "Mis Prras"
+  },
+  {
+   "id": "116386537910128",
+   "date": "2026-10-19T02:05:22+00:00",
+   "result": "L",
+   "score": "2-4",
+   "opponent": "Fish Academy"
   }
  ]
 }
