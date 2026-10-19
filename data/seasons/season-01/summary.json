@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 72,
+ "matches_played": 73,
  "record": {
   "W": 33,
   "D": 9,
-  "L": 30
+  "L": 31
  },
- "goals_for": 198,
- "goals_against": 184,
+ "goals_for": 201,
+ "goals_against": 188,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-19T19:57:30+00:00",
+ "last_match": "2026-10-19T20:16:28+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -514,6 +514,13 @@
    "result": "L",
    "score": "2-3",
    "opponent": "ChicagoOvO"
+  },
+  {
+   "id": "118796111100224",
+   "date": "2026-10-19T20:16:28+00:00",
+   "result": "L",
+   "score": "3-4",
+   "opponent": "Los Cottageros"
   }
  ]
 }
