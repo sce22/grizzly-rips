@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 71,
+ "matches_played": 72,
  "record": {
   "W": 33,
   "D": 9,
-  "L": 29
+  "L": 30
  },
- "goals_for": 196,
- "goals_against": 181,
+ "goals_for": 198,
+ "goals_against": 184,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-19T02:23:55+00:00",
+ "last_match": "2026-10-19T19:57:30+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -507,6 +507,13 @@
    "result": "L",
    "score": "1-6",
    "opponent": "La Tuna"
+  },
+  {
+   "id": "118736041190146",
+   "date": "2026-10-19T19:57:30+00:00",
+   "result": "L",
+   "score": "2-3",
+   "opponent": "ChicagoOvO"
   }
  ]
 }
