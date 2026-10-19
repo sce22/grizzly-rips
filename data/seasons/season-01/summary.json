@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 73,
+ "matches_played": 74,
  "record": {
-  "W": 33,
+  "W": 34,
   "D": 9,
   "L": 31
  },
- "goals_for": 201,
- "goals_against": 188,
+ "goals_for": 206,
+ "goals_against": 192,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-19T20:16:28+00:00",
+ "last_match": "2026-10-19T20:47:20+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -521,6 +521,13 @@
    "result": "L",
    "score": "3-4",
    "opponent": "Los Cottageros"
+  },
+  {
+   "id": "118756509520446",
+   "date": "2026-10-19T20:47:20+00:00",
+   "result": "W",
+   "score": "5-4",
+   "opponent": "Blitz FC"
   }
  ]
 }
