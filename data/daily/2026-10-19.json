@@ -1,0 +1,509 @@
+{
+ "date": "2026-10-19",
+ "label": "Mon, Oct 19",
+ "title": "Oct 19 Daily Summary",
+ "games": 4,
+ "record": {
+  "W": 1,
+  "D": 0,
+  "L": 3
+ },
+ "gf": 10,
+ "ga": 14,
+ "points": 3,
+ "baseline": {
+  "matches": 71,
+  "weight": 0.64,
+  "ppg": 1.52,
+  "gd": 0.21,
+  "rating": 7.8
+ },
+ "score": 7,
+ "grade": "C-",
+ "players": [
+  {
+   "name": "PhogsToffees",
+   "games": 4,
+   "goals": 5,
+   "assists": 5,
+   "key_passes": 5,
+   "tackles_won": 2,
+   "tackles_att": 11,
+   "passes_made": 106,
+   "passes_att": 130,
+   "shots": 12,
+   "shots_on": 5,
+   "mom": 1,
+   "pos": "forward",
+   "rage_quits": 0,
+   "record": {
+    "W": 1,
+    "D": 0,
+    "L": 3
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "ChicagoOvO",
+     "score": "2-3",
+     "result": "L",
+     "rating": 7.9
+    },
+    {
+     "match": 2,
+     "opp": "Los Cottageros",
+     "score": "3-4",
+     "result": "L",
+     "rating": 9.0
+    },
+    {
+     "match": 3,
+     "opp": "Blitz FC",
+     "score": "5-4",
+     "result": "W",
+     "rating": 10.0
+    },
+    {
+     "match": 4,
+     "opp": "Real Day Shift",
+     "score": "0-3",
+     "result": "L",
+     "rating": 6.4
+    }
+   ],
+   "avg_rating": 8.32,
+   "best_rating": 10.0,
+   "worst_rating": 6.4,
+   "top_issue": "shot_selection",
+   "pass_pct": 82,
+   "tackle_pct": 18,
+   "usual": {
+    "rating": 8.68,
+    "pass_pct": 80,
+    "tackle_pct": 32,
+    "matches": 67
+   },
+   "lowlights": [
+    "Match 4 vs Real Day Shift: Match rating 6.4, down from your usual 8.8",
+    "Match 4 vs Real Day Shift: Shot accuracy 0%, down from your usual 70%",
+    "Match 4 vs Real Day Shift: Misplaced passes 8, up from your usual 5"
+   ],
+   "highlights": [
+    "Match 3 vs Blitz FC: A perfect 10.0, your 9th Perfect Game for us",
+    "Match 4 vs Real Day Shift: Passes attempted 38, up from your usual 28"
+   ],
+   "all_time": {
+    "matches": 75,
+    "avg_rating": 7.95,
+    "rage_quits": 2
+   }
+  },
+  {
+   "name": "buddskees",
+   "games": 4,
+   "goals": 2,
+   "assists": 1,
+   "key_passes": 2,
+   "tackles_won": 4,
+   "tackles_att": 7,
+   "passes_made": 48,
+   "passes_att": 65,
+   "shots": 10,
+   "shots_on": 4,
+   "mom": 0,
+   "pos": "midfielder",
+   "rage_quits": 1,
+   "record": {
+    "W": 1,
+    "D": 0,
+    "L": 3
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "ChicagoOvO",
+     "score": "2-3",
+     "result": "L",
+     "rating": 7.5
+    },
+    {
+     "match": 2,
+     "opp": "Los Cottageros",
+     "score": "3-4",
+     "result": "L",
+     "rating": 7.1,
+     "rage_quit": true
+    },
+    {
+     "match": 3,
+     "opp": "Blitz FC",
+     "score": "5-4",
+     "result": "W",
+     "rating": 9.2
+    },
+    {
+     "match": 4,
+     "opp": "Real Day Shift",
+     "score": "0-3",
+     "result": "L",
+     "rating": 6.7
+    }
+   ],
+   "avg_rating": 7.62,
+   "best_rating": 9.2,
+   "worst_rating": 6.7,
+   "top_issue": "defensive_work_rate",
+   "pass_pct": 74,
+   "tackle_pct": 57,
+   "usual": {
+    "rating": 8.12,
+    "pass_pct": 74,
+    "tackle_pct": 68,
+    "matches": 33
+   },
+   "lowlights": [
+    "Rage quit 1 time today",
+    "Match 4 vs Real Day Shift: Shot conversion 0%, down from your usual 51%",
+    "Match 4 vs Real Day Shift: Missed tackles 2, up from your usual 1"
+   ],
+   "highlights": [
+    "Match 3 vs Blitz FC: Shots 7, up from your usual 1",
+    "Match 3 vs Blitz FC: Pass accuracy 88%, up from your usual 69%"
+   ],
+   "all_time": {
+    "matches": 43,
+    "avg_rating": 7.95,
+    "rage_quits": 6
+   }
+  },
+  {
+   "name": "BellyTb1",
+   "games": 4,
+   "goals": 2,
+   "assists": 3,
+   "key_passes": 1,
+   "tackles_won": 2,
+   "tackles_att": 9,
+   "passes_made": 68,
+   "passes_att": 91,
+   "shots": 15,
+   "shots_on": 9,
+   "mom": 0,
+   "pos": "midfielder",
+   "rage_quits": 0,
+   "record": {
+    "W": 1,
+    "D": 0,
+    "L": 3
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "ChicagoOvO",
+     "score": "2-3",
+     "result": "L",
+     "rating": 7.9
+    },
+    {
+     "match": 2,
+     "opp": "Los Cottageros",
+     "score": "3-4",
+     "result": "L",
+     "rating": 6.7
+    },
+    {
+     "match": 3,
+     "opp": "Blitz FC",
+     "score": "5-4",
+     "result": "W",
+     "rating": 8.5
+    },
+    {
+     "match": 4,
+     "opp": "Real Day Shift",
+     "score": "0-3",
+     "result": "L",
+     "rating": 6.7
+    }
+   ],
+   "avg_rating": 7.45,
+   "best_rating": 8.5,
+   "worst_rating": 6.7,
+   "top_issue": "defensive_work_rate",
+   "pass_pct": 75,
+   "tackle_pct": 22,
+   "usual": {
+    "rating": 8.1,
+    "pass_pct": 69,
+    "tackle_pct": 32,
+    "matches": 66
+   },
+   "lowlights": [
+    "Match 2 vs Los Cottageros: Their best midfielder posted 10.0 to your 6.7",
+    "Match 4 vs Real Day Shift: Missed tackles 4, up from your usual 2",
+    "Match 4 vs Real Day Shift: Shot accuracy 0%, down from your usual 52%"
+   ],
+   "highlights": [
+    "Match 1 vs ChicagoOvO: Completed passes 26, up from your usual 12",
+    "Match 3 vs Blitz FC: Shots on target 5, up from your usual 2"
+   ],
+   "all_time": {
+    "matches": 75,
+    "avg_rating": 7.67,
+    "rage_quits": 4
+   }
+  }
+ ],
+ "active": [
+  "PhogsToffees",
+  "buddskees",
+  "BellyTb1"
+ ],
+ "mvp": "PhogsToffees",
+ "best_match": {
+  "id": "118756509520446",
+  "score": "5-4",
+  "opp": "Blitz FC",
+  "result": "W"
+ },
+ "worst_match": {
+  "id": "118576970980335",
+  "score": "0-3",
+  "opp": "Real Day Shift",
+  "result": "L"
+ },
+ "team_issue": "defensive_work_rate",
+ "team": {
+  "longest_losing_run": 2,
+  "conceded_per_match": 3.5,
+  "first_half_points": 0,
+  "second_half_points": 3,
+  "rage_quits": [
+   {
+    "name": "buddskees",
+    "match": 2,
+    "opp": "Los Cottageros",
+    "score": "3-4"
+   }
+  ],
+  "their_avg_rating": 8.33,
+  "our_avg_rating": 7.86,
+  "four_goal_losses": 0
+ },
+ "ladder_day": {
+  "start": {
+   "division_name": "Division 4",
+   "stage": "promotion",
+   "stage_label": "Promotion → Division 3",
+   "points": 9,
+   "target": 9,
+   "lives": 3,
+   "max_lives": 3,
+   "status": [
+    "Must win 1 out of 1"
+   ],
+   "spoken": "We're in Division 4, playing promotion matches for Division 3. 2 down, 1 to go, and we need 1 more win",
+   "taken_at": "2026-10-18T23:00-05:00"
+  },
+  "end": {
+   "division_name": "Division 3",
+   "stage": "points",
+   "stage_label": "Points phase",
+   "points": 0,
+   "target": 12,
+   "lives": 3,
+   "max_lives": 3,
+   "status": [
+    "0/12 pts: 12 more to reach promotion to Division 2"
+   ],
+   "spoken": "We're in Division 3 with 0 of 12 points and 3 of 3 chances left",
+   "taken_at": "2026-10-19T23:00-05:00"
+  },
+  "moved": "up",
+  "events": [
+   {
+    "ts": 1792442840,
+    "kind": "promoted",
+    "text": "Promotion match 3 of 3: W 5-4 vs Blitz FC. Promoted to Division 3!"
+   }
+  ],
+  "relegated_from": null,
+  "promoted_from": "Division 4",
+  "facing_relegation": false
+ },
+ "matches": [
+  {
+   "id": "118736041190146",
+   "ts": 1792439850,
+   "result": "L",
+   "gf": 2,
+   "ga": 3,
+   "opp": "ChicagoOvO"
+  },
+  {
+   "id": "118796111100224",
+   "ts": 1792440988,
+   "result": "L",
+   "gf": 3,
+   "ga": 4,
+   "opp": "Los Cottageros"
+  },
+  {
+   "id": "118756509520446",
+   "ts": 1792442840,
+   "result": "W",
+   "gf": 5,
+   "ga": 4,
+   "opp": "Blitz FC"
+  },
+  {
+   "id": "118576970980335",
+   "ts": 1792444109,
+   "result": "L",
+   "gf": 0,
+   "ga": 3,
+   "opp": "Real Day Shift"
+  }
+ ],
+ "table": {
+  "division": "3",
+  "division_name": "Division 3",
+  "next_name": "Division 2",
+  "stage": "points",
+  "points": 0,
+  "target": 12,
+  "lives": 3,
+  "max_lives": 3,
+  "phase_results": [],
+  "taken_at": "2026-10-19T23:00-05:00",
+  "stage_label": "Points phase",
+  "status": [
+   "0/12 pts: 12 more to reach promotion to Division 2"
+  ],
+  "spoken": "We're in Division 3 with 0 of 12 points and 3 of 3 chances left",
+  "history": [
+   {
+    "ts": 1791857876,
+    "match": "96322446730452",
+    "result": "L",
+    "score": "4-6",
+    "opp": "FcCHI400s",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 2 of 4: L 4-6 vs FcCHI400s",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1791859105,
+    "match": "96360414110435",
+    "result": "L",
+    "score": "2-8",
+    "opp": "kromium",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 3 of 4: L 2-8 vs kromium. Promotion missed; back to 0 pts in Division 3",
+    "kind": "promotion_failed"
+   },
+   {
+    "ts": 1792013142,
+    "match": "101802909950186",
+    "result": "L",
+    "score": "1-2",
+    "opp": "Flex musix",
+    "division": "3",
+    "stage": "points",
+    "kind": "relegation_match_due",
+    "text": "Out of chances in Division 3 (L 1-2 vs Flex musix). Relegation match next"
+   },
+   {
+    "ts": 1792014447,
+    "match": "101858959220201",
+    "result": "L",
+    "score": "2-3",
+    "opp": "NorthStar",
+    "division": "3",
+    "stage": "relegation",
+    "kind": "relegated",
+    "text": "Relegation match L 2-3 vs NorthStar. Down to Division 4"
+   },
+   {
+    "ts": 1792018178,
+    "match": "102242626390439",
+    "result": "W",
+    "score": "6-2",
+    "opp": "Drew Peacox FC",
+    "division": "4",
+    "stage": "points",
+    "kind": "qualified",
+    "text": "Reached 9 pts in Division 4 (W 6-2 vs Drew Peacox FC). Promotion matches to Division 3: win 2 of 3"
+   },
+   {
+    "ts": 1792019429,
+    "match": "102336594140327",
+    "result": "W",
+    "score": "3-2",
+    "opp": "NorthStar",
+    "division": "4",
+    "stage": "promotion",
+    "text": "Promotion match 1 of 3: W 3-2 vs NorthStar",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1792021726,
+    "match": "102618218300426",
+    "result": "L",
+    "score": "2-3",
+    "opp": "Stinging Beez",
+    "division": "4",
+    "stage": "promotion",
+    "text": "Promotion match 2 of 3: L 2-3 vs Stinging Beez",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1792442840,
+    "match": "118756509520446",
+    "result": "W",
+    "score": "5-4",
+    "opp": "Blitz FC",
+    "division": "4",
+    "stage": "promotion",
+    "text": "Promotion match 3 of 3: W 5-4 vs Blitz FC. Promoted to Division 3!",
+    "kind": "promoted"
+   }
+  ]
+ },
+ "club": "Grizzly Rips",
+ "previous": {
+  "date": "2026-10-18",
+  "grade": "B-",
+  "record": {
+   "W": 6,
+   "D": 0,
+   "L": 4
+  }
+ },
+ "season_so_far": {
+  "season": "Season 1 · Sep 17 – Oct 22",
+  "record": {
+   "W": 34,
+   "D": 9,
+   "L": 32
+  },
+  "gf": 206,
+  "ga": 195
+ },
+ "speech_by": "claude",
+ "speech": "Alright, Grizzly Rips, pull up a chair. Today's a C-, and I'm not gonna dress that up in a Sunday suit. 4 matches, 1 win, 3 losses. We scored 10 and let in 14. That's 3.5 goals against every single match, and when you're leaking like a screen door on a submarine, it doesn't much matter how many you score. We took zero points from first halves all day, and the other side out-rated us 8.33 to 7.86. Our usual is about 1.5 points a match; today we managed less than 1.\n\nNow the ladder. We woke up in Division 4, 1 win away from promotion. We got that win, 5-4 over Blitz FC, and we're in Division 3. That's real, and I'm proud of it. Then we lost to Real Day Shift 0-3 and finished the night in Division 3 with 0 of 12 points, needing 12 to move up again. We climbed the ladder and then just sorta stood there blinking at the view.\n\nPhogsToffees, you were the engine today. 5 goals, 5 assists, and a perfect 10.0 against Blitz FC, your 9th perfect match for us. That's beautiful. But that last match? A 6.4, zero shots on target, and 8 misplaced passes. You tried to do it all yourself with 38 pass attempts, and it got loose. And defensively, you won 2 tackles out of 11. That's 18% against your usual 32%. Forwards defend too, friend.\n\nbuddskees, I've gotta say it plain: you quit the Los Cottageros match while we were down 3-4. One goal. You left your teammates short with a match still breathing. That one stings. Then against Real Day Shift you converted none of your shots and missed 2 tackles. Your tackling dropped to 57% from your usual 68%. But match 3, you were electric: 7 shots and 88% passing in the match that got us promoted. That's who you are when you stick around.\n\nBellyTb1, tough day. You averaged 7.45 against your usual 8.1. Their midfielder posted a 10.0 to your 6.7 against Los Cottageros, which means somebody was running free in your neighborhood. In the last match you missed 4 tackles and put zero shots on target, and overall you won 2 of 9 tackles. But 26 completed passes against ChicagoOvO and 5 shots on target against Blitz FC tell me the quality's right there.\n\nSo here's the fix, and it's about effort more than talent. When we lose the ball, the nearest player presses hard for 3 to 5 seconds, and everybody else shuts the passing lanes. Track your runner all the way into the box, because those late, unmarked runs are killing us. And get stuck in. Even winning 1 tackle in 8 pays for the tries.\n\nHere's the thing, y'all. We're 34 wins into this season, we just got promoted, and 4 matches don't erase that. Bad days are just good days that haven't found their footing yet. Tomorrow, we press, we stay, and we show Division 3 we belong. I believe in every one of you.",
+ "phrases": [],
+ "key_stats": [
+  "Day: 1W 0D 3L from 4 matches · 10 scored, 14 conceded",
+  "Vs our usual: 0.8 pts per game today, 1.5 normally (71 matches)",
+  "Player of the day: PhogsToffees (8.3 avg, 5 goals, 5 assists)",
+  "Ladder: started Division 4, promotion matches, finished Division 3, 0/12 pts, 3 of 3 chances",
+  "Rage quits: buddskees",
+  "League: Points phase",
+  "0/12 pts: 12 more to reach promotion to Division 2"
+ ],
+ "coach": "Coach Lasso",
+ "generated_at": "2026-10-19T23:00-05:00"
+}
