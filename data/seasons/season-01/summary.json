@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 76,
+ "matches_played": 77,
  "record": {
   "W": 34,
   "D": 9,
-  "L": 33
+  "L": 34
  },
  "goals_for": 207,
- "goals_against": 199,
+ "goals_against": 202,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-22T23:22:24+00:00",
+ "last_match": "2026-10-22T23:39:31+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -542,6 +542,13 @@
    "result": "L",
    "score": "1-4",
    "opponent": "Burger Chute"
+  },
+  {
+   "id": "129054087900143",
+   "date": "2026-10-22T23:39:31+00:00",
+   "result": "L",
+   "score": "0-3",
+   "opponent": "UBEREAT"
   }
  ]
 }
