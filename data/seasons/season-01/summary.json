@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 78,
+ "matches_played": 79,
  "record": {
   "W": 34,
   "D": 9,
-  "L": 35
+  "L": 36
  },
- "goals_for": 208,
- "goals_against": 208,
+ "goals_for": 210,
+ "goals_against": 212,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-23T00:05:28+00:00",
+ "last_match": "2026-10-23T00:27:21+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -556,6 +556,13 @@
    "result": "L",
    "score": "1-6",
    "opponent": "feshar fc"
+  },
+  {
+   "id": "129018282380425",
+   "date": "2026-10-23T00:27:21+00:00",
+   "result": "L",
+   "score": "2-4",
+   "opponent": "Holy Gotham"
   }
  ]
 }
