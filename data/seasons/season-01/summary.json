@@ -1,15 +1,15 @@
 {
  "season": "Season 1 · Sep 17 – Oct 22",
- "matches_played": 77,
+ "matches_played": 78,
  "record": {
   "W": 34,
   "D": 9,
-  "L": 34
+  "L": 35
  },
- "goals_for": 207,
- "goals_against": 202,
+ "goals_for": 208,
+ "goals_against": 208,
  "first_match": "2026-09-29T22:09:39+00:00",
- "last_match": "2026-10-22T23:39:31+00:00",
+ "last_match": "2026-10-23T00:05:28+00:00",
  "matches": [
   {
    "id": "46894398530377",
@@ -549,6 +549,13 @@
    "result": "L",
    "score": "0-3",
    "opponent": "UBEREAT"
+  },
+  {
+   "id": "129060159800016",
+   "date": "2026-10-23T00:05:28+00:00",
+   "result": "L",
+   "score": "1-6",
+   "opponent": "feshar fc"
   }
  ]
 }
