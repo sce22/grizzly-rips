@@ -1,5 +1,5 @@
 {
- "fetched": "2026-10-23T00:09:05+00:00",
+ "fetched": "2026-10-23T00:28:40+00:00",
  "members": [
   {
    "name": "tuxedo_slide",
@@ -75,18 +75,18 @@
   },
   {
    "name": "PhogsToffees",
-   "gamesPlayed": "95",
-   "winRate": "43",
-   "goals": "100",
-   "assists": "70",
+   "gamesPlayed": "96",
+   "winRate": "42",
+   "goals": "101",
+   "assists": "71",
    "cleanSheetsDef": "0",
    "cleanSheetsGK": "0",
    "shotSuccessRate": "38",
-   "passesMade": "1804",
-   "passSuccessRate": "76",
+   "passesMade": "1847",
+   "passSuccessRate": "77",
    "ratingAve": "7.9",
    "tacklesMade": "69",
-   "tackleSuccessRate": "23",
+   "tackleSuccessRate": "22",
    "proName": "Stuss",
    "proPos": "25",
    "proStyle": "0",
@@ -98,9 +98,9 @@
    "redCards": "0",
    "prevGoals": "4",
    "prevGoals1": "4",
-   "prevGoals2": "0",
-   "prevGoals3": "5",
-   "prevGoals4": "4",
+   "prevGoals2": "1",
+   "prevGoals3": "4",
+   "prevGoals4": "5",
    "prevGoals5": "1",
    "prevGoals6": "3",
    "prevGoals7": "1",
@@ -111,17 +111,17 @@
   },
   {
    "name": "BellyTb1",
-   "gamesPlayed": "95",
-   "winRate": "43",
+   "gamesPlayed": "96",
+   "winRate": "42",
    "goals": "69",
-   "assists": "50",
+   "assists": "51",
    "cleanSheetsDef": "0",
    "cleanSheetsGK": "0",
-   "shotSuccessRate": "27",
-   "passesMade": "1281",
+   "shotSuccessRate": "26",
+   "passesMade": "1308",
    "passSuccessRate": "71",
    "ratingAve": "7.7",
-   "tacklesMade": "67",
+   "tacklesMade": "69",
    "tackleSuccessRate": "36",
    "proName": "T. Beltran",
    "proPos": "25",
@@ -134,8 +134,8 @@
    "redCards": "0",
    "prevGoals": "1",
    "prevGoals1": "1",
-   "prevGoals2": "3",
-   "prevGoals3": "0",
+   "prevGoals2": "2",
+   "prevGoals3": "1",
    "prevGoals4": "1",
    "prevGoals5": "1",
    "prevGoals6": "4",
@@ -145,10 +145,5 @@
    "prevGoals10": "3",
    "favoritePosition": "forward"
   }
- ],
- "pending": {
-  "expect_total": 273,
-  "until": 1792717095.5710843,
-  "had_total": 271
- }
+ ]
 }
