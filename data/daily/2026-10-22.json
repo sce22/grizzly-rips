@@ -1,0 +1,436 @@
+{
+ "date": "2026-10-22",
+ "label": "Thu, Oct 22",
+ "title": "Oct 22 Daily Summary",
+ "games": 4,
+ "record": {
+  "W": 0,
+  "D": 0,
+  "L": 4
+ },
+ "gf": 4,
+ "ga": 17,
+ "points": 0,
+ "baseline": {
+  "matches": 75,
+  "weight": 0.65,
+  "ppg": 1.48,
+  "gd": 0.15,
+  "rating": 7.8
+ },
+ "score": 0,
+ "grade": "F",
+ "players": [
+  {
+   "name": "BellyTb1",
+   "games": 4,
+   "goals": 1,
+   "assists": 4,
+   "key_passes": 5,
+   "tackles_won": 3,
+   "tackles_att": 13,
+   "passes_made": 88,
+   "passes_att": 120,
+   "shots": 13,
+   "shots_on": 9,
+   "mom": 1,
+   "pos": "midfielder",
+   "rage_quits": 0,
+   "record": {
+    "W": 0,
+    "D": 0,
+    "L": 4
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Burger Chute",
+     "score": "1-4",
+     "result": "L",
+     "rating": 7.8
+    },
+    {
+     "match": 2,
+     "opp": "UBEREAT",
+     "score": "0-3",
+     "result": "L",
+     "rating": 10.0
+    },
+    {
+     "match": 3,
+     "opp": "feshar fc",
+     "score": "1-6",
+     "result": "L",
+     "rating": 7.6
+    },
+    {
+     "match": 4,
+     "opp": "Holy Gotham",
+     "score": "2-4",
+     "result": "L",
+     "rating": 7.8
+    }
+   ],
+   "avg_rating": 8.3,
+   "best_rating": 10.0,
+   "worst_rating": 7.6,
+   "top_issue": "finishing",
+   "pass_pct": 73,
+   "tackle_pct": 23,
+   "usual": {
+    "rating": 7.84,
+    "pass_pct": 70,
+    "tackle_pct": 30,
+    "matches": 70
+   },
+   "lowlights": [
+    "Match 4 vs Holy Gotham: Giveaways 18, up from your usual 8",
+    "Match 4 vs Holy Gotham: Their best forward posted 10.0 to your 7.8",
+    "Match 1 vs Burger Chute: Tackle success 0%, down from your usual 33%"
+   ],
+   "highlights": [
+    "Match 2 vs UBEREAT: A perfect 10.0, your 4th Perfect Game for us",
+    "Match 1 vs Burger Chute: Completed passes 29, up from your usual 15"
+   ],
+   "all_time": {
+    "matches": 79,
+    "avg_rating": 7.7,
+    "rage_quits": 4
+   }
+  },
+  {
+   "name": "PhogsToffees",
+   "games": 4,
+   "goals": 3,
+   "assists": 1,
+   "key_passes": 10,
+   "tackles_won": 2,
+   "tackles_att": 11,
+   "passes_made": 108,
+   "passes_att": 128,
+   "shots": 10,
+   "shots_on": 8,
+   "mom": 0,
+   "pos": "forward",
+   "rage_quits": 1,
+   "record": {
+    "W": 0,
+    "D": 0,
+    "L": 4
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Burger Chute",
+     "score": "1-4",
+     "result": "L",
+     "rating": 7.5
+    },
+    {
+     "match": 2,
+     "opp": "UBEREAT",
+     "score": "0-3",
+     "result": "L",
+     "rating": 5.0,
+     "rage_quit": true
+    },
+    {
+     "match": 3,
+     "opp": "feshar fc",
+     "score": "1-6",
+     "result": "L",
+     "rating": 7.9
+    },
+    {
+     "match": 4,
+     "opp": "Holy Gotham",
+     "score": "2-4",
+     "result": "L",
+     "rating": 8.8
+    }
+   ],
+   "avg_rating": 7.3,
+   "best_rating": 8.8,
+   "worst_rating": 5.0,
+   "top_issue": "shot_selection",
+   "pass_pct": 84,
+   "tackle_pct": 18,
+   "usual": {
+    "rating": 8.59,
+    "pass_pct": 81,
+    "tackle_pct": 39,
+    "matches": 71
+   },
+   "lowlights": [
+    "Rage quit 1 time today",
+    "Averaged 7.3 on the day against a usual 8.6",
+    "Match 4 vs Holy Gotham: Giveaways 12, up from your usual 8"
+   ],
+   "highlights": [
+    "Match 4 vs Holy Gotham: On-ball actions 57, up from your usual 37",
+    "Match 1 vs Burger Chute: Tackles attempted 6, up from your usual 3"
+   ],
+   "all_time": {
+    "matches": 79,
+    "avg_rating": 7.92,
+    "rage_quits": 3
+   }
+  }
+ ],
+ "active": [
+  "BellyTb1",
+  "PhogsToffees"
+ ],
+ "mvp": "BellyTb1",
+ "best_match": {
+  "id": "129018282380425",
+  "score": "2-4",
+  "opp": "Holy Gotham",
+  "result": "L"
+ },
+ "worst_match": {
+  "id": "129060159800016",
+  "score": "1-6",
+  "opp": "feshar fc",
+  "result": "L"
+ },
+ "team_issue": "finishing",
+ "team": {
+  "longest_losing_run": 4,
+  "conceded_per_match": 4.25,
+  "first_half_points": 0,
+  "second_half_points": 0,
+  "rage_quits": [
+   {
+    "name": "PhogsToffees",
+    "match": 2,
+    "opp": "UBEREAT",
+    "score": "0-3"
+   }
+  ],
+  "their_avg_rating": 7.98,
+  "our_avg_rating": 8.2,
+  "four_goal_losses": 1
+ },
+ "ladder_day": {
+  "start": {
+   "division_name": "Division 3",
+   "stage": "points",
+   "stage_label": "Points phase",
+   "points": 0,
+   "target": 12,
+   "lives": 3,
+   "max_lives": 3,
+   "status": [
+    "0/12 pts: 12 more to reach promotion to Division 2"
+   ],
+   "spoken": "We're in Division 3 with 0 of 12 points and 3 of 3 chances left",
+   "taken_at": "2026-10-21T23:00-05:00"
+  },
+  "end": {
+   "division_name": "Division 4",
+   "stage": "points",
+   "stage_label": "Points phase",
+   "points": 0,
+   "target": 9,
+   "lives": 3,
+   "max_lives": 3,
+   "status": [
+    "0/9 pts: 9 more to reach promotion to Division 3"
+   ],
+   "spoken": "We're in Division 4 with 0 of 9 points and 3 of 3 chances left",
+   "taken_at": "2026-10-22T23:00-05:00"
+  },
+  "moved": "down",
+  "events": [
+   {
+    "ts": 1792713928,
+    "kind": "relegation_match_due",
+    "text": "Out of chances in Division 3 (L 1-6 vs feshar fc). Relegation match next"
+   },
+   {
+    "ts": 1792715241,
+    "kind": "relegated",
+    "text": "Relegation match L 2-4 vs Holy Gotham. Down to Division 4"
+   }
+  ],
+  "relegated_from": "Division 3",
+  "promoted_from": null,
+  "facing_relegation": false
+ },
+ "matches": [
+  {
+   "id": "128964019990041",
+   "ts": 1792711344,
+   "result": "L",
+   "gf": 1,
+   "ga": 4,
+   "opp": "Burger Chute"
+  },
+  {
+   "id": "129054087900143",
+   "ts": 1792712371,
+   "result": "L",
+   "gf": 0,
+   "ga": 3,
+   "opp": "UBEREAT"
+  },
+  {
+   "id": "129060159800016",
+   "ts": 1792713928,
+   "result": "L",
+   "gf": 1,
+   "ga": 6,
+   "opp": "feshar fc"
+  },
+  {
+   "id": "129018282380425",
+   "ts": 1792715241,
+   "result": "L",
+   "gf": 2,
+   "ga": 4,
+   "opp": "Holy Gotham"
+  }
+ ],
+ "table": {
+  "division": "4",
+  "division_name": "Division 4",
+  "next_name": "Division 3",
+  "stage": "points",
+  "points": 0,
+  "target": 9,
+  "lives": 3,
+  "max_lives": 3,
+  "phase_results": [],
+  "taken_at": "2026-10-22T23:00-05:00",
+  "stage_label": "Points phase",
+  "status": [
+   "0/9 pts: 9 more to reach promotion to Division 3"
+  ],
+  "spoken": "We're in Division 4 with 0 of 9 points and 3 of 3 chances left",
+  "history": [
+   {
+    "ts": 1792013142,
+    "match": "101802909950186",
+    "result": "L",
+    "score": "1-2",
+    "opp": "Flex musix",
+    "division": "3",
+    "stage": "points",
+    "kind": "relegation_match_due",
+    "text": "Out of chances in Division 3 (L 1-2 vs Flex musix). Relegation match next"
+   },
+   {
+    "ts": 1792014447,
+    "match": "101858959220201",
+    "result": "L",
+    "score": "2-3",
+    "opp": "NorthStar",
+    "division": "3",
+    "stage": "relegation",
+    "kind": "relegated",
+    "text": "Relegation match L 2-3 vs NorthStar. Down to Division 4"
+   },
+   {
+    "ts": 1792018178,
+    "match": "102242626390439",
+    "result": "W",
+    "score": "6-2",
+    "opp": "Drew Peacox FC",
+    "division": "4",
+    "stage": "points",
+    "kind": "qualified",
+    "text": "Reached 9 pts in Division 4 (W 6-2 vs Drew Peacox FC). Promotion matches to Division 3: win 2 of 3"
+   },
+   {
+    "ts": 1792019429,
+    "match": "102336594140327",
+    "result": "W",
+    "score": "3-2",
+    "opp": "NorthStar",
+    "division": "4",
+    "stage": "promotion",
+    "text": "Promotion match 1 of 3: W 3-2 vs NorthStar",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1792021726,
+    "match": "102618218300426",
+    "result": "L",
+    "score": "2-3",
+    "opp": "Stinging Beez",
+    "division": "4",
+    "stage": "promotion",
+    "text": "Promotion match 2 of 3: L 2-3 vs Stinging Beez",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1792442840,
+    "match": "118756509520446",
+    "result": "W",
+    "score": "5-4",
+    "opp": "Blitz FC",
+    "division": "4",
+    "stage": "promotion",
+    "text": "Promotion match 3 of 3: W 5-4 vs Blitz FC. Promoted to Division 3!",
+    "kind": "promoted"
+   },
+   {
+    "ts": 1792713928,
+    "match": "129060159800016",
+    "result": "L",
+    "score": "1-6",
+    "opp": "feshar fc",
+    "division": "3",
+    "stage": "points",
+    "kind": "relegation_match_due",
+    "text": "Out of chances in Division 3 (L 1-6 vs feshar fc). Relegation match next"
+   },
+   {
+    "ts": 1792715241,
+    "match": "129018282380425",
+    "result": "L",
+    "score": "2-4",
+    "opp": "Holy Gotham",
+    "division": "3",
+    "stage": "relegation",
+    "kind": "relegated",
+    "text": "Relegation match L 2-4 vs Holy Gotham. Down to Division 4"
+   }
+  ]
+ },
+ "club": "Grizzly Rips",
+ "previous": {
+  "date": "2026-10-19",
+  "grade": "C-",
+  "record": {
+   "W": 1,
+   "D": 0,
+   "L": 3
+  }
+ },
+ "season_so_far": {
+  "season": "Season 1 · Sep 17 – Oct 22",
+  "record": {
+   "W": 34,
+   "D": 9,
+   "L": 36
+  },
+  "gf": 210,
+  "ga": 212
+ },
+ "speech_by": "claude",
+ "speech": "Grizzly Rips, sit down. That was an F, and I'm not gonna dress it up in a Sunday suit. 4 matches, 4 losses. 4 goals scored, 17 conceded. That's 4.25 goals against per match, and you leaked like a screen door on a submarine. Burger Chute beat us 1-4. UBEREAT beat us 0-3. Then feshar fc ran us over 1-6, and that one burned our last chance in Division 3. We had a relegation match to save ourselves, and Holy Gotham beat us 2-4. We started this morning in Division 3. We're ending tonight in Division 4 with 0 of 9 points. And somewhere in the middle of all that, one of us quit on the team. One rage quit, at 0-3, with the clock still running.\n\nBellyTb1. In the relegation match you gave the ball away 18 times. Your usual is 8. That's more than double, in the one match we couldn't afford it. Their best forward posted a 10.0 against your 7.8, and that forward lived in the space you left behind. Against Burger Chute your tackle success was 0%. On the day you won 3 of 13 tackles. That's 23%, under your usual 30. Now here's the fair part. You put up a perfect 10.0 against UBEREAT, your 4th perfect match for this club, and you set up 4 goals. You showed up. You just showed up careless.\n\nPhogsToffees. You rage quit against UBEREAT. I know it stung. But walking out at 0-3 leaves your friend out there alone, and that's a 5.0 on your sheet that you handed yourself. You averaged 7.3 against your usual 8.6. You gave it away 12 times against Holy Gotham, up from 8. And you won 2 of 11 tackles, 18% against your usual 39. The bright spot is real, though. You came back and had 57 on-ball actions in the relegation match, with an 8.8. You scored 3 and put 8 of 10 shots on target. You wanted the ball when it counted. I just need you to want it in every match.\n\nAnd that's our real problem, folks. Finishing. Between y'all, 17 of 23 shots hit the target, and only 4 went in. You're hitting the keeper's hands. Aim for the corners. Keepers love a shot right down the middle. From an angle, finesse it to the far post. One-on-one, go low and hard. Low across the keeper is the hardest save there is, and the easiest rebound to tap in.\n\nNow, my granddaddy kept bees back in Kansas. One spring a storm knocked the whole hive flat. He didn't cuss the wind. He set that box back up, one frame at a time, and by July he had more honey than the year before. Division 4 is our box knocked flat. It's 9 points back to Division 3, and we've got all 3 chances. You two have scored 210 goals together this season. You've won 34 matches. A storm doesn't erase that.\n\nSo get some sleep. Tomorrow we set the hive back up, aim for the corners, and nobody leaves the field until the whistle. I believe in y'all. Let's go make some honey.",
+ "phrases": [],
+ "key_stats": [
+  "Day: 0W 0D 4L from 4 matches · 4 scored, 17 conceded",
+  "Vs our usual: 0.0 pts per game today, 1.5 normally (75 matches)",
+  "Player of the day: BellyTb1 (8.3 avg, 1 goal, 4 assists)",
+  "Ladder: started Division 3, 0/12 pts, 3 of 3 chances, finished Division 4, 0/9 pts, 3 of 3 chances",
+  "Rage quits: PhogsToffees",
+  "League: Points phase",
+  "0/9 pts: 9 more to reach promotion to Division 3"
+ ],
+ "coach": "Coach Lasso",
+ "generated_at": "2026-10-22T23:00-05:00"
+}
