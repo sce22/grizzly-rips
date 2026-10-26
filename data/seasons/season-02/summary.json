@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 7,
+ "matches_played": 8,
  "record": {
-  "W": 3,
+  "W": 4,
   "D": 0,
   "L": 4
  },
- "goals_for": 13,
+ "goals_for": 16,
  "goals_against": 19,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-26T21:05:22+00:00",
+ "last_match": "2026-10-26T21:13:00+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -59,6 +59,13 @@
    "result": "L",
    "score": "1-3",
    "opponent": "FurtzMucho"
+  },
+  {
+   "id": "141424447540320",
+   "date": "2026-10-26T21:13:00+00:00",
+   "result": "W",
+   "score": "3-0",
+   "opponent": "ManJustGotTop"
   }
  ]
 }
