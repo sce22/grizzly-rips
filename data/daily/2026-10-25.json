@@ -1,0 +1,563 @@
+{
+ "date": "2026-10-25",
+ "label": "Sun, Oct 25",
+ "title": "Oct 25 Daily Summary",
+ "games": 6,
+ "record": {
+  "W": 3,
+  "D": 0,
+  "L": 3
+ },
+ "gf": 12,
+ "ga": 16,
+ "points": 9,
+ "baseline": {
+  "matches": 79,
+  "weight": 0.66,
+  "ppg": 1.41,
+  "gd": -0.03,
+  "rating": 7.8
+ },
+ "score": 11,
+ "grade": "B-",
+ "players": [
+  {
+   "name": "buddskees",
+   "games": 6,
+   "goals": 3,
+   "assists": 4,
+   "key_passes": 7,
+   "tackles_won": 5,
+   "tackles_att": 12,
+   "passes_made": 103,
+   "passes_att": 141,
+   "shots": 13,
+   "shots_on": 5,
+   "mom": 2,
+   "pos": "forward",
+   "rage_quits": 0,
+   "record": {
+    "W": 3,
+    "D": 0,
+    "L": 3
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Hippy Go",
+     "score": "0-4",
+     "result": "L",
+     "rating": 6.8
+    },
+    {
+     "match": 2,
+     "opp": "Sapa Boys",
+     "score": "2-3",
+     "result": "L",
+     "rating": 8.1
+    },
+    {
+     "match": 3,
+     "opp": "fifa ballers",
+     "score": "3-2",
+     "result": "W",
+     "rating": 9.3
+    },
+    {
+     "match": 4,
+     "opp": "4SkinCollecters",
+     "score": "2-1",
+     "result": "W",
+     "rating": 8.2
+    },
+    {
+     "match": 5,
+     "opp": "Bodtkaa Junior",
+     "score": "1-4",
+     "result": "L",
+     "rating": 8.1
+    },
+    {
+     "match": 6,
+     "opp": "El Chele",
+     "score": "4-2",
+     "result": "W",
+     "rating": 7.2
+    }
+   ],
+   "avg_rating": 7.95,
+   "best_rating": 9.3,
+   "worst_rating": 6.8,
+   "top_issue": "shot_selection",
+   "pass_pct": 73,
+   "tackle_pct": 42,
+   "usual": {
+    "rating": 8.11,
+    "pass_pct": 73,
+    "tackle_pct": 64,
+    "matches": 36
+   },
+   "lowlights": [
+    "Match 5 vs Bodtkaa Junior: Missed tackles 4, up from your usual 0",
+    "Match 5 vs Bodtkaa Junior: Giveaways 14, up from your usual 8",
+    "Match 2 vs Sapa Boys: Shot accuracy 0%, down from your usual 61%"
+   ],
+   "highlights": [
+    "Match 5 vs Bodtkaa Junior: Tackles attempted 5, up from your usual 2",
+    "Match 5 vs Bodtkaa Junior: On-ball actions 40, up from your usual 28"
+   ],
+   "all_time": {
+    "matches": 49,
+    "avg_rating": 7.95,
+    "rage_quits": 6
+   }
+  },
+  {
+   "name": "BellyTb1",
+   "games": 6,
+   "goals": 4,
+   "assists": 2,
+   "key_passes": 4,
+   "tackles_won": 9,
+   "tackles_att": 20,
+   "passes_made": 88,
+   "passes_att": 114,
+   "shots": 28,
+   "shots_on": 11,
+   "mom": 1,
+   "pos": "forward",
+   "rage_quits": 0,
+   "record": {
+    "W": 3,
+    "D": 0,
+    "L": 3
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Hippy Go",
+     "score": "0-4",
+     "result": "L",
+     "rating": 6.2
+    },
+    {
+     "match": 2,
+     "opp": "Sapa Boys",
+     "score": "2-3",
+     "result": "L",
+     "rating": 8.0
+    },
+    {
+     "match": 3,
+     "opp": "fifa ballers",
+     "score": "3-2",
+     "result": "W",
+     "rating": 7.9
+    },
+    {
+     "match": 4,
+     "opp": "4SkinCollecters",
+     "score": "2-1",
+     "result": "W",
+     "rating": 7.3
+    },
+    {
+     "match": 5,
+     "opp": "Bodtkaa Junior",
+     "score": "1-4",
+     "result": "L",
+     "rating": 7.0
+    },
+    {
+     "match": 6,
+     "opp": "El Chele",
+     "score": "4-2",
+     "result": "W",
+     "rating": 9.4
+    }
+   ],
+   "avg_rating": 7.63,
+   "best_rating": 9.4,
+   "worst_rating": 6.2,
+   "top_issue": "shot_selection",
+   "pass_pct": 77,
+   "tackle_pct": 45,
+   "usual": {
+    "rating": 8.13,
+    "pass_pct": 70,
+    "tackle_pct": 26,
+    "matches": 74
+   },
+   "lowlights": [
+    "Match 2 vs Sapa Boys: Missed tackles 6, up from your usual 2",
+    "Match 4 vs 4SkinCollecters: Shots 1, down from your usual 4",
+    "Match 3 vs fifa ballers: Pass accuracy 63%, down from your usual 75%"
+   ],
+   "highlights": [
+    "Match 6 vs El Chele: Shots 10, up from your usual 4",
+    "Match 5 vs Bodtkaa Junior: Tackle success 67%, up from your usual 26%"
+   ],
+   "all_time": {
+    "matches": 85,
+    "avg_rating": 7.69,
+    "rage_quits": 4
+   }
+  },
+  {
+   "name": "PhogsToffees",
+   "games": 6,
+   "goals": 5,
+   "assists": 3,
+   "key_passes": 7,
+   "tackles_won": 0,
+   "tackles_att": 5,
+   "passes_made": 128,
+   "passes_att": 152,
+   "shots": 15,
+   "shots_on": 11,
+   "mom": 0,
+   "pos": "forward",
+   "rage_quits": 0,
+   "record": {
+    "W": 3,
+    "D": 0,
+    "L": 3
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Hippy Go",
+     "score": "0-4",
+     "result": "L",
+     "rating": 6.2
+    },
+    {
+     "match": 2,
+     "opp": "Sapa Boys",
+     "score": "2-3",
+     "result": "L",
+     "rating": 8.1
+    },
+    {
+     "match": 3,
+     "opp": "fifa ballers",
+     "score": "3-2",
+     "result": "W",
+     "rating": 7.4
+    },
+    {
+     "match": 4,
+     "opp": "4SkinCollecters",
+     "score": "2-1",
+     "result": "W",
+     "rating": 7.6
+    },
+    {
+     "match": 5,
+     "opp": "Bodtkaa Junior",
+     "score": "1-4",
+     "result": "L",
+     "rating": 6.8
+    },
+    {
+     "match": 6,
+     "opp": "El Chele",
+     "score": "4-2",
+     "result": "W",
+     "rating": 8.9
+    }
+   ],
+   "avg_rating": 7.5,
+   "best_rating": 8.9,
+   "worst_rating": 6.2,
+   "top_issue": "shot_volume",
+   "pass_pct": 84,
+   "tackle_pct": 0,
+   "usual": {
+    "rating": 8.37,
+    "pass_pct": 82,
+    "tackle_pct": 35,
+    "matches": 74
+   },
+   "lowlights": [
+    "Averaged 7.5 on the day against a usual 8.4",
+    "Match 1 vs Hippy Go: On-ball actions 18, down from your usual 39",
+    "Match 5 vs Bodtkaa Junior: Shot accuracy 0%, down from your usual 74%"
+   ],
+   "highlights": [
+    "Match 1 vs Hippy Go: Giveaways 2, down from your usual 9",
+    "Match 6 vs El Chele: Shot conversion 67%, up from your usual 26%"
+   ],
+   "all_time": {
+    "matches": 85,
+    "avg_rating": 7.89,
+    "rage_quits": 3
+   }
+  }
+ ],
+ "active": [
+  "buddskees",
+  "BellyTb1",
+  "PhogsToffees"
+ ],
+ "mvp": "buddskees",
+ "best_match": {
+  "id": "139374382010070",
+  "score": "4-2",
+  "opp": "El Chele",
+  "result": "W"
+ },
+ "worst_match": {
+  "id": "139306008260248",
+  "score": "0-4",
+  "opp": "Hippy Go",
+  "result": "L"
+ },
+ "team_issue": "shot_selection",
+ "team": {
+  "longest_losing_run": 2,
+  "conceded_per_match": 2.67,
+  "first_half_points": 3,
+  "second_half_points": 6,
+  "rage_quits": [],
+  "their_avg_rating": 7.69,
+  "our_avg_rating": 7.69,
+  "four_goal_losses": 1
+ },
+ "ladder_day": {
+  "start": {
+   "division_name": "Division 4",
+   "stage": "points",
+   "stage_label": "Points phase",
+   "points": 0,
+   "target": 9,
+   "lives": 3,
+   "max_lives": 3,
+   "status": [
+    "0/9 pts: 9 more to reach promotion to Division 3"
+   ],
+   "spoken": "We're in Division 4 with 0 of 9 points and 3 of 3 chances left",
+   "taken_at": "2026-10-24T23:00-05:00"
+  },
+  "end": {
+   "division_name": "Division 4",
+   "stage": "points",
+   "stage_label": "Points phase",
+   "points": 6,
+   "target": 9,
+   "lives": 3,
+   "max_lives": 3,
+   "status": [
+    "6/9 pts: 3 more to reach promotion to Division 3"
+   ],
+   "spoken": "We're in Division 4 with 6 of 9 points and 3 of 3 chances left",
+   "taken_at": "2026-10-25T23:00-05:00"
+  },
+  "moved": null,
+  "events": [
+   {
+    "ts": 1792979723,
+    "kind": "relegation_match_due",
+    "text": "Out of chances in Division 4 (L 1-4 vs Bodtkaa Junior). Relegation match next"
+   },
+   {
+    "ts": 1792980881,
+    "kind": "survived",
+    "text": "Relegation match won (4-2 vs El Chele). Staying in Division 4, chances reset, back to 6 pts"
+   }
+  ],
+  "relegated_from": null,
+  "promoted_from": null,
+  "facing_relegation": false
+ },
+ "matches": [
+  {
+   "id": "139306008260248",
+   "ts": 1792974574,
+   "result": "L",
+   "gf": 0,
+   "ga": 4,
+   "opp": "Hippy Go"
+  },
+  {
+   "id": "139350027650133",
+   "ts": 1792975680,
+   "result": "L",
+   "gf": 2,
+   "ga": 3,
+   "opp": "Sapa Boys"
+  },
+  {
+   "id": "139374121000299",
+   "ts": 1792977244,
+   "result": "W",
+   "gf": 3,
+   "ga": 2,
+   "opp": "fifa ballers"
+  },
+  {
+   "id": "139322262920167",
+   "ts": 1792978400,
+   "result": "W",
+   "gf": 2,
+   "ga": 1,
+   "opp": "4SkinCollecters"
+  },
+  {
+   "id": "139280429580232",
+   "ts": 1792979723,
+   "result": "L",
+   "gf": 1,
+   "ga": 4,
+   "opp": "Bodtkaa Junior"
+  },
+  {
+   "id": "139374382010070",
+   "ts": 1792980881,
+   "result": "W",
+   "gf": 4,
+   "ga": 2,
+   "opp": "El Chele"
+  }
+ ],
+ "table": {
+  "division": "4",
+  "division_name": "Division 4",
+  "next_name": "Division 3",
+  "stage": "points",
+  "points": 6,
+  "target": 9,
+  "lives": 3,
+  "max_lives": 3,
+  "phase_results": [],
+  "taken_at": "2026-10-25T23:00-05:00",
+  "stage_label": "Points phase",
+  "status": [
+   "6/9 pts: 3 more to reach promotion to Division 3"
+  ],
+  "spoken": "We're in Division 4 with 6 of 9 points and 3 of 3 chances left",
+  "history": [
+   {
+    "ts": 1792018178,
+    "match": "102242626390439",
+    "result": "W",
+    "score": "6-2",
+    "opp": "Drew Peacox FC",
+    "division": "4",
+    "stage": "points",
+    "kind": "qualified",
+    "text": "Reached 9 pts in Division 4 (W 6-2 vs Drew Peacox FC). Promotion matches to Division 3: win 2 of 3"
+   },
+   {
+    "ts": 1792019429,
+    "match": "102336594140327",
+    "result": "W",
+    "score": "3-2",
+    "opp": "NorthStar",
+    "division": "4",
+    "stage": "promotion",
+    "text": "Promotion match 1 of 3: W 3-2 vs NorthStar",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1792021726,
+    "match": "102618218300426",
+    "result": "L",
+    "score": "2-3",
+    "opp": "Stinging Beez",
+    "division": "4",
+    "stage": "promotion",
+    "text": "Promotion match 2 of 3: L 2-3 vs Stinging Beez",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1792442840,
+    "match": "118756509520446",
+    "result": "W",
+    "score": "5-4",
+    "opp": "Blitz FC",
+    "division": "4",
+    "stage": "promotion",
+    "text": "Promotion match 3 of 3: W 5-4 vs Blitz FC. Promoted to Division 3!",
+    "kind": "promoted"
+   },
+   {
+    "ts": 1792713928,
+    "match": "129060159800016",
+    "result": "L",
+    "score": "1-6",
+    "opp": "feshar fc",
+    "division": "3",
+    "stage": "points",
+    "kind": "relegation_match_due",
+    "text": "Out of chances in Division 3 (L 1-6 vs feshar fc). Relegation match next"
+   },
+   {
+    "ts": 1792715241,
+    "match": "129018282380425",
+    "result": "L",
+    "score": "2-4",
+    "opp": "Holy Gotham",
+    "division": "3",
+    "stage": "relegation",
+    "kind": "relegated",
+    "text": "Relegation match L 2-4 vs Holy Gotham. Down to Division 4"
+   },
+   {
+    "ts": 1792979723,
+    "match": "139280429580232",
+    "result": "L",
+    "score": "1-4",
+    "opp": "Bodtkaa Junior",
+    "division": "4",
+    "stage": "points",
+    "kind": "relegation_match_due",
+    "text": "Out of chances in Division 4 (L 1-4 vs Bodtkaa Junior). Relegation match next"
+   },
+   {
+    "ts": 1792980881,
+    "match": "139374382010070",
+    "result": "W",
+    "score": "4-2",
+    "opp": "El Chele",
+    "division": "4",
+    "stage": "relegation",
+    "kind": "survived",
+    "text": "Relegation match won (4-2 vs El Chele). Staying in Division 4, chances reset, back to 6 pts"
+   }
+  ]
+ },
+ "club": "Grizzly Rips",
+ "previous": {
+  "date": "2026-10-22",
+  "grade": "F",
+  "record": {
+   "W": 0,
+   "D": 0,
+   "L": 4
+  }
+ },
+ "season_so_far": {
+  "season": "Season 2 · Oct 22 – Nov 26",
+  "record": {
+   "W": 3,
+   "D": 0,
+   "L": 3
+  },
+  "gf": 12,
+  "ga": 16
+ },
+ "speech_by": "claude",
+ "speech": "Alright, Grizzly Rips, gather 'round. Today's a B-minus, and I think that's about as fair as a church bake sale judge. 3 wins, 3 losses, 12 scored, 16 conceded. That's 1.5 points a match, a hair better than our usual 1.41, and a whole lot better than Thursday's 0 for 4.\n\nNow the ladder. We started the day in Division 4 with 0 of 9 points. That 1-4 loss to Bodtkaa Junior burned our last chance and dropped us into a relegation match. Then y'all went out and beat El Chele 4-2 to save our bacon. So we finish where we started, Division 4, but with 6 of 9 points and 3 more to reach Division 3.\n\nHere's the plain truth, though. We gave up 2.67 goals a match. We opened the day getting run over 0-4 by Hippy Go, and Bodtkaa put 4 past us too. Two four-goal hammerings is not a defense, that's a screen door on a submarine. And our shot selection was like throwing darts in a hailstorm. Shoot central, inside the box. Set your feet. If the angle's tight, cut it back, because a better shot beats a first shot every day of the week.\n\nbuddskees, you were our engine, 3 goals and 4 assists, 2 Man of the Match awards, and a 9.3 against fifa ballers. But the Bodtkaa match got away from you: 14 giveaways when you usually have 8, and 4 missed tackles when you usually miss none. You were trying to fix everything yourself. Against Sapa Boys, not one shot on target. Your tackle success sat at 42% against your usual 64%. Trust the folks next to you.\n\nBellyTb1, you were trigger-happy today. 28 shots, only 11 on target. That's a lot of fans in the upper deck catching souvenirs. 6 missed tackles against Sapa Boys, a 6.2 in the opener, and 63% passing against fifa ballers. But your tackling was a revelation, 67% against Bodtkaa, and that 9.4 in the relegation match with 10 shots was you dragging us across the line. That's the player I want.\n\nPhogsToffees, you averaged a 7.5 against your usual 8.4, and it was a quiet day. Against Hippy Go you touched the ball 18 times when you usually get 39. You disappeared. Against Bodtkaa, 0% shot accuracy, and you went 0 for 5 in tackles all day. But when you did shoot, 11 of 15 hit the target, you scored 5, passed at 84%, and that 67% conversion against El Chele was cold as a January doorknob.\n\nHere's what I love. We earned 3 points in the first half of the day and 6 in the second. When things got scary, y'all got better. A team that improves under pressure is a team that's going places. We're 3 points from Division 3, and I believe in every one of you. Let's go get 'em.",
+ "phrases": [],
+ "key_stats": [
+  "Day: 3W 0D 3L from 6 matches · 12 scored, 16 conceded",
+  "Vs our usual: 1.5 pts per game today, 1.4 normally (79 matches)",
+  "Player of the day: buddskees (8.0 avg, 3 goals, 4 assists)",
+  "Ladder: started Division 4, 0/9 pts, 3 of 3 chances, finished Division 4, 6/9 pts, 3 of 3 chances",
+  "League: Points phase",
+  "6/9 pts: 3 more to reach promotion to Division 3"
+ ],
+ "coach": "Coach Lasso",
+ "generated_at": "2026-10-25T23:00-05:00"
+}
