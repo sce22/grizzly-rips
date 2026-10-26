@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 5,
+ "matches_played": 6,
  "record": {
-  "W": 2,
+  "W": 3,
   "D": 0,
   "L": 3
  },
- "goals_for": 8,
- "goals_against": 14,
+ "goals_for": 12,
+ "goals_against": 16,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-26T01:55:23+00:00",
+ "last_match": "2026-10-26T02:14:41+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -45,6 +45,13 @@
    "result": "L",
    "score": "1-4",
    "opponent": "Bodtkaa Junior"
+  },
+  {
+   "id": "139374382010070",
+   "date": "2026-10-26T02:14:41+00:00",
+   "result": "W",
+   "score": "4-2",
+   "opponent": "El Chele"
   }
  ]
 }
