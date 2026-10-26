@@ -1,0 +1,22 @@
+{
+ "season": "Season 2 · Oct 22 – Nov 26",
+ "matches_played": 1,
+ "record": {
+  "W": 0,
+  "D": 0,
+  "L": 1
+ },
+ "goals_for": 0,
+ "goals_against": 4,
+ "first_match": "2026-10-26T00:29:34+00:00",
+ "last_match": "2026-10-26T00:29:34+00:00",
+ "matches": [
+  {
+   "id": "139306008260248",
+   "date": "2026-10-26T00:29:34+00:00",
+   "result": "L",
+   "score": "0-4",
+   "opponent": "Hippy Go"
+  }
+ ]
+}
