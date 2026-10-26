@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 12,
+ "matches_played": 13,
  "record": {
   "W": 7,
   "D": 1,
-  "L": 4
+  "L": 5
  },
- "goals_for": 28,
- "goals_against": 23,
+ "goals_for": 32,
+ "goals_against": 30,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-26T22:18:33+00:00",
+ "last_match": "2026-10-26T22:40:05+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -94,6 +94,13 @@
    "result": "W",
    "score": "4-2",
    "opponent": "SkeeBD Scouts"
+  },
+  {
+   "id": "141766108790410",
+   "date": "2026-10-26T22:40:05+00:00",
+   "result": "L",
+   "score": "4-7",
+   "opponent": "DZ Yanited"
   }
  ]
 }
