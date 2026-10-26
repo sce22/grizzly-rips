@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 13,
+ "matches_played": 14,
  "record": {
-  "W": 7,
+  "W": 8,
   "D": 1,
   "L": 5
  },
- "goals_for": 32,
- "goals_against": 30,
+ "goals_for": 34,
+ "goals_against": 31,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-26T22:40:05+00:00",
+ "last_match": "2026-10-26T23:00:50+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -101,6 +101,13 @@
    "result": "L",
    "score": "4-7",
    "opponent": "DZ Yanited"
+  },
+  {
+   "id": "141664472030091",
+   "date": "2026-10-26T23:00:50+00:00",
+   "result": "W",
+   "score": "2-1",
+   "opponent": "Jawnsons"
   }
  ]
 }
