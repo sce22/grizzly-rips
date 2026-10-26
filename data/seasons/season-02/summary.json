@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 3,
+ "matches_played": 4,
  "record": {
-  "W": 1,
+  "W": 2,
   "D": 0,
   "L": 2
  },
- "goals_for": 5,
- "goals_against": 9,
+ "goals_for": 7,
+ "goals_against": 10,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-26T01:14:04+00:00",
+ "last_match": "2026-10-26T01:33:20+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -31,6 +31,13 @@
    "result": "W",
    "score": "3-2",
    "opponent": "fifa ballers"
+  },
+  {
+   "id": "139322262920167",
+   "date": "2026-10-26T01:33:20+00:00",
+   "result": "W",
+   "score": "2-1",
+   "opponent": "4SkinCollecters"
   }
  ]
 }
