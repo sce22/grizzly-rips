@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 15,
+ "matches_played": 16,
  "record": {
   "W": 9,
   "D": 1,
-  "L": 5
+  "L": 6
  },
- "goals_for": 38,
- "goals_against": 31,
+ "goals_for": 39,
+ "goals_against": 33,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-26T23:38:04+00:00",
+ "last_match": "2026-10-26T23:56:26+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -115,6 +115,13 @@
    "result": "W",
    "score": "4-0",
    "opponent": "Fruitguys Fc"
+  },
+  {
+   "id": "141700784670083",
+   "date": "2026-10-26T23:56:26+00:00",
+   "result": "L",
+   "score": "1-2",
+   "opponent": "Higher Crowd"
   }
  ]
 }
