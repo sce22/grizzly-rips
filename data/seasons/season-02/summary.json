@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 2,
+ "matches_played": 3,
  "record": {
-  "W": 0,
+  "W": 1,
   "D": 0,
   "L": 2
  },
- "goals_for": 2,
- "goals_against": 7,
+ "goals_for": 5,
+ "goals_against": 9,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-26T00:48:00+00:00",
+ "last_match": "2026-10-26T01:14:04+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -24,6 +24,13 @@
    "result": "L",
    "score": "2-3",
    "opponent": "Sapa Boys"
+  },
+  {
+   "id": "139374121000299",
+   "date": "2026-10-26T01:14:04+00:00",
+   "result": "W",
+   "score": "3-2",
+   "opponent": "fifa ballers"
   }
  ]
 }
