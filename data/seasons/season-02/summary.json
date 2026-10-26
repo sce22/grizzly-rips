@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 1,
+ "matches_played": 2,
  "record": {
   "W": 0,
   "D": 0,
-  "L": 1
+  "L": 2
  },
- "goals_for": 0,
- "goals_against": 4,
+ "goals_for": 2,
+ "goals_against": 7,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-26T00:29:34+00:00",
+ "last_match": "2026-10-26T00:48:00+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -17,6 +17,13 @@
    "result": "L",
    "score": "0-4",
    "opponent": "Hippy Go"
+  },
+  {
+   "id": "139350027650133",
+   "date": "2026-10-26T00:48:00+00:00",
+   "result": "L",
+   "score": "2-3",
+   "opponent": "Sapa Boys"
   }
  ]
 }
