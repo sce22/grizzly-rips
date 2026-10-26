@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 8,
+ "matches_played": 9,
  "record": {
-  "W": 4,
+  "W": 5,
   "D": 0,
   "L": 4
  },
- "goals_for": 16,
+ "goals_for": 19,
  "goals_against": 19,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-26T21:13:00+00:00",
+ "last_match": "2026-10-26T21:30:15+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -66,6 +66,13 @@
    "result": "W",
    "score": "3-0",
    "opponent": "ManJustGotTop"
+  },
+  {
+   "id": "141404528350149",
+   "date": "2026-10-26T21:30:15+00:00",
+   "result": "W",
+   "score": "3-0",
+   "opponent": "SharkRealm"
   }
  ]
 }
