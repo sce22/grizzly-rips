@@ -145,5 +145,10 @@
    "prevGoals10": "3",
    "favoritePosition": "forward"
   }
- ]
+ ],
+ "pending": {
+  "expect_total": 291,
+  "until": 1792981612.343672,
+  "had_total": 288
+ }
 }

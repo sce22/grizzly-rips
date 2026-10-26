@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 4,
+ "matches_played": 5,
  "record": {
   "W": 2,
   "D": 0,
-  "L": 2
+  "L": 3
  },
- "goals_for": 7,
- "goals_against": 10,
+ "goals_for": 8,
+ "goals_against": 14,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-26T01:33:20+00:00",
+ "last_match": "2026-10-26T01:55:23+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -38,6 +38,13 @@
    "result": "W",
    "score": "2-1",
    "opponent": "4SkinCollecters"
+  },
+  {
+   "id": "139280429580232",
+   "date": "2026-10-26T01:55:23+00:00",
+   "result": "L",
+   "score": "1-4",
+   "opponent": "Bodtkaa Junior"
   }
  ]
 }
