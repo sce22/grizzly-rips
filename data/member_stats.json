@@ -1,5 +1,5 @@
 {
- "fetched": "2026-10-27T21:44:24+00:00",
+ "fetched": "2026-10-27T21:54:02+00:00",
  "members": [
   {
    "name": "tuxedo_slide",
@@ -75,7 +75,7 @@
   },
   {
    "name": "PhogsToffees",
-   "gamesPlayed": "121",
+   "gamesPlayed": "122",
    "winRate": "46",
    "goals": "128",
    "assists": "83",
@@ -98,27 +98,27 @@
    "redCards": "1",
    "prevGoals": "3",
    "prevGoals1": "3",
-   "prevGoals2": "1",
-   "prevGoals3": "6",
+   "prevGoals2": "0",
+   "prevGoals3": "5",
    "prevGoals4": "6",
    "prevGoals5": "3",
-   "prevGoals6": "4",
-   "prevGoals7": "3",
+   "prevGoals6": "5",
+   "prevGoals7": "2",
    "prevGoals8": "7",
-   "prevGoals9": "3",
-   "prevGoals10": "2",
+   "prevGoals9": "4",
+   "prevGoals10": "3",
    "favoritePosition": "forward"
   },
   {
    "name": "BellyTb1",
-   "gamesPlayed": "121",
+   "gamesPlayed": "122",
    "winRate": "46",
    "goals": "91",
    "assists": "65",
    "cleanSheetsDef": "0",
    "cleanSheetsGK": "0",
    "shotSuccessRate": "25",
-   "passesMade": "1723",
+   "passesMade": "1725",
    "passSuccessRate": "72",
    "ratingAve": "7.7",
    "tacklesMade": "100",
@@ -130,25 +130,20 @@
    "proNationality": "95",
    "proOverall": "77",
    "proOverallStr": "77",
-   "manOfTheMatch": "17",
+   "manOfTheMatch": "18",
    "redCards": "0",
-   "prevGoals": "2",
-   "prevGoals1": "2",
-   "prevGoals2": "5",
-   "prevGoals3": "2",
-   "prevGoals4": "2",
-   "prevGoals5": "1",
-   "prevGoals6": "5",
+   "prevGoals": "1",
+   "prevGoals1": "1",
+   "prevGoals2": "3",
+   "prevGoals3": "3",
+   "prevGoals4": "3",
+   "prevGoals5": "2",
+   "prevGoals6": "4",
    "prevGoals7": "2",
    "prevGoals8": "1",
-   "prevGoals9": "4",
-   "prevGoals10": "5",
+   "prevGoals9": "5",
+   "prevGoals10": "3",
    "favoritePosition": "forward"
   }
- ],
- "pending": {
-  "expect_total": 347,
-  "until": 1793139817.1467872,
-  "had_total": 345
- }
+ ]
 }
