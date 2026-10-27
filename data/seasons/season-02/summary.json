@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 21,
+ "matches_played": 22,
  "record": {
-  "W": 12,
+  "W": 13,
   "D": 2,
   "L": 7
  },
- "goals_for": 58,
- "goals_against": 44,
+ "goals_for": 62,
+ "goals_against": 45,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-27T20:59:58+00:00",
+ "last_match": "2026-10-27T21:20:12+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -157,6 +157,13 @@
    "result": "W",
    "score": "5-0",
    "opponent": "liveislikeadih"
+  },
+  {
+   "id": "144224703400191",
+   "date": "2026-10-27T21:20:12+00:00",
+   "result": "W",
+   "score": "4-1",
+   "opponent": "Negymar FC"
   }
  ]
 }
