@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 17,
+ "matches_played": 18,
  "record": {
-  "W": 10,
+  "W": 11,
   "D": 1,
   "L": 6
  },
- "goals_for": 43,
- "goals_against": 35,
+ "goals_for": 46,
+ "goals_against": 36,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-27T00:17:41+00:00",
+ "last_match": "2026-10-27T00:39:50+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -129,6 +129,13 @@
    "result": "W",
    "score": "4-2",
    "opponent": "Galway SC"
+  },
+  {
+   "id": "141784781910279",
+   "date": "2026-10-27T00:39:50+00:00",
+   "result": "W",
+   "score": "3-1",
+   "opponent": "AC KT"
   }
  ]
 }
