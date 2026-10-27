@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 20,
+ "matches_played": 21,
  "record": {
-  "W": 11,
+  "W": 12,
   "D": 2,
   "L": 7
  },
- "goals_for": 53,
+ "goals_for": 58,
  "goals_against": 44,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-27T01:41:57+00:00",
+ "last_match": "2026-10-27T20:59:58+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -150,6 +150,13 @@
    "result": "D",
    "score": "4-4",
    "opponent": "Realdrive Fc"
+  },
+  {
+   "id": "143986966880420",
+   "date": "2026-10-27T20:59:58+00:00",
+   "result": "W",
+   "score": "5-0",
+   "opponent": "liveislikeadih"
   }
  ]
 }
