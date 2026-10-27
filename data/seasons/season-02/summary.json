@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 16,
+ "matches_played": 17,
  "record": {
-  "W": 9,
+  "W": 10,
   "D": 1,
   "L": 6
  },
- "goals_for": 39,
- "goals_against": 33,
+ "goals_for": 43,
+ "goals_against": 35,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-26T23:56:26+00:00",
+ "last_match": "2026-10-27T00:17:41+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -122,6 +122,13 @@
    "result": "L",
    "score": "1-2",
    "opponent": "Higher Crowd"
+  },
+  {
+   "id": "141862507390268",
+   "date": "2026-10-27T00:17:41+00:00",
+   "result": "W",
+   "score": "4-2",
+   "opponent": "Galway SC"
   }
  ]
 }
