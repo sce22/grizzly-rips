@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 31,
+ "matches_played": 32,
  "record": {
-  "W": 18,
+  "W": 19,
   "D": 2,
   "L": 11
  },
- "goals_for": 87,
- "goals_against": 64,
+ "goals_for": 91,
+ "goals_against": 66,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-28T00:14:18+00:00",
+ "last_match": "2026-10-28T00:33:55+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -227,6 +227,13 @@
    "result": "L",
    "score": "2-4",
    "opponent": "4Das FC"
+  },
+  {
+   "id": "145034223180166",
+   "date": "2026-10-28T00:33:55+00:00",
+   "result": "W",
+   "score": "4-2",
+   "opponent": "IronClad City"
   }
  ]
 }
