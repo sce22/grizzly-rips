@@ -1,0 +1,765 @@
+{
+ "date": "2026-10-27",
+ "label": "Tue, Oct 27",
+ "title": "Oct 27 Daily Summary",
+ "games": 13,
+ "record": {
+  "W": 8,
+  "D": 0,
+  "L": 5
+ },
+ "gf": 40,
+ "ga": 27,
+ "points": 24,
+ "baseline": {
+  "matches": 99,
+  "weight": 0.71,
+  "ppg": 1.47,
+  "gd": 0.07,
+  "rating": 7.82
+ },
+ "score": 20,
+ "grade": "A+",
+ "players": [
+  {
+   "name": "BellyTb1",
+   "games": 13,
+   "goals": 15,
+   "assists": 8,
+   "key_passes": 17,
+   "tackles_won": 12,
+   "tackles_att": 39,
+   "passes_made": 254,
+   "passes_att": 334,
+   "shots": 55,
+   "shots_on": 37,
+   "mom": 5,
+   "pos": "forward",
+   "rage_quits": 0,
+   "record": {
+    "W": 8,
+    "D": 0,
+    "L": 5
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "liveislikeadih",
+     "score": "5-0",
+     "result": "W",
+     "rating": 10.0
+    },
+    {
+     "match": 2,
+     "opp": "Negymar FC",
+     "score": "4-1",
+     "result": "W",
+     "rating": 9.8
+    },
+    {
+     "match": 3,
+     "opp": "Sovereign XII",
+     "score": "1-2",
+     "result": "L",
+     "rating": 8.5
+    },
+    {
+     "match": 4,
+     "opp": "6 Half Pints",
+     "score": "3-0",
+     "result": "W",
+     "rating": 6.3
+    },
+    {
+     "match": 5,
+     "opp": "Cineplex fc",
+     "score": "3-7",
+     "result": "L",
+     "rating": 7.7
+    },
+    {
+     "match": 6,
+     "opp": "Abdina fc",
+     "score": "1-2",
+     "result": "L",
+     "rating": 6.9
+    },
+    {
+     "match": 7,
+     "opp": "Nonie United",
+     "score": "2-0",
+     "result": "W",
+     "rating": 7.5
+    },
+    {
+     "match": 8,
+     "opp": "Cotteville Bums",
+     "score": "6-1",
+     "result": "W",
+     "rating": 9.6
+    },
+    {
+     "match": 9,
+     "opp": "Dingos Utd",
+     "score": "3-0",
+     "result": "W",
+     "rating": 8.8
+    },
+    {
+     "match": 10,
+     "opp": "Byron City",
+     "score": "4-3",
+     "result": "W",
+     "rating": 9.6
+    },
+    {
+     "match": 11,
+     "opp": "4Das FC",
+     "score": "2-4",
+     "result": "L",
+     "rating": 7.8
+    },
+    {
+     "match": 12,
+     "opp": "IronClad City",
+     "score": "4-2",
+     "result": "W",
+     "rating": 9.3
+    },
+    {
+     "match": 13,
+     "opp": "TheMostWanted",
+     "score": "2-5",
+     "result": "L",
+     "rating": 6.6
+    }
+   ],
+   "avg_rating": 8.34,
+   "best_rating": 10.0,
+   "worst_rating": 6.3,
+   "top_issue": "shot_selection",
+   "pass_pct": 76,
+   "tackle_pct": 31,
+   "usual": {
+    "rating": 7.85,
+    "pass_pct": 76,
+    "tackle_pct": 49,
+    "matches": 93
+   },
+   "lowlights": [
+    "Match 13 vs TheMostWanted: Their best forward posted 9.8 to your 6.6",
+    "Match 4 vs 6 Half Pints: On-ball actions 2, down from your usual 33",
+    "Match 3 vs Sovereign XII: Missed tackles 6, up from your usual 2"
+   ],
+   "highlights": [
+    "Match 1 vs liveislikeadih: A perfect 10.0, your 5th Perfect Game for us",
+    "Match 1 vs liveislikeadih: Match rating 10.0, up from your usual 7.7"
+   ],
+   "all_time": {
+    "matches": 112,
+    "avg_rating": 7.77,
+    "rage_quits": 4
+   }
+  },
+  {
+   "name": "PhogsToffees",
+   "games": 13,
+   "goals": 12,
+   "assists": 10,
+   "key_passes": 27,
+   "tackles_won": 14,
+   "tackles_att": 52,
+   "passes_made": 344,
+   "passes_att": 421,
+   "shots": 49,
+   "shots_on": 23,
+   "mom": 2,
+   "pos": "forward",
+   "rage_quits": 0,
+   "record": {
+    "W": 8,
+    "D": 0,
+    "L": 5
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "liveislikeadih",
+     "score": "5-0",
+     "result": "W",
+     "rating": 9.5
+    },
+    {
+     "match": 2,
+     "opp": "Negymar FC",
+     "score": "4-1",
+     "result": "W",
+     "rating": 9.0
+    },
+    {
+     "match": 3,
+     "opp": "Sovereign XII",
+     "score": "1-2",
+     "result": "L",
+     "rating": 7.1
+    },
+    {
+     "match": 4,
+     "opp": "6 Half Pints",
+     "score": "3-0",
+     "result": "W",
+     "rating": 5.8
+    },
+    {
+     "match": 5,
+     "opp": "Cineplex fc",
+     "score": "3-7",
+     "result": "L",
+     "rating": 9.9
+    },
+    {
+     "match": 6,
+     "opp": "Abdina fc",
+     "score": "1-2",
+     "result": "L",
+     "rating": 6.7
+    },
+    {
+     "match": 7,
+     "opp": "Nonie United",
+     "score": "2-0",
+     "result": "W",
+     "rating": 7.7
+    },
+    {
+     "match": 8,
+     "opp": "Cotteville Bums",
+     "score": "6-1",
+     "result": "W",
+     "rating": 9.6
+    },
+    {
+     "match": 9,
+     "opp": "Dingos Utd",
+     "score": "3-0",
+     "result": "W",
+     "rating": 7.9
+    },
+    {
+     "match": 10,
+     "opp": "Byron City",
+     "score": "4-3",
+     "result": "W",
+     "rating": 9.3
+    },
+    {
+     "match": 11,
+     "opp": "4Das FC",
+     "score": "2-4",
+     "result": "L",
+     "rating": 7.2
+    },
+    {
+     "match": 12,
+     "opp": "IronClad City",
+     "score": "4-2",
+     "result": "W",
+     "rating": 9.6
+    },
+    {
+     "match": 13,
+     "opp": "TheMostWanted",
+     "score": "2-5",
+     "result": "L",
+     "rating": 7.6
+    }
+   ],
+   "avg_rating": 8.22,
+   "best_rating": 9.9,
+   "worst_rating": 5.8,
+   "top_issue": "shot_selection",
+   "pass_pct": 82,
+   "tackle_pct": 27,
+   "usual": {
+    "rating": 8.24,
+    "pass_pct": 80,
+    "tackle_pct": 39,
+    "matches": 94
+   },
+   "lowlights": [
+    "Match 4 vs 6 Half Pints: Match rating 5.8, down from your usual 8.4",
+    "Match 9 vs Dingos Utd: Shot conversion 0%, down from your usual 29%",
+    "Match 4 vs 6 Half Pints: On-ball actions 1, down from your usual 36"
+   ],
+   "highlights": [
+    "Match 5 vs Cineplex fc: Tackle success 67%, up from your usual 24%",
+    "Match 2 vs Negymar FC: Completed passes 42, up from your usual 20"
+   ],
+   "all_time": {
+    "matches": 112,
+    "avg_rating": 7.97,
+    "rage_quits": 3
+   }
+  },
+  {
+   "name": "buddskees",
+   "games": 9,
+   "goals": 8,
+   "assists": 4,
+   "key_passes": 5,
+   "tackles_won": 17,
+   "tackles_att": 32,
+   "passes_made": 180,
+   "passes_att": 230,
+   "shots": 23,
+   "shots_on": 13,
+   "mom": 2,
+   "pos": "forward",
+   "rage_quits": 0,
+   "record": {
+    "W": 5,
+    "D": 0,
+    "L": 4
+   },
+   "log": [
+    {
+     "match": 5,
+     "opp": "Cineplex fc",
+     "score": "3-7",
+     "result": "L",
+     "rating": 7.3
+    },
+    {
+     "match": 6,
+     "opp": "Abdina fc",
+     "score": "1-2",
+     "result": "L",
+     "rating": 8.4
+    },
+    {
+     "match": 7,
+     "opp": "Nonie United",
+     "score": "2-0",
+     "result": "W",
+     "rating": 7.4
+    },
+    {
+     "match": 8,
+     "opp": "Cotteville Bums",
+     "score": "6-1",
+     "result": "W",
+     "rating": 10.0
+    },
+    {
+     "match": 9,
+     "opp": "Dingos Utd",
+     "score": "3-0",
+     "result": "W",
+     "rating": 7.7
+    },
+    {
+     "match": 10,
+     "opp": "Byron City",
+     "score": "4-3",
+     "result": "W",
+     "rating": 8.2
+    },
+    {
+     "match": 11,
+     "opp": "4Das FC",
+     "score": "2-4",
+     "result": "L",
+     "rating": 8.7
+    },
+    {
+     "match": 12,
+     "opp": "IronClad City",
+     "score": "4-2",
+     "result": "W",
+     "rating": 7.9
+    },
+    {
+     "match": 13,
+     "opp": "TheMostWanted",
+     "score": "2-5",
+     "result": "L",
+     "rating": 7.6
+    }
+   ],
+   "avg_rating": 8.13,
+   "best_rating": 10.0,
+   "worst_rating": 7.3,
+   "top_issue": "shot_selection",
+   "pass_pct": 78,
+   "tackle_pct": 53,
+   "usual": {
+    "rating": 8.25,
+    "pass_pct": 78,
+    "tackle_pct": 31,
+    "matches": 53
+   },
+   "lowlights": [
+    "Match 5 vs Cineplex fc: Their best forward posted 10.0 to your 7.3",
+    "Match 10 vs Byron City: Shots 0, down from your usual 3",
+    "Match 13 vs TheMostWanted: Misplaced passes 8, up from your usual 5"
+   ],
+   "highlights": [
+    "Match 8 vs Cotteville Bums: A perfect 10.0, your 6th Perfect Game for us",
+    "Match 12 vs IronClad City: Tackles won 4, up from your usual 1"
+   ],
+   "all_time": {
+    "matches": 72,
+    "avg_rating": 7.99,
+    "rage_quits": 8
+   }
+  }
+ ],
+ "active": [
+  "BellyTb1",
+  "PhogsToffees",
+  "buddskees"
+ ],
+ "mvp": "BellyTb1",
+ "best_match": {
+  "id": "144528782980392",
+  "score": "6-1",
+  "opp": "Cotteville Bums",
+  "result": "W"
+ },
+ "worst_match": {
+  "id": "144632082490439",
+  "score": "3-7",
+  "opp": "Cineplex fc",
+  "result": "L"
+ },
+ "team_issue": "shot_selection",
+ "team": {
+  "longest_losing_run": 2,
+  "conceded_per_match": 2.08,
+  "first_half_points": 9,
+  "second_half_points": 15,
+  "rage_quits": [],
+  "their_avg_rating": 7.33,
+  "our_avg_rating": 8.24,
+  "four_goal_losses": 1
+ },
+ "ladder_day": {
+  "start": {
+   "division_name": "Division 3",
+   "stage": "points",
+   "stage_label": "Points phase",
+   "points": 0,
+   "target": 12,
+   "lives": 3,
+   "max_lives": 3,
+   "status": [
+    "0/12 pts: 12 more to reach promotion to Division 2"
+   ],
+   "spoken": "We're in Division 3 with 0 of 12 points and 3 of 3 chances left",
+   "taken_at": "2026-10-26T23:00-05:00"
+  },
+  "end": {
+   "division_name": "Division 2",
+   "stage": "points",
+   "stage_label": "Points phase",
+   "points": 0,
+   "target": 16,
+   "lives": 2,
+   "max_lives": 3,
+   "status": [
+    "0/16 pts: 16 more to reach promotion to Division 1"
+   ],
+   "spoken": "We're in Division 2 with 0 of 16 points and 2 of 3 chances left",
+   "taken_at": "2026-10-27T23:00-05:00"
+  },
+  "moved": "up",
+  "events": [
+   {
+    "ts": 1793139970,
+    "kind": "relegation_match_due",
+    "text": "Out of chances in Division 3 (L 1-2 vs Abdina fc). Relegation match next"
+   },
+   {
+    "ts": 1793141092,
+    "kind": "survived",
+    "text": "Relegation match won (2-0 vs Nonie United). Staying in Division 3, chances reset, back to 9 pts"
+   },
+   {
+    "ts": 1793142461,
+    "kind": "qualified",
+    "text": "Reached 12 pts in Division 3 (W 6-1 vs Cotteville Bums). Promotion matches to Division 2: win 3 of 4"
+   },
+   {
+    "ts": 1793143922,
+    "kind": "promo_match",
+    "text": "Promotion match 1 of 4: W 3-0 vs Dingos Utd"
+   },
+   {
+    "ts": 1793145117,
+    "kind": "promo_match",
+    "text": "Promotion match 2 of 4: W 4-3 vs Byron City"
+   },
+   {
+    "ts": 1793146458,
+    "kind": "promo_match",
+    "text": "Promotion match 3 of 4: L 2-4 vs 4Das FC"
+   },
+   {
+    "ts": 1793147635,
+    "kind": "promoted",
+    "text": "Promotion match 4 of 4: W 4-2 vs IronClad City. Promoted to Division 2!"
+   }
+  ],
+  "relegated_from": null,
+  "promoted_from": "Division 3",
+  "facing_relegation": false
+ },
+ "matches": [
+  {
+   "id": "143986966880420",
+   "ts": 1793134798,
+   "result": "W",
+   "gf": 5,
+   "ga": 0,
+   "opp": "liveislikeadih"
+  },
+  {
+   "id": "144224703400191",
+   "ts": 1793136012,
+   "result": "W",
+   "gf": 4,
+   "ga": 1,
+   "opp": "Negymar FC"
+  },
+  {
+   "id": "144224896430295",
+   "ts": 1793137244,
+   "result": "L",
+   "gf": 1,
+   "ga": 2,
+   "opp": "Sovereign XII"
+  },
+  {
+   "id": "144460319080116",
+   "ts": 1793137676,
+   "result": "W",
+   "gf": 3,
+   "ga": 0,
+   "opp": "6 Half Pints"
+  },
+  {
+   "id": "144632082490439",
+   "ts": 1793138793,
+   "result": "L",
+   "gf": 3,
+   "ga": 7,
+   "opp": "Cineplex fc"
+  },
+  {
+   "id": "144392603290160",
+   "ts": 1793139970,
+   "result": "L",
+   "gf": 1,
+   "ga": 2,
+   "opp": "Abdina fc"
+  },
+  {
+   "id": "144438746060374",
+   "ts": 1793141092,
+   "result": "W",
+   "gf": 2,
+   "ga": 0,
+   "opp": "Nonie United"
+  },
+  {
+   "id": "144528782980392",
+   "ts": 1793142461,
+   "result": "W",
+   "gf": 6,
+   "ga": 1,
+   "opp": "Cotteville Bums"
+  },
+  {
+   "id": "144550918930012",
+   "ts": 1793143922,
+   "result": "W",
+   "gf": 3,
+   "ga": 0,
+   "opp": "Dingos Utd"
+  },
+  {
+   "id": "144968057010081",
+   "ts": 1793145117,
+   "result": "W",
+   "gf": 4,
+   "ga": 3,
+   "opp": "Byron City"
+  },
+  {
+   "id": "144970193020204",
+   "ts": 1793146458,
+   "result": "L",
+   "gf": 2,
+   "ga": 4,
+   "opp": "4Das FC"
+  },
+  {
+   "id": "145034223180166",
+   "ts": 1793147635,
+   "result": "W",
+   "gf": 4,
+   "ga": 2,
+   "opp": "IronClad City"
+  },
+  {
+   "id": "145006377210116",
+   "ts": 1793148977,
+   "result": "L",
+   "gf": 2,
+   "ga": 5,
+   "opp": "TheMostWanted"
+  }
+ ],
+ "table": {
+  "division": "2",
+  "division_name": "Division 2",
+  "next_name": "Division 1",
+  "stage": "points",
+  "points": 0,
+  "target": 16,
+  "lives": 2,
+  "max_lives": 3,
+  "phase_results": [
+   "L"
+  ],
+  "taken_at": "2026-10-27T23:00-05:00",
+  "stage_label": "Points phase",
+  "status": [
+   "0/16 pts: 16 more to reach promotion to Division 1"
+  ],
+  "spoken": "We're in Division 2 with 0 of 16 points and 2 of 3 chances left",
+  "history": [
+   {
+    "ts": 1793065317,
+    "match": "142186018040284",
+    "result": "D",
+    "score": "4-4",
+    "opp": "Realdrive Fc",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 3 of 4: D 4-4 vs Realdrive Fc. Promotion missed; back to 0 pts in Division 3",
+    "kind": "promotion_failed"
+   },
+   {
+    "ts": 1793139970,
+    "match": "144392603290160",
+    "result": "L",
+    "score": "1-2",
+    "opp": "Abdina fc",
+    "division": "3",
+    "stage": "points",
+    "kind": "relegation_match_due",
+    "text": "Out of chances in Division 3 (L 1-2 vs Abdina fc). Relegation match next"
+   },
+   {
+    "ts": 1793141092,
+    "match": "144438746060374",
+    "result": "W",
+    "score": "2-0",
+    "opp": "Nonie United",
+    "division": "3",
+    "stage": "relegation",
+    "kind": "survived",
+    "text": "Relegation match won (2-0 vs Nonie United). Staying in Division 3, chances reset, back to 9 pts"
+   },
+   {
+    "ts": 1793142461,
+    "match": "144528782980392",
+    "result": "W",
+    "score": "6-1",
+    "opp": "Cotteville Bums",
+    "division": "3",
+    "stage": "points",
+    "kind": "qualified",
+    "text": "Reached 12 pts in Division 3 (W 6-1 vs Cotteville Bums). Promotion matches to Division 2: win 3 of 4"
+   },
+   {
+    "ts": 1793143922,
+    "match": "144550918930012",
+    "result": "W",
+    "score": "3-0",
+    "opp": "Dingos Utd",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 1 of 4: W 3-0 vs Dingos Utd",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1793145117,
+    "match": "144968057010081",
+    "result": "W",
+    "score": "4-3",
+    "opp": "Byron City",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 2 of 4: W 4-3 vs Byron City",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1793146458,
+    "match": "144970193020204",
+    "result": "L",
+    "score": "2-4",
+    "opp": "4Das FC",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 3 of 4: L 2-4 vs 4Das FC",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1793147635,
+    "match": "145034223180166",
+    "result": "W",
+    "score": "4-2",
+    "opp": "IronClad City",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 4 of 4: W 4-2 vs IronClad City. Promoted to Division 2!",
+    "kind": "promoted"
+   }
+  ]
+ },
+ "club": "Grizzly Rips",
+ "previous": {
+  "date": "2026-10-26",
+  "grade": "A",
+  "record": {
+   "W": 8,
+   "D": 2,
+   "L": 4
+  }
+ },
+ "season_so_far": {
+  "season": "Season 2 · Oct 22 – Nov 26",
+  "record": {
+   "W": 19,
+   "D": 2,
+   "L": 12
+  },
+  "gf": 93,
+  "ga": 71
+ },
+ "speech_by": "claude",
+ "speech": "Well, butter my biscuit and call me a breakfast buffet, Grizzly Rips, y'all did it! That's an A+, folks, and you earned every bit of it.\n\nWe woke up this morning in Division 3 with 0 of 12 points. We go to bed in Division 2. It was not a straight road. We lost 1-2 to Abdina fc, ran out of chances, and stared a relegation match right in the face. And what did y'all do? Beat Nonie United 2-0, hit 12 points with a 6-1 thumping of Cotteville Bums, then won 3 of 4 promotion matches, sealing it 4-2 against IronClad City. That's not a comeback, friends, that's a resurrection with a marching band.\n\n8 wins from 13, 40 goals scored, and a team rating of 8.24 against our usual 7.82. And y'all got stronger as the night went on, with 15 points in the back half versus 9 up front.\n\nNow, honest Coach time. We conceded 27. That 3-7 against Cineplex fc was ugly, plain and simple, and closing 2-5 to TheMostWanted left a sour taste. Our shot selection was wild, too. PhogsToffees, 49 shots and only 23 on target. Work it into the middle of the box, set your feet, and if the angle's tight, cut it back. A better shot beats a first shot.\n\nBellyTb1, you were a runaway freight train loaded with fireworks. 15 goals, 8 assists, 5 Man of the Match awards, and a perfect 10.0 to open the night, your 5th Perfect Game. But against 6 Half Pints you had 2 on-ball actions when you usually have 33. Your tackling dipped to 31% from your usual 49%, and in that last match their best forward posted a 9.8 to your 6.6. Stay switched on, even when you're cooking.\n\nPhogsToffees, you see passes the rest of us need a map for. 27 key passes, 10 assists, 12 goals. And a 9.9 in that Cineplex mess, winning 67% of your tackles while the house was on fire. That's character. Match 4, though, was a 5.8 with 1 on-ball action. You vanished like my sense of direction in a corn maze.\n\nbuddskees, you came in at match 5 and brought a toolbox. A perfect 10.0 in the 6-1, your 6th Perfect Game, and tackling at 53% against your usual 31%. That's grit. But against Byron City you didn't take a single shot, and against TheMostWanted you misplaced 8 passes. Little things, sure, but you're too good for little things.\n\nTwo A days back to back, y'all. Division 2 has 16 points waiting for us, and I believe in this group the way I believe in pie for breakfast. Get some rest, dream big, and tomorrow we go climbing again. Proud of you. So darn proud.",
+ "phrases": [],
+ "key_stats": [
+  "Day: 8W 0D 5L from 13 matches · 40 scored, 27 conceded",
+  "Vs our usual: 1.8 pts per game today, 1.5 normally (99 matches)",
+  "Player of the day: BellyTb1 (8.3 avg, 15 goals, 8 assists)",
+  "Ladder: started Division 3, 0/12 pts, 3 of 3 chances, finished Division 2, 0/16 pts, 2 of 3 chances",
+  "League: Points phase",
+  "0/16 pts: 16 more to reach promotion to Division 1"
+ ],
+ "coach": "Coach Lasso",
+ "generated_at": "2026-10-27T23:01-05:00"
+}
