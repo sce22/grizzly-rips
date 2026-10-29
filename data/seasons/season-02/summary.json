@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 36,
+ "matches_played": 37,
  "record": {
   "W": 20,
   "D": 4,
-  "L": 12
+  "L": 13
  },
- "goals_for": 106,
- "goals_against": 78,
+ "goals_for": 108,
+ "goals_against": 81,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-29T00:56:22+00:00",
+ "last_match": "2026-10-29T01:16:52+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -262,6 +262,13 @@
    "result": "W",
    "score": "8-2",
    "opponent": "begeshana LLC"
+  },
+  {
+   "id": "148070481890426",
+   "date": "2026-10-29T01:16:52+00:00",
+   "result": "L",
+   "score": "2-3",
+   "opponent": "Kalulu FC"
   }
  ]
 }

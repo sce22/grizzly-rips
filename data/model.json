@@ -1,5 +1,5 @@
 {
- "matches_in_archive": 115,
+ "matches_in_archive": 116,
  "positions": {
   "goalkeeper": {
    "samples": 0,
@@ -119,12 +119,12 @@
    }
   },
   "forward": {
-   "samples": 165,
+   "samples": 167,
    "share": 0.85,
    "learned": true,
    "weights": {
     "_intercept": 6.613,
-    "goals": 0.523,
+    "goals": 0.522,
     "assists": 0.403,
     "key_passes": 0.127,
     "shots_on": 0.071,
