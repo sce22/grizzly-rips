@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 33,
+ "matches_played": 34,
  "record": {
   "W": 19,
-  "D": 2,
+  "D": 3,
   "L": 12
  },
- "goals_for": 93,
- "goals_against": 71,
+ "goals_for": 95,
+ "goals_against": 73,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-28T00:56:17+00:00",
+ "last_match": "2026-10-29T00:17:10+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -241,6 +241,13 @@
    "result": "L",
    "score": "2-5",
    "opponent": "TheMostWanted"
+  },
+  {
+   "id": "147958430230472",
+   "date": "2026-10-29T00:17:10+00:00",
+   "result": "D",
+   "score": "2-2",
+   "opponent": "FC TBD"
   }
  ]
 }
