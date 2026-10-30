@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 37,
+ "matches_played": 38,
  "record": {
   "W": 20,
   "D": 4,
-  "L": 13
+  "L": 14
  },
- "goals_for": 108,
- "goals_against": 81,
+ "goals_for": 111,
+ "goals_against": 85,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-29T01:16:52+00:00",
+ "last_match": "2026-10-30T00:00:09+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -269,6 +269,13 @@
    "result": "L",
    "score": "2-3",
    "opponent": "Kalulu FC"
+  },
+  {
+   "id": "150792616140093",
+   "date": "2026-10-30T00:00:09+00:00",
+   "result": "L",
+   "score": "3-4",
+   "opponent": "Los Pistoleroz"
   }
  ]
 }
