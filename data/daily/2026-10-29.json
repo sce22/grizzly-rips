@@ -1,0 +1,453 @@
+{
+ "date": "2026-10-29",
+ "label": "Thu, Oct 29",
+ "title": "Oct 29 Daily Summary",
+ "games": 5,
+ "record": {
+  "W": 3,
+  "D": 0,
+  "L": 2
+ },
+ "gf": 19,
+ "ga": 10,
+ "points": 9,
+ "baseline": {
+  "matches": 116,
+  "weight": 0.74,
+  "ppg": 1.51,
+  "gd": 0.22,
+  "rating": 7.88
+ },
+ "score": 17,
+ "grade": "A-",
+ "players": [
+  {
+   "name": "PhogsToffees",
+   "games": 5,
+   "goals": 11,
+   "assists": 5,
+   "key_passes": 3,
+   "tackles_won": 7,
+   "tackles_att": 14,
+   "passes_made": 130,
+   "passes_att": 167,
+   "shots": 25,
+   "shots_on": 16,
+   "mom": 1,
+   "pos": "forward",
+   "rage_quits": 0,
+   "record": {
+    "W": 3,
+    "D": 0,
+    "L": 2
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Los Pistoleroz",
+     "score": "3-4",
+     "result": "L",
+     "rating": 8.5
+    },
+    {
+     "match": 2,
+     "opp": "Tuntuncitos FC",
+     "score": "9-1",
+     "result": "W",
+     "rating": 10.0
+    },
+    {
+     "match": 3,
+     "opp": "They Dont Know",
+     "score": "2-0",
+     "result": "W",
+     "rating": 8.0
+    },
+    {
+     "match": 4,
+     "opp": "Hegseth FC",
+     "score": "4-2",
+     "result": "W",
+     "rating": 9.2
+    },
+    {
+     "match": 5,
+     "opp": "Amala Boys",
+     "score": "1-3",
+     "result": "L",
+     "rating": 7.8
+    }
+   ],
+   "avg_rating": 8.7,
+   "best_rating": 10.0,
+   "worst_rating": 7.8,
+   "top_issue": "shot_selection",
+   "pass_pct": 78,
+   "tackle_pct": 50,
+   "usual": {
+    "rating": 8.2,
+    "pass_pct": 80,
+    "tackle_pct": 23,
+    "matches": 111
+   },
+   "lowlights": [
+    "Match 3 vs They Dont Know: Tackles attempted 1, down from your usual 4",
+    "Match 2 vs Tuntuncitos FC: Passes attempted 28, down from your usual 36",
+    "Match 5 vs Amala Boys: Match 5 of the session and your rating had slid from 8.8 early on to 7.8"
+   ],
+   "highlights": [
+    "Match 2 vs Tuntuncitos FC: A perfect 10.0, your 11th Perfect Game for us",
+    "Match 1 vs Los Pistoleroz: Tackle success 67%, up from your usual 14%"
+   ],
+   "all_time": {
+    "matches": 121,
+    "avg_rating": 8.02,
+    "rage_quits": 3
+   }
+  },
+  {
+   "name": "BellyTb1",
+   "games": 5,
+   "goals": 8,
+   "assists": 6,
+   "key_passes": 3,
+   "tackles_won": 7,
+   "tackles_att": 13,
+   "passes_made": 100,
+   "passes_att": 135,
+   "shots": 21,
+   "shots_on": 16,
+   "mom": 0,
+   "pos": "forward",
+   "rage_quits": 0,
+   "record": {
+    "W": 3,
+    "D": 0,
+    "L": 2
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Los Pistoleroz",
+     "score": "3-4",
+     "result": "L",
+     "rating": 8.4
+    },
+    {
+     "match": 2,
+     "opp": "Tuntuncitos FC",
+     "score": "9-1",
+     "result": "W",
+     "rating": 10.0
+    },
+    {
+     "match": 3,
+     "opp": "They Dont Know",
+     "score": "2-0",
+     "result": "W",
+     "rating": 7.5
+    },
+    {
+     "match": 4,
+     "opp": "Hegseth FC",
+     "score": "4-2",
+     "result": "W",
+     "rating": 9.2
+    },
+    {
+     "match": 5,
+     "opp": "Amala Boys",
+     "score": "1-3",
+     "result": "L",
+     "rating": 7.1
+    }
+   ],
+   "avg_rating": 8.44,
+   "best_rating": 10.0,
+   "worst_rating": 7.1,
+   "top_issue": "shot_selection",
+   "pass_pct": 74,
+   "tackle_pct": 54,
+   "usual": {
+    "rating": 8.24,
+    "pass_pct": 77,
+    "tackle_pct": 31,
+    "matches": 110
+   },
+   "lowlights": [
+    "Match 5 vs Amala Boys: Match rating 7.1, down from your usual 8.6",
+    "Match 5 vs Amala Boys: Misplaced passes 12, up from your usual 6",
+    "Match 4 vs Hegseth FC: Tackles attempted 0, down from your usual 3"
+   ],
+   "highlights": [
+    "Match 2 vs Tuntuncitos FC: A perfect 10.0, your 6th Perfect Game for us",
+    "Match 2 vs Tuntuncitos FC: Goal involvements 8, up from your usual 2"
+   ],
+   "all_time": {
+    "matches": 121,
+    "avg_rating": 7.83,
+    "rage_quits": 4
+   }
+  }
+ ],
+ "active": [
+  "PhogsToffees",
+  "BellyTb1"
+ ],
+ "mvp": "PhogsToffees",
+ "best_match": {
+  "id": "150846640480154",
+  "score": "9-1",
+  "opp": "Tuntuncitos FC",
+  "result": "W"
+ },
+ "worst_match": {
+  "id": "150836849030464",
+  "score": "1-3",
+  "opp": "Amala Boys",
+  "result": "L"
+ },
+ "team_issue": "shot_selection",
+ "team": {
+  "longest_losing_run": 1,
+  "conceded_per_match": 2.0,
+  "first_half_points": 3,
+  "second_half_points": 6,
+  "rage_quits": [],
+  "their_avg_rating": 7.85,
+  "our_avg_rating": 8.57,
+  "four_goal_losses": 0
+ },
+ "ladder_day": {
+  "start": {
+   "division_name": "Division 2",
+   "stage": "points",
+   "stage_label": "Points phase",
+   "points": 5,
+   "target": 16,
+   "lives": 1,
+   "max_lives": 3,
+   "status": [
+    "5/16 pts: 11 more to reach promotion to Division 1"
+   ],
+   "spoken": "We're in Division 2 with 5 of 16 points and 1 of 3 chances left",
+   "taken_at": "2026-10-28T23:00-05:00"
+  },
+  "end": {
+   "division_name": "Division 2",
+   "stage": "points",
+   "stage_label": "Points phase",
+   "points": 11,
+   "target": 16,
+   "lives": 2,
+   "max_lives": 3,
+   "status": [
+    "11/16 pts: 5 more to reach promotion to Division 1"
+   ],
+   "spoken": "We're in Division 2 with 11 of 16 points and 2 of 3 chances left",
+   "taken_at": "2026-10-29T23:00-05:00"
+  },
+  "moved": null,
+  "events": [
+   {
+    "ts": 1793318409,
+    "kind": "relegation_match_due",
+    "text": "Out of chances in Division 2 (L 3-4 vs Los Pistoleroz). Relegation match next"
+   },
+   {
+    "ts": 1793319326,
+    "kind": "survived",
+    "text": "Relegation match won (9-1 vs Tuntuncitos FC). Staying in Division 2, chances reset, back to 5 pts"
+   }
+  ],
+  "relegated_from": null,
+  "promoted_from": null,
+  "facing_relegation": false
+ },
+ "matches": [
+  {
+   "id": "150792616140093",
+   "ts": 1793318409,
+   "result": "L",
+   "gf": 3,
+   "ga": 4,
+   "opp": "Los Pistoleroz"
+  },
+  {
+   "id": "150846640480154",
+   "ts": 1793319326,
+   "result": "W",
+   "gf": 9,
+   "ga": 1,
+   "opp": "Tuntuncitos FC"
+  },
+  {
+   "id": "151058086540373",
+   "ts": 1793320351,
+   "result": "W",
+   "gf": 2,
+   "ga": 0,
+   "opp": "They Dont Know"
+  },
+  {
+   "id": "151086137030020",
+   "ts": 1793321533,
+   "result": "W",
+   "gf": 4,
+   "ga": 2,
+   "opp": "Hegseth FC"
+  },
+  {
+   "id": "150836849030464",
+   "ts": 1793322802,
+   "result": "L",
+   "gf": 1,
+   "ga": 3,
+   "opp": "Amala Boys"
+  }
+ ],
+ "table": {
+  "division": "2",
+  "division_name": "Division 2",
+  "next_name": "Division 1",
+  "stage": "points",
+  "points": 11,
+  "target": 16,
+  "lives": 2,
+  "max_lives": 3,
+  "phase_results": [
+   "W",
+   "W",
+   "L"
+  ],
+  "taken_at": "2026-10-29T23:00-05:00",
+  "stage_label": "Points phase",
+  "status": [
+   "11/16 pts: 5 more to reach promotion to Division 1"
+  ],
+  "spoken": "We're in Division 2 with 11 of 16 points and 2 of 3 chances left",
+  "history": [
+   {
+    "ts": 1793141092,
+    "match": "144438746060374",
+    "result": "W",
+    "score": "2-0",
+    "opp": "Nonie United",
+    "division": "3",
+    "stage": "relegation",
+    "kind": "survived",
+    "text": "Relegation match won (2-0 vs Nonie United). Staying in Division 3, chances reset, back to 9 pts"
+   },
+   {
+    "ts": 1793142461,
+    "match": "144528782980392",
+    "result": "W",
+    "score": "6-1",
+    "opp": "Cotteville Bums",
+    "division": "3",
+    "stage": "points",
+    "kind": "qualified",
+    "text": "Reached 12 pts in Division 3 (W 6-1 vs Cotteville Bums). Promotion matches to Division 2: win 3 of 4"
+   },
+   {
+    "ts": 1793143922,
+    "match": "144550918930012",
+    "result": "W",
+    "score": "3-0",
+    "opp": "Dingos Utd",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 1 of 4: W 3-0 vs Dingos Utd",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1793145117,
+    "match": "144968057010081",
+    "result": "W",
+    "score": "4-3",
+    "opp": "Byron City",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 2 of 4: W 4-3 vs Byron City",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1793146458,
+    "match": "144970193020204",
+    "result": "L",
+    "score": "2-4",
+    "opp": "4Das FC",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 3 of 4: L 2-4 vs 4Das FC",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1793147635,
+    "match": "145034223180166",
+    "result": "W",
+    "score": "4-2",
+    "opp": "IronClad City",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 4 of 4: W 4-2 vs IronClad City. Promoted to Division 2!",
+    "kind": "promoted"
+   },
+   {
+    "ts": 1793318409,
+    "match": "150792616140093",
+    "result": "L",
+    "score": "3-4",
+    "opp": "Los Pistoleroz",
+    "division": "2",
+    "stage": "points",
+    "kind": "relegation_match_due",
+    "text": "Out of chances in Division 2 (L 3-4 vs Los Pistoleroz). Relegation match next"
+   },
+   {
+    "ts": 1793319326,
+    "match": "150846640480154",
+    "result": "W",
+    "score": "9-1",
+    "opp": "Tuntuncitos FC",
+    "division": "2",
+    "stage": "relegation",
+    "kind": "survived",
+    "text": "Relegation match won (9-1 vs Tuntuncitos FC). Staying in Division 2, chances reset, back to 5 pts"
+   }
+  ]
+ },
+ "club": "Grizzly Rips",
+ "previous": {
+  "date": "2026-10-28",
+  "grade": "B-",
+  "record": {
+   "W": 1,
+   "D": 2,
+   "L": 1
+  }
+ },
+ "season_so_far": {
+  "season": "Season 2 · Oct 22 – Nov 26",
+  "record": {
+   "W": 23,
+   "D": 4,
+   "L": 15
+  },
+  "gf": 127,
+  "ga": 91
+ },
+ "speech_by": "claude",
+ "speech": "Well, Grizzly Rips, grab a chair and maybe a cold glass of something fizzy, because today was an A-minus, and y'all earned every letter of it. 3 wins, 2 losses, 19 goals scored, 10 let in, and a team rating of 8.57 against our usual 7.88. That's like showing up to the county fair and winning the pie contest, the tractor pull and the hog-calling all before lunch.\n\nNow, the ladder. We woke up in Division 2 with 5 of 16 points and just 1 chance left. Then we dropped a 3-4 heartbreaker to Los Pistoleroz, and suddenly we had a relegation match staring at us like a raccoon on the porch. And what did y'all do? You beat Tuntuncitos FC 9-1. Nine. We stayed up, chances reset, and we finished the day in Division 2 with 11 of 16 points and 2 chances left. That's 5 more points to Division 1, folks. I can smell it from here, and it smells like victory and a little bit like kettle corn.\n\nPhogsToffees, my goodness. 11 goals, 5 assists, and a perfect 10.0 in that relegation match, your 11th perfect 10 for this club. You were hungry all day, and I loved that you chased the ball, too. You won 50% of your tackles when you usually sit at 23%, and 67% in that first match. That's a forward who decided the whole field was their business. Now, a little coaching sprinkle: 25 shots, 16 on target. That's good, but 9 of those went sailing toward the parking lot. Work it into the middle of the box, set your feet, and those turn into goals. And you faded late, sliding to a 7.8 against Amala Boys. Totally fair after a day like this, but we finish the meal before we unbuckle the belt.\n\nBellyTb1, you were the other half of the best pairing in town. 8 goals, 6 assists, and 8 goal involvements in the 9-1 alone, against your usual 2. That's your 6th perfect 10.0 for us, and you played like somebody who'd been waiting all week to be let off the leash. 16 of your 21 shots on target is downright surgical. And 54% in the tackle against your usual 31%? Lovely grit. The last match got away from you, though: a 7.1 and 12 misplaced passes, double your usual. When the legs get heavy, keep it simple.\n\nHere's the thing, team. We lost 1-3 to Amala Boys to close the night, and that stings a smidge. But one loss doesn't erase a day where we looked relegation right in the eye, laughed, and scored 9.\n\nSo get some rest, drink some water, and dream about Division 1. 5 points, friends. We're not just knocking on that door. We're bringing a casserole, and they're gonna let us in.",
+ "phrases": [],
+ "key_stats": [
+  "Day: 3W 0D 2L from 5 matches · 19 scored, 10 conceded",
+  "Vs our usual: 1.8 pts per game today, 1.5 normally (116 matches)",
+  "Player of the day: PhogsToffees (8.7 avg, 11 goals, 5 assists)",
+  "Ladder: started Division 2, 5/16 pts, 1 of 3 chances, finished Division 2, 11/16 pts, 2 of 3 chances",
+  "League: Points phase",
+  "11/16 pts: 5 more to reach promotion to Division 1"
+ ],
+ "coach": "Coach Lasso",
+ "generated_at": "2026-10-29T23:00-05:00"
+}
