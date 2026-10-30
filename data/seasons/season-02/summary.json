@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 40,
+ "matches_played": 41,
  "record": {
-  "W": 22,
+  "W": 23,
   "D": 4,
   "L": 14
  },
- "goals_for": 122,
- "goals_against": 86,
+ "goals_for": 126,
+ "goals_against": 88,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-30T00:32:31+00:00",
+ "last_match": "2026-10-30T00:52:13+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -290,6 +290,13 @@
    "result": "W",
    "score": "2-0",
    "opponent": "They Dont Know"
+  },
+  {
+   "id": "151086137030020",
+   "date": "2026-10-30T00:52:13+00:00",
+   "result": "W",
+   "score": "4-2",
+   "opponent": "Hegseth FC"
   }
  ]
 }
