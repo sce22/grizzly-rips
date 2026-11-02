@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 44,
+ "matches_played": 45,
  "record": {
   "W": 24,
   "D": 5,
-  "L": 15
+  "L": 16
  },
  "goals_for": 129,
- "goals_against": 92,
+ "goals_against": 95,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-02T02:18:01+00:00",
+ "last_match": "2026-11-02T02:34:30+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -318,6 +318,13 @@
    "result": "D",
    "score": "1-1",
    "opponent": "Wetter FC"
+  },
+  {
+   "id": "160138153260168",
+   "date": "2026-11-02T02:34:30+00:00",
+   "result": "L",
+   "score": "0-3",
+   "opponent": "Goal Scorer 18"
   }
  ]
 }
