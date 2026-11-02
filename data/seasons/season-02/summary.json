@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 43,
+ "matches_played": 44,
  "record": {
   "W": 24,
-  "D": 4,
+  "D": 5,
   "L": 15
  },
- "goals_for": 128,
- "goals_against": 91,
+ "goals_for": 129,
+ "goals_against": 92,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-02T01:59:18+00:00",
+ "last_match": "2026-11-02T02:18:01+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -311,6 +311,13 @@
    "result": "W",
    "score": "1-0",
    "opponent": "Sacks N Racks"
+  },
+  {
+   "id": "160020357950467",
+   "date": "2026-11-02T02:18:01+00:00",
+   "result": "D",
+   "score": "1-1",
+   "opponent": "Wetter FC"
   }
  ]
 }
