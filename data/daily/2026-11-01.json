@@ -1,0 +1,488 @@
+{
+ "date": "2026-11-01",
+ "label": "Sun, Nov 1",
+ "title": "Nov 1 Daily Summary",
+ "games": 3,
+ "record": {
+  "W": 1,
+  "D": 1,
+  "L": 1
+ },
+ "gf": 2,
+ "ga": 4,
+ "points": 4,
+ "baseline": {
+  "matches": 121,
+  "weight": 0.75,
+  "ppg": 1.52,
+  "gd": 0.28,
+  "rating": 7.9
+ },
+ "score": 4,
+ "grade": "D",
+ "players": [
+  {
+   "name": "buddskees",
+   "games": 3,
+   "goals": 2,
+   "assists": 0,
+   "key_passes": 2,
+   "tackles_won": 0,
+   "tackles_att": 8,
+   "passes_made": 47,
+   "passes_att": 61,
+   "shots": 4,
+   "shots_on": 3,
+   "mom": 2,
+   "pos": "forward",
+   "rage_quits": 0,
+   "record": {
+    "W": 1,
+    "D": 1,
+    "L": 1
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Sacks N Racks",
+     "score": "1-0",
+     "result": "W",
+     "rating": 8.6
+    },
+    {
+     "match": 2,
+     "opp": "Wetter FC",
+     "score": "1-1",
+     "result": "D",
+     "rating": 7.7
+    },
+    {
+     "match": 3,
+     "opp": "Goal Scorer 18",
+     "score": "0-3",
+     "result": "L",
+     "rating": 6.0
+    }
+   ],
+   "avg_rating": 7.43,
+   "best_rating": 8.6,
+   "worst_rating": 6.0,
+   "top_issue": "shot_selection",
+   "pass_pct": 77,
+   "tackle_pct": 0,
+   "usual": {
+    "rating": 8.17,
+    "pass_pct": 78,
+    "tackle_pct": 43,
+    "matches": 62
+   },
+   "lowlights": [
+    "Averaged 7.4 on the day against a usual 8.2",
+    "Match 3 vs Goal Scorer 18: Passes attempted 6, down from your usual 28",
+    "Match 1 vs Sacks N Racks: Tackle success 0%, down from your usual 57%"
+   ],
+   "highlights": [
+    "Match 3 vs Goal Scorer 18: Misplaced passes 2, down from your usual 6",
+    "Match 1 vs Sacks N Racks: 7th straight match at 7.5 match rating"
+   ],
+   "all_time": {
+    "matches": 75,
+    "avg_rating": 7.97,
+    "rage_quits": 8
+   }
+  },
+  {
+   "name": "PhogsToffees",
+   "games": 3,
+   "goals": 0,
+   "assists": 2,
+   "key_passes": 3,
+   "tackles_won": 0,
+   "tackles_att": 8,
+   "passes_made": 36,
+   "passes_att": 55,
+   "shots": 1,
+   "shots_on": 1,
+   "mom": 0,
+   "pos": "forward",
+   "rage_quits": 1,
+   "record": {
+    "W": 1,
+    "D": 1,
+    "L": 1
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Sacks N Racks",
+     "score": "1-0",
+     "result": "W",
+     "rating": 6.8
+    },
+    {
+     "match": 2,
+     "opp": "Wetter FC",
+     "score": "1-1",
+     "result": "D",
+     "rating": 6.9
+    },
+    {
+     "match": 3,
+     "opp": "Goal Scorer 18",
+     "score": "0-3",
+     "result": "L",
+     "rating": 6.5,
+     "rage_quit": true
+    }
+   ],
+   "avg_rating": 6.73,
+   "best_rating": 6.9,
+   "worst_rating": 6.5,
+   "top_issue": "forcing_passes",
+   "pass_pct": 65,
+   "tackle_pct": 0,
+   "usual": {
+    "rating": 8.62,
+    "pass_pct": 78,
+    "tackle_pct": 23,
+    "matches": 116
+   },
+   "lowlights": [
+    "Rage quit 1 time today",
+    "Averaged 6.7 on the day against a usual 8.6",
+    "Passed at 65% across the day (36 of 55), down from a usual 78%"
+   ],
+   "highlights": [
+    "Match 2 vs Wetter FC: Key passes 3, up from your usual 1",
+    "Match 2 vs Wetter FC: Better completed passes than any of their humans (20 vs their best 16)"
+   ],
+   "all_time": {
+    "matches": 124,
+    "avg_rating": 7.99,
+    "rage_quits": 4
+   }
+  },
+  {
+   "name": "BellyTb1",
+   "games": 3,
+   "goals": 0,
+   "assists": 0,
+   "key_passes": 0,
+   "tackles_won": 1,
+   "tackles_att": 3,
+   "passes_made": 19,
+   "passes_att": 26,
+   "shots": 5,
+   "shots_on": 0,
+   "mom": 0,
+   "pos": "forward",
+   "rage_quits": 1,
+   "record": {
+    "W": 1,
+    "D": 1,
+    "L": 1
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Sacks N Racks",
+     "score": "1-0",
+     "result": "W",
+     "rating": 5.5
+    },
+    {
+     "match": 2,
+     "opp": "Wetter FC",
+     "score": "1-1",
+     "result": "D",
+     "rating": 6.2
+    },
+    {
+     "match": 3,
+     "opp": "Goal Scorer 18",
+     "score": "0-3",
+     "result": "L",
+     "rating": 5.0,
+     "rage_quit": true
+    }
+   ],
+   "avg_rating": 5.57,
+   "best_rating": 6.2,
+   "worst_rating": 5.0,
+   "top_issue": "shot_selection",
+   "pass_pct": 73,
+   "tackle_pct": 33,
+   "usual": {
+    "rating": 8.59,
+    "pass_pct": 76,
+    "tackle_pct": 39,
+    "matches": 115
+   },
+   "lowlights": [
+    "Rage quit 1 time today",
+    "Averaged 5.6 on the day against a usual 8.6",
+    "Match 1 vs Sacks N Racks: Completed passes 5, down from your usual 21"
+   ],
+   "highlights": [
+    "Match 1 vs Sacks N Racks: Misplaced passes 3, down from your usual 7",
+    "Match 1 vs Sacks N Racks: Team-high 2 shots"
+   ],
+   "all_time": {
+    "matches": 124,
+    "avg_rating": 7.78,
+    "rage_quits": 5
+   }
+  }
+ ],
+ "active": [
+  "buddskees",
+  "PhogsToffees",
+  "BellyTb1"
+ ],
+ "mvp": "buddskees",
+ "best_match": {
+  "id": "160054216570432",
+  "score": "1-0",
+  "opp": "Sacks N Racks",
+  "result": "W"
+ },
+ "worst_match": {
+  "id": "160138153260168",
+  "score": "0-3",
+  "opp": "Goal Scorer 18",
+  "result": "L"
+ },
+ "team_issue": "shot_selection",
+ "team": {
+  "longest_losing_run": 1,
+  "conceded_per_match": 1.33,
+  "first_half_points": 3,
+  "second_half_points": 1,
+  "rage_quits": [
+   {
+    "name": "PhogsToffees",
+    "match": 3,
+    "opp": "Goal Scorer 18",
+    "score": "0-3"
+   },
+   {
+    "name": "BellyTb1",
+    "match": 3,
+    "opp": "Goal Scorer 18",
+    "score": "0-3"
+   }
+  ],
+  "their_avg_rating": 6.76,
+  "our_avg_rating": 6.81,
+  "four_goal_losses": 0
+ },
+ "ladder_day": {
+  "start": {
+   "division_name": "Division 2",
+   "stage": "points",
+   "stage_label": "Points phase",
+   "points": 11,
+   "target": 16,
+   "lives": 2,
+   "max_lives": 3,
+   "status": [
+    "11/16 pts: 5 more to reach promotion to Division 1"
+   ],
+   "spoken": "We're in Division 2 with 11 of 16 points and 2 of 3 chances left",
+   "taken_at": "2026-10-31T23:00-05:00"
+  },
+  "end": {
+   "division_name": "Division 2",
+   "stage": "points",
+   "stage_label": "Points phase",
+   "points": 15,
+   "target": 16,
+   "lives": 1,
+   "max_lives": 3,
+   "status": [
+    "15/16 pts: 1 more to reach promotion to Division 1"
+   ],
+   "spoken": "We're in Division 2 with 15 of 16 points and 1 of 3 chances left",
+   "taken_at": "2026-11-01T23:00-06:00"
+  },
+  "moved": null,
+  "events": [],
+  "relegated_from": null,
+  "promoted_from": null,
+  "facing_relegation": false
+ },
+ "matches": [
+  {
+   "id": "160054216570432",
+   "ts": 1793584758,
+   "result": "W",
+   "gf": 1,
+   "ga": 0,
+   "opp": "Sacks N Racks"
+  },
+  {
+   "id": "160020357950467",
+   "ts": 1793585881,
+   "result": "D",
+   "gf": 1,
+   "ga": 1,
+   "opp": "Wetter FC"
+  },
+  {
+   "id": "160138153260168",
+   "ts": 1793586870,
+   "result": "L",
+   "gf": 0,
+   "ga": 3,
+   "opp": "Goal Scorer 18"
+  }
+ ],
+ "table": {
+  "division": "2",
+  "division_name": "Division 2",
+  "next_name": "Division 1",
+  "stage": "points",
+  "points": 15,
+  "target": 16,
+  "lives": 1,
+  "max_lives": 3,
+  "phase_results": [
+   "W",
+   "W",
+   "L",
+   "W",
+   "D",
+   "L"
+  ],
+  "taken_at": "2026-11-01T23:00-06:00",
+  "stage_label": "Points phase",
+  "status": [
+   "15/16 pts: 1 more to reach promotion to Division 1"
+  ],
+  "spoken": "We're in Division 2 with 15 of 16 points and 1 of 3 chances left",
+  "history": [
+   {
+    "ts": 1793141092,
+    "match": "144438746060374",
+    "result": "W",
+    "score": "2-0",
+    "opp": "Nonie United",
+    "division": "3",
+    "stage": "relegation",
+    "kind": "survived",
+    "text": "Relegation match won (2-0 vs Nonie United). Staying in Division 3, chances reset, back to 9 pts"
+   },
+   {
+    "ts": 1793142461,
+    "match": "144528782980392",
+    "result": "W",
+    "score": "6-1",
+    "opp": "Cotteville Bums",
+    "division": "3",
+    "stage": "points",
+    "kind": "qualified",
+    "text": "Reached 12 pts in Division 3 (W 6-1 vs Cotteville Bums). Promotion matches to Division 2: win 3 of 4"
+   },
+   {
+    "ts": 1793143922,
+    "match": "144550918930012",
+    "result": "W",
+    "score": "3-0",
+    "opp": "Dingos Utd",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 1 of 4: W 3-0 vs Dingos Utd",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1793145117,
+    "match": "144968057010081",
+    "result": "W",
+    "score": "4-3",
+    "opp": "Byron City",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 2 of 4: W 4-3 vs Byron City",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1793146458,
+    "match": "144970193020204",
+    "result": "L",
+    "score": "2-4",
+    "opp": "4Das FC",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 3 of 4: L 2-4 vs 4Das FC",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1793147635,
+    "match": "145034223180166",
+    "result": "W",
+    "score": "4-2",
+    "opp": "IronClad City",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 4 of 4: W 4-2 vs IronClad City. Promoted to Division 2!",
+    "kind": "promoted"
+   },
+   {
+    "ts": 1793318409,
+    "match": "150792616140093",
+    "result": "L",
+    "score": "3-4",
+    "opp": "Los Pistoleroz",
+    "division": "2",
+    "stage": "points",
+    "kind": "relegation_match_due",
+    "text": "Out of chances in Division 2 (L 3-4 vs Los Pistoleroz). Relegation match next"
+   },
+   {
+    "ts": 1793319326,
+    "match": "150846640480154",
+    "result": "W",
+    "score": "9-1",
+    "opp": "Tuntuncitos FC",
+    "division": "2",
+    "stage": "relegation",
+    "kind": "survived",
+    "text": "Relegation match won (9-1 vs Tuntuncitos FC). Staying in Division 2, chances reset, back to 5 pts"
+   }
+  ]
+ },
+ "club": "Grizzly Rips",
+ "previous": {
+  "date": "2026-10-29",
+  "grade": "A-",
+  "record": {
+   "W": 3,
+   "D": 0,
+   "L": 2
+  }
+ },
+ "season_so_far": {
+  "season": "Season 2 · Oct 22 – Nov 26",
+  "record": {
+   "W": 24,
+   "D": 5,
+   "L": 16
+  },
+  "gf": 129,
+  "ga": 95
+ },
+ "speech_by": "claude",
+ "speech": "Alright, Grizzly Rips, pull up a chair, because this one's going to sting a little. Today was a D. 1 win, 1 draw, 1 loss, 2 goals scored, 4 conceded. Our team rating sat at 6.81 when our usual is 7.9. We came in off an A-minus and played like folks who'd misplaced their cleats in the parking lot.\n\nAnd let's talk about that last match. Goal Scorer 18 beat us 0-3, and two of y'all walked out the door before the final whistle. Two rage quits in one match. That's not losing, that's leaving. A ship doesn't sink because of the storm. It sinks because the crew jumps overboard.\n\nLadder-wise, we started the day in Division 2 with 11 of 16 points and 2 of 3 chances left. We finish it with 15 of 16 and 1 chance left. We're one single point from Division 1, and we're walking that tightrope with no net.\n\nbuddskees, you scored both our goals and took Man of the Match twice. You were our heartbeat early with an 8.6 against Sacks N Racks. But you averaged 7.4 when you're usually an 8.2. You went 0 for 8 in tackles. And in that 0-3 you attempted just 6 passes, down from your usual 28. That's not a forward going quiet, that's a forward going missing. Your 6.0 to finish the day was a lightbulb flickering out.\n\nPhogsToffees, you quit on us against Goal Scorer 18, and I need you to hear me say that plainly. You averaged 6.7 against a usual 8.6. You passed at 65%, 36 of 55, when you live at 78%. And 0 for 8 in tackles. Now, credit where it's due: 2 assists, 3 key passes against Wetter FC, and 20 completed passes in that match, more than any of their humans managed. You've got the vision. Don't let frustration fog up the windshield.\n\nBellyTb1, you rage quit that same match. You averaged 5.6 against a usual 8.6, and that's a cliff, not a dip. You completed just 5 passes against Sacks N Racks, down from your usual 21. And 5 shots on the day, 0 on target. Zero. You did lead us with 2 shots in that opening win and cut your misplaced passes to 3 from your usual 7, so the care is in there somewhere.\n\nWhich brings me to our real problem: shot selection. Tight angles and long range are where shots go to die. Work it into the middle of the box before you pull the trigger. If you've got a half second, set your feet. If the angle's tight, cut it back to a teammate. A better shot beats a first shot every single time.\n\nNow, here's the thing. My grandma used to say a rough Sunday just means the pie's still in the oven. We are 24 wins into this season. We have put 129 goals in the net. And we are one point, just one, from Division 1. That's not a team in trouble. That's a team standing at the front door with the key in its hand.\n\nSo stay in the match, stay with each other, and next time out, we turn that key together. I believe in y'all. Now let's go get that point.",
+ "phrases": [],
+ "key_stats": [
+  "Day: 1W 1D 1L from 3 matches · 2 scored, 4 conceded",
+  "Vs our usual: 1.3 pts per game today, 1.5 normally (121 matches)",
+  "Player of the day: buddskees (7.4 avg, 2 goals, 0 assists)",
+  "Ladder: started Division 2, 11/16 pts, 2 of 3 chances, finished Division 2, 15/16 pts, 1 of 3 chances",
+  "Rage quits: PhogsToffees, BellyTb1",
+  "League: Points phase",
+  "15/16 pts: 1 more to reach promotion to Division 1"
+ ],
+ "coach": "Coach Lasso",
+ "generated_at": "2026-11-01T23:01-06:00"
+}
