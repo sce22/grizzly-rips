@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 42,
+ "matches_played": 43,
  "record": {
-  "W": 23,
+  "W": 24,
   "D": 4,
   "L": 15
  },
- "goals_for": 127,
+ "goals_for": 128,
  "goals_against": 91,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-10-30T01:13:22+00:00",
+ "last_match": "2026-11-02T01:59:18+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -304,6 +304,13 @@
    "result": "L",
    "score": "1-3",
    "opponent": "Amala Boys"
+  },
+  {
+   "id": "160054216570432",
+   "date": "2026-11-02T01:59:18+00:00",
+   "result": "W",
+   "score": "1-0",
+   "opponent": "Sacks N Racks"
   }
  ]
 }
