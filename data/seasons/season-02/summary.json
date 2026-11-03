@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 52,
+ "matches_played": 53,
  "record": {
   "W": 27,
-  "D": 6,
+  "D": 7,
   "L": 19
  },
- "goals_for": 152,
- "goals_against": 113,
+ "goals_for": 154,
+ "goals_against": 115,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-03T22:46:11+00:00",
+ "last_match": "2026-11-03T23:06:34+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -374,6 +374,13 @@
    "result": "L",
    "score": "1-2",
    "opponent": "Bombo UTD"
+  },
+  {
+   "id": "164908281320327",
+   "date": "2026-11-03T23:06:34+00:00",
+   "result": "D",
+   "score": "2-2",
+   "opponent": "The Chozen"
   }
  ]
 }
