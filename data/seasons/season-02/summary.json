@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 53,
+ "matches_played": 54,
  "record": {
   "W": 27,
-  "D": 7,
+  "D": 8,
   "L": 19
  },
- "goals_for": 154,
- "goals_against": 115,
+ "goals_for": 157,
+ "goals_against": 118,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-03T23:06:34+00:00",
+ "last_match": "2026-11-03T23:26:24+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -381,6 +381,13 @@
    "result": "D",
    "score": "2-2",
    "opponent": "The Chozen"
+  },
+  {
+   "id": "164734783800466",
+   "date": "2026-11-03T23:26:24+00:00",
+   "result": "D",
+   "score": "3-3",
+   "opponent": "Dark Hallow"
   }
  ]
 }
