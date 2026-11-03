@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 47,
+ "matches_played": 48,
  "record": {
-  "W": 25,
+  "W": 26,
   "D": 5,
   "L": 17
  },
- "goals_for": 138,
- "goals_against": 102,
+ "goals_for": 142,
+ "goals_against": 103,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-03T00:19:14+00:00",
+ "last_match": "2026-11-03T00:54:40+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -339,6 +339,13 @@
    "result": "L",
    "score": "3-6",
    "opponent": "CALMA UNITED"
+  },
+  {
+   "id": "162516725150411",
+   "date": "2026-11-03T00:54:40+00:00",
+   "result": "W",
+   "score": "4-1",
+   "opponent": "Berd FC"
   }
  ]
 }
