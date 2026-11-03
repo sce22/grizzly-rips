@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 50,
+ "matches_played": 51,
  "record": {
   "W": 27,
-  "D": 5,
+  "D": 6,
   "L": 18
  },
- "goals_for": 149,
- "goals_against": 109,
+ "goals_for": 151,
+ "goals_against": 111,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-03T01:34:17+00:00",
+ "last_match": "2026-11-03T22:26:01+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -360,6 +360,13 @@
    "result": "L",
    "score": "2-3",
    "opponent": "PCL FC"
+  },
+  {
+   "id": "164562941010426",
+   "date": "2026-11-03T22:26:01+00:00",
+   "result": "D",
+   "score": "2-2",
+   "opponent": "Bloks FC"
   }
  ]
 }

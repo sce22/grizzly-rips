@@ -1,5 +1,5 @@
 {
- "matches_in_archive": 129,
+ "matches_in_archive": 130,
  "positions": {
   "goalkeeper": {
    "samples": 0,
@@ -119,25 +119,25 @@
    }
   },
   "forward": {
-   "samples": 194,
+   "samples": 197,
    "share": 0.87,
    "learned": true,
    "weights": {
-    "_intercept": 6.577,
-    "goals": 0.511,
-    "assists": 0.378,
-    "key_passes": 0.126,
+    "_intercept": 6.568,
+    "goals": 0.514,
+    "assists": 0.38,
+    "key_passes": 0.125,
     "shots_on": 0.072,
-    "shots_off": 0.034,
+    "shots_off": 0.035,
     "passes_made": 0.011,
     "passes_missed": 0.007,
-    "tackles_made": -0.057,
+    "tackles_made": -0.061,
     "missed_tackles": -0.001,
     "saves": 0.0,
     "conceded": 0.055,
     "clean_sheet": 0.0,
     "red_cards": -0.962,
-    "result_val": 0.24
+    "result_val": 0.238
    },
    "baseline": {
     "_intercept": 6.45,
