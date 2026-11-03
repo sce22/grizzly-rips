@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 45,
+ "matches_played": 46,
  "record": {
-  "W": 24,
+  "W": 25,
   "D": 5,
   "L": 16
  },
- "goals_for": 129,
- "goals_against": 95,
+ "goals_for": 135,
+ "goals_against": 96,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-02T02:34:30+00:00",
+ "last_match": "2026-11-03T00:00:41+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -325,6 +325,13 @@
    "result": "L",
    "score": "0-3",
    "opponent": "Goal Scorer 18"
+  },
+  {
+   "id": "162488520050351",
+   "date": "2026-11-03T00:00:41+00:00",
+   "result": "W",
+   "score": "6-1",
+   "opponent": "DragonsWarriors"
   }
  ]
 }
