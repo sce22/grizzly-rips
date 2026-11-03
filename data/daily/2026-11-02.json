@@ -1,0 +1,453 @@
+{
+ "date": "2026-11-02",
+ "label": "Mon, Nov 2",
+ "title": "Nov 2 Daily Summary",
+ "games": 5,
+ "record": {
+  "W": 3,
+  "D": 0,
+  "L": 2
+ },
+ "gf": 20,
+ "ga": 14,
+ "points": 9,
+ "baseline": {
+  "matches": 124,
+  "weight": 0.76,
+  "ppg": 1.52,
+  "gd": 0.26,
+  "rating": 7.87
+ },
+ "score": 16,
+ "grade": "A-",
+ "players": [
+  {
+   "name": "BellyTb1",
+   "games": 5,
+   "goals": 9,
+   "assists": 8,
+   "key_passes": 8,
+   "tackles_won": 5,
+   "tackles_att": 15,
+   "passes_made": 122,
+   "passes_att": 155,
+   "shots": 27,
+   "shots_on": 14,
+   "mom": 2,
+   "pos": "forward",
+   "rage_quits": 0,
+   "record": {
+    "W": 3,
+    "D": 0,
+    "L": 2
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "DragonsWarriors",
+     "score": "6-1",
+     "result": "W",
+     "rating": 9.9
+    },
+    {
+     "match": 2,
+     "opp": "CALMA UNITED",
+     "score": "3-6",
+     "result": "L",
+     "rating": 9.4
+    },
+    {
+     "match": 3,
+     "opp": "Berd FC",
+     "score": "4-1",
+     "result": "W",
+     "rating": 9.9
+    },
+    {
+     "match": 4,
+     "opp": "MLRookies",
+     "score": "5-3",
+     "result": "W",
+     "rating": 10.0
+    },
+    {
+     "match": 5,
+     "opp": "PCL FC",
+     "score": "2-3",
+     "result": "L",
+     "rating": 8.5
+    }
+   ],
+   "avg_rating": 9.54,
+   "best_rating": 10.0,
+   "worst_rating": 8.5,
+   "top_issue": "shot_selection",
+   "pass_pct": 79,
+   "tackle_pct": 33,
+   "usual": {
+    "rating": 8.15,
+    "pass_pct": 76,
+    "tackle_pct": 38,
+    "matches": 117
+   },
+   "lowlights": [
+    "Match 3 vs Berd FC: Missed tackles 4, up from your usual 1",
+    "Match 2 vs CALMA UNITED: Misplaced passes 13, up from your usual 6",
+    "Match 5 vs PCL FC: Match 5 of the session and your rating had slid from 9.7 early on to 8.5"
+   ],
+   "highlights": [
+    "Match 4 vs MLRookies: A perfect 10.0, your 7th Perfect Game for us",
+    "Match 2 vs CALMA UNITED: Shots 7, up from your usual 4"
+   ],
+   "all_time": {
+    "matches": 129,
+    "avg_rating": 7.85,
+    "rage_quits": 5
+   }
+  },
+  {
+   "name": "PhogsToffees",
+   "games": 5,
+   "goals": 8,
+   "assists": 7,
+   "key_passes": 12,
+   "tackles_won": 5,
+   "tackles_att": 28,
+   "passes_made": 145,
+   "passes_att": 197,
+   "shots": 21,
+   "shots_on": 13,
+   "mom": 1,
+   "pos": "forward",
+   "rage_quits": 0,
+   "record": {
+    "W": 3,
+    "D": 0,
+    "L": 2
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "DragonsWarriors",
+     "score": "6-1",
+     "result": "W",
+     "rating": 10.0
+    },
+    {
+     "match": 2,
+     "opp": "CALMA UNITED",
+     "score": "3-6",
+     "result": "L",
+     "rating": 8.5
+    },
+    {
+     "match": 3,
+     "opp": "Berd FC",
+     "score": "4-1",
+     "result": "W",
+     "rating": 8.5
+    },
+    {
+     "match": 4,
+     "opp": "MLRookies",
+     "score": "5-3",
+     "result": "W",
+     "rating": 10.0
+    },
+    {
+     "match": 5,
+     "opp": "PCL FC",
+     "score": "2-3",
+     "result": "L",
+     "rating": 7.9
+    }
+   ],
+   "avg_rating": 8.98,
+   "best_rating": 10.0,
+   "worst_rating": 7.9,
+   "top_issue": "shot_selection",
+   "pass_pct": 74,
+   "tackle_pct": 18,
+   "usual": {
+    "rating": 8.37,
+    "pass_pct": 77,
+    "tackle_pct": 20,
+    "matches": 118
+   },
+   "lowlights": [
+    "Match 3 vs Berd FC: Misplaced passes 16, up from your usual 8",
+    "Match 2 vs CALMA UNITED: Missed tackles 7, up from your usual 3",
+    "Match 3 vs Berd FC: Shot accuracy 29%, down from your usual 66%"
+   ],
+   "highlights": [
+    "Match 1 vs DragonsWarriors: A perfect 10.0, your 12th Perfect Game for us",
+    "Match 1 vs DragonsWarriors: Shot conversion 100%, up from your usual 34%"
+   ],
+   "all_time": {
+    "matches": 129,
+    "avg_rating": 8.03,
+    "rage_quits": 4
+   }
+  }
+ ],
+ "active": [
+  "BellyTb1",
+  "PhogsToffees"
+ ],
+ "mvp": "BellyTb1",
+ "best_match": {
+  "id": "162488520050351",
+  "score": "6-1",
+  "opp": "DragonsWarriors",
+  "result": "W"
+ },
+ "worst_match": {
+  "id": "162538483780208",
+  "score": "3-6",
+  "opp": "CALMA UNITED",
+  "result": "L"
+ },
+ "team_issue": "shot_selection",
+ "team": {
+  "longest_losing_run": 1,
+  "conceded_per_match": 2.8,
+  "first_half_points": 3,
+  "second_half_points": 6,
+  "rage_quits": [],
+  "their_avg_rating": 7.92,
+  "our_avg_rating": 9.26,
+  "four_goal_losses": 0
+ },
+ "ladder_day": {
+  "start": {
+   "division_name": "Division 2",
+   "stage": "points",
+   "stage_label": "Points phase",
+   "points": 15,
+   "target": 16,
+   "lives": 1,
+   "max_lives": 3,
+   "status": [
+    "15/16 pts: 1 more to reach promotion to Division 1"
+   ],
+   "spoken": "We're in Division 2 with 15 of 16 points and 1 of 3 chances left",
+   "taken_at": "2026-11-01T23:00-06:00"
+  },
+  "end": {
+   "division_name": "Division 2",
+   "stage": "points",
+   "stage_label": "Points phase",
+   "points": 6,
+   "target": 16,
+   "lives": 2,
+   "max_lives": 3,
+   "status": [
+    "6/16 pts: 10 more to reach promotion to Division 1"
+   ],
+   "spoken": "We're in Division 2 with 6 of 16 points and 2 of 3 chances left",
+   "taken_at": "2026-11-02T23:00-06:00"
+  },
+  "moved": null,
+  "events": [
+   {
+    "ts": 1793664041,
+    "kind": "qualified",
+    "text": "Reached 16 pts in Division 2 (W 6-1 vs DragonsWarriors). Promotion matches to Division 1: win 4 of 4"
+   },
+   {
+    "ts": 1793665154,
+    "kind": "promotion_failed",
+    "text": "Promotion match 1 of 4: L 3-6 vs CALMA UNITED. Promotion missed; back to 0 pts in Division 2"
+   }
+  ],
+  "relegated_from": null,
+  "promoted_from": null,
+  "facing_relegation": false
+ },
+ "matches": [
+  {
+   "id": "162488520050351",
+   "ts": 1793664041,
+   "result": "W",
+   "gf": 6,
+   "ga": 1,
+   "opp": "DragonsWarriors"
+  },
+  {
+   "id": "162538483780208",
+   "ts": 1793665154,
+   "result": "L",
+   "gf": 3,
+   "ga": 6,
+   "opp": "CALMA UNITED"
+  },
+  {
+   "id": "162516725150411",
+   "ts": 1793667280,
+   "result": "W",
+   "gf": 4,
+   "ga": 1,
+   "opp": "Berd FC"
+  },
+  {
+   "id": "162484873330222",
+   "ts": 1793668530,
+   "result": "W",
+   "gf": 5,
+   "ga": 3,
+   "opp": "MLRookies"
+  },
+  {
+   "id": "162484952860220",
+   "ts": 1793669657,
+   "result": "L",
+   "gf": 2,
+   "ga": 3,
+   "opp": "PCL FC"
+  }
+ ],
+ "table": {
+  "division": "2",
+  "division_name": "Division 2",
+  "next_name": "Division 1",
+  "stage": "points",
+  "points": 6,
+  "target": 16,
+  "lives": 2,
+  "max_lives": 3,
+  "phase_results": [
+   "W",
+   "W",
+   "L"
+  ],
+  "taken_at": "2026-11-02T23:00-06:00",
+  "stage_label": "Points phase",
+  "status": [
+   "6/16 pts: 10 more to reach promotion to Division 1"
+  ],
+  "spoken": "We're in Division 2 with 6 of 16 points and 2 of 3 chances left",
+  "history": [
+   {
+    "ts": 1793143922,
+    "match": "144550918930012",
+    "result": "W",
+    "score": "3-0",
+    "opp": "Dingos Utd",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 1 of 4: W 3-0 vs Dingos Utd",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1793145117,
+    "match": "144968057010081",
+    "result": "W",
+    "score": "4-3",
+    "opp": "Byron City",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 2 of 4: W 4-3 vs Byron City",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1793146458,
+    "match": "144970193020204",
+    "result": "L",
+    "score": "2-4",
+    "opp": "4Das FC",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 3 of 4: L 2-4 vs 4Das FC",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1793147635,
+    "match": "145034223180166",
+    "result": "W",
+    "score": "4-2",
+    "opp": "IronClad City",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 4 of 4: W 4-2 vs IronClad City. Promoted to Division 2!",
+    "kind": "promoted"
+   },
+   {
+    "ts": 1793318409,
+    "match": "150792616140093",
+    "result": "L",
+    "score": "3-4",
+    "opp": "Los Pistoleroz",
+    "division": "2",
+    "stage": "points",
+    "kind": "relegation_match_due",
+    "text": "Out of chances in Division 2 (L 3-4 vs Los Pistoleroz). Relegation match next"
+   },
+   {
+    "ts": 1793319326,
+    "match": "150846640480154",
+    "result": "W",
+    "score": "9-1",
+    "opp": "Tuntuncitos FC",
+    "division": "2",
+    "stage": "relegation",
+    "kind": "survived",
+    "text": "Relegation match won (9-1 vs Tuntuncitos FC). Staying in Division 2, chances reset, back to 5 pts"
+   },
+   {
+    "ts": 1793664041,
+    "match": "162488520050351",
+    "result": "W",
+    "score": "6-1",
+    "opp": "DragonsWarriors",
+    "division": "2",
+    "stage": "points",
+    "kind": "qualified",
+    "text": "Reached 16 pts in Division 2 (W 6-1 vs DragonsWarriors). Promotion matches to Division 1: win 4 of 4"
+   },
+   {
+    "ts": 1793665154,
+    "match": "162538483780208",
+    "result": "L",
+    "score": "3-6",
+    "opp": "CALMA UNITED",
+    "division": "2",
+    "stage": "promotion",
+    "text": "Promotion match 1 of 4: L 3-6 vs CALMA UNITED. Promotion missed; back to 0 pts in Division 2",
+    "kind": "promotion_failed"
+   }
+  ]
+ },
+ "club": "Grizzly Rips",
+ "previous": {
+  "date": "2026-11-01",
+  "grade": "D",
+  "record": {
+   "W": 1,
+   "D": 1,
+   "L": 1
+  }
+ },
+ "season_so_far": {
+  "season": "Season 2 · Oct 22 – Nov 26",
+  "record": {
+   "W": 27,
+   "D": 5,
+   "L": 18
+  },
+  "gf": 149,
+  "ga": 109
+ },
+ "speech_by": "claude",
+ "speech": "Well, Grizzly Rips, pull up a chair, because Coach is grinning like a raccoon that found the unlocked dumpster. That was an A-minus day. 3 wins from 5 matches, 20 goals scored, and a team rating of 9.26 when we usually sit around 7.87. Yesterday y'all handed me a D, and today you marched right back in and fixed the leaky roof yourselves. That's what I call character.\n\nNow the ladder, straight up. We started the day in Division 2 sitting on 15 of 16 points. A 6-1 win over DragonsWarriors got us to 16 and into the promotion series, and then CALMA UNITED beat us 3-6 in the very first promotion match and sent us back to 0. That one stung, and it should. We gave up 6. Then y'all dusted off, climbed back to 6 of 16, and finished the day with 2 of 3 chances left. The one blemish on today is that we concede 2.8 a match. 14 against in 5 is too many for a club scoring like this one.\n\nBellyTb1, my goodness gracious. 9 goals, 8 assists, 2 Man of the Match awards and a 9.54 average when your usual is an 8.15. That perfect 10 against MLRookies was your 7th for us, and you were pure hunger all day. Couple of smudges on the windshield, though. 13 misplaced passes in the CALMA loss, 4 missed tackles against Berd FC, and by match 5 you'd slid from a 9.7 to an 8.5. The legs were tired. Totally fair after a day like that.\n\nPhogsToffees, you opened the day like a marching band. A perfect 10 against DragonsWarriors, your 12th for us, and you converted every single shot. 8 goals, 7 assists and 12 key passes. You were the one opening doors for everybody. Now, against Berd FC you misplaced 16 passes and hit the target with just 29% of your shots, and you missed 7 tackles against CALMA. Your 7.9 in the last match tells me the tank ran low. Still, an 8.98 average over your usual 8.37 is a mighty fine day at the office.\n\nOne thing to work on together, and that's shot selection. BellyTb1 put 14 of 27 on target, and Phogs hit 13 of 21. Good, but there are free goals sitting in that gap. Work it into the middle of the box before you pull the trigger. If you've got a half second, set your feet, because shots taken off balance end up in row Z with the hot dog guy. And if the angle's tight, cut it back to your partner. A better shot beats a first shot every single time.\n\nAnd here's what makes my heart do cartwheels: we took 6 of our 9 points in the second half of the session. You finished stronger than you started. That's not luck, friends, that's grit. Division 1 is out there waiting with the porch light on, and we've got 2 chances left to knock on that door. So rest up, drink some water, and come back hungry. Proud of y'all. Truly.",
+ "phrases": [],
+ "key_stats": [
+  "Day: 3W 0D 2L from 5 matches · 20 scored, 14 conceded",
+  "Vs our usual: 1.8 pts per game today, 1.5 normally (124 matches)",
+  "Player of the day: BellyTb1 (9.5 avg, 9 goals, 8 assists)",
+  "Ladder: started Division 2, 15/16 pts, 1 of 3 chances, finished Division 2, 6/16 pts, 2 of 3 chances",
+  "League: Points phase",
+  "6/16 pts: 10 more to reach promotion to Division 1"
+ ],
+ "coach": "Coach Lasso",
+ "generated_at": "2026-11-02T23:00-06:00"
+}
