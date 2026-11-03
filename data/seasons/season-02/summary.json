@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 49,
+ "matches_played": 50,
  "record": {
   "W": 27,
   "D": 5,
-  "L": 17
+  "L": 18
  },
- "goals_for": 147,
- "goals_against": 106,
+ "goals_for": 149,
+ "goals_against": 109,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-03T01:15:30+00:00",
+ "last_match": "2026-11-03T01:34:17+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -353,6 +353,13 @@
    "result": "W",
    "score": "5-3",
    "opponent": "MLRookies"
+  },
+  {
+   "id": "162484952860220",
+   "date": "2026-11-03T01:34:17+00:00",
+   "result": "L",
+   "score": "2-3",
+   "opponent": "PCL FC"
   }
  ]
 }
