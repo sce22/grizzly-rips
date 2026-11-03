@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 46,
+ "matches_played": 47,
  "record": {
   "W": 25,
   "D": 5,
-  "L": 16
+  "L": 17
  },
- "goals_for": 135,
- "goals_against": 96,
+ "goals_for": 138,
+ "goals_against": 102,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-03T00:00:41+00:00",
+ "last_match": "2026-11-03T00:19:14+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -332,6 +332,13 @@
    "result": "W",
    "score": "6-1",
    "opponent": "DragonsWarriors"
+  },
+  {
+   "id": "162538483780208",
+   "date": "2026-11-03T00:19:14+00:00",
+   "result": "L",
+   "score": "3-6",
+   "opponent": "CALMA UNITED"
   }
  ]
 }
