@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 60,
+ "matches_played": 61,
  "record": {
   "W": 29,
   "D": 9,
-  "L": 22
+  "L": 23
  },
- "goals_for": 170,
- "goals_against": 136,
+ "goals_for": 171,
+ "goals_against": 140,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-04T23:38:54+00:00",
+ "last_match": "2026-11-04T23:54:45+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -430,6 +430,13 @@
    "result": "L",
    "score": "2-3",
    "opponent": "SÖMBRA FC"
+  },
+  {
+   "id": "167634289780368",
+   "date": "2026-11-04T23:54:45+00:00",
+   "result": "L",
+   "score": "1-4",
+   "opponent": "aztecuba"
   }
  ]
 }
