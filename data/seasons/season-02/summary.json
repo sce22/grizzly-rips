@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 56,
+ "matches_played": 57,
  "record": {
-  "W": 28,
+  "W": 29,
   "D": 9,
   "L": 19
  },
- "goals_for": 165,
+ "goals_for": 166,
  "goals_against": 125,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-04T00:46:43+00:00",
+ "last_match": "2026-11-04T01:08:30+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -402,6 +402,13 @@
    "result": "W",
    "score": "7-6",
    "opponent": "CD CHlVAS"
+  },
+  {
+   "id": "164878917330214",
+   "date": "2026-11-04T01:08:30+00:00",
+   "result": "W",
+   "score": "1-0",
+   "opponent": "Tøken FC"
   }
  ]
 }
