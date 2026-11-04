@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 57,
+ "matches_played": 58,
  "record": {
   "W": 29,
   "D": 9,
-  "L": 19
+  "L": 20
  },
- "goals_for": 166,
- "goals_against": 125,
+ "goals_for": 168,
+ "goals_against": 130,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-04T01:08:30+00:00",
+ "last_match": "2026-11-04T01:29:33+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -409,6 +409,13 @@
    "result": "W",
    "score": "1-0",
    "opponent": "Tøken FC"
+  },
+  {
+   "id": "165278189640021",
+   "date": "2026-11-04T01:29:33+00:00",
+   "result": "L",
+   "score": "2-5",
+   "opponent": "YummyOrdaFC"
   }
  ]
 }
