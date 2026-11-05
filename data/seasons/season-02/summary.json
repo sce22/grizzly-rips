@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 61,
+ "matches_played": 62,
  "record": {
   "W": 29,
   "D": 9,
-  "L": 23
+  "L": 24
  },
- "goals_for": 171,
- "goals_against": 140,
+ "goals_for": 174,
+ "goals_against": 144,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-04T23:54:45+00:00",
+ "last_match": "2026-11-05T00:13:23+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -437,6 +437,13 @@
    "result": "L",
    "score": "1-4",
    "opponent": "aztecuba"
+  },
+  {
+   "id": "167792038760424",
+   "date": "2026-11-05T00:13:23+00:00",
+   "result": "L",
+   "score": "3-4",
+   "opponent": "Team Takeoff"
   }
  ]
 }
