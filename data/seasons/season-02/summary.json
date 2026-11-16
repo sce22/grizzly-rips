@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 63,
+ "matches_played": 64,
  "record": {
   "W": 29,
   "D": 10,
-  "L": 24
+  "L": 25
  },
- "goals_for": 176,
- "goals_against": 146,
+ "goals_for": 177,
+ "goals_against": 149,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-16T00:39:41+00:00",
+ "last_match": "2026-11-16T01:06:14+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -451,6 +451,13 @@
    "result": "D",
    "score": "2-2",
    "opponent": "Conquer CF"
+  },
+  {
+   "id": "195322527400090",
+   "date": "2026-11-16T01:06:14+00:00",
+   "result": "L",
+   "score": "1-3",
+   "opponent": "Louisville"
   }
  ]
 }
