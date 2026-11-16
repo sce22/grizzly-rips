@@ -1,0 +1,985 @@
+{
+ "date": "2026-11-15",
+ "label": "Sun, Nov 15",
+ "title": "Nov 15 Daily Summary",
+ "games": 11,
+ "record": {
+  "W": 7,
+  "D": 2,
+  "L": 2
+ },
+ "gf": 27,
+ "ga": 17,
+ "points": 23,
+ "baseline": {
+  "matches": 141,
+  "weight": 0.78,
+  "ppg": 1.47,
+  "gd": 0.2,
+  "rating": 7.88
+ },
+ "score": 16,
+ "grade": "A-",
+ "players": [
+  {
+   "name": "buddskees",
+   "games": 11,
+   "goals": 4,
+   "assists": 5,
+   "key_passes": 17,
+   "tackles_won": 18,
+   "tackles_att": 25,
+   "passes_made": 141,
+   "passes_att": 181,
+   "shots": 12,
+   "shots_on": 9,
+   "mom": 1,
+   "pos": "midfielder",
+   "rage_quits": 1,
+   "record": {
+    "W": 7,
+    "D": 2,
+    "L": 2
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Conquer CF",
+     "score": "2-2",
+     "result": "D",
+     "rating": 8.6
+    },
+    {
+     "match": 2,
+     "opp": "Louisville",
+     "score": "1-3",
+     "result": "L",
+     "rating": 7.8
+    },
+    {
+     "match": 3,
+     "opp": "20 dollars",
+     "score": "3-2",
+     "result": "W",
+     "rating": 6.9
+    },
+    {
+     "match": 4,
+     "opp": "Baby on Board",
+     "score": "0-2",
+     "result": "L",
+     "rating": 6.7
+    },
+    {
+     "match": 5,
+     "opp": "La Paz Toyota",
+     "score": "6-1",
+     "result": "W",
+     "rating": 9.5
+    },
+    {
+     "match": 6,
+     "opp": "Ball De Sac FC",
+     "score": "2-1",
+     "result": "W",
+     "rating": 7.3
+    },
+    {
+     "match": 7,
+     "opp": "Gîrth0nTurfFC",
+     "score": "3-2",
+     "result": "W",
+     "rating": 7.6,
+     "rage_quit": true
+    },
+    {
+     "match": 8,
+     "opp": "NomNomFC",
+     "score": "1-0",
+     "result": "W",
+     "rating": 7.7
+    },
+    {
+     "match": 9,
+     "opp": "Blinkers Nation",
+     "score": "3-3",
+     "result": "D",
+     "rating": 7.7
+    },
+    {
+     "match": 10,
+     "opp": "Foursome",
+     "score": "2-0",
+     "result": "W",
+     "rating": 8.0
+    },
+    {
+     "match": 11,
+     "opp": "Chudz UTD",
+     "score": "4-1",
+     "result": "W",
+     "rating": 8.4
+    }
+   ],
+   "avg_rating": 7.84,
+   "best_rating": 9.5,
+   "worst_rating": 6.7,
+   "top_issue": "defensive_work_rate",
+   "pass_pct": 78,
+   "tackle_pct": 72,
+   "usual": {
+    "rating": 7.84,
+    "pass_pct": 77,
+    "tackle_pct": 40,
+    "matches": 65
+   },
+   "lowlights": [
+    "Rage quit 1 time today",
+    "Match 4 vs Baby on Board: Shot conversion 0%, down from your usual 39%",
+    "Match 1 vs Conquer CF: Passes attempted 11, down from your usual 25"
+   ],
+   "highlights": [
+    "Match 4 vs Baby on Board: Shot accuracy 100%, up from your usual 39%",
+    "Match 2 vs Louisville: Key passes 3, up from your usual 1"
+   ],
+   "all_time": {
+    "matches": 86,
+    "avg_rating": 7.95,
+    "rage_quits": 9
+   }
+  },
+  {
+   "name": "PhogsToffees",
+   "games": 11,
+   "goals": 9,
+   "assists": 8,
+   "key_passes": 16,
+   "tackles_won": 9,
+   "tackles_att": 33,
+   "passes_made": 141,
+   "passes_att": 184,
+   "shots": 27,
+   "shots_on": 19,
+   "mom": 2,
+   "pos": "forward",
+   "rage_quits": 1,
+   "record": {
+    "W": 7,
+    "D": 2,
+    "L": 2
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Conquer CF",
+     "score": "2-2",
+     "result": "D",
+     "rating": 6.8
+    },
+    {
+     "match": 2,
+     "opp": "Louisville",
+     "score": "1-3",
+     "result": "L",
+     "rating": 6.2
+    },
+    {
+     "match": 3,
+     "opp": "20 dollars",
+     "score": "3-2",
+     "result": "W",
+     "rating": 8.0
+    },
+    {
+     "match": 4,
+     "opp": "Baby on Board",
+     "score": "0-2",
+     "result": "L",
+     "rating": 6.0
+    },
+    {
+     "match": 5,
+     "opp": "La Paz Toyota",
+     "score": "6-1",
+     "result": "W",
+     "rating": 10.0
+    },
+    {
+     "match": 6,
+     "opp": "Ball De Sac FC",
+     "score": "2-1",
+     "result": "W",
+     "rating": 7.3
+    },
+    {
+     "match": 7,
+     "opp": "Gîrth0nTurfFC",
+     "score": "3-2",
+     "result": "W",
+     "rating": 7.4
+    },
+    {
+     "match": 8,
+     "opp": "NomNomFC",
+     "score": "1-0",
+     "result": "W",
+     "rating": 6.4
+    },
+    {
+     "match": 9,
+     "opp": "Blinkers Nation",
+     "score": "3-3",
+     "result": "D",
+     "rating": 8.6
+    },
+    {
+     "match": 10,
+     "opp": "Foursome",
+     "score": "2-0",
+     "result": "W",
+     "rating": 5.0,
+     "rage_quit": true
+    },
+    {
+     "match": 11,
+     "opp": "Chudz UTD",
+     "score": "4-1",
+     "result": "W",
+     "rating": 10.0
+    }
+   ],
+   "avg_rating": 7.43,
+   "best_rating": 10.0,
+   "worst_rating": 5.0,
+   "top_issue": "shot_selection",
+   "pass_pct": 77,
+   "tackle_pct": 27,
+   "usual": {
+    "rating": 8.05,
+    "pass_pct": 74,
+    "tackle_pct": 23,
+    "matches": 135
+   },
+   "lowlights": [
+    "Rage quit 1 time today",
+    "Match 4 vs Baby on Board: Their best forward posted 9.2 to your 6.0",
+    "Match 2 vs Louisville: Shots 0, down from your usual 3"
+   ],
+   "highlights": [
+    "Match 5 vs La Paz Toyota: A perfect 10.0, your 14th Perfect Game for us",
+    "Match 11 vs Chudz UTD: Shots 7, up from your usual 2"
+   ],
+   "all_time": {
+    "matches": 152,
+    "avg_rating": 7.97,
+    "rage_quits": 5
+   }
+  },
+  {
+   "name": "BellyTb1",
+   "games": 11,
+   "goals": 6,
+   "assists": 5,
+   "key_passes": 7,
+   "tackles_won": 17,
+   "tackles_att": 34,
+   "passes_made": 178,
+   "passes_att": 248,
+   "shots": 20,
+   "shots_on": 12,
+   "mom": 2,
+   "pos": "forward",
+   "rage_quits": 0,
+   "record": {
+    "W": 7,
+    "D": 2,
+    "L": 2
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Conquer CF",
+     "score": "2-2",
+     "result": "D",
+     "rating": 8.7
+    },
+    {
+     "match": 2,
+     "opp": "Louisville",
+     "score": "1-3",
+     "result": "L",
+     "rating": 7.7
+    },
+    {
+     "match": 3,
+     "opp": "20 dollars",
+     "score": "3-2",
+     "result": "W",
+     "rating": 7.5
+    },
+    {
+     "match": 4,
+     "opp": "Baby on Board",
+     "score": "0-2",
+     "result": "L",
+     "rating": 6.1
+    },
+    {
+     "match": 5,
+     "opp": "La Paz Toyota",
+     "score": "6-1",
+     "result": "W",
+     "rating": 6.7
+    },
+    {
+     "match": 6,
+     "opp": "Ball De Sac FC",
+     "score": "2-1",
+     "result": "W",
+     "rating": 7.6
+    },
+    {
+     "match": 7,
+     "opp": "Gîrth0nTurfFC",
+     "score": "3-2",
+     "result": "W",
+     "rating": 8.4
+    },
+    {
+     "match": 8,
+     "opp": "NomNomFC",
+     "score": "1-0",
+     "result": "W",
+     "rating": 6.8
+    },
+    {
+     "match": 9,
+     "opp": "Blinkers Nation",
+     "score": "3-3",
+     "result": "D",
+     "rating": 7.4
+    },
+    {
+     "match": 10,
+     "opp": "Foursome",
+     "score": "2-0",
+     "result": "W",
+     "rating": 7.2
+    },
+    {
+     "match": 11,
+     "opp": "Chudz UTD",
+     "score": "4-1",
+     "result": "W",
+     "rating": 6.4
+    }
+   ],
+   "avg_rating": 7.32,
+   "best_rating": 8.7,
+   "worst_rating": 6.1,
+   "top_issue": "forcing_passes",
+   "pass_pct": 72,
+   "tackle_pct": 50,
+   "usual": {
+    "rating": 8.38,
+    "pass_pct": 78,
+    "tackle_pct": 37,
+    "matches": 133
+   },
+   "lowlights": [
+    "Averaged 7.3 on the day against a usual 8.4",
+    "Match 6 vs Ball De Sac FC: Pass accuracy 56%, down from your usual 78%",
+    "Match 11 vs Chudz UTD: Missed tackles 4, up from your usual 1"
+   ],
+   "highlights": [
+    "Match 1 vs Conquer CF: Shot conversion 100%, up from your usual 24%",
+    "Match 2 vs Louisville: Tackle success 67%, up from your usual 30%"
+   ],
+   "all_time": {
+    "matches": 152,
+    "avg_rating": 7.82,
+    "rage_quits": 5
+   }
+  },
+  {
+   "name": "tuxedo_slide",
+   "games": 11,
+   "goals": 6,
+   "assists": 5,
+   "key_passes": 10,
+   "tackles_won": 7,
+   "tackles_att": 29,
+   "passes_made": 106,
+   "passes_att": 164,
+   "shots": 16,
+   "shots_on": 12,
+   "mom": 1,
+   "pos": "midfielder",
+   "rage_quits": 0,
+   "record": {
+    "W": 7,
+    "D": 2,
+    "L": 2
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Conquer CF",
+     "score": "2-2",
+     "result": "D",
+     "rating": 6.0
+    },
+    {
+     "match": 2,
+     "opp": "Louisville",
+     "score": "1-3",
+     "result": "L",
+     "rating": 6.9
+    },
+    {
+     "match": 3,
+     "opp": "20 dollars",
+     "score": "3-2",
+     "result": "W",
+     "rating": 8.4
+    },
+    {
+     "match": 4,
+     "opp": "Baby on Board",
+     "score": "0-2",
+     "result": "L",
+     "rating": 6.7
+    },
+    {
+     "match": 5,
+     "opp": "La Paz Toyota",
+     "score": "6-1",
+     "result": "W",
+     "rating": 8.9
+    },
+    {
+     "match": 6,
+     "opp": "Ball De Sac FC",
+     "score": "2-1",
+     "result": "W",
+     "rating": 6.6
+    },
+    {
+     "match": 7,
+     "opp": "Gîrth0nTurfFC",
+     "score": "3-2",
+     "result": "W",
+     "rating": 7.1
+    },
+    {
+     "match": 8,
+     "opp": "NomNomFC",
+     "score": "1-0",
+     "result": "W",
+     "rating": 7.4
+    },
+    {
+     "match": 9,
+     "opp": "Blinkers Nation",
+     "score": "3-3",
+     "result": "D",
+     "rating": 7.0
+    },
+    {
+     "match": 10,
+     "opp": "Foursome",
+     "score": "2-0",
+     "result": "W",
+     "rating": 6.5
+    },
+    {
+     "match": 11,
+     "opp": "Chudz UTD",
+     "score": "4-1",
+     "result": "W",
+     "rating": 7.3
+    }
+   ],
+   "avg_rating": 7.16,
+   "best_rating": 8.9,
+   "worst_rating": 6.0,
+   "top_issue": "passing_accuracy",
+   "pass_pct": 65,
+   "tackle_pct": 24,
+   "usual": {
+    "rating": 7.61,
+    "pass_pct": 57,
+    "tackle_pct": 30,
+    "matches": 25
+   },
+   "lowlights": [
+    "Match 8 vs NomNomFC: Pass accuracy 33%, down from your usual 68%",
+    "Match 11 vs Chudz UTD: Red card: the team played a player down for the rest of it",
+    "Match 1 vs Conquer CF: Match rating 6.0, down from your usual 7.7"
+   ],
+   "highlights": [
+    "Match 1 vs Conquer CF: Most pass accuracy you've had in 23 matches for us (76%)",
+    "Match 3 vs 20 dollars: Shot conversion 100%, up from your usual 24%"
+   ],
+   "all_time": {
+    "matches": 38,
+    "avg_rating": 7.38,
+    "rage_quits": 0
+   }
+  },
+  {
+   "name": "Soup_Kitchen22",
+   "games": 11,
+   "goals": 1,
+   "assists": 2,
+   "key_passes": 4,
+   "tackles_won": 10,
+   "tackles_att": 35,
+   "passes_made": 76,
+   "passes_att": 122,
+   "shots": 4,
+   "shots_on": 3,
+   "mom": 0,
+   "pos": "forward",
+   "rage_quits": 0,
+   "record": {
+    "W": 7,
+    "D": 2,
+    "L": 2
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Conquer CF",
+     "score": "2-2",
+     "result": "D",
+     "rating": 6.9
+    },
+    {
+     "match": 2,
+     "opp": "Louisville",
+     "score": "1-3",
+     "result": "L",
+     "rating": 5.5
+    },
+    {
+     "match": 3,
+     "opp": "20 dollars",
+     "score": "3-2",
+     "result": "W",
+     "rating": 6.7
+    },
+    {
+     "match": 4,
+     "opp": "Baby on Board",
+     "score": "0-2",
+     "result": "L",
+     "rating": 6.6
+    },
+    {
+     "match": 5,
+     "opp": "La Paz Toyota",
+     "score": "6-1",
+     "result": "W",
+     "rating": 8.1
+    },
+    {
+     "match": 6,
+     "opp": "Ball De Sac FC",
+     "score": "2-1",
+     "result": "W",
+     "rating": 6.7
+    },
+    {
+     "match": 7,
+     "opp": "Gîrth0nTurfFC",
+     "score": "3-2",
+     "result": "W",
+     "rating": 6.5
+    },
+    {
+     "match": 8,
+     "opp": "NomNomFC",
+     "score": "1-0",
+     "result": "W",
+     "rating": 7.4
+    },
+    {
+     "match": 9,
+     "opp": "Blinkers Nation",
+     "score": "3-3",
+     "result": "D",
+     "rating": 5.9
+    },
+    {
+     "match": 10,
+     "opp": "Foursome",
+     "score": "2-0",
+     "result": "W",
+     "rating": 6.8
+    },
+    {
+     "match": 11,
+     "opp": "Chudz UTD",
+     "score": "4-1",
+     "result": "W",
+     "rating": 7.5
+    }
+   ],
+   "avg_rating": 6.78,
+   "best_rating": 8.1,
+   "worst_rating": 5.5,
+   "top_issue": "involvement",
+   "pass_pct": 62,
+   "tackle_pct": 29,
+   "usual": {
+    "rating": 6.34,
+    "pass_pct": 60,
+    "tackle_pct": 16,
+    "matches": 8
+   },
+   "lowlights": [
+    "Match 2 vs Louisville: Pass accuracy 17% (1 of 6)",
+    "Match 2 vs Louisville: Tackle success 0% (0 of 4)",
+    "Match 2 vs Louisville: Their best midfielder posted 8.4 to your 5.5"
+   ],
+   "highlights": [
+    "Match 5 vs La Paz Toyota: Match rating 8.1, up from your usual 6.4",
+    "Match 8 vs NomNomFC: Tackle success 67%, up from your usual 14%"
+   ],
+   "all_time": {
+    "matches": 19,
+    "avg_rating": 6.59,
+    "rage_quits": 0
+   }
+  }
+ ],
+ "active": [
+  "buddskees",
+  "PhogsToffees",
+  "BellyTb1",
+  "tuxedo_slide",
+  "Soup_Kitchen22"
+ ],
+ "mvp": "buddskees",
+ "best_match": {
+  "id": "195296847400393",
+  "score": "6-1",
+  "opp": "La Paz Toyota",
+  "result": "W"
+ },
+ "worst_match": {
+  "id": "195612120900354",
+  "score": "0-2",
+  "opp": "Baby on Board",
+  "result": "L"
+ },
+ "team_issue": "involvement",
+ "team": {
+  "longest_losing_run": 1,
+  "conceded_per_match": 1.55,
+  "first_half_points": 7,
+  "second_half_points": 16,
+  "rage_quits": [
+   {
+    "name": "buddskees",
+    "match": 7,
+    "opp": "Gîrth0nTurfFC",
+    "score": "3-2"
+   },
+   {
+    "name": "PhogsToffees",
+    "match": 10,
+    "opp": "Foursome",
+    "score": "2-0"
+   }
+  ],
+  "their_avg_rating": 7.22,
+  "our_avg_rating": 7.34,
+  "four_goal_losses": 0
+ },
+ "ladder_day": {
+  "start": {
+   "division_name": "Division 4",
+   "stage": "points",
+   "stage_label": "Points phase",
+   "points": 0,
+   "target": 9,
+   "lives": 3,
+   "max_lives": 3,
+   "status": [
+    "0/9 pts: 9 more to reach promotion to Division 3"
+   ],
+   "spoken": "We're in Division 4 with 0 of 9 points and 3 of 3 chances left",
+   "taken_at": "2026-11-14T23:00-06:00"
+  },
+  "end": {
+   "division_name": "Division 3",
+   "stage": "points",
+   "stage_label": "Points phase",
+   "points": 10,
+   "target": 12,
+   "lives": 3,
+   "max_lives": 3,
+   "status": [
+    "10/12 pts: 2 more to reach promotion to Division 2"
+   ],
+   "spoken": "We're in Division 3 with 10 of 12 points and 3 of 3 chances left",
+   "taken_at": "2026-11-15T23:00-06:00"
+  },
+  "moved": "up",
+  "events": [
+   {
+    "ts": 1794797212,
+    "kind": "qualified",
+    "text": "Reached 9 pts in Division 4 (W 2-1 vs Ball De Sac FC). Promotion matches to Division 3: win 2 of 3"
+   },
+   {
+    "ts": 1794798436,
+    "kind": "promo_match",
+    "text": "Promotion match 1 of 3: W 3-2 vs Gîrth0nTurfFC"
+   },
+   {
+    "ts": 1794799611,
+    "kind": "promoted",
+    "text": "Promotion match 2 of 3: W 1-0 vs NomNomFC. Promoted to Division 3!"
+   },
+   {
+    "ts": 1794800813,
+    "kind": "manual",
+    "text": "Status: Division 3, points stage"
+   }
+  ],
+  "relegated_from": null,
+  "promoted_from": "Division 4",
+  "facing_relegation": false
+ },
+ "matches": [
+  {
+   "id": "195152752520220",
+   "ts": 1794789581,
+   "result": "D",
+   "gf": 2,
+   "ga": 2,
+   "opp": "Conquer CF"
+  },
+  {
+   "id": "195322527400090",
+   "ts": 1794791174,
+   "result": "L",
+   "gf": 1,
+   "ga": 3,
+   "opp": "Louisville"
+  },
+  {
+   "id": "195238778020184",
+   "ts": 1794792349,
+   "result": "W",
+   "gf": 3,
+   "ga": 2,
+   "opp": "20 dollars"
+  },
+  {
+   "id": "195612120900354",
+   "ts": 1794794781,
+   "result": "L",
+   "gf": 0,
+   "ga": 2,
+   "opp": "Baby on Board"
+  },
+  {
+   "id": "195296847400393",
+   "ts": 1794796021,
+   "result": "W",
+   "gf": 6,
+   "ga": 1,
+   "opp": "La Paz Toyota"
+  },
+  {
+   "id": "195278921770442",
+   "ts": 1794797212,
+   "result": "W",
+   "gf": 2,
+   "ga": 1,
+   "opp": "Ball De Sac FC"
+  },
+  {
+   "id": "195644222180080",
+   "ts": 1794798436,
+   "result": "W",
+   "gf": 3,
+   "ga": 2,
+   "opp": "Gîrth0nTurfFC"
+  },
+  {
+   "id": "195728137910207",
+   "ts": 1794799611,
+   "result": "W",
+   "gf": 1,
+   "ga": 0,
+   "opp": "NomNomFC"
+  },
+  {
+   "id": "195624347990390",
+   "ts": 1794800813,
+   "result": "D",
+   "gf": 3,
+   "ga": 3,
+   "opp": "Blinkers Nation"
+  },
+  {
+   "id": "195626392930403",
+   "ts": 1794802015,
+   "result": "W",
+   "gf": 2,
+   "ga": 0,
+   "opp": "Foursome"
+  },
+  {
+   "id": "195778162200381",
+   "ts": 1794803222,
+   "result": "W",
+   "gf": 4,
+   "ga": 1,
+   "opp": "Chudz UTD"
+  }
+ ],
+ "table": {
+  "division": "3",
+  "division_name": "Division 3",
+  "next_name": "Division 2",
+  "stage": "points",
+  "points": 10,
+  "target": 12,
+  "lives": 3,
+  "max_lives": 3,
+  "phase_results": [
+   "W",
+   "W"
+  ],
+  "taken_at": "2026-11-15T23:00-06:00",
+  "stage_label": "Points phase",
+  "status": [
+   "10/12 pts: 2 more to reach promotion to Division 2"
+  ],
+  "spoken": "We're in Division 3 with 10 of 12 points and 3 of 3 chances left",
+  "history": [
+   {
+    "ts": 1793754510,
+    "match": "164878917330214",
+    "result": "W",
+    "score": "1-0",
+    "opp": "Tøken FC",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 3 of 4: W 1-0 vs Tøken FC",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1793755773,
+    "match": "165278189640021",
+    "result": "L",
+    "score": "2-5",
+    "opp": "YummyOrdaFC",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 4 of 4: L 2-5 vs YummyOrdaFC. Promotion missed; back to 0 pts in Division 3",
+    "kind": "promotion_failed"
+   },
+   {
+    "ts": 1793836485,
+    "match": "167634289780368",
+    "result": "L",
+    "score": "1-4",
+    "opp": "aztecuba",
+    "division": "3",
+    "stage": "points",
+    "kind": "relegation_match_due",
+    "text": "Out of chances in Division 3 (L 1-4 vs aztecuba). Relegation match next"
+   },
+   {
+    "ts": 1793837603,
+    "match": "167792038760424",
+    "result": "L",
+    "score": "3-4",
+    "opp": "Team Takeoff",
+    "division": "3",
+    "stage": "relegation",
+    "kind": "relegated",
+    "text": "Relegation match L 3-4 vs Team Takeoff. Down to Division 4"
+   },
+   {
+    "ts": 1794797212,
+    "match": "195278921770442",
+    "result": "W",
+    "score": "2-1",
+    "opp": "Ball De Sac FC",
+    "division": "4",
+    "stage": "points",
+    "kind": "qualified",
+    "text": "Reached 9 pts in Division 4 (W 2-1 vs Ball De Sac FC). Promotion matches to Division 3: win 2 of 3"
+   },
+   {
+    "ts": 1794798436,
+    "match": "195644222180080",
+    "result": "W",
+    "score": "3-2",
+    "opp": "Gîrth0nTurfFC",
+    "division": "4",
+    "stage": "promotion",
+    "text": "Promotion match 1 of 3: W 3-2 vs Gîrth0nTurfFC",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1794799611,
+    "match": "195728137910207",
+    "result": "W",
+    "score": "1-0",
+    "opp": "NomNomFC",
+    "division": "4",
+    "stage": "promotion",
+    "text": "Promotion match 2 of 3: W 1-0 vs NomNomFC. Promoted to Division 3!",
+    "kind": "promoted"
+   },
+   {
+    "ts": 1794800813,
+    "kind": "manual",
+    "text": "Status: Division 3, points stage"
+   }
+  ]
+ },
+ "club": "Grizzly Rips",
+ "previous": {
+  "date": "2026-11-04",
+  "grade": "F",
+  "record": {
+   "W": 0,
+   "D": 0,
+   "L": 4
+  }
+ },
+ "season_so_far": {
+  "season": "Season 2 · Oct 22 – Nov 26",
+  "record": {
+   "W": 36,
+   "D": 11,
+   "L": 26
+  },
+  "gf": 201,
+  "ga": 161
+ },
+ "speech_by": "claude",
+ "speech": "Grizzly Rips, pull up a chair, because Coach has been grinning so wide my cheeks are asking for a substitution. That's an A-minus today, folks, and you earned every bit of it.\n\nLast time out we went 0 and 4 and took home an F. Today we played 11 matches, won 7, drew 2, lost 2, scored 27 and let in 17. We woke up in Division 4 with 0 of 9 points, and we're going to bed in Division 3 with 10 of 12, just 2 points from promotion again. We hit 9 points beating Ball De Sac FC, then won our promotion matches back to back, 3-2 over Gîrth0nTurfFC and 1-0 over NomNomFC. Two for two. That's not a climb, that's an escalator.\n\nNow the honest bit. The start was rough: 1 win in the first 4, and a 0-2 against Baby on Board where we couldn't buy a goal at a yard sale. Our team rating sat at 7.34 against our usual 7.88. But the second half of the day brought 16 points to the first half's 7. That's a team that got better as the coffee wore off.\n\nbuddskees, you were the engine. You won 18 tackles from 25. That's 72%, when you usually sit at 40. You also put up a 9.5 in the 6-1. But you rage quit while we were winning 3-2. Winning! That's like walking out of your own birthday party before the cake. Stay for the cake.\n\nPhogsToffees, you scored 9 goals with 8 assists and posted two perfect 10s, including 7 shots in the closer. Pure fireworks. Then you rage quit against Foursome while we were up 2-0. Friend, you were holding a winning lottery ticket and tossed it in the creek. Keep the ticket.\n\nBellyTb1, you got 6 goals, 5 assists and 2 Man of the Match awards, so you showed up. But you averaged 7.3 against your usual 8.4, and you passed at 56% against Ball De Sac. Even on an off day you were dangerous. That tells me plenty.\n\ntuxedo_slide, you got 6 goals and an 8.9 in the rout, and you were perfect in front of goal against 20 dollars. You also passed at 33% against NomNomFC and picked up a red card against Chudz that left us a player short. Keep the fire. Just leave the matches in the box.\n\nSoup_Kitchen22, you averaged 6.78, above your usual 6.34, and won 67% of your tackles against NomNomFC. Louisville was rough, with 1 completed pass from 6. But you're trending the right way.\n\nOne coaching note: on-ball involvement. Show for it, angle yourself diagonal to the passer, and move after you pass. Be the friend who's always available.\n\nY'all went from an F to an A-minus and a promotion in 11 days. Imagine what we do next. Sleep well, Rips. Division 2 is leaving the porch light on.",
+ "phrases": [],
+ "key_stats": [
+  "Day: 7W 2D 2L from 11 matches · 27 scored, 17 conceded",
+  "Vs our usual: 2.1 pts per game today, 1.5 normally (141 matches)",
+  "Player of the day: buddskees (7.8 avg, 4 goals, 5 assists)",
+  "Ladder: started Division 4, 0/9 pts, 3 of 3 chances, finished Division 3, 10/12 pts, 3 of 3 chances",
+  "Rage quits: buddskees, PhogsToffees",
+  "League: Points phase",
+  "10/12 pts: 2 more to reach promotion to Division 2"
+ ],
+ "coach": "Coach Lasso",
+ "generated_at": "2026-11-15T23:00-06:00"
+}
