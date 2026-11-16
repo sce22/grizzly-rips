@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 65,
+ "matches_played": 66,
  "record": {
   "W": 30,
   "D": 10,
-  "L": 25
+  "L": 26
  },
  "goals_for": 180,
- "goals_against": 151,
+ "goals_against": 153,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-16T01:25:49+00:00",
+ "last_match": "2026-11-16T02:06:21+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -465,6 +465,13 @@
    "result": "W",
    "score": "3-2",
    "opponent": "20 dollars"
+  },
+  {
+   "id": "195612120900354",
+   "date": "2026-11-16T02:06:21+00:00",
+   "result": "L",
+   "score": "0-2",
+   "opponent": "Baby on Board"
   }
  ]
 }
