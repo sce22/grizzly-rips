@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 67,
+ "matches_played": 68,
  "record": {
-  "W": 31,
+  "W": 32,
   "D": 10,
   "L": 26
  },
- "goals_for": 186,
- "goals_against": 154,
+ "goals_for": 188,
+ "goals_against": 155,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-16T02:27:01+00:00",
+ "last_match": "2026-11-16T02:46:52+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -479,6 +479,13 @@
    "result": "W",
    "score": "6-1",
    "opponent": "La Paz Toyota"
+  },
+  {
+   "id": "195278921770442",
+   "date": "2026-11-16T02:46:52+00:00",
+   "result": "W",
+   "score": "2-1",
+   "opponent": "Ball De Sac FC"
   }
  ]
 }
