@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 71,
+ "matches_played": 72,
  "record": {
-  "W": 34,
+  "W": 35,
   "D": 11,
   "L": 26
  },
- "goals_for": 195,
+ "goals_for": 197,
  "goals_against": 160,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-16T03:46:53+00:00",
+ "last_match": "2026-11-16T04:06:55+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -507,6 +507,13 @@
    "result": "D",
    "score": "3-3",
    "opponent": "Blinkers Nation"
+  },
+  {
+   "id": "195626392930403",
+   "date": "2026-11-16T04:06:55+00:00",
+   "result": "W",
+   "score": "2-0",
+   "opponent": "Foursome"
   }
  ]
 }
