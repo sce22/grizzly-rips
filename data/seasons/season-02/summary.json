@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 69,
+ "matches_played": 70,
  "record": {
-  "W": 33,
+  "W": 34,
   "D": 10,
   "L": 26
  },
- "goals_for": 191,
+ "goals_for": 192,
  "goals_against": 157,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-16T03:07:16+00:00",
+ "last_match": "2026-11-16T03:26:51+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -493,6 +493,13 @@
    "result": "W",
    "score": "3-2",
    "opponent": "Gîrth0nTurfFC"
+  },
+  {
+   "id": "195728137910207",
+   "date": "2026-11-16T03:26:51+00:00",
+   "result": "W",
+   "score": "1-0",
+   "opponent": "NomNomFC"
   }
  ]
 }
