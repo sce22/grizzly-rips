@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 66,
+ "matches_played": 67,
  "record": {
-  "W": 30,
+  "W": 31,
   "D": 10,
   "L": 26
  },
- "goals_for": 180,
- "goals_against": 153,
+ "goals_for": 186,
+ "goals_against": 154,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-16T02:06:21+00:00",
+ "last_match": "2026-11-16T02:27:01+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -472,6 +472,13 @@
    "result": "L",
    "score": "0-2",
    "opponent": "Baby on Board"
+  },
+  {
+   "id": "195296847400393",
+   "date": "2026-11-16T02:27:01+00:00",
+   "result": "W",
+   "score": "6-1",
+   "opponent": "La Paz Toyota"
   }
  ]
 }
