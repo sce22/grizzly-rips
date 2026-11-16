@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 62,
+ "matches_played": 63,
  "record": {
   "W": 29,
-  "D": 9,
+  "D": 10,
   "L": 24
  },
- "goals_for": 174,
- "goals_against": 144,
+ "goals_for": 176,
+ "goals_against": 146,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-05T00:13:23+00:00",
+ "last_match": "2026-11-16T00:39:41+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -444,6 +444,13 @@
    "result": "L",
    "score": "3-4",
    "opponent": "Team Takeoff"
+  },
+  {
+   "id": "195152752520220",
+   "date": "2026-11-16T00:39:41+00:00",
+   "result": "D",
+   "score": "2-2",
+   "opponent": "Conquer CF"
   }
  ]
 }
