@@ -1,12 +1,12 @@
 {
  "note": "Edited in the app",
- "as_of_ts": 1793748384,
- "as_of_match": "164734783800466",
- "set_at": "2026-11-03T18:07-06:00",
+ "as_of_ts": 1794800813,
+ "as_of_match": "195624347990390",
+ "set_at": "2026-11-15T21:49-06:00",
  "state": {
   "division": "3",
-  "stage": "promotion",
-  "points": 12,
+  "stage": "points",
+  "points": 4,
   "lives": 3,
   "promo_played": 0,
   "promo_wins": 0,
@@ -14,116 +14,6 @@
   "phase_results": []
  },
  "history": [
-  {
-   "ts": 1792980881,
-   "match": "139374382010070",
-   "result": "W",
-   "score": "4-2",
-   "opp": "El Chele",
-   "division": "4",
-   "stage": "relegation",
-   "kind": "survived",
-   "text": "Relegation match won (4-2 vs El Chele). Staying in Division 4, chances reset, back to 6 pts"
-  },
-  {
-   "ts": 1793049180,
-   "match": "141424447540320",
-   "result": "W",
-   "score": "3-0",
-   "opp": "ManJustGotTop",
-   "division": "4",
-   "stage": "points",
-   "kind": "qualified",
-   "text": "Reached 9 pts in Division 4 (W 3-0 vs ManJustGotTop). Promotion matches to Division 3: win 2 of 3"
-  },
-  {
-   "ts": 1793050215,
-   "match": "141404528350149",
-   "result": "W",
-   "score": "3-0",
-   "opp": "SharkRealm",
-   "division": "4",
-   "stage": "promotion",
-   "text": "Promotion match 1 of 3: W 3-0 vs SharkRealm",
-   "kind": "promo_match"
-  },
-  {
-   "ts": 1793051554,
-   "match": "141656021570155",
-   "result": "D",
-   "score": "2-2",
-   "opp": "Vaine Saxxxx",
-   "division": "4",
-   "stage": "promotion",
-   "text": "Promotion match 2 of 3: D 2-2 vs Vaine Saxxxx",
-   "kind": "promo_match"
-  },
-  {
-   "ts": 1793052027,
-   "match": "141382861660085",
-   "result": "W",
-   "score": "3-0",
-   "opp": "Tuh Alec FC",
-   "division": "4",
-   "stage": "promotion",
-   "text": "Promotion match 3 of 3: W 3-0 vs Tuh Alec FC. Promoted to Division 3!",
-   "kind": "promoted"
-  },
-  {
-   "ts": 1793060261,
-   "match": "141862507390268",
-   "result": "W",
-   "score": "4-2",
-   "opp": "Galway SC",
-   "division": "3",
-   "stage": "points",
-   "kind": "qualified",
-   "text": "Reached 12 pts in Division 3 (W 4-2 vs Galway SC). Promotion matches to Division 2: win 3 of 4"
-  },
-  {
-   "ts": 1793061590,
-   "match": "141784781910279",
-   "result": "W",
-   "score": "3-1",
-   "opp": "AC KT",
-   "division": "3",
-   "stage": "promotion",
-   "text": "Promotion match 1 of 4: W 3-1 vs AC KT",
-   "kind": "promo_match"
-  },
-  {
-   "ts": 1793064154,
-   "match": "141982403320234",
-   "result": "L",
-   "score": "3-4",
-   "opp": "FAFO CF",
-   "division": "3",
-   "stage": "promotion",
-   "text": "Promotion match 2 of 4: L 3-4 vs FAFO CF",
-   "kind": "promo_match"
-  },
-  {
-   "ts": 1793065317,
-   "match": "142186018040284",
-   "result": "D",
-   "score": "4-4",
-   "opp": "Realdrive Fc",
-   "division": "3",
-   "stage": "promotion",
-   "text": "Promotion match 3 of 4: D 4-4 vs Realdrive Fc. Promotion missed; back to 0 pts in Division 3",
-   "kind": "promotion_failed"
-  },
-  {
-   "ts": 1793139970,
-   "match": "144392603290160",
-   "result": "L",
-   "score": "1-2",
-   "opp": "Abdina fc",
-   "division": "3",
-   "stage": "points",
-   "kind": "relegation_match_due",
-   "text": "Out of chances in Division 3 (L 1-2 vs Abdina fc). Relegation match next"
-  },
   {
    "ts": 1793141092,
    "match": "144438746060374",
@@ -238,6 +128,110 @@
    "ts": 1793748384,
    "kind": "manual",
    "text": "Status: Division 3, promotion stage"
+  },
+  {
+   "ts": 1793751913,
+   "match": "164872750500347",
+   "result": "D",
+   "score": "1-1",
+   "opp": "Louisville",
+   "division": "3",
+   "stage": "promotion",
+   "text": "Promotion match 1 of 4: D 1-1 vs Louisville",
+   "kind": "promo_match"
+  },
+  {
+   "ts": 1793753203,
+   "match": "164946758970373",
+   "result": "W",
+   "score": "7-6",
+   "opp": "CD CHlVAS",
+   "division": "3",
+   "stage": "promotion",
+   "text": "Promotion match 2 of 4: W 7-6 vs CD CHlVAS",
+   "kind": "promo_match"
+  },
+  {
+   "ts": 1793754510,
+   "match": "164878917330214",
+   "result": "W",
+   "score": "1-0",
+   "opp": "T\u00f8ken FC",
+   "division": "3",
+   "stage": "promotion",
+   "text": "Promotion match 3 of 4: W 1-0 vs T\u00f8ken FC",
+   "kind": "promo_match"
+  },
+  {
+   "ts": 1793755773,
+   "match": "165278189640021",
+   "result": "L",
+   "score": "2-5",
+   "opp": "YummyOrdaFC",
+   "division": "3",
+   "stage": "promotion",
+   "text": "Promotion match 4 of 4: L 2-5 vs YummyOrdaFC. Promotion missed; back to 0 pts in Division 3",
+   "kind": "promotion_failed"
+  },
+  {
+   "ts": 1793836485,
+   "match": "167634289780368",
+   "result": "L",
+   "score": "1-4",
+   "opp": "aztecuba",
+   "division": "3",
+   "stage": "points",
+   "kind": "relegation_match_due",
+   "text": "Out of chances in Division 3 (L 1-4 vs aztecuba). Relegation match next"
+  },
+  {
+   "ts": 1793837603,
+   "match": "167792038760424",
+   "result": "L",
+   "score": "3-4",
+   "opp": "Team Takeoff",
+   "division": "3",
+   "stage": "relegation",
+   "kind": "relegated",
+   "text": "Relegation match L 3-4 vs Team Takeoff. Down to Division 4"
+  },
+  {
+   "ts": 1794797212,
+   "match": "195278921770442",
+   "result": "W",
+   "score": "2-1",
+   "opp": "Ball De Sac FC",
+   "division": "4",
+   "stage": "points",
+   "kind": "qualified",
+   "text": "Reached 9 pts in Division 4 (W 2-1 vs Ball De Sac FC). Promotion matches to Division 3: win 2 of 3"
+  },
+  {
+   "ts": 1794798436,
+   "match": "195644222180080",
+   "result": "W",
+   "score": "3-2",
+   "opp": "G\u00eerth0nTurfFC",
+   "division": "4",
+   "stage": "promotion",
+   "text": "Promotion match 1 of 3: W 3-2 vs G\u00eerth0nTurfFC",
+   "kind": "promo_match"
+  },
+  {
+   "ts": 1794799611,
+   "match": "195728137910207",
+   "result": "W",
+   "score": "1-0",
+   "opp": "NomNomFC",
+   "division": "4",
+   "stage": "promotion",
+   "text": "Promotion match 2 of 3: W 1-0 vs NomNomFC. Promoted to Division 3!",
+   "kind": "promoted"
+  },
+  {
+   "ts": 1794800813,
+   "kind": "manual",
+   "text": "Status: Division 3, points stage"
   }
  ]
 }
