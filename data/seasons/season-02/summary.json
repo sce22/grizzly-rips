@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 72,
+ "matches_played": 73,
  "record": {
-  "W": 35,
+  "W": 36,
   "D": 11,
   "L": 26
  },
- "goals_for": 197,
- "goals_against": 160,
+ "goals_for": 201,
+ "goals_against": 161,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-16T04:06:55+00:00",
+ "last_match": "2026-11-16T04:27:02+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -514,6 +514,13 @@
    "result": "W",
    "score": "2-0",
    "opponent": "Foursome"
+  },
+  {
+   "id": "195778162200381",
+   "date": "2026-11-16T04:27:02+00:00",
+   "result": "W",
+   "score": "4-1",
+   "opponent": "Chudz UTD"
   }
  ]
 }
