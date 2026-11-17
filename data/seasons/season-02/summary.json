@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 73,
+ "matches_played": 74,
  "record": {
   "W": 36,
-  "D": 11,
+  "D": 12,
   "L": 26
  },
- "goals_for": 201,
- "goals_against": 161,
+ "goals_for": 203,
+ "goals_against": 163,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-16T04:27:02+00:00",
+ "last_match": "2026-11-17T23:04:05+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -521,6 +521,13 @@
    "result": "W",
    "score": "4-1",
    "opponent": "Chudz UTD"
+  },
+  {
+   "id": "199414913620255",
+   "date": "2026-11-17T23:04:05+00:00",
+   "result": "D",
+   "score": "2-2",
+   "opponent": "Plebe United FC"
   }
  ]
 }
