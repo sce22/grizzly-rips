@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 74,
+ "matches_played": 75,
  "record": {
-  "W": 36,
+  "W": 37,
   "D": 12,
   "L": 26
  },
- "goals_for": 203,
- "goals_against": 163,
+ "goals_for": 207,
+ "goals_against": 166,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-17T23:04:05+00:00",
+ "last_match": "2026-11-17T23:32:07+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -528,6 +528,13 @@
    "result": "D",
    "score": "2-2",
    "opponent": "Plebe United FC"
+  },
+  {
+   "id": "199736278940138",
+   "date": "2026-11-17T23:32:07+00:00",
+   "result": "W",
+   "score": "4-3",
+   "opponent": "FMFC Academy"
   }
  ]
 }
