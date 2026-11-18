@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 81,
+ "matches_played": 82,
  "record": {
   "W": 39,
-  "D": 13,
+  "D": 14,
   "L": 29
  },
- "goals_for": 224,
- "goals_against": 185,
+ "goals_for": 227,
+ "goals_against": 188,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-18T02:05:00+00:00",
+ "last_match": "2026-11-18T02:46:24+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -577,6 +577,13 @@
    "result": "W",
    "score": "3-2",
    "opponent": "West Ohio Albon"
+  },
+  {
+   "id": "200116274450365",
+   "date": "2026-11-18T02:46:24+00:00",
+   "result": "D",
+   "score": "3-3",
+   "opponent": "FC Anish"
   }
  ]
 }
