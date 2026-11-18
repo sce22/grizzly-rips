@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 76,
+ "matches_played": 77,
  "record": {
   "W": 37,
-  "D": 12,
+  "D": 13,
   "L": 27
  },
- "goals_for": 210,
- "goals_against": 170,
+ "goals_for": 213,
+ "goals_against": 173,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-18T00:01:28+00:00",
+ "last_match": "2026-11-18T00:24:59+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -542,6 +542,13 @@
    "result": "L",
    "score": "3-4",
    "opponent": "Moisture FC"
+  },
+  {
+   "id": "199708575100325",
+   "date": "2026-11-18T00:24:59+00:00",
+   "result": "D",
+   "score": "3-3",
+   "opponent": "LesMoms"
   }
  ]
 }
