@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 75,
+ "matches_played": 76,
  "record": {
   "W": 37,
   "D": 12,
-  "L": 26
+  "L": 27
  },
- "goals_for": 207,
- "goals_against": 166,
+ "goals_for": 210,
+ "goals_against": 170,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-17T23:32:07+00:00",
+ "last_match": "2026-11-18T00:01:28+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -535,6 +535,13 @@
    "result": "W",
    "score": "4-3",
    "opponent": "FMFC Academy"
+  },
+  {
+   "id": "199640625200446",
+   "date": "2026-11-18T00:01:28+00:00",
+   "result": "L",
+   "score": "3-4",
+   "opponent": "Moisture FC"
   }
  ]
 }
