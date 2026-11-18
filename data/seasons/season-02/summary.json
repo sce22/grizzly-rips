@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 82,
+ "matches_played": 83,
  "record": {
-  "W": 39,
+  "W": 40,
   "D": 14,
   "L": 29
  },
- "goals_for": 227,
- "goals_against": 188,
+ "goals_for": 231,
+ "goals_against": 191,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-18T02:46:24+00:00",
+ "last_match": "2026-11-18T03:05:19+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -584,6 +584,13 @@
    "result": "D",
    "score": "3-3",
    "opponent": "FC Anish"
+  },
+  {
+   "id": "200084406230315",
+   "date": "2026-11-18T03:05:19+00:00",
+   "result": "W",
+   "score": "4-3",
+   "opponent": "FC 4 Real"
   }
  ]
 }
