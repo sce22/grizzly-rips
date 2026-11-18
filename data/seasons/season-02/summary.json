@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 78,
+ "matches_played": 79,
  "record": {
   "W": 38,
   "D": 13,
-  "L": 27
+  "L": 28
  },
- "goals_for": 218,
- "goals_against": 174,
+ "goals_for": 221,
+ "goals_against": 179,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-18T01:06:38+00:00",
+ "last_match": "2026-11-18T01:36:06+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -556,6 +556,13 @@
    "result": "W",
    "score": "5-1",
    "opponent": "Old Spice 37"
+  },
+  {
+   "id": "199702775680096",
+   "date": "2026-11-18T01:36:06+00:00",
+   "result": "L",
+   "score": "3-5",
+   "opponent": "Gøøcastle Utd"
   }
  ]
 }
