@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 80,
+ "matches_played": 81,
  "record": {
-  "W": 38,
+  "W": 39,
   "D": 13,
   "L": 29
  },
- "goals_for": 221,
- "goals_against": 183,
+ "goals_for": 224,
+ "goals_against": 185,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-18T01:45:45+00:00",
+ "last_match": "2026-11-18T02:05:00+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -570,6 +570,13 @@
    "result": "L",
    "score": "0-4",
    "opponent": "Liquid Cf"
+  },
+  {
+   "id": "199852636740342",
+   "date": "2026-11-18T02:05:00+00:00",
+   "result": "W",
+   "score": "3-2",
+   "opponent": "West Ohio Albon"
   }
  ]
 }
