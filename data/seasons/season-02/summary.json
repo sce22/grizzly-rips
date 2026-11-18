@@ -1,15 +1,15 @@
 {
  "season": "Season 2 · Oct 22 – Nov 26",
- "matches_played": 79,
+ "matches_played": 80,
  "record": {
   "W": 38,
   "D": 13,
-  "L": 28
+  "L": 29
  },
  "goals_for": 221,
- "goals_against": 179,
+ "goals_against": 183,
  "first_match": "2026-10-26T00:29:34+00:00",
- "last_match": "2026-11-18T01:36:06+00:00",
+ "last_match": "2026-11-18T01:45:45+00:00",
  "matches": [
   {
    "id": "139306008260248",
@@ -563,6 +563,13 @@
    "result": "L",
    "score": "3-5",
    "opponent": "Gøøcastle Utd"
+  },
+  {
+   "id": "200150061220481",
+   "date": "2026-11-18T01:45:45+00:00",
+   "result": "L",
+   "score": "0-4",
+   "opponent": "Liquid Cf"
   }
  ]
 }

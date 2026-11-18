@@ -1,5 +1,5 @@
 {
- "matches_in_archive": 158,
+ "matches_in_archive": 159,
  "positions": {
   "goalkeeper": {
    "samples": 0,
@@ -119,7 +119,7 @@
    }
   },
   "forward": {
-   "samples": 262,
+   "samples": 264,
    "share": 0.9,
    "learned": true,
    "weights": {
@@ -137,7 +137,7 @@
     "conceded": 0.042,
     "clean_sheet": 0.0,
     "red_cards": -0.943,
-    "result_val": 0.209
+    "result_val": 0.21
    },
    "baseline": {
     "_intercept": 6.45,
