@@ -1,0 +1,752 @@
+{
+ "date": "2026-11-17",
+ "label": "Tue, Nov 17",
+ "title": "Nov 17 Daily Summary",
+ "games": 11,
+ "record": {
+  "W": 5,
+  "D": 3,
+  "L": 3
+ },
+ "gf": 34,
+ "ga": 32,
+ "points": 18,
+ "baseline": {
+  "matches": 152,
+  "weight": 0.79,
+  "ppg": 1.51,
+  "gd": 0.25,
+  "rating": 7.81
+ },
+ "score": 10,
+ "grade": "C+",
+ "players": [
+  {
+   "name": "PhogsToffees",
+   "games": 11,
+   "goals": 12,
+   "assists": 11,
+   "key_passes": 16,
+   "tackles_won": 12,
+   "tackles_att": 25,
+   "passes_made": 182,
+   "passes_att": 241,
+   "shots": 33,
+   "shots_on": 17,
+   "mom": 3,
+   "pos": "forward",
+   "rage_quits": 0,
+   "record": {
+    "W": 5,
+    "D": 3,
+    "L": 3
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Plebe United FC",
+     "score": "2-2",
+     "result": "D",
+     "rating": 6.9
+    },
+    {
+     "match": 2,
+     "opp": "FMFC Academy",
+     "score": "4-3",
+     "result": "W",
+     "rating": 8.1
+    },
+    {
+     "match": 3,
+     "opp": "Moisture FC",
+     "score": "3-4",
+     "result": "L",
+     "rating": 6.4
+    },
+    {
+     "match": 4,
+     "opp": "LesMoms",
+     "score": "3-3",
+     "result": "D",
+     "rating": 8.1
+    },
+    {
+     "match": 5,
+     "opp": "Old Spice 37",
+     "score": "5-1",
+     "result": "W",
+     "rating": 9.2
+    },
+    {
+     "match": 6,
+     "opp": "Gøøcastle Utd",
+     "score": "3-5",
+     "result": "L",
+     "rating": 7.7
+    },
+    {
+     "match": 7,
+     "opp": "Liquid Cf",
+     "score": "0-4",
+     "result": "L",
+     "rating": 6.4
+    },
+    {
+     "match": 8,
+     "opp": "West Ohio Albon",
+     "score": "3-2",
+     "result": "W",
+     "rating": 7.4
+    },
+    {
+     "match": 9,
+     "opp": "FC Anish",
+     "score": "3-3",
+     "result": "D",
+     "rating": 8.9
+    },
+    {
+     "match": 10,
+     "opp": "FC 4 Real",
+     "score": "4-3",
+     "result": "W",
+     "rating": 10.0
+    },
+    {
+     "match": 11,
+     "opp": "SlimeLikely",
+     "score": "4-2",
+     "result": "W",
+     "rating": 9.9
+    }
+   ],
+   "avg_rating": 8.09,
+   "best_rating": 10.0,
+   "worst_rating": 6.4,
+   "top_issue": "shot_selection",
+   "pass_pct": 76,
+   "tackle_pct": 48,
+   "usual": {
+    "rating": 7.62,
+    "pass_pct": 74,
+    "tackle_pct": 27,
+    "matches": 145
+   },
+   "lowlights": [
+    "Match 9 vs FC Anish: Misplaced passes 10, up from your usual 5",
+    "Match 3 vs Moisture FC: Shot accuracy 0%, down from your usual 70%",
+    "Match 3 vs Moisture FC: Their best forward posted 8.6 to your 6.4"
+   ],
+   "highlights": [
+    "Match 10 vs FC 4 Real: A perfect 10.0, your 16th Perfect Game for us",
+    "Match 3 vs Moisture FC: Tackle success 100%, up from your usual 29%"
+   ],
+   "all_time": {
+    "matches": 163,
+    "avg_rating": 7.98,
+    "rage_quits": 5
+   }
+  },
+  {
+   "name": "buddskees",
+   "games": 11,
+   "goals": 12,
+   "assists": 7,
+   "key_passes": 9,
+   "tackles_won": 6,
+   "tackles_att": 22,
+   "passes_made": 139,
+   "passes_att": 186,
+   "shots": 27,
+   "shots_on": 18,
+   "mom": 3,
+   "pos": "midfielder",
+   "rage_quits": 3,
+   "record": {
+    "W": 5,
+    "D": 3,
+    "L": 3
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Plebe United FC",
+     "score": "2-2",
+     "result": "D",
+     "rating": 7.8
+    },
+    {
+     "match": 2,
+     "opp": "FMFC Academy",
+     "score": "4-3",
+     "result": "W",
+     "rating": 8.3
+    },
+    {
+     "match": 3,
+     "opp": "Moisture FC",
+     "score": "3-4",
+     "result": "L",
+     "rating": 9.0
+    },
+    {
+     "match": 4,
+     "opp": "LesMoms",
+     "score": "3-3",
+     "result": "D",
+     "rating": 8.2
+    },
+    {
+     "match": 5,
+     "opp": "Old Spice 37",
+     "score": "5-1",
+     "result": "W",
+     "rating": 10.0
+    },
+    {
+     "match": 6,
+     "opp": "Gøøcastle Utd",
+     "score": "3-5",
+     "result": "L",
+     "rating": 7.9
+    },
+    {
+     "match": 7,
+     "opp": "Liquid Cf",
+     "score": "0-4",
+     "result": "L",
+     "rating": 6.0,
+     "rage_quit": true
+    },
+    {
+     "match": 8,
+     "opp": "West Ohio Albon",
+     "score": "3-2",
+     "result": "W",
+     "rating": 7.9
+    },
+    {
+     "match": 9,
+     "opp": "FC Anish",
+     "score": "3-3",
+     "result": "D",
+     "rating": 7.3
+    },
+    {
+     "match": 10,
+     "opp": "FC 4 Real",
+     "score": "4-3",
+     "result": "W",
+     "rating": 7.1,
+     "rage_quit": true
+    },
+    {
+     "match": 11,
+     "opp": "SlimeLikely",
+     "score": "4-2",
+     "result": "W",
+     "rating": 5.0,
+     "rage_quit": true
+    }
+   ],
+   "avg_rating": 7.68,
+   "best_rating": 10.0,
+   "worst_rating": 5.0,
+   "top_issue": "finishing",
+   "pass_pct": 75,
+   "tackle_pct": 27,
+   "usual": {
+    "rating": 7.76,
+    "pass_pct": 77,
+    "tackle_pct": 59,
+    "matches": 75
+   },
+   "lowlights": [
+    "Rage quit 3 times today",
+    "Match 9 vs FC Anish: Pass accuracy 53%, down from your usual 76%",
+    "Match 1 vs Plebe United FC: Tackle success 33%, down from your usual 72%"
+   ],
+   "highlights": [
+    "Match 5 vs Old Spice 37: A perfect 10.0, your 7th Perfect Game for us",
+    "Match 5 vs Old Spice 37: Goal involvements 5, up from your usual 2"
+   ],
+   "all_time": {
+    "matches": 97,
+    "avg_rating": 7.92,
+    "rage_quits": 12
+   }
+  },
+  {
+   "name": "BellyTb1",
+   "games": 11,
+   "goals": 7,
+   "assists": 7,
+   "key_passes": 9,
+   "tackles_won": 14,
+   "tackles_att": 24,
+   "passes_made": 196,
+   "passes_att": 246,
+   "shots": 26,
+   "shots_on": 12,
+   "mom": 0,
+   "pos": "forward",
+   "rage_quits": 0,
+   "record": {
+    "W": 5,
+    "D": 3,
+    "L": 3
+   },
+   "log": [
+    {
+     "match": 1,
+     "opp": "Plebe United FC",
+     "score": "2-2",
+     "result": "D",
+     "rating": 7.4
+    },
+    {
+     "match": 2,
+     "opp": "FMFC Academy",
+     "score": "4-3",
+     "result": "W",
+     "rating": 8.8
+    },
+    {
+     "match": 3,
+     "opp": "Moisture FC",
+     "score": "3-4",
+     "result": "L",
+     "rating": 6.5
+    },
+    {
+     "match": 4,
+     "opp": "LesMoms",
+     "score": "3-3",
+     "result": "D",
+     "rating": 7.8
+    },
+    {
+     "match": 5,
+     "opp": "Old Spice 37",
+     "score": "5-1",
+     "result": "W",
+     "rating": 8.5
+    },
+    {
+     "match": 6,
+     "opp": "Gøøcastle Utd",
+     "score": "3-5",
+     "result": "L",
+     "rating": 6.8
+    },
+    {
+     "match": 7,
+     "opp": "Liquid Cf",
+     "score": "0-4",
+     "result": "L",
+     "rating": 6.5
+    },
+    {
+     "match": 8,
+     "opp": "West Ohio Albon",
+     "score": "3-2",
+     "result": "W",
+     "rating": 8.2
+    },
+    {
+     "match": 9,
+     "opp": "FC Anish",
+     "score": "3-3",
+     "result": "D",
+     "rating": 7.0
+    },
+    {
+     "match": 10,
+     "opp": "FC 4 Real",
+     "score": "4-3",
+     "result": "W",
+     "rating": 8.9
+    },
+    {
+     "match": 11,
+     "opp": "SlimeLikely",
+     "score": "4-2",
+     "result": "W",
+     "rating": 8.1
+    }
+   ],
+   "avg_rating": 7.68,
+   "best_rating": 8.9,
+   "worst_rating": 6.5,
+   "top_issue": "shot_selection",
+   "pass_pct": 80,
+   "tackle_pct": 58,
+   "usual": {
+    "rating": 7.47,
+    "pass_pct": 74,
+    "tackle_pct": 47,
+    "matches": 144
+   },
+   "lowlights": [
+    "Match 7 vs Liquid Cf: Passes attempted 8, down from your usual 22",
+    "Match 11 vs SlimeLikely: Missed tackles 4, up from your usual 1",
+    "Match 7 vs Liquid Cf: Their best forward posted 8.9 to your 6.5"
+   ],
+   "highlights": [
+    "Match 11 vs SlimeLikely: Tackles attempted 7, up from your usual 2",
+    "Match 2 vs FMFC Academy: Completed passes 25, up from your usual 16"
+   ],
+   "all_time": {
+    "matches": 163,
+    "avg_rating": 7.81,
+    "rage_quits": 5
+   }
+  }
+ ],
+ "active": [
+  "PhogsToffees",
+  "buddskees",
+  "BellyTb1"
+ ],
+ "mvp": "PhogsToffees",
+ "best_match": {
+  "id": "200052089400032",
+  "score": "5-1",
+  "opp": "Old Spice 37",
+  "result": "W"
+ },
+ "worst_match": {
+  "id": "200150061220481",
+  "score": "0-4",
+  "opp": "Liquid Cf",
+  "result": "L"
+ },
+ "team_issue": "shot_selection",
+ "team": {
+  "longest_losing_run": 2,
+  "conceded_per_match": 2.91,
+  "first_half_points": 8,
+  "second_half_points": 10,
+  "rage_quits": [
+   {
+    "name": "buddskees",
+    "match": 7,
+    "opp": "Liquid Cf",
+    "score": "0-4"
+   },
+   {
+    "name": "buddskees",
+    "match": 10,
+    "opp": "FC 4 Real",
+    "score": "4-3"
+   },
+   {
+    "name": "buddskees",
+    "match": 11,
+    "opp": "SlimeLikely",
+    "score": "4-2"
+   }
+  ],
+  "their_avg_rating": 7.75,
+  "our_avg_rating": 8.0,
+  "four_goal_losses": 1
+ },
+ "ladder_day": {
+  "start": {
+   "division_name": "Division 3",
+   "stage": "points",
+   "stage_label": "Points phase",
+   "points": 10,
+   "target": 12,
+   "lives": 3,
+   "max_lives": 3,
+   "status": [
+    "10/12 pts: 2 more to reach promotion to Division 2"
+   ],
+   "spoken": "We're in Division 3 with 10 of 12 points and 3 of 3 chances left",
+   "taken_at": "2026-11-16T23:00-06:00"
+  },
+  "end": {
+   "division_name": "Division 3",
+   "stage": "promotion",
+   "stage_label": "Promotion → Division 2",
+   "points": 13,
+   "target": 12,
+   "lives": 1,
+   "max_lives": 3,
+   "status": [
+    "Must win 3 out of 4"
+   ],
+   "spoken": "We're in Division 3, playing promotion matches for Division 2. 0 down, 4 to go, and we need 3 more wins",
+   "taken_at": "2026-11-17T23:00-06:00"
+  },
+  "moved": null,
+  "events": [
+   {
+    "ts": 1794958327,
+    "kind": "qualified",
+    "text": "Reached 12 pts in Division 3 (W 4-3 vs FMFC Academy). Promotion matches to Division 2: win 3 of 4"
+   },
+   {
+    "ts": 1794960088,
+    "kind": "promo_match",
+    "text": "Promotion match 1 of 4: L 3-4 vs Moisture FC"
+   },
+   {
+    "ts": 1794961499,
+    "kind": "promotion_failed",
+    "text": "Promotion match 2 of 4: D 3-3 vs LesMoms. Promotion missed; back to 0 pts in Division 3"
+   },
+   {
+    "ts": 1794972669,
+    "kind": "qualified",
+    "text": "Reached 12 pts in Division 3 (W 4-2 vs SlimeLikely). Promotion matches to Division 2: win 3 of 4"
+   }
+  ],
+  "relegated_from": null,
+  "promoted_from": null,
+  "facing_relegation": false
+ },
+ "matches": [
+  {
+   "id": "199414913620255",
+   "ts": 1794956645,
+   "result": "D",
+   "gf": 2,
+   "ga": 2,
+   "opp": "Plebe United FC"
+  },
+  {
+   "id": "199736278940138",
+   "ts": 1794958327,
+   "result": "W",
+   "gf": 4,
+   "ga": 3,
+   "opp": "FMFC Academy"
+  },
+  {
+   "id": "199640625200446",
+   "ts": 1794960088,
+   "result": "L",
+   "gf": 3,
+   "ga": 4,
+   "opp": "Moisture FC"
+  },
+  {
+   "id": "199708575100325",
+   "ts": 1794961499,
+   "result": "D",
+   "gf": 3,
+   "ga": 3,
+   "opp": "LesMoms"
+  },
+  {
+   "id": "200052089400032",
+   "ts": 1794963998,
+   "result": "W",
+   "gf": 5,
+   "ga": 1,
+   "opp": "Old Spice 37"
+  },
+  {
+   "id": "199702775680096",
+   "ts": 1794965766,
+   "result": "L",
+   "gf": 3,
+   "ga": 5,
+   "opp": "Gøøcastle Utd"
+  },
+  {
+   "id": "200150061220481",
+   "ts": 1794966345,
+   "result": "L",
+   "gf": 0,
+   "ga": 4,
+   "opp": "Liquid Cf"
+  },
+  {
+   "id": "199852636740342",
+   "ts": 1794967500,
+   "result": "W",
+   "gf": 3,
+   "ga": 2,
+   "opp": "West Ohio Albon"
+  },
+  {
+   "id": "200116274450365",
+   "ts": 1794969984,
+   "result": "D",
+   "gf": 3,
+   "ga": 3,
+   "opp": "FC Anish"
+  },
+  {
+   "id": "200084406230315",
+   "ts": 1794971119,
+   "result": "W",
+   "gf": 4,
+   "ga": 3,
+   "opp": "FC 4 Real"
+  },
+  {
+   "id": "200036527580057",
+   "ts": 1794972669,
+   "result": "W",
+   "gf": 4,
+   "ga": 2,
+   "opp": "SlimeLikely"
+  }
+ ],
+ "table": {
+  "division": "3",
+  "division_name": "Division 3",
+  "next_name": "Division 2",
+  "stage": "promotion",
+  "points": 13,
+  "target": 12,
+  "lives": 1,
+  "max_lives": 3,
+  "phase_results": [
+   "W",
+   "L",
+   "L",
+   "W",
+   "D",
+   "W",
+   "W"
+  ],
+  "taken_at": "2026-11-17T23:00-06:00",
+  "promo": {
+   "played": 0,
+   "total": 4,
+   "wins": 0,
+   "target_wins": 3,
+   "results": [],
+   "left": 4,
+   "wins_needed": 3
+  },
+  "stage_label": "Promotion → Division 2",
+  "status": [
+   "Must win 3 out of 4"
+  ],
+  "spoken": "We're in Division 3, playing promotion matches for Division 2. 0 down, 4 to go, and we need 3 more wins",
+  "history": [
+   {
+    "ts": 1794797212,
+    "match": "195278921770442",
+    "result": "W",
+    "score": "2-1",
+    "opp": "Ball De Sac FC",
+    "division": "4",
+    "stage": "points",
+    "kind": "qualified",
+    "text": "Reached 9 pts in Division 4 (W 2-1 vs Ball De Sac FC). Promotion matches to Division 3: win 2 of 3"
+   },
+   {
+    "ts": 1794798436,
+    "match": "195644222180080",
+    "result": "W",
+    "score": "3-2",
+    "opp": "Gîrth0nTurfFC",
+    "division": "4",
+    "stage": "promotion",
+    "text": "Promotion match 1 of 3: W 3-2 vs Gîrth0nTurfFC",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1794799611,
+    "match": "195728137910207",
+    "result": "W",
+    "score": "1-0",
+    "opp": "NomNomFC",
+    "division": "4",
+    "stage": "promotion",
+    "text": "Promotion match 2 of 3: W 1-0 vs NomNomFC. Promoted to Division 3!",
+    "kind": "promoted"
+   },
+   {
+    "ts": 1794800813,
+    "kind": "manual",
+    "text": "Status: Division 3, points stage"
+   },
+   {
+    "ts": 1794958327,
+    "match": "199736278940138",
+    "result": "W",
+    "score": "4-3",
+    "opp": "FMFC Academy",
+    "division": "3",
+    "stage": "points",
+    "kind": "qualified",
+    "text": "Reached 12 pts in Division 3 (W 4-3 vs FMFC Academy). Promotion matches to Division 2: win 3 of 4"
+   },
+   {
+    "ts": 1794960088,
+    "match": "199640625200446",
+    "result": "L",
+    "score": "3-4",
+    "opp": "Moisture FC",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 1 of 4: L 3-4 vs Moisture FC",
+    "kind": "promo_match"
+   },
+   {
+    "ts": 1794961499,
+    "match": "199708575100325",
+    "result": "D",
+    "score": "3-3",
+    "opp": "LesMoms",
+    "division": "3",
+    "stage": "promotion",
+    "text": "Promotion match 2 of 4: D 3-3 vs LesMoms. Promotion missed; back to 0 pts in Division 3",
+    "kind": "promotion_failed"
+   },
+   {
+    "ts": 1794972669,
+    "match": "200036527580057",
+    "result": "W",
+    "score": "4-2",
+    "opp": "SlimeLikely",
+    "division": "3",
+    "stage": "points",
+    "kind": "qualified",
+    "text": "Reached 12 pts in Division 3 (W 4-2 vs SlimeLikely). Promotion matches to Division 2: win 3 of 4"
+   }
+  ]
+ },
+ "club": "Grizzly Rips",
+ "previous": {
+  "date": "2026-11-15",
+  "grade": "A-",
+  "record": {
+   "W": 7,
+   "D": 2,
+   "L": 2
+  }
+ },
+ "season_so_far": {
+  "season": "Season 2 · Oct 22 – Nov 26",
+  "record": {
+   "W": 41,
+   "D": 14,
+   "L": 29
+  },
+  "gf": 235,
+  "ga": 193
+ },
+ "speech_by": "claude",
+ "speech": "Alright, Grizzly Rips, pull up a chair. Tuesday gets a C+, and that's about right. 5 wins, 3 draws, 3 losses, 34 scored and 32 let in. That's a little better than our usual on points and a little worse on goal difference. It's like a casserole that tastes fine but you can't quite tell what's in it.\n\nHere's the ladder. We started the day in Division 3, 10 points from 12. We beat FMFC Academy 4-3 to earn the promotion series, then lost 3-4 to Moisture FC and drew 3-3 with LesMoms, and the door shut in our faces. Back to zero. Then y'all rebuilt it, beat SlimeLikely 4-2, and finished the night right back in the promotion series, needing 3 wins from 4. We climbed the same hill twice. That shows grit, but it also shows we wasted a day.\n\nThe defending was not good enough. We conceded 2.91 per match, and the 0-4 to Liquid Cf was flat-out ugly. Shot selection is the other thing. Too many shots from tight angles and from distance, and too many taken while off balance. Get the ball into the middle of the box, set your feet, and if the angle's bad, cut it back. A better shot beats a first shot.\n\nPhogsToffees, you were the engine tonight. 12 goals, 11 assists, an 8.09 against your usual 7.62, and a perfect 10.0 against FC 4 Real, your 16th for us. And your tackling, 48% against a usual 27%, tells me you cared about the dirty work. But against Moisture FC you went 0% on shot accuracy and their best forward outplayed you 8.6 to 6.4, in a promotion match. And 10 misplaced passes against FC Anish is double your usual. Keep the fire, but get a little calmer when the stakes go up.\n\nbuddskees, this one's going to sting a little. You quit 3 matches today, and two of them were wins. You walked out on teammates who were winning. Your tackling fell to 27% from a usual 59%, and your passing dropped to 53% against FC Anish. And here's what bugs me, because you're too good for it. Your perfect 10.0 against Old Spice 37, with 5 goal involvements, was the best single performance anybody had all night. That player doesn't need the exit button. Stay in the room.\n\nBellyTb1, you were quietly solid. 80% passing against your usual 74, a 7.68 that beats your norm, 7 goals and 7 assists. But against Liquid Cf you attempted just 8 passes when you usually try 22, and that's disappearing when we needed you. You also missed 4 tackles against SlimeLikely. Go chase it, sure, but stay on your feet.\n\nSo here's where we stand. We've got four matches to win three, and we already know the road, because we've walked it twice today. Tomorrow we shoot from the middle, we defend like the lead matters, and every one of us stays to the final whistle. I believe in this group more than I believe in my grandma's pie, and friends, that pie is a religion. Let's go get Division 2.",
+ "phrases": [],
+ "key_stats": [
+  "Day: 5W 3D 3L from 11 matches · 34 scored, 32 conceded",
+  "Vs our usual: 1.6 pts per game today, 1.5 normally (152 matches)",
+  "Player of the day: PhogsToffees (8.1 avg, 12 goals, 11 assists)",
+  "Ladder: started Division 3, 10/12 pts, 3 of 3 chances, finished Division 3, promotion matches",
+  "Rage quits: buddskees x3",
+  "League: Promotion → Division 2",
+  "Must win 3 out of 4"
+ ],
+ "coach": "Coach Lasso",
+ "generated_at": "2026-11-17T23:00-06:00"
+}
